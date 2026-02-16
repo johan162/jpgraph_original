@@ -2,17 +2,24 @@
 
 > **⚠️ This repository is a historic archive.** JpGraph was developed between 2000–2010 for **PHP 5.x** and the **GD 2.x** graphics library. It is not maintained, will not run on modern PHP versions, and is published here solely for historical and educational interest.
 
-## What Is JpGraph?
+## What Was/Is JpGraph?
 
-JpGraph is an object-oriented PHP graph-plotting library created by **Johan Persson** at [Aditus Consulting](http://www.aditus.nu/jpgraph/). Development started around 1999–2000 and continued through 2010.
+JpGraph is an object-oriented PHP graph-plotting library created by **Johan Persson** at [Aditus Consulting](http://www.aditus.nu/jpgraph/). Development started around 1998–1999 and continued through 2010.
 
-At its peak, JpGraph was one of the most comprehensive server-side charting libraries available for PHP. It could produce publication-quality charts rendered as PNG, JPEG, or GIF images — all driven by PHP's GD extension with no JavaScript, no browser dependency, and no external rendering engine.
+At its peak, JpGraph was one of the most comprehensive server-side charting libraries available for PHP and was for a decade the most used graphic library for PHP. It could produce publication-quality charts rendered as PNG, JPEG, or GIF images — all driven by PHP's GD extension with no JavaScript, no browser dependency, and no external rendering engine.
 
-The library was released under a **dual license**: the QPL 1.0 for open-source and educational use, and a commercial JpGraph Professional License.
+The library was eventually released under a **dual license**: the QPL 1.0 for open-source and educational use, and a commercial JpGraph Professional License. The reason for the dual license to be able to part tinme work almost fulltime with support and development.
+
+## What happened to JpGraph?
+
+I had a co-operation with the Japanese company Asial which re-distributed the library for Japanese customer and give basic support in Japanese. When I for various reason decided to walk away from the library I spent over a decade building and supporting I gave the library to Asial to maintain, enhance and continue supporting. Asial (https://jpgraph.net/) have continued to add support for newer version of PHP and the GD library. The current release supports PHP 8.5. 
+
+I have no longer any interest in JpGraph or PHP and is more like a parent who has seen the kid grow up and move away from home. 
+
 
 ### What This Repository Contains
 
-This repository collects the **last Pro release** (v3.1.6p, January 2010) together with archival materials spanning the project's full lifetime:
+This repository collects the **last Pro release** (v3.1.6p, January 2010) together with some archival materials spanning the project's full lifetime. The original website is not included as it was dynamically generated with a home made PHP publishing system that is not compatible with modern PHP.
 
 | Path | Description |
 |------|-------------|
@@ -29,7 +36,7 @@ This repository collects the **last Pro release** (v3.1.6p, January 2010) togeth
 
 ### `jpgraph-3.1.6p/` — The Library (v3.1.6p)
 
-This is the final snapshot of the Professional edition, build r1928p, exported January 12, 2010.
+This is the final snapshot of the Professional edition, build r1928p, exported January 12, 2010. Back then SVN was used to manage the source code. 
 
 #### `jpgraph-3.1.6p/src/` — Source Code
 
@@ -140,7 +147,11 @@ See [README-DDDA.md](README-DDDA.md) for a detailed description.
 
 ### `doc-xml/` — Documentation Source (DocBook XML)
 
-The original XML source for the JpGraph user manual and reference guide, authored in **DocBook** format and built using **Phing** (a PHP build tool). The documentation covers:
+The original XML (using Docbook 5 schema) source for the JpGraph user manual and reference guide, authored in **DocBook** format and built using **Phing** (a PHP build tool). 
+
+The documentation build system is a bit involved as it dynamically generates all almost 200 images (and includes the source) and in some sense works as a unit and regression test of each release as each figure should work as described in the documentation. The whole build system is driven by a custom medium complex Phing build recepie. I don't know how widely Phing is used today but it works quite well (its basically a PHP re-implementation of Java's Ant)
+
+The documentation covers:
 
 - Installation and configuration
 - Tutorials for every chart type (line, bar, pie, Gantt, radar, polar, windrose, contour, matrix, odometer, stock, etc.)
@@ -194,7 +205,7 @@ The library was released under a dual-license model:
 - **QPL 1.0** (Q Public License) for open-source and educational use
 - **JpGraph Professional License** for commercial use
 
-Copyright © 2000–2009 Aditus Consulting. All rights reserved.
+Copyright © 1998–2010 Aditus Consulting. All rights reserved.
 
 ---
 
