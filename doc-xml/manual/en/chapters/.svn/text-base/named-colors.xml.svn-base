@@ -1,0 +1,2669 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<appendix version="5.0" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xml:id="app.named-colors">
+ <title>Named color list</title>
+     <para> See <xref xlink:href="#chap.color-handling"/> for a discussion on how to specify colors
+          for graphic objects in the graph.</para>
+<table frame="none">
+<title>Named color list</title><tgroup cols="4">
+<thead>
+<row>
+     <entry> Color name </entry>
+     <entry> RGB Triple </entry>
+     <entry> Hex </entry>
+     <entry> Color </entry>
+</row>
+</thead>
+<tbody>
+<row>
+     <entry>AntiqueWhite1</entry>
+     <entry>(255,239,219)</entry>
+     <entry><constant>#ffefdb</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffefdb.html" ?> </entry>
+</row>
+<row>
+     <entry>AntiqueWhite2</entry>
+     <entry>(238,223,204)</entry>
+     <entry><constant>#eedfcc</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eedfcc.html" ?> </entry>
+</row>
+<row>
+     <entry>AntiqueWhite3</entry>
+     <entry>(205,192,176)</entry>
+     <entry><constant>#cdc0b0</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdc0b0.html" ?> </entry>
+</row>
+<row>
+     <entry>AntiqueWhite4</entry>
+     <entry>(139,131,120)</entry>
+     <entry><constant>#8b8378</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b8378.html" ?> </entry>
+</row>
+<row>
+     <entry>aliceblue</entry>
+     <entry>(240,248,255)</entry>
+     <entry><constant>#f0f8ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-f0f8ff.html" ?> </entry>
+</row>
+<row>
+     <entry>antiquewhite</entry>
+     <entry>(250,235,215)</entry>
+     <entry><constant>#faebd7</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-faebd7.html" ?> </entry>
+</row>
+<row>
+     <entry>aqua</entry>
+     <entry>(0,255,255)</entry>
+     <entry><constant>#00ffff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00ffff.html" ?> </entry>
+</row>
+<row>
+     <entry>aquamarine</entry>
+     <entry>(127,255,212)</entry>
+     <entry><constant>#7fffd4</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-7fffd4.html" ?> </entry>
+</row>
+<row>
+     <entry>aquamarine1</entry>
+     <entry>(127,255,212)</entry>
+     <entry><constant>#7fffd4</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-7fffd4.html" ?> </entry>
+</row>
+<row>
+     <entry>aquamarine2</entry>
+     <entry>(118,238,198)</entry>
+     <entry><constant>#76eec6</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-76eec6.html" ?> </entry>
+</row>
+<row>
+     <entry>aquamarine3</entry>
+     <entry>(102,205,170)</entry>
+     <entry><constant>#66cdaa</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-66cdaa.html" ?> </entry>
+</row>
+<row>
+     <entry>aquamarine4</entry>
+     <entry>(69,139,116)</entry>
+     <entry><constant>#458b74</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-458b74.html" ?> </entry>
+</row>
+<row>
+     <entry>azure</entry>
+     <entry>(240,255,255)</entry>
+     <entry><constant>#f0ffff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-f0ffff.html" ?> </entry>
+</row>
+<row>
+     <entry>azure1</entry>
+     <entry>(240,255,255)</entry>
+     <entry><constant>#f0ffff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-f0ffff.html" ?> </entry>
+</row>
+<row>
+     <entry>azure2</entry>
+     <entry>(224,238,238)</entry>
+     <entry><constant>#e0eeee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-e0eeee.html" ?> </entry>
+</row>
+<row>
+     <entry>azure3</entry>
+     <entry>(193,205,205)</entry>
+     <entry><constant>#c1cdcd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-c1cdcd.html" ?> </entry>
+</row>
+<row>
+     <entry>azure4</entry>
+     <entry>(131,139,139)</entry>
+     <entry><constant>#838b8b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-838b8b.html" ?> </entry>
+</row>
+<row>
+     <entry>beige</entry>
+     <entry>(245,245,220)</entry>
+     <entry><constant>#f5f5dc</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-f5f5dc.html" ?> </entry>
+</row>
+<row>
+     <entry>bisque</entry>
+     <entry>(255,228,196)</entry>
+     <entry><constant>#ffe4c4</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffe4c4.html" ?> </entry>
+</row>
+<row>
+     <entry>bisque1</entry>
+     <entry>(255,228,196)</entry>
+     <entry><constant>#ffe4c4</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffe4c4.html" ?> </entry>
+</row>
+<row>
+     <entry>bisque2</entry>
+     <entry>(238,213,183)</entry>
+     <entry><constant>#eed5b7</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eed5b7.html" ?> </entry>
+</row>
+<row>
+     <entry>bisque3</entry>
+     <entry>(205,183,158)</entry>
+     <entry><constant>#cdb79e</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdb79e.html" ?> </entry>
+</row>
+<row>
+     <entry>bisque4</entry>
+     <entry>(139,125,107)</entry>
+     <entry><constant>#8b7d6b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b7d6b.html" ?> </entry>
+</row>
+<row>
+     <entry>black</entry>
+     <entry>(0,0,0)</entry>
+     <entry><constant>#000000</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-000000.html" ?> </entry>
+</row>
+<row>
+     <entry>blanchedalmond</entry>
+     <entry>(255,235,205)</entry>
+     <entry><constant>#ffebcd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffebcd.html" ?> </entry>
+</row>
+<row>
+     <entry>blue</entry>
+     <entry>(0,0,255)</entry>
+     <entry><constant>#0000ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-0000ff.html" ?> </entry>
+</row>
+<row>
+     <entry>blueviolet</entry>
+     <entry>(138,43,226)</entry>
+     <entry><constant>#8a2be2</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8a2be2.html" ?> </entry>
+</row>
+<row>
+     <entry>brown</entry>
+     <entry>(165,42,42)</entry>
+     <entry><constant>#a52a2a</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-a52a2a.html" ?> </entry>
+</row>
+<row>
+     <entry>brown1</entry>
+     <entry>(255,64,64)</entry>
+     <entry><constant>#ff4040</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff4040.html" ?> </entry>
+</row>
+<row>
+     <entry>brown2</entry>
+     <entry>(238,59,59)</entry>
+     <entry><constant>#ee3b3b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee3b3b.html" ?> </entry>
+</row>
+<row>
+     <entry>brown3</entry>
+     <entry>(205,51,51)</entry>
+     <entry><constant>#cd3333</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd3333.html" ?> </entry>
+</row>
+<row>
+     <entry>brown4</entry>
+     <entry>(139,35,35)</entry>
+     <entry><constant>#8b2323</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b2323.html" ?> </entry>
+</row>
+<row>
+     <entry>burlywood</entry>
+     <entry>(222,184,135)</entry>
+     <entry><constant>#deb887</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-deb887.html" ?> </entry>
+</row>
+<row>
+     <entry>burlywood1</entry>
+     <entry>(255,211,155)</entry>
+     <entry><constant>#ffd39b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffd39b.html" ?> </entry>
+</row>
+<row>
+     <entry>burlywood2</entry>
+     <entry>(238,197,145)</entry>
+     <entry><constant>#eec591</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eec591.html" ?> </entry>
+</row>
+<row>
+     <entry>burlywood3</entry>
+     <entry>(205,170,125)</entry>
+     <entry><constant>#cdaa7d</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdaa7d.html" ?> </entry>
+</row>
+<row>
+     <entry>burlywood4</entry>
+     <entry>(139,115,85)</entry>
+     <entry><constant>#8b7355</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b7355.html" ?> </entry>
+</row>
+<row>
+     <entry>cadetblue</entry>
+     <entry>(95,158,160)</entry>
+     <entry><constant>#5f9ea0</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-5f9ea0.html" ?> </entry>
+</row>
+<row>
+     <entry>cadetblue1</entry>
+     <entry>(152,245,255)</entry>
+     <entry><constant>#98f5ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-98f5ff.html" ?> </entry>
+</row>
+<row>
+     <entry>cadetblue2</entry>
+     <entry>(142,229,238)</entry>
+     <entry><constant>#8ee5ee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8ee5ee.html" ?> </entry>
+</row>
+<row>
+     <entry>cadetblue3</entry>
+     <entry>(122,197,205)</entry>
+     <entry><constant>#7ac5cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-7ac5cd.html" ?> </entry>
+</row>
+<row>
+     <entry>cadetblue4</entry>
+     <entry>(83,134,139)</entry>
+     <entry><constant>#53868b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-53868b.html" ?> </entry>
+</row>
+<row>
+     <entry>chartreuse</entry>
+     <entry>(127,255,0)</entry>
+     <entry><constant>#7fff00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-7fff00.html" ?> </entry>
+</row>
+<row>
+     <entry>chartreuse1</entry>
+     <entry>(127,255,0)</entry>
+     <entry><constant>#7fff00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-7fff00.html" ?> </entry>
+</row>
+<row>
+     <entry>chartreuse2</entry>
+     <entry>(118,238,0)</entry>
+     <entry><constant>#76ee00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-76ee00.html" ?> </entry>
+</row>
+<row>
+     <entry>chartreuse3</entry>
+     <entry>(102,205,0)</entry>
+     <entry><constant>#66cd00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-66cd00.html" ?> </entry>
+</row>
+<row>
+     <entry>chartreuse4</entry>
+     <entry>(69,139,0)</entry>
+     <entry><constant>#458b00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-458b00.html" ?> </entry>
+</row>
+<row>
+     <entry>chocolate</entry>
+     <entry>(210,105,30)</entry>
+     <entry><constant>#d2691e</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-d2691e.html" ?> </entry>
+</row>
+<row>
+     <entry>chocolate1</entry>
+     <entry>(255,127,36)</entry>
+     <entry><constant>#ff7f24</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff7f24.html" ?> </entry>
+</row>
+<row>
+     <entry>chocolate2</entry>
+     <entry>(238,118,33)</entry>
+     <entry><constant>#ee7621</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee7621.html" ?> </entry>
+</row>
+<row>
+     <entry>chocolate3</entry>
+     <entry>(205,102,29)</entry>
+     <entry><constant>#cd661d</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd661d.html" ?> </entry>
+</row>
+<row>
+     <entry>chocolate4</entry>
+     <entry>(139,69,19)</entry>
+     <entry><constant>#8b4513</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b4513.html" ?> </entry>
+</row>
+<row>
+     <entry>coral</entry>
+     <entry>(255,127,80)</entry>
+     <entry><constant>#ff7f50</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff7f50.html" ?> </entry>
+</row>
+<row>
+     <entry>coral1</entry>
+     <entry>(255,114,86)</entry>
+     <entry><constant>#ff7256</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff7256.html" ?> </entry>
+</row>
+<row>
+     <entry>coral2</entry>
+     <entry>(238,106,80)</entry>
+     <entry><constant>#ee6a50</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee6a50.html" ?> </entry>
+</row>
+<row>
+     <entry>coral3</entry>
+     <entry>(205,91,69)</entry>
+     <entry><constant>#cd5b45</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd5b45.html" ?> </entry>
+</row>
+<row>
+     <entry>coral4</entry>
+     <entry>(139,62,47)</entry>
+     <entry><constant>#8b3e2f</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b3e2f.html" ?> </entry>
+</row>
+<row>
+     <entry>cornflowerblue</entry>
+     <entry>(100,149,237)</entry>
+     <entry><constant>#6495ed</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-6495ed.html" ?> </entry>
+</row>
+<row>
+     <entry>cornsilk</entry>
+     <entry>(255,248,220)</entry>
+     <entry><constant>#fff8dc</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-fff8dc.html" ?> </entry>
+</row>
+<row>
+     <entry>cyan</entry>
+     <entry>(0,255,255)</entry>
+     <entry><constant>#00ffff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00ffff.html" ?> </entry>
+</row>
+<row>
+     <entry>cyan1</entry>
+     <entry>(0,255,255)</entry>
+     <entry><constant>#00ffff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00ffff.html" ?> </entry>
+</row>
+<row>
+     <entry>cyan2</entry>
+     <entry>(0,238,238)</entry>
+     <entry><constant>#00eeee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00eeee.html" ?> </entry>
+</row>
+<row>
+     <entry>cyan3</entry>
+     <entry>(0,205,205)</entry>
+     <entry><constant>#00cdcd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00cdcd.html" ?> </entry>
+</row>
+<row>
+     <entry>cyan4</entry>
+     <entry>(0,139,139)</entry>
+     <entry><constant>#008b8b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-008b8b.html" ?> </entry>
+</row>
+<row>
+     <entry>darkblue</entry>
+     <entry>(0,0,139)</entry>
+     <entry><constant>#00008b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00008b.html" ?> </entry>
+</row>
+<row>
+     <entry>darkcyan</entry>
+     <entry>(0,139,139)</entry>
+     <entry><constant>#008b8b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-008b8b.html" ?> </entry>
+</row>
+<row>
+     <entry>darkgoldenrod</entry>
+     <entry>(184,134,11)</entry>
+     <entry><constant>#b8860b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-b8860b.html" ?> </entry>
+</row>
+<row>
+     <entry>darkgoldenrod1</entry>
+     <entry>(255,185,15)</entry>
+     <entry><constant>#ffb90f</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffb90f.html" ?> </entry>
+</row>
+<row>
+     <entry>darkgoldenrod2</entry>
+     <entry>(238,173,14)</entry>
+     <entry><constant>#eead0e</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eead0e.html" ?> </entry>
+</row>
+<row>
+     <entry>darkgoldenrod3</entry>
+     <entry>(205,149,12)</entry>
+     <entry><constant>#cd950c</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd950c.html" ?> </entry>
+</row>
+<row>
+     <entry>darkgoldenrod4</entry>
+     <entry>(139,101,8)</entry>
+     <entry><constant>#8b6508</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b6508.html" ?> </entry>
+</row>
+<row>
+     <entry>darkgray</entry>
+     <entry>(100,100,100)</entry>
+     <entry><constant>#646464</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-646464.html" ?> </entry>
+</row>
+<row>
+     <entry>darkgreen</entry>
+     <entry>(0,100,0)</entry>
+     <entry><constant>#006400</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-006400.html" ?> </entry>
+</row>
+<row>
+     <entry>darkkhaki</entry>
+     <entry>(189,183,107)</entry>
+     <entry><constant>#bdb76b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-bdb76b.html" ?> </entry>
+</row>
+<row>
+     <entry>darkmagenta</entry>
+     <entry>(139,0,139)</entry>
+     <entry><constant>#8b008b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b008b.html" ?> </entry>
+</row>
+<row>
+     <entry>darkolivegreen</entry>
+     <entry>(85,107,47)</entry>
+     <entry><constant>#556b2f</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-556b2f.html" ?> </entry>
+</row>
+<row>
+     <entry>darkolivegreen1</entry>
+     <entry>(202,255,112)</entry>
+     <entry><constant>#caff70</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-caff70.html" ?> </entry>
+</row>
+<row>
+     <entry>darkolivegreen2</entry>
+     <entry>(188,238,104)</entry>
+     <entry><constant>#bcee68</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-bcee68.html" ?> </entry>
+</row>
+<row>
+     <entry>darkolivegreen3</entry>
+     <entry>(162,205,90)</entry>
+     <entry><constant>#a2cd5a</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-a2cd5a.html" ?> </entry>
+</row>
+<row>
+     <entry>darkolivegreen4</entry>
+     <entry>(110,139,61)</entry>
+     <entry><constant>#6e8b3d</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-6e8b3d.html" ?> </entry>
+</row>
+<row>
+     <entry>darkorange</entry>
+     <entry>(255,140,0)</entry>
+     <entry><constant>#ff8c00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff8c00.html" ?> </entry>
+</row>
+<row>
+     <entry>darkorange1</entry>
+     <entry>(255,127,0)</entry>
+     <entry><constant>#ff7f00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff7f00.html" ?> </entry>
+</row>
+<row>
+     <entry>darkorange2</entry>
+     <entry>(238,118,0)</entry>
+     <entry><constant>#ee7600</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee7600.html" ?> </entry>
+</row>
+<row>
+     <entry>darkorange3</entry>
+     <entry>(205,102,0)</entry>
+     <entry><constant>#cd6600</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd6600.html" ?> </entry>
+</row>
+<row>
+     <entry>darkorange4</entry>
+     <entry>(139,69,0)</entry>
+     <entry><constant>#8b4500</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b4500.html" ?> </entry>
+</row>
+<row>
+     <entry>darkorchid</entry>
+     <entry>(153,50,204)</entry>
+     <entry><constant>#9932cc</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-9932cc.html" ?> </entry>
+</row>
+<row>
+     <entry>darkorchid1</entry>
+     <entry>(191,62,255)</entry>
+     <entry><constant>#bf3eff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-bf3eff.html" ?> </entry>
+</row>
+<row>
+     <entry>darkorchid2</entry>
+     <entry>(178,58,238)</entry>
+     <entry><constant>#b23aee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-b23aee.html" ?> </entry>
+</row>
+<row>
+     <entry>darkorchid3</entry>
+     <entry>(154,50,205)</entry>
+     <entry><constant>#9a32cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-9a32cd.html" ?> </entry>
+</row>
+<row>
+     <entry>darkorchid4</entry>
+     <entry>(104,34,139)</entry>
+     <entry><constant>#68228b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-68228b.html" ?> </entry>
+</row>
+<row>
+     <entry>darkred</entry>
+     <entry>(139,0,0)</entry>
+     <entry><constant>#8b0000</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b0000.html" ?> </entry>
+</row>
+<row>
+     <entry>darksalmon</entry>
+     <entry>(233,150,122)</entry>
+     <entry><constant>#e9967a</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-e9967a.html" ?> </entry>
+</row>
+<row>
+     <entry>darkseagreen</entry>
+     <entry>(143,188,143)</entry>
+     <entry><constant>#8fbc8f</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8fbc8f.html" ?> </entry>
+</row>
+<row>
+     <entry>darkseagreen1</entry>
+     <entry>(193,255,193)</entry>
+     <entry><constant>#c1ffc1</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-c1ffc1.html" ?> </entry>
+</row>
+<row>
+     <entry>darkseagreen2</entry>
+     <entry>(180,238,180)</entry>
+     <entry><constant>#b4eeb4</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-b4eeb4.html" ?> </entry>
+</row>
+<row>
+     <entry>darkseagreen3</entry>
+     <entry>(155,205,155)</entry>
+     <entry><constant>#9bcd9b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-9bcd9b.html" ?> </entry>
+</row>
+<row>
+     <entry>darkseagreen4</entry>
+     <entry>(105,139,105)</entry>
+     <entry><constant>#698b69</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-698b69.html" ?> </entry>
+</row>
+<row>
+     <entry>darkslateblue</entry>
+     <entry>(72,61,139)</entry>
+     <entry><constant>#483d8b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-483d8b.html" ?> </entry>
+</row>
+<row>
+     <entry>darkslategray</entry>
+     <entry>(47,79,79)</entry>
+     <entry><constant>#2f4f4f</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-2f4f4f.html" ?> </entry>
+</row>
+<row>
+     <entry>darkslategray1</entry>
+     <entry>(151,255,255)</entry>
+     <entry><constant>#97ffff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-97ffff.html" ?> </entry>
+</row>
+<row>
+     <entry>darkslategray2</entry>
+     <entry>(141,238,238)</entry>
+     <entry><constant>#8deeee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8deeee.html" ?> </entry>
+</row>
+<row>
+     <entry>darkslategray3</entry>
+     <entry>(121,205,205)</entry>
+     <entry><constant>#79cdcd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-79cdcd.html" ?> </entry>
+</row>
+<row>
+     <entry>darkslategray4</entry>
+     <entry>(82,139,139)</entry>
+     <entry><constant>#528b8b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-528b8b.html" ?> </entry>
+</row>
+<row>
+     <entry>darkturquoise</entry>
+     <entry>(0,206,209)</entry>
+     <entry><constant>#00ced1</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00ced1.html" ?> </entry>
+</row>
+<row>
+     <entry>darkviolet</entry>
+     <entry>(148,0,211)</entry>
+     <entry><constant>#9400d3</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-9400d3.html" ?> </entry>
+</row>
+<row>
+     <entry>deepindigo</entry>
+     <entry>(138,43,226)</entry>
+     <entry><constant>#8a2be2</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8a2be2.html" ?> </entry>
+</row>
+<row>
+     <entry>deeppink</entry>
+     <entry>(255,20,147)</entry>
+     <entry><constant>#ff1493</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff1493.html" ?> </entry>
+</row>
+<row>
+     <entry>deeppink1</entry>
+     <entry>(255,20,147)</entry>
+     <entry><constant>#ff1493</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff1493.html" ?> </entry>
+</row>
+<row>
+     <entry>deeppink2</entry>
+     <entry>(238,18,137)</entry>
+     <entry><constant>#ee1289</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee1289.html" ?> </entry>
+</row>
+<row>
+     <entry>deeppink3</entry>
+     <entry>(205,16,118)</entry>
+     <entry><constant>#cd1076</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd1076.html" ?> </entry>
+</row>
+<row>
+     <entry>deeppink4</entry>
+     <entry>(139,10,80)</entry>
+     <entry><constant>#8b0a50</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b0a50.html" ?> </entry>
+</row>
+<row>
+     <entry>deepskyblue</entry>
+     <entry>(0,191,255)</entry>
+     <entry><constant>#00bfff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00bfff.html" ?> </entry>
+</row>
+<row>
+     <entry>deepskyblue1</entry>
+     <entry>(0,191,255)</entry>
+     <entry><constant>#00bfff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00bfff.html" ?> </entry>
+</row>
+<row>
+     <entry>deepskyblue2</entry>
+     <entry>(0,178,238)</entry>
+     <entry><constant>#00b2ee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00b2ee.html" ?> </entry>
+</row>
+<row>
+     <entry>deepskyblue3</entry>
+     <entry>(0,154,205)</entry>
+     <entry><constant>#009acd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-009acd.html" ?> </entry>
+</row>
+<row>
+     <entry>deepskyblue4</entry>
+     <entry>(0,104,139)</entry>
+     <entry><constant>#00688b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00688b.html" ?> </entry>
+</row>
+<row>
+     <entry>dimgray</entry>
+     <entry>(105,105,105)</entry>
+     <entry><constant>#696969</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-696969.html" ?> </entry>
+</row>
+<row>
+     <entry>dodgerblue</entry>
+     <entry>(30,144,255)</entry>
+     <entry><constant>#1e90ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-1e90ff.html" ?> </entry>
+</row>
+<row>
+     <entry>dodgerblue1</entry>
+     <entry>(30,144,255)</entry>
+     <entry><constant>#1e90ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-1e90ff.html" ?> </entry>
+</row>
+<row>
+     <entry>dodgerblue2</entry>
+     <entry>(28,134,238)</entry>
+     <entry><constant>#1c86ee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-1c86ee.html" ?> </entry>
+</row>
+<row>
+     <entry>dodgerblue3</entry>
+     <entry>(24,116,205)</entry>
+     <entry><constant>#1874cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-1874cd.html" ?> </entry>
+</row>
+<row>
+     <entry>dodgerblue4</entry>
+     <entry>(16,78,139)</entry>
+     <entry><constant>#104e8b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-104e8b.html" ?> </entry>
+</row>
+<row>
+     <entry>eggplant</entry>
+     <entry>(144,176,168)</entry>
+     <entry><constant>#90b0a8</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-90b0a8.html" ?> </entry>
+</row>
+<row>
+     <entry>electricindigo</entry>
+     <entry>(102,0,255)</entry>
+     <entry><constant>#6600ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-6600ff.html" ?> </entry>
+</row>
+<row>
+     <entry>firebrick</entry>
+     <entry>(178,34,34)</entry>
+     <entry><constant>#b22222</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-b22222.html" ?> </entry>
+</row>
+<row>
+     <entry>firebrick1</entry>
+     <entry>(255,48,48)</entry>
+     <entry><constant>#ff3030</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff3030.html" ?> </entry>
+</row>
+<row>
+     <entry>firebrick2</entry>
+     <entry>(238,44,44)</entry>
+     <entry><constant>#ee2c2c</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee2c2c.html" ?> </entry>
+</row>
+<row>
+     <entry>firebrick3</entry>
+     <entry>(205,38,38)</entry>
+     <entry><constant>#cd2626</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd2626.html" ?> </entry>
+</row>
+<row>
+     <entry>firebrick4</entry>
+     <entry>(139,26,26)</entry>
+     <entry><constant>#8b1a1a</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b1a1a.html" ?> </entry>
+</row>
+<row>
+     <entry>forestgreen</entry>
+     <entry>(34,139,34)</entry>
+     <entry><constant>#228b22</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-228b22.html" ?> </entry>
+</row>
+<row>
+     <entry>gainsboro</entry>
+     <entry>(220,220,220)</entry>
+     <entry><constant>#dcdcdc</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-dcdcdc.html" ?> </entry>
+</row>
+<row>
+     <entry>gold</entry>
+     <entry>(255,215,0)</entry>
+     <entry><constant>#ffd700</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffd700.html" ?> </entry>
+</row>
+<row>
+     <entry>gold1</entry>
+     <entry>(255,215,0)</entry>
+     <entry><constant>#ffd700</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffd700.html" ?> </entry>
+</row>
+<row>
+     <entry>gold2</entry>
+     <entry>(238,201,0)</entry>
+     <entry><constant>#eec900</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eec900.html" ?> </entry>
+</row>
+<row>
+     <entry>gold3</entry>
+     <entry>(205,173,0)</entry>
+     <entry><constant>#cdad00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdad00.html" ?> </entry>
+</row>
+<row>
+     <entry>gold4</entry>
+     <entry>(139,117,0)</entry>
+     <entry><constant>#8b7500</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b7500.html" ?> </entry>
+</row>
+<row>
+     <entry>goldenrod</entry>
+     <entry>(218,165,32)</entry>
+     <entry><constant>#daa520</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-daa520.html" ?> </entry>
+</row>
+<row>
+     <entry>goldenrod1</entry>
+     <entry>(255,193,37)</entry>
+     <entry><constant>#ffc125</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffc125.html" ?> </entry>
+</row>
+<row>
+     <entry>goldenrod2</entry>
+     <entry>(238,180,34)</entry>
+     <entry><constant>#eeb422</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eeb422.html" ?> </entry>
+</row>
+<row>
+     <entry>goldenrod3</entry>
+     <entry>(205,155,29)</entry>
+     <entry><constant>#cd9b1d</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd9b1d.html" ?> </entry>
+</row>
+<row>
+     <entry>goldenrod4</entry>
+     <entry>(139,105,20)</entry>
+     <entry><constant>#8b6914</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b6914.html" ?> </entry>
+</row>
+<row>
+     <entry>gray</entry>
+     <entry>(190,190,190)</entry>
+     <entry><constant>#bebebe</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-bebebe.html" ?> </entry>
+</row>
+<row>
+     <entry>gray1</entry>
+     <entry>(10,10,10)</entry>
+     <entry><constant>#0a0a0a</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-0a0a0a.html" ?> </entry>
+</row>
+<row>
+     <entry>gray2</entry>
+     <entry>(40,40,30)</entry>
+     <entry><constant>#28281e</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-28281e.html" ?> </entry>
+</row>
+<row>
+     <entry>gray3</entry>
+     <entry>(70,70,70)</entry>
+     <entry><constant>#464646</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-464646.html" ?> </entry>
+</row>
+<row>
+     <entry>gray4</entry>
+     <entry>(100,100,100)</entry>
+     <entry><constant>#646464</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-646464.html" ?> </entry>
+</row>
+<row>
+     <entry>gray5</entry>
+     <entry>(130,130,130)</entry>
+     <entry><constant>#828282</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-828282.html" ?> </entry>
+</row>
+<row>
+     <entry>gray6</entry>
+     <entry>(160,160,160)</entry>
+     <entry><constant>#a0a0a0</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-a0a0a0.html" ?> </entry>
+</row>
+<row>
+     <entry>gray7</entry>
+     <entry>(190,190,190)</entry>
+     <entry><constant>#bebebe</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-bebebe.html" ?> </entry>
+</row>
+<row>
+     <entry>gray8</entry>
+     <entry>(210,210,210)</entry>
+     <entry><constant>#d2d2d2</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-d2d2d2.html" ?> </entry>
+</row>
+<row>
+     <entry>gray9</entry>
+     <entry>(240,240,240)</entry>
+     <entry><constant>#f0f0f0</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-f0f0f0.html" ?> </entry>
+</row>
+<row>
+     <entry>green</entry>
+     <entry>(0,255,0)</entry>
+     <entry><constant>#00ff00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00ff00.html" ?> </entry>
+</row>
+<row>
+     <entry>greenyellow</entry>
+     <entry>(173,255,47)</entry>
+     <entry><constant>#adff2f</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-adff2f.html" ?> </entry>
+</row>
+<row>
+     <entry>honeydew</entry>
+     <entry>(193,205,193)</entry>
+     <entry><constant>#c1cdc1</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-c1cdc1.html" ?> </entry>
+</row>
+<row>
+     <entry>hotpink</entry>
+     <entry>(255,105,180)</entry>
+     <entry><constant>#ff69b4</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff69b4.html" ?> </entry>
+</row>
+<row>
+     <entry>hotpink1</entry>
+     <entry>(255,110,180)</entry>
+     <entry><constant>#ff6eb4</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff6eb4.html" ?> </entry>
+</row>
+<row>
+     <entry>hotpink2</entry>
+     <entry>(238,106,167)</entry>
+     <entry><constant>#ee6aa7</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee6aa7.html" ?> </entry>
+</row>
+<row>
+     <entry>hotpink3</entry>
+     <entry>(205,96,144)</entry>
+     <entry><constant>#cd6090</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd6090.html" ?> </entry>
+</row>
+<row>
+     <entry>hotpink4</entry>
+     <entry>(139,58,98)</entry>
+     <entry><constant>#8b3a62</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b3a62.html" ?> </entry>
+</row>
+<row>
+     <entry>indianred</entry>
+     <entry>(205,92,92)</entry>
+     <entry><constant>#cd5c5c</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd5c5c.html" ?> </entry>
+</row>
+<row>
+     <entry>indianred1</entry>
+     <entry>(255,106,106)</entry>
+     <entry><constant>#ff6a6a</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff6a6a.html" ?> </entry>
+</row>
+<row>
+     <entry>indianred2</entry>
+     <entry>(238,99,99)</entry>
+     <entry><constant>#ee6363</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee6363.html" ?> </entry>
+</row>
+<row>
+     <entry>indianred3</entry>
+     <entry>(205,85,85)</entry>
+     <entry><constant>#cd5555</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd5555.html" ?> </entry>
+</row>
+<row>
+     <entry>indianred4</entry>
+     <entry>(139,58,58)</entry>
+     <entry><constant>#8b3a3a</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b3a3a.html" ?> </entry>
+</row>
+<row>
+     <entry>indigo</entry>
+     <entry>(75,0,130)</entry>
+     <entry><constant>#4b0082</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-4b0082.html" ?> </entry>
+</row>
+<row>
+     <entry>indigodye</entry>
+     <entry>(0,65,106)</entry>
+     <entry><constant>#00416a</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00416a.html" ?> </entry>
+</row>
+<row>
+     <entry>ivory</entry>
+     <entry>(255,255,240)</entry>
+     <entry><constant>#fffff0</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-fffff0.html" ?> </entry>
+</row>
+<row>
+     <entry>ivory1</entry>
+     <entry>(255,255,240)</entry>
+     <entry><constant>#fffff0</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-fffff0.html" ?> </entry>
+</row>
+<row>
+     <entry>ivory2</entry>
+     <entry>(238,238,224)</entry>
+     <entry><constant>#eeeee0</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eeeee0.html" ?> </entry>
+</row>
+<row>
+     <entry>ivory3</entry>
+     <entry>(205,205,193)</entry>
+     <entry><constant>#cdcdc1</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdcdc1.html" ?> </entry>
+</row>
+<row>
+     <entry>ivory4</entry>
+     <entry>(139,139,131)</entry>
+     <entry><constant>#8b8b83</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b8b83.html" ?> </entry>
+</row>
+<row>
+     <entry>khaki</entry>
+     <entry>(240,230,140)</entry>
+     <entry><constant>#f0e68c</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-f0e68c.html" ?> </entry>
+</row>
+<row>
+     <entry>khaki1</entry>
+     <entry>(255,246,143)</entry>
+     <entry><constant>#fff68f</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-fff68f.html" ?> </entry>
+</row>
+<row>
+     <entry>khaki2</entry>
+     <entry>(238,230,133)</entry>
+     <entry><constant>#eee685</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eee685.html" ?> </entry>
+</row>
+<row>
+     <entry>khaki3</entry>
+     <entry>(205,198,115)</entry>
+     <entry><constant>#cdc673</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdc673.html" ?> </entry>
+</row>
+<row>
+     <entry>khaki4</entry>
+     <entry>(139,134,78)</entry>
+     <entry><constant>#8b864e</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b864e.html" ?> </entry>
+</row>
+<row>
+     <entry>lavender</entry>
+     <entry>(230,230,250)</entry>
+     <entry><constant>#e6e6fa</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-e6e6fa.html" ?> </entry>
+</row>
+<row>
+     <entry>lavenderblush</entry>
+     <entry>(255,240,245)</entry>
+     <entry><constant>#fff0f5</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-fff0f5.html" ?> </entry>
+</row>
+<row>
+     <entry>lavenderblush1</entry>
+     <entry>(255,240,245)</entry>
+     <entry><constant>#fff0f5</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-fff0f5.html" ?> </entry>
+</row>
+<row>
+     <entry>lavenderblush2</entry>
+     <entry>(238,224,229)</entry>
+     <entry><constant>#eee0e5</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eee0e5.html" ?> </entry>
+</row>
+<row>
+     <entry>lavenderblush3</entry>
+     <entry>(205,193,197)</entry>
+     <entry><constant>#cdc1c5</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdc1c5.html" ?> </entry>
+</row>
+<row>
+     <entry>lavenderblush4</entry>
+     <entry>(139,131,134)</entry>
+     <entry><constant>#8b8386</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b8386.html" ?> </entry>
+</row>
+<row>
+     <entry>lawngreen</entry>
+     <entry>(124,252,0)</entry>
+     <entry><constant>#7cfc00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-7cfc00.html" ?> </entry>
+</row>
+<row>
+     <entry>lemonchiffon</entry>
+     <entry>(255,250,205)</entry>
+     <entry><constant>#fffacd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-fffacd.html" ?> </entry>
+</row>
+<row>
+     <entry>lemonchiffon1</entry>
+     <entry>(255,250,205)</entry>
+     <entry><constant>#fffacd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-fffacd.html" ?> </entry>
+</row>
+<row>
+     <entry>lemonchiffon2</entry>
+     <entry>(238,233,191)</entry>
+     <entry><constant>#eee9bf</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eee9bf.html" ?> </entry>
+</row>
+<row>
+     <entry>lemonchiffon3</entry>
+     <entry>(205,201,165)</entry>
+     <entry><constant>#cdc9a5</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdc9a5.html" ?> </entry>
+</row>
+<row>
+     <entry>lemonchiffon4</entry>
+     <entry>(139,137,112)</entry>
+     <entry><constant>#8b8970</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b8970.html" ?> </entry>
+</row>
+<row>
+     <entry>lightblue</entry>
+     <entry>(173,216,230)</entry>
+     <entry><constant>#add8e6</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-add8e6.html" ?> </entry>
+</row>
+<row>
+     <entry>lightblue1</entry>
+     <entry>(191,239,255)</entry>
+     <entry><constant>#bfefff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-bfefff.html" ?> </entry>
+</row>
+<row>
+     <entry>lightblue2</entry>
+     <entry>(178,223,238)</entry>
+     <entry><constant>#b2dfee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-b2dfee.html" ?> </entry>
+</row>
+<row>
+     <entry>lightblue3</entry>
+     <entry>(154,192,205)</entry>
+     <entry><constant>#9ac0cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-9ac0cd.html" ?> </entry>
+</row>
+<row>
+     <entry>lightblue4</entry>
+     <entry>(104,131,139)</entry>
+     <entry><constant>#68838b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-68838b.html" ?> </entry>
+</row>
+<row>
+     <entry>lightcoral</entry>
+     <entry>(240,128,128)</entry>
+     <entry><constant>#f08080</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-f08080.html" ?> </entry>
+</row>
+<row>
+     <entry>lightcyan</entry>
+     <entry>(224,255,255)</entry>
+     <entry><constant>#e0ffff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-e0ffff.html" ?> </entry>
+</row>
+<row>
+     <entry>lightcyan1</entry>
+     <entry>(224,255,255)</entry>
+     <entry><constant>#e0ffff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-e0ffff.html" ?> </entry>
+</row>
+<row>
+     <entry>lightcyan2</entry>
+     <entry>(209,238,238)</entry>
+     <entry><constant>#d1eeee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-d1eeee.html" ?> </entry>
+</row>
+<row>
+     <entry>lightcyan3</entry>
+     <entry>(180,205,205)</entry>
+     <entry><constant>#b4cdcd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-b4cdcd.html" ?> </entry>
+</row>
+<row>
+     <entry>lightcyan4</entry>
+     <entry>(122,139,139)</entry>
+     <entry><constant>#7a8b8b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-7a8b8b.html" ?> </entry>
+</row>
+<row>
+     <entry>lightgoldenrod</entry>
+     <entry>(238,221,130)</entry>
+     <entry><constant>#eedd82</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eedd82.html" ?> </entry>
+</row>
+<row>
+     <entry>lightgoldenrod1</entry>
+     <entry>(255,236,139)</entry>
+     <entry><constant>#ffec8b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffec8b.html" ?> </entry>
+</row>
+<row>
+     <entry>lightgoldenrod2</entry>
+     <entry>(238,220,130)</entry>
+     <entry><constant>#eedc82</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eedc82.html" ?> </entry>
+</row>
+<row>
+     <entry>lightgoldenrod3</entry>
+     <entry>(205,190,112)</entry>
+     <entry><constant>#cdbe70</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdbe70.html" ?> </entry>
+</row>
+<row>
+     <entry>lightgoldenrod4</entry>
+     <entry>(139,129,76)</entry>
+     <entry><constant>#8b814c</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b814c.html" ?> </entry>
+</row>
+<row>
+     <entry>lightgoldenrodyellow</entry>
+     <entry>(250,250,210)</entry>
+     <entry><constant>#fafad2</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-fafad2.html" ?> </entry>
+</row>
+<row>
+     <entry>lightgray</entry>
+     <entry>(211,211,211)</entry>
+     <entry><constant>#d3d3d3</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-d3d3d3.html" ?> </entry>
+</row>
+<row>
+     <entry>lightgreen</entry>
+     <entry>(144,238,144)</entry>
+     <entry><constant>#90ee90</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-90ee90.html" ?> </entry>
+</row>
+<row>
+     <entry>lightpink</entry>
+     <entry>(255,182,193)</entry>
+     <entry><constant>#ffb6c1</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffb6c1.html" ?> </entry>
+</row>
+<row>
+     <entry>lightpink1</entry>
+     <entry>(255,174,185)</entry>
+     <entry><constant>#ffaeb9</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffaeb9.html" ?> </entry>
+</row>
+<row>
+     <entry>lightpink2</entry>
+     <entry>(238,162,173)</entry>
+     <entry><constant>#eea2ad</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eea2ad.html" ?> </entry>
+</row>
+<row>
+     <entry>lightpink3</entry>
+     <entry>(205,140,149)</entry>
+     <entry><constant>#cd8c95</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd8c95.html" ?> </entry>
+</row>
+<row>
+     <entry>lightpink4</entry>
+     <entry>(139,95,101)</entry>
+     <entry><constant>#8b5f65</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b5f65.html" ?> </entry>
+</row>
+<row>
+     <entry>lightred</entry>
+     <entry>(211,167,168)</entry>
+     <entry><constant>#d3a7a8</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-d3a7a8.html" ?> </entry>
+</row>
+<row>
+     <entry>lightsalmon</entry>
+     <entry>(255,160,122)</entry>
+     <entry><constant>#ffa07a</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffa07a.html" ?> </entry>
+</row>
+<row>
+     <entry>lightsalmon1</entry>
+     <entry>(255,160,122)</entry>
+     <entry><constant>#ffa07a</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffa07a.html" ?> </entry>
+</row>
+<row>
+     <entry>lightsalmon2</entry>
+     <entry>(238,149,114)</entry>
+     <entry><constant>#ee9572</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee9572.html" ?> </entry>
+</row>
+<row>
+     <entry>lightsalmon3</entry>
+     <entry>(205,129,98)</entry>
+     <entry><constant>#cd8162</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd8162.html" ?> </entry>
+</row>
+<row>
+     <entry>lightsalmon4</entry>
+     <entry>(139,87,66)</entry>
+     <entry><constant>#8b5742</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b5742.html" ?> </entry>
+</row>
+<row>
+     <entry>lightseagreen</entry>
+     <entry>(32,178,170)</entry>
+     <entry><constant>#20b2aa</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-20b2aa.html" ?> </entry>
+</row>
+<row>
+     <entry>lightskyblue</entry>
+     <entry>(135,206,250)</entry>
+     <entry><constant>#87cefa</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-87cefa.html" ?> </entry>
+</row>
+<row>
+     <entry>lightskyblue1</entry>
+     <entry>(176,226,255)</entry>
+     <entry><constant>#b0e2ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-b0e2ff.html" ?> </entry>
+</row>
+<row>
+     <entry>lightskyblue2</entry>
+     <entry>(164,211,238)</entry>
+     <entry><constant>#a4d3ee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-a4d3ee.html" ?> </entry>
+</row>
+<row>
+     <entry>lightskyblue3</entry>
+     <entry>(141,182,205)</entry>
+     <entry><constant>#8db6cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8db6cd.html" ?> </entry>
+</row>
+<row>
+     <entry>lightskyblue4</entry>
+     <entry>(96,123,139)</entry>
+     <entry><constant>#607b8b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-607b8b.html" ?> </entry>
+</row>
+<row>
+     <entry>lightslateblue</entry>
+     <entry>(132,112,255)</entry>
+     <entry><constant>#8470ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8470ff.html" ?> </entry>
+</row>
+<row>
+     <entry>lightslategray</entry>
+     <entry>(119,136,153)</entry>
+     <entry><constant>#778899</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-778899.html" ?> </entry>
+</row>
+<row>
+     <entry>lightsteelblue</entry>
+     <entry>(176,196,222)</entry>
+     <entry><constant>#b0c4de</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-b0c4de.html" ?> </entry>
+</row>
+<row>
+     <entry>lightsteelblue1</entry>
+     <entry>(202,225,255)</entry>
+     <entry><constant>#cae1ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cae1ff.html" ?> </entry>
+</row>
+<row>
+     <entry>lightsteelblue2</entry>
+     <entry>(188,210,238)</entry>
+     <entry><constant>#bcd2ee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-bcd2ee.html" ?> </entry>
+</row>
+<row>
+     <entry>lightsteelblue3</entry>
+     <entry>(162,181,205)</entry>
+     <entry><constant>#a2b5cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-a2b5cd.html" ?> </entry>
+</row>
+<row>
+     <entry>lightsteelblue4</entry>
+     <entry>(110,123,139)</entry>
+     <entry><constant>#6e7b8b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-6e7b8b.html" ?> </entry>
+</row>
+<row>
+     <entry>lightyellow</entry>
+     <entry>(255,255,200)</entry>
+     <entry><constant>#ffffc8</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffffc8.html" ?> </entry>
+</row>
+<row>
+     <entry>lime</entry>
+     <entry>(0,255,0)</entry>
+     <entry><constant>#00ff00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00ff00.html" ?> </entry>
+</row>
+<row>
+     <entry>limegreen</entry>
+     <entry>(50,205,50)</entry>
+     <entry><constant>#32cd32</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-32cd32.html" ?> </entry>
+</row>
+<row>
+     <entry>linen</entry>
+     <entry>(250,240,230)</entry>
+     <entry><constant>#faf0e6</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-faf0e6.html" ?> </entry>
+</row>
+<row>
+     <entry>magenta</entry>
+     <entry>(255,0,255)</entry>
+     <entry><constant>#ff00ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff00ff.html" ?> </entry>
+</row>
+<row>
+     <entry>magenta1</entry>
+     <entry>(255,0,255)</entry>
+     <entry><constant>#ff00ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff00ff.html" ?> </entry>
+</row>
+<row>
+     <entry>magenta2</entry>
+     <entry>(238,0,238)</entry>
+     <entry><constant>#ee00ee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee00ee.html" ?> </entry>
+</row>
+<row>
+     <entry>magenta3</entry>
+     <entry>(205,0,205)</entry>
+     <entry><constant>#cd00cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd00cd.html" ?> </entry>
+</row>
+<row>
+     <entry>magenta4</entry>
+     <entry>(139,0,139)</entry>
+     <entry><constant>#8b008b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b008b.html" ?> </entry>
+</row>
+<row>
+     <entry>maroon</entry>
+     <entry>(176,48,96)</entry>
+     <entry><constant>#b03060</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-b03060.html" ?> </entry>
+</row>
+<row>
+     <entry>maroon1</entry>
+     <entry>(255,52,179)</entry>
+     <entry><constant>#ff34b3</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff34b3.html" ?> </entry>
+</row>
+<row>
+     <entry>maroon2</entry>
+     <entry>(238,48,167)</entry>
+     <entry><constant>#ee30a7</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee30a7.html" ?> </entry>
+</row>
+<row>
+     <entry>maroon3</entry>
+     <entry>(205,41,144)</entry>
+     <entry><constant>#cd2990</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd2990.html" ?> </entry>
+</row>
+<row>
+     <entry>maroon4</entry>
+     <entry>(139,28,98)</entry>
+     <entry><constant>#8b1c62</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b1c62.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumaquamarine</entry>
+     <entry>(102,205,170)</entry>
+     <entry><constant>#66cdaa</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-66cdaa.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumblue</entry>
+     <entry>(0,0,205)</entry>
+     <entry><constant>#0000cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-0000cd.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumorchid</entry>
+     <entry>(186,85,211)</entry>
+     <entry><constant>#ba55d3</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ba55d3.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumorchid1</entry>
+     <entry>(224,102,255)</entry>
+     <entry><constant>#e066ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-e066ff.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumorchid2</entry>
+     <entry>(209,95,238)</entry>
+     <entry><constant>#d15fee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-d15fee.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumorchid3</entry>
+     <entry>(180,82,205)</entry>
+     <entry><constant>#b452cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-b452cd.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumorchid4</entry>
+     <entry>(122,55,139)</entry>
+     <entry><constant>#7a378b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-7a378b.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumpurple</entry>
+     <entry>(147,112,219)</entry>
+     <entry><constant>#9370db</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-9370db.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumpurple1</entry>
+     <entry>(171,130,255)</entry>
+     <entry><constant>#ab82ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ab82ff.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumpurple2</entry>
+     <entry>(159,121,238)</entry>
+     <entry><constant>#9f79ee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-9f79ee.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumpurple3</entry>
+     <entry>(137,104,205)</entry>
+     <entry><constant>#8968cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8968cd.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumpurple4</entry>
+     <entry>(93,71,139)</entry>
+     <entry><constant>#5d478b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-5d478b.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumred</entry>
+     <entry>(140,34,34)</entry>
+     <entry><constant>#8c2222</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8c2222.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumseagreen</entry>
+     <entry>(60,179,113)</entry>
+     <entry><constant>#3cb371</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-3cb371.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumslateblue</entry>
+     <entry>(123,104,238)</entry>
+     <entry><constant>#7b68ee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-7b68ee.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumspringgreen</entry>
+     <entry>(0,250,154)</entry>
+     <entry><constant>#00fa9a</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00fa9a.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumturquoise</entry>
+     <entry>(72,209,204)</entry>
+     <entry><constant>#48d1cc</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-48d1cc.html" ?> </entry>
+</row>
+<row>
+     <entry>mediumvioletred</entry>
+     <entry>(199,21,133)</entry>
+     <entry><constant>#c71585</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-c71585.html" ?> </entry>
+</row>
+<row>
+     <entry>midnightblue</entry>
+     <entry>(25,25,112)</entry>
+     <entry><constant>#191970</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-191970.html" ?> </entry>
+</row>
+<row>
+     <entry>mintcream</entry>
+     <entry>(245,255,250)</entry>
+     <entry><constant>#f5fffa</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-f5fffa.html" ?> </entry>
+</row>
+<row>
+     <entry>mistyrose</entry>
+     <entry>(255,228,225)</entry>
+     <entry><constant>#ffe4e1</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffe4e1.html" ?> </entry>
+</row>
+<row>
+     <entry>mistyrose1</entry>
+     <entry>(255,228,225)</entry>
+     <entry><constant>#ffe4e1</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffe4e1.html" ?> </entry>
+</row>
+<row>
+     <entry>mistyrose2</entry>
+     <entry>(238,213,210)</entry>
+     <entry><constant>#eed5d2</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eed5d2.html" ?> </entry>
+</row>
+<row>
+     <entry>mistyrose3</entry>
+     <entry>(205,183,181)</entry>
+     <entry><constant>#cdb7b5</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdb7b5.html" ?> </entry>
+</row>
+<row>
+     <entry>mistyrose4</entry>
+     <entry>(139,125,123)</entry>
+     <entry><constant>#8b7d7b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b7d7b.html" ?> </entry>
+</row>
+<row>
+     <entry>moccasin</entry>
+     <entry>(255,228,181)</entry>
+     <entry><constant>#ffe4b5</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffe4b5.html" ?> </entry>
+</row>
+<row>
+     <entry>navajowhite</entry>
+     <entry>(255,222,173)</entry>
+     <entry><constant>#ffdead</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffdead.html" ?> </entry>
+</row>
+<row>
+     <entry>navajowhite1</entry>
+     <entry>(255,222,173)</entry>
+     <entry><constant>#ffdead</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffdead.html" ?> </entry>
+</row>
+<row>
+     <entry>navajowhite2</entry>
+     <entry>(238,207,161)</entry>
+     <entry><constant>#eecfa1</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eecfa1.html" ?> </entry>
+</row>
+<row>
+     <entry>navajowhite3</entry>
+     <entry>(205,179,139)</entry>
+     <entry><constant>#cdb38b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdb38b.html" ?> </entry>
+</row>
+<row>
+     <entry>navajowhite4</entry>
+     <entry>(139,121,94)</entry>
+     <entry><constant>#8b795e</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b795e.html" ?> </entry>
+</row>
+<row>
+     <entry>navy</entry>
+     <entry>(0,0,128)</entry>
+     <entry><constant>#000080</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-000080.html" ?> </entry>
+</row>
+<row>
+     <entry>oldlace</entry>
+     <entry>(253,245,230)</entry>
+     <entry><constant>#fdf5e6</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-fdf5e6.html" ?> </entry>
+</row>
+<row>
+     <entry>olivedrab</entry>
+     <entry>(107,142,35)</entry>
+     <entry><constant>#6b8e23</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-6b8e23.html" ?> </entry>
+</row>
+<row>
+     <entry>olivedrab1</entry>
+     <entry>(192,255,62)</entry>
+     <entry><constant>#c0ff3e</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-c0ff3e.html" ?> </entry>
+</row>
+<row>
+     <entry>olivedrab2</entry>
+     <entry>(179,238,58)</entry>
+     <entry><constant>#b3ee3a</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-b3ee3a.html" ?> </entry>
+</row>
+<row>
+     <entry>olivedrab3</entry>
+     <entry>(154,205,50)</entry>
+     <entry><constant>#9acd32</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-9acd32.html" ?> </entry>
+</row>
+<row>
+     <entry>olivedrab4</entry>
+     <entry>(105,139,34)</entry>
+     <entry><constant>#698b22</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-698b22.html" ?> </entry>
+</row>
+<row>
+     <entry>orange</entry>
+     <entry>(255,165,0)</entry>
+     <entry><constant>#ffa500</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffa500.html" ?> </entry>
+</row>
+<row>
+     <entry>orange1</entry>
+     <entry>(255,165,0)</entry>
+     <entry><constant>#ffa500</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffa500.html" ?> </entry>
+</row>
+<row>
+     <entry>orange2</entry>
+     <entry>(238,154,0)</entry>
+     <entry><constant>#ee9a00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee9a00.html" ?> </entry>
+</row>
+<row>
+     <entry>orange3</entry>
+     <entry>(205,133,0)</entry>
+     <entry><constant>#cd8500</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd8500.html" ?> </entry>
+</row>
+<row>
+     <entry>orange4</entry>
+     <entry>(139,90,0)</entry>
+     <entry><constant>#8b5a00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b5a00.html" ?> </entry>
+</row>
+<row>
+     <entry>orangered</entry>
+     <entry>(255,69,0)</entry>
+     <entry><constant>#ff4500</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff4500.html" ?> </entry>
+</row>
+<row>
+     <entry>orangered1</entry>
+     <entry>(255,69,0)</entry>
+     <entry><constant>#ff4500</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff4500.html" ?> </entry>
+</row>
+<row>
+     <entry>orangered2</entry>
+     <entry>(238,64,0)</entry>
+     <entry><constant>#ee4000</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee4000.html" ?> </entry>
+</row>
+<row>
+     <entry>orangered3</entry>
+     <entry>(205,55,0)</entry>
+     <entry><constant>#cd3700</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd3700.html" ?> </entry>
+</row>
+<row>
+     <entry>orangered4</entry>
+     <entry>(139,37,0)</entry>
+     <entry><constant>#8b2500</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b2500.html" ?> </entry>
+</row>
+<row>
+     <entry>orchid</entry>
+     <entry>(218,112,214)</entry>
+     <entry><constant>#da70d6</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-da70d6.html" ?> </entry>
+</row>
+<row>
+     <entry>orchid1</entry>
+     <entry>(255,131,250)</entry>
+     <entry><constant>#ff83fa</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff83fa.html" ?> </entry>
+</row>
+<row>
+     <entry>orchid2</entry>
+     <entry>(238,122,233)</entry>
+     <entry><constant>#ee7ae9</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee7ae9.html" ?> </entry>
+</row>
+<row>
+     <entry>orchid3</entry>
+     <entry>(205,105,201)</entry>
+     <entry><constant>#cd69c9</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd69c9.html" ?> </entry>
+</row>
+<row>
+     <entry>orchid4</entry>
+     <entry>(139,71,137)</entry>
+     <entry><constant>#8b4789</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b4789.html" ?> </entry>
+</row>
+<row>
+     <entry>palegoldenrod</entry>
+     <entry>(238,232,170)</entry>
+     <entry><constant>#eee8aa</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eee8aa.html" ?> </entry>
+</row>
+<row>
+     <entry>palegreen</entry>
+     <entry>(152,251,152)</entry>
+     <entry><constant>#98fb98</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-98fb98.html" ?> </entry>
+</row>
+<row>
+     <entry>palegreen1</entry>
+     <entry>(154,255,154)</entry>
+     <entry><constant>#9aff9a</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-9aff9a.html" ?> </entry>
+</row>
+<row>
+     <entry>palegreen2</entry>
+     <entry>(144,238,144)</entry>
+     <entry><constant>#90ee90</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-90ee90.html" ?> </entry>
+</row>
+<row>
+     <entry>palegreen3</entry>
+     <entry>(124,205,124)</entry>
+     <entry><constant>#7ccd7c</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-7ccd7c.html" ?> </entry>
+</row>
+<row>
+     <entry>palegreen4</entry>
+     <entry>(84,139,84)</entry>
+     <entry><constant>#548b54</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-548b54.html" ?> </entry>
+</row>
+<row>
+     <entry>paleturquoise</entry>
+     <entry>(175,238,238)</entry>
+     <entry><constant>#afeeee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-afeeee.html" ?> </entry>
+</row>
+<row>
+     <entry>paleturquoise1</entry>
+     <entry>(187,255,255)</entry>
+     <entry><constant>#bbffff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-bbffff.html" ?> </entry>
+</row>
+<row>
+     <entry>paleturquoise2</entry>
+     <entry>(174,238,238)</entry>
+     <entry><constant>#aeeeee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-aeeeee.html" ?> </entry>
+</row>
+<row>
+     <entry>paleturquoise3</entry>
+     <entry>(150,205,205)</entry>
+     <entry><constant>#96cdcd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-96cdcd.html" ?> </entry>
+</row>
+<row>
+     <entry>paleturquoise4</entry>
+     <entry>(102,139,139)</entry>
+     <entry><constant>#668b8b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-668b8b.html" ?> </entry>
+</row>
+<row>
+     <entry>palevioletred</entry>
+     <entry>(219,112,147)</entry>
+     <entry><constant>#db7093</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-db7093.html" ?> </entry>
+</row>
+<row>
+     <entry>palevioletred1</entry>
+     <entry>(255,130,171)</entry>
+     <entry><constant>#ff82ab</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff82ab.html" ?> </entry>
+</row>
+<row>
+     <entry>palevioletred2</entry>
+     <entry>(238,121,159)</entry>
+     <entry><constant>#ee799f</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee799f.html" ?> </entry>
+</row>
+<row>
+     <entry>palevioletred3</entry>
+     <entry>(205,104,137)</entry>
+     <entry><constant>#cd6889</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd6889.html" ?> </entry>
+</row>
+<row>
+     <entry>palevioletred4</entry>
+     <entry>(139,71,93)</entry>
+     <entry><constant>#8b475d</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b475d.html" ?> </entry>
+</row>
+<row>
+     <entry>papayawhip</entry>
+     <entry>(255,239,213)</entry>
+     <entry><constant>#ffefd5</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffefd5.html" ?> </entry>
+</row>
+<row>
+     <entry>peachPuff1</entry>
+     <entry>(255,218,185)</entry>
+     <entry><constant>#ffdab9</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffdab9.html" ?> </entry>
+</row>
+<row>
+     <entry>peachpuff</entry>
+     <entry>(255,218,185)</entry>
+     <entry><constant>#ffdab9</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffdab9.html" ?> </entry>
+</row>
+<row>
+     <entry>peachpuff2</entry>
+     <entry>(238,203,173)</entry>
+     <entry><constant>#eecbad</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eecbad.html" ?> </entry>
+</row>
+<row>
+     <entry>peachpuff3</entry>
+     <entry>(205,175,149)</entry>
+     <entry><constant>#cdaf95</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdaf95.html" ?> </entry>
+</row>
+<row>
+     <entry>peachpuff4</entry>
+     <entry>(139,119,101)</entry>
+     <entry><constant>#8b7765</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b7765.html" ?> </entry>
+</row>
+<row>
+     <entry>peru</entry>
+     <entry>(205,133,63)</entry>
+     <entry><constant>#cd853f</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd853f.html" ?> </entry>
+</row>
+<row>
+     <entry>pigmentindigo</entry>
+     <entry>(75,0,130)</entry>
+     <entry><constant>#4b0082</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-4b0082.html" ?> </entry>
+</row>
+<row>
+     <entry>pink</entry>
+     <entry>(255,192,203)</entry>
+     <entry><constant>#ffc0cb</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffc0cb.html" ?> </entry>
+</row>
+<row>
+     <entry>pink1</entry>
+     <entry>(255,181,197)</entry>
+     <entry><constant>#ffb5c5</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffb5c5.html" ?> </entry>
+</row>
+<row>
+     <entry>pink2</entry>
+     <entry>(238,169,184)</entry>
+     <entry><constant>#eea9b8</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eea9b8.html" ?> </entry>
+</row>
+<row>
+     <entry>pink3</entry>
+     <entry>(205,145,158)</entry>
+     <entry><constant>#cd919e</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd919e.html" ?> </entry>
+</row>
+<row>
+     <entry>pink4</entry>
+     <entry>(139,99,108)</entry>
+     <entry><constant>#8b636c</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b636c.html" ?> </entry>
+</row>
+<row>
+     <entry>plum</entry>
+     <entry>(221,160,221)</entry>
+     <entry><constant>#dda0dd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-dda0dd.html" ?> </entry>
+</row>
+<row>
+     <entry>plum1</entry>
+     <entry>(255,187,255)</entry>
+     <entry><constant>#ffbbff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffbbff.html" ?> </entry>
+</row>
+<row>
+     <entry>plum2</entry>
+     <entry>(238,174,238)</entry>
+     <entry><constant>#eeaeee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eeaeee.html" ?> </entry>
+</row>
+<row>
+     <entry>plum3</entry>
+     <entry>(205,150,205)</entry>
+     <entry><constant>#cd96cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd96cd.html" ?> </entry>
+</row>
+<row>
+     <entry>plum4</entry>
+     <entry>(139,102,139)</entry>
+     <entry><constant>#8b668b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b668b.html" ?> </entry>
+</row>
+<row>
+     <entry>powderblue</entry>
+     <entry>(176,224,230)</entry>
+     <entry><constant>#b0e0e6</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-b0e0e6.html" ?> </entry>
+</row>
+<row>
+     <entry>purple</entry>
+     <entry>(160,32,240)</entry>
+     <entry><constant>#a020f0</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-a020f0.html" ?> </entry>
+</row>
+<row>
+     <entry>purple1</entry>
+     <entry>(155,48,255)</entry>
+     <entry><constant>#9b30ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-9b30ff.html" ?> </entry>
+</row>
+<row>
+     <entry>purple2</entry>
+     <entry>(145,44,238)</entry>
+     <entry><constant>#912cee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-912cee.html" ?> </entry>
+</row>
+<row>
+     <entry>purple3</entry>
+     <entry>(125,38,205)</entry>
+     <entry><constant>#7d26cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-7d26cd.html" ?> </entry>
+</row>
+<row>
+     <entry>purple4</entry>
+     <entry>(85,26,139)</entry>
+     <entry><constant>#551a8b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-551a8b.html" ?> </entry>
+</row>
+<row>
+     <entry>red</entry>
+     <entry>(255,0,0)</entry>
+     <entry><constant>#ff0000</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff0000.html" ?> </entry>
+</row>
+<row>
+     <entry>rosybrown</entry>
+     <entry>(188,143,143)</entry>
+     <entry><constant>#bc8f8f</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-bc8f8f.html" ?> </entry>
+</row>
+<row>
+     <entry>rosybrown1</entry>
+     <entry>(255,193,193)</entry>
+     <entry><constant>#ffc1c1</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffc1c1.html" ?> </entry>
+</row>
+<row>
+     <entry>rosybrown2</entry>
+     <entry>(238,180,180)</entry>
+     <entry><constant>#eeb4b4</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eeb4b4.html" ?> </entry>
+</row>
+<row>
+     <entry>rosybrown3</entry>
+     <entry>(205,155,155)</entry>
+     <entry><constant>#cd9b9b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd9b9b.html" ?> </entry>
+</row>
+<row>
+     <entry>rosybrown4</entry>
+     <entry>(139,105,105)</entry>
+     <entry><constant>#8b6969</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b6969.html" ?> </entry>
+</row>
+<row>
+     <entry>royalblue</entry>
+     <entry>(65,105,225)</entry>
+     <entry><constant>#4169e1</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-4169e1.html" ?> </entry>
+</row>
+<row>
+     <entry>royalblue1</entry>
+     <entry>(72,118,255)</entry>
+     <entry><constant>#4876ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-4876ff.html" ?> </entry>
+</row>
+<row>
+     <entry>royalblue2</entry>
+     <entry>(67,110,238)</entry>
+     <entry><constant>#436eee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-436eee.html" ?> </entry>
+</row>
+<row>
+     <entry>royalblue3</entry>
+     <entry>(58,95,205)</entry>
+     <entry><constant>#3a5fcd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-3a5fcd.html" ?> </entry>
+</row>
+<row>
+     <entry>royalblue4</entry>
+     <entry>(39,64,139)</entry>
+     <entry><constant>#27408b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-27408b.html" ?> </entry>
+</row>
+<row>
+     <entry>saddlebrown</entry>
+     <entry>(139,69,19)</entry>
+     <entry><constant>#8b4513</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b4513.html" ?> </entry>
+</row>
+<row>
+     <entry>salmon</entry>
+     <entry>(250,128,114)</entry>
+     <entry><constant>#fa8072</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-fa8072.html" ?> </entry>
+</row>
+<row>
+     <entry>salmon1</entry>
+     <entry>(255,140,105)</entry>
+     <entry><constant>#ff8c69</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff8c69.html" ?> </entry>
+</row>
+<row>
+     <entry>salmon2</entry>
+     <entry>(238,130,98)</entry>
+     <entry><constant>#ee8262</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee8262.html" ?> </entry>
+</row>
+<row>
+     <entry>salmon3</entry>
+     <entry>(205,112,84)</entry>
+     <entry><constant>#cd7054</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd7054.html" ?> </entry>
+</row>
+<row>
+     <entry>salmon4</entry>
+     <entry>(139,76,57)</entry>
+     <entry><constant>#8b4c39</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b4c39.html" ?> </entry>
+</row>
+<row>
+     <entry>sandybrown</entry>
+     <entry>(244,164,96)</entry>
+     <entry><constant>#f4a460</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-f4a460.html" ?> </entry>
+</row>
+<row>
+     <entry>seagreen</entry>
+     <entry>(46,139,87)</entry>
+     <entry><constant>#2e8b57</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-2e8b57.html" ?> </entry>
+</row>
+<row>
+     <entry>seagreen1</entry>
+     <entry>(84,255,159)</entry>
+     <entry><constant>#54ff9f</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-54ff9f.html" ?> </entry>
+</row>
+<row>
+     <entry>seagreen2</entry>
+     <entry>(78,238,148)</entry>
+     <entry><constant>#4eee94</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-4eee94.html" ?> </entry>
+</row>
+<row>
+     <entry>seagreen3</entry>
+     <entry>(67,205,128)</entry>
+     <entry><constant>#43cd80</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-43cd80.html" ?> </entry>
+</row>
+<row>
+     <entry>seagreen4</entry>
+     <entry>(46,139,87)</entry>
+     <entry><constant>#2e8b57</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-2e8b57.html" ?> </entry>
+</row>
+<row>
+     <entry>seashell</entry>
+     <entry>(255,245,238)</entry>
+     <entry><constant>#fff5ee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-fff5ee.html" ?> </entry>
+</row>
+<row>
+     <entry>seashell1</entry>
+     <entry>(255,245,238)</entry>
+     <entry><constant>#fff5ee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-fff5ee.html" ?> </entry>
+</row>
+<row>
+     <entry>seashell2</entry>
+     <entry>(238,229,222)</entry>
+     <entry><constant>#eee5de</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eee5de.html" ?> </entry>
+</row>
+<row>
+     <entry>seashell3</entry>
+     <entry>(205,197,191)</entry>
+     <entry><constant>#cdc5bf</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdc5bf.html" ?> </entry>
+</row>
+<row>
+     <entry>seashell4</entry>
+     <entry>(139,134,130)</entry>
+     <entry><constant>#8b8682</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b8682.html" ?> </entry>
+</row>
+<row>
+     <entry>sienna</entry>
+     <entry>(160,82,45)</entry>
+     <entry><constant>#a0522d</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-a0522d.html" ?> </entry>
+</row>
+<row>
+     <entry>sienna1</entry>
+     <entry>(255,130,71)</entry>
+     <entry><constant>#ff8247</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff8247.html" ?> </entry>
+</row>
+<row>
+     <entry>sienna2</entry>
+     <entry>(238,121,66)</entry>
+     <entry><constant>#ee7942</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee7942.html" ?> </entry>
+</row>
+<row>
+     <entry>sienna3</entry>
+     <entry>(205,104,57)</entry>
+     <entry><constant>#cd6839</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd6839.html" ?> </entry>
+</row>
+<row>
+     <entry>sienna4</entry>
+     <entry>(139,71,38)</entry>
+     <entry><constant>#8b4726</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b4726.html" ?> </entry>
+</row>
+<row>
+     <entry>silver</entry>
+     <entry>(192,192,192)</entry>
+     <entry><constant>#c0c0c0</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-c0c0c0.html" ?> </entry>
+</row>
+<row>
+     <entry>skyblue</entry>
+     <entry>(135,206,235)</entry>
+     <entry><constant>#87ceeb</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-87ceeb.html" ?> </entry>
+</row>
+<row>
+     <entry>skyblue1</entry>
+     <entry>(135,206,255)</entry>
+     <entry><constant>#87ceff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-87ceff.html" ?> </entry>
+</row>
+<row>
+     <entry>skyblue2</entry>
+     <entry>(126,192,238)</entry>
+     <entry><constant>#7ec0ee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-7ec0ee.html" ?> </entry>
+</row>
+<row>
+     <entry>skyblue3</entry>
+     <entry>(108,166,205)</entry>
+     <entry><constant>#6ca6cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-6ca6cd.html" ?> </entry>
+</row>
+<row>
+     <entry>skyblue4</entry>
+     <entry>(74,112,139)</entry>
+     <entry><constant>#4a708b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-4a708b.html" ?> </entry>
+</row>
+<row>
+     <entry>slateblue</entry>
+     <entry>(106,90,205)</entry>
+     <entry><constant>#6a5acd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-6a5acd.html" ?> </entry>
+</row>
+<row>
+     <entry>slateblue1</entry>
+     <entry>(131,111,255)</entry>
+     <entry><constant>#836fff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-836fff.html" ?> </entry>
+</row>
+<row>
+     <entry>slateblue2</entry>
+     <entry>(122,103,238)</entry>
+     <entry><constant>#7a67ee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-7a67ee.html" ?> </entry>
+</row>
+<row>
+     <entry>slateblue3</entry>
+     <entry>(105,89,205)</entry>
+     <entry><constant>#6959cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-6959cd.html" ?> </entry>
+</row>
+<row>
+     <entry>slateblue4</entry>
+     <entry>(71,60,139)</entry>
+     <entry><constant>#473c8b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-473c8b.html" ?> </entry>
+</row>
+<row>
+     <entry>slategray</entry>
+     <entry>(112,128,144)</entry>
+     <entry><constant>#708090</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-708090.html" ?> </entry>
+</row>
+<row>
+     <entry>slategray1</entry>
+     <entry>(198,226,255)</entry>
+     <entry><constant>#c6e2ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-c6e2ff.html" ?> </entry>
+</row>
+<row>
+     <entry>slategray2</entry>
+     <entry>(185,211,238)</entry>
+     <entry><constant>#b9d3ee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-b9d3ee.html" ?> </entry>
+</row>
+<row>
+     <entry>slategray3</entry>
+     <entry>(159,182,205)</entry>
+     <entry><constant>#9fb6cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-9fb6cd.html" ?> </entry>
+</row>
+<row>
+     <entry>slategray4</entry>
+     <entry>(108,123,139)</entry>
+     <entry><constant>#6c7b8b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-6c7b8b.html" ?> </entry>
+</row>
+<row>
+     <entry>snow1</entry>
+     <entry>(255,250,250)</entry>
+     <entry><constant>#fffafa</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-fffafa.html" ?> </entry>
+</row>
+<row>
+     <entry>snow2</entry>
+     <entry>(238,233,233)</entry>
+     <entry><constant>#eee9e9</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eee9e9.html" ?> </entry>
+</row>
+<row>
+     <entry>snow3</entry>
+     <entry>(205,201,201)</entry>
+     <entry><constant>#cdc9c9</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdc9c9.html" ?> </entry>
+</row>
+<row>
+     <entry>snow4</entry>
+     <entry>(139,137,137)</entry>
+     <entry><constant>#8b8989</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b8989.html" ?> </entry>
+</row>
+<row>
+     <entry>springgreen</entry>
+     <entry>(0,255,127)</entry>
+     <entry><constant>#00ff7f</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00ff7f.html" ?> </entry>
+</row>
+<row>
+     <entry>springgreen1</entry>
+     <entry>(0,255,127)</entry>
+     <entry><constant>#00ff7f</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00ff7f.html" ?> </entry>
+</row>
+<row>
+     <entry>springgreen2</entry>
+     <entry>(0,238,118)</entry>
+     <entry><constant>#00ee76</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00ee76.html" ?> </entry>
+</row>
+<row>
+     <entry>springgreen3</entry>
+     <entry>(0,205,102)</entry>
+     <entry><constant>#00cd66</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00cd66.html" ?> </entry>
+</row>
+<row>
+     <entry>springgreen4</entry>
+     <entry>(0,139,69)</entry>
+     <entry><constant>#008b45</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-008b45.html" ?> </entry>
+</row>
+<row>
+     <entry>steelblue</entry>
+     <entry>(70,130,180)</entry>
+     <entry><constant>#4682b4</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-4682b4.html" ?> </entry>
+</row>
+<row>
+     <entry>steelblue1</entry>
+     <entry>(99,184,255)</entry>
+     <entry><constant>#63b8ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-63b8ff.html" ?> </entry>
+</row>
+<row>
+     <entry>steelblue2</entry>
+     <entry>(92,172,238)</entry>
+     <entry><constant>#5cacee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-5cacee.html" ?> </entry>
+</row>
+<row>
+     <entry>steelblue3</entry>
+     <entry>(79,148,205)</entry>
+     <entry><constant>#4f94cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-4f94cd.html" ?> </entry>
+</row>
+<row>
+     <entry>steelblue4</entry>
+     <entry>(54,100,139)</entry>
+     <entry><constant>#36648b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-36648b.html" ?> </entry>
+</row>
+<row>
+     <entry>tan</entry>
+     <entry>(210,180,140)</entry>
+     <entry><constant>#d2b48c</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-d2b48c.html" ?> </entry>
+</row>
+<row>
+     <entry>tan1</entry>
+     <entry>(255,165,79)</entry>
+     <entry><constant>#ffa54f</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffa54f.html" ?> </entry>
+</row>
+<row>
+     <entry>tan2</entry>
+     <entry>(238,154,73)</entry>
+     <entry><constant>#ee9a49</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee9a49.html" ?> </entry>
+</row>
+<row>
+     <entry>tan3</entry>
+     <entry>(205,133,63)</entry>
+     <entry><constant>#cd853f</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd853f.html" ?> </entry>
+</row>
+<row>
+     <entry>tan4</entry>
+     <entry>(139,90,43)</entry>
+     <entry><constant>#8b5a2b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b5a2b.html" ?> </entry>
+</row>
+<row>
+     <entry>teal</entry>
+     <entry>(0,128,128)</entry>
+     <entry><constant>#008080</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-008080.html" ?> </entry>
+</row>
+<row>
+     <entry>thistle</entry>
+     <entry>(216,191,216)</entry>
+     <entry><constant>#d8bfd8</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-d8bfd8.html" ?> </entry>
+</row>
+<row>
+     <entry>thistle1</entry>
+     <entry>(255,225,255)</entry>
+     <entry><constant>#ffe1ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffe1ff.html" ?> </entry>
+</row>
+<row>
+     <entry>thistle2</entry>
+     <entry>(238,210,238)</entry>
+     <entry><constant>#eed2ee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eed2ee.html" ?> </entry>
+</row>
+<row>
+     <entry>thistle3</entry>
+     <entry>(205,181,205)</entry>
+     <entry><constant>#cdb5cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdb5cd.html" ?> </entry>
+</row>
+<row>
+     <entry>thistle4</entry>
+     <entry>(139,123,139)</entry>
+     <entry><constant>#8b7b8b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b7b8b.html" ?> </entry>
+</row>
+<row>
+     <entry>tomato</entry>
+     <entry>(255,99,71)</entry>
+     <entry><constant>#ff6347</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff6347.html" ?> </entry>
+</row>
+<row>
+     <entry>tomato1</entry>
+     <entry>(255,99,71)</entry>
+     <entry><constant>#ff6347</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff6347.html" ?> </entry>
+</row>
+<row>
+     <entry>tomato2</entry>
+     <entry>(238,92,66)</entry>
+     <entry><constant>#ee5c42</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee5c42.html" ?> </entry>
+</row>
+<row>
+     <entry>tomato3</entry>
+     <entry>(205,79,57)</entry>
+     <entry><constant>#cd4f39</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd4f39.html" ?> </entry>
+</row>
+<row>
+     <entry>tomato4</entry>
+     <entry>(139,54,38)</entry>
+     <entry><constant>#8b3626</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b3626.html" ?> </entry>
+</row>
+<row>
+     <entry>turquoise</entry>
+     <entry>(64,224,208)</entry>
+     <entry><constant>#40e0d0</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-40e0d0.html" ?> </entry>
+</row>
+<row>
+     <entry>turquoise1</entry>
+     <entry>(0,245,255)</entry>
+     <entry><constant>#00f5ff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00f5ff.html" ?> </entry>
+</row>
+<row>
+     <entry>turquoise2</entry>
+     <entry>(0,229,238)</entry>
+     <entry><constant>#00e5ee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00e5ee.html" ?> </entry>
+</row>
+<row>
+     <entry>turquoise3</entry>
+     <entry>(0,197,205)</entry>
+     <entry><constant>#00c5cd</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00c5cd.html" ?> </entry>
+</row>
+<row>
+     <entry>turquoise4</entry>
+     <entry>(0,134,139)</entry>
+     <entry><constant>#00868b</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-00868b.html" ?> </entry>
+</row>
+<row>
+     <entry>violet</entry>
+     <entry>(238,130,238)</entry>
+     <entry><constant>#ee82ee</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee82ee.html" ?> </entry>
+</row>
+<row>
+     <entry>violetred</entry>
+     <entry>(208,32,144)</entry>
+     <entry><constant>#d02090</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-d02090.html" ?> </entry>
+</row>
+<row>
+     <entry>violetred1</entry>
+     <entry>(255,62,150)</entry>
+     <entry><constant>#ff3e96</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ff3e96.html" ?> </entry>
+</row>
+<row>
+     <entry>violetred2</entry>
+     <entry>(238,58,140)</entry>
+     <entry><constant>#ee3a8c</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ee3a8c.html" ?> </entry>
+</row>
+<row>
+     <entry>violetred3</entry>
+     <entry>(205,50,120)</entry>
+     <entry><constant>#cd3278</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cd3278.html" ?> </entry>
+</row>
+<row>
+     <entry>violetred4</entry>
+     <entry>(139,34,82)</entry>
+     <entry><constant>#8b2252</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b2252.html" ?> </entry>
+</row>
+<row>
+     <entry>wheat</entry>
+     <entry>(245,222,179)</entry>
+     <entry><constant>#f5deb3</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-f5deb3.html" ?> </entry>
+</row>
+<row>
+     <entry>wheat1</entry>
+     <entry>(255,231,186)</entry>
+     <entry><constant>#ffe7ba</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffe7ba.html" ?> </entry>
+</row>
+<row>
+     <entry>wheat2</entry>
+     <entry>(238,216,174)</entry>
+     <entry><constant>#eed8ae</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eed8ae.html" ?> </entry>
+</row>
+<row>
+     <entry>wheat3</entry>
+     <entry>(205,186,150)</entry>
+     <entry><constant>#cdba96</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdba96.html" ?> </entry>
+</row>
+<row>
+     <entry>wheat4</entry>
+     <entry>(139,126,102)</entry>
+     <entry><constant>#8b7e66</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b7e66.html" ?> </entry>
+</row>
+<row>
+     <entry>white</entry>
+     <entry>(255,255,255)</entry>
+     <entry><constant>#ffffff</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffffff.html" ?> </entry>
+</row>
+<row>
+     <entry>whitesmoke</entry>
+     <entry>(245,245,245)</entry>
+     <entry><constant>#f5f5f5</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-f5f5f5.html" ?> </entry>
+</row>
+<row>
+     <entry>yellow</entry>
+     <entry>(255,255,0)</entry>
+     <entry><constant>#ffff00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffff00.html" ?> </entry>
+</row>
+<row>
+     <entry>yellow1</entry>
+     <entry>(255,255,0)</entry>
+     <entry><constant>#ffff00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-ffff00.html" ?> </entry>
+</row>
+<row>
+     <entry>yellow2</entry>
+     <entry>(238,238,0)</entry>
+     <entry><constant>#eeee00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-eeee00.html" ?> </entry>
+</row>
+<row>
+     <entry>yellow3</entry>
+     <entry>(205,205,0)</entry>
+     <entry><constant>#cdcd00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-cdcd00.html" ?> </entry>
+</row>
+<row>
+     <entry>yellow4</entry>
+     <entry>(139,139,0)</entry>
+     <entry><constant>#8b8b00</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-8b8b00.html" ?> </entry>
+</row>
+<row>
+     <entry>yellowgreen</entry>
+     <entry>(154,205,50)</entry>
+     <entry><constant>#9acd32</constant></entry>
+     <entry role="named-color"> <?dbhtml-include href="../colors/color-9acd32.html" ?> </entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</appendix>

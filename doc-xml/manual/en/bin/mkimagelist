@@ -1,0 +1,44 @@
+#!/usr/bin/gawk -f
+#
+# $Id: mkimagelist 1647 2009-07-20 12:29:23Z ljp $
+#
+# Scan files given as arguments and extract all example file names
+#
+BEGIN {
+    print "#!/bin/sh";
+    print "# Automatically generated shell script to create all images + highlighted source.";
+    print "# Generated " strftime();
+    print "#";
+    nn=0;
+    base="/home/ljp/workspace/";
+    dir= base "jpgraph-src/Examples/";
+    imgdir= base "docbook/manual/en/output/ex_img/";
+    srcdir= base "docbook/manual/en/output/ex_src/";
+    miscdir = base "docbook/manual/en/misc-includes/";
+}
+
+/<programlisting>\#:/ {
+    match($0,/<programlisting>\#:([a-z0-9\(\)\_\-\.]+)(\|[A-Za-z0-9\.\(\)\$\_\-<>\/\%\=\:\,\;\?\'\"\$ ]+)?\#<\/programlisting>/,m) ;
+    print "(cd " dir "; php " m[1] ".php > " imgdir m[1] ".png &)" ;
+    print "(bin/phphl -l --name --css ../phphl.css -f " dir m[1] ".php > " srcdir m[1] ".html &)" ;
+    nn++;
+}
+/<programlisting>\#=/ {
+    match($0,/<programlisting>\#=([a-z0-9\(\)\_\-\.]+)(\|[A-Za-z0-9\.\(\)\$\_\-<>\/\%\=\:\,\;\?\'\"\$ ]+)?\#<\/programlisting>/,m) ;
+    print "(cd " dir "; php " m[1] ".php > " imgdir m[1] ".png &)" ;
+    print "(bin/phphl -l --name --css ../phphl.css -f " dir m[1] ".php > " srcdir m[1] ".html &)" ;
+    nn++;
+}
+/<programlisting>\#[^:=!]/ {
+    match($0,/<programlisting>\#([a-z0-9\(\)\_\-\.]+)(\|[A-Za-z0-9\.\(\)\$\_\-<>\/\%\=\:\,\;\?\'\"\$ ]+)?\#<\/programlisting>/,m) ;
+    print "(cd " dir "; php " m[1] ".php > " imgdir m[1] ".png &)" ;
+    print "(bin/phphl -l --name --css ../phphl.css -f " dir m[1] ".php > " srcdir m[1] ".html &)" ;
+    nn++;
+}
+
+END {
+    print "(bin/phphl -l --name --css ../phphl.css -f " miscdir "common-obj-graph.php > " srcdir "common-obj-graph.html)" ;
+    print "(bin/phphl -l --name --css ../phphl.css -f " miscdir "common-obj-piegraph.php > " srcdir "common-obj-piegraph.html)" ;
+    print "(bin/phphl -l --name --css ../phphl.css -f " dir "mulyaxiscsimex1.php > " srcdir "mulycsim_example_static.html)" ;
+    print "#\n# Total number of examples: " nn "\n#";
+}

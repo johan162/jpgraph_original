@@ -1,0 +1,112 @@
+This E-mail is sent to previous holder of the JpGraph professional license.
+
+
+PHP5: JpGraph 3.0.0p Professional Version Released
+==================================================
+
+JpGraph 3.0.0p is now available for immediate download.
+
+This is a major update that among other improvements addresses the following:
+
+ * A completely rewritten documentation. The new documentation covers
+   all aspects of the library in a coherent format. This new documentation is also
+   available on-line at 
+   
+        http://www.aditus.nu/jpgraph/docportal/index.html
+
+ * More than 30 feature requests has been implemented and released. Among them are
+ 
+     * Support for 2D Matrix visualization
+     * Support for 2D Contour graphs
+     * Support for QR-Codes which is the highest capacity 2D-Barcode available
+     * A new command line utility to generate linear barcodes
+     * Rewritten error handling to fully support (and use) PHP5 exception handling
+     * Support of Gantt bars with discontinuities
+     * Support for PHP 5.3
+     * ... and many more. Full details are available on the download page
+
+
+Upgrade policy:
+===============
+
+As stated in the license each license covers one major version of the library.
+
+However, we have decided that all customers who have purchased a license
+this year ,i.e. after 2009-01-01 will be entitled to a free upgrade. 
+For those who have purchased a license prior to 2008-12-31 a discounted license 
+upgrade is available.
+
+For those not interested in the new features of v3.0.0 it is still possible
+to benefit from the new documentation since that is also available in the
+2.4.1p release which is freely available.
+
+Potential issues upgrading from 2.4.x
+======================================
+
+* From a functional point of view there are no API breaks in 3.0.0. 
+
+* There are some restructuring of where files are located in the library
+  which means that scripts using PDf417 or Datamatrix must update the
+  paths from where the individual library files are read from.
+
+* In addition all methods that were marked as "Deprecated" (and gave an
+  error when the define "ERR_DEPRECATED" was enabled) have been removed.
+
+* The default paths for TTF fonts for Linux/Unix has been updated to follow
+  the standard base recommendation.
+  
+* All files are now using UTF-8 character encoding. This should only help and not 
+  be of any consequence as we can foresee
+
+
+Phase out of 2.4.x branch
+==========================
+
+The 2.4.x branch will be phased out within the coming 6 months and only critical
+errors will be corrected. No new features will be included (unless this comes
+for free when correcting a critical defect).
+
+
+NuSphere Encoder
+================
+
+One new feature to further increase the performance of this release of
+the library is that both branches include versions of the 
+library that have been encoded with the NuSphere encoder. 
+(See http://www.nusphere.com) in a separate directory "PHPExpress-src/"
+
+When these versions are used with a server that have the (free) PHPExpress
+module installed this will greatly increase the performance of the library
+since the PHP server will not have to do any parsing and translation to
+bytecode for each script that is run. Depending on the application and
+how frequent the call to the graph scripts are made it is not unreasonable
+to expect well over 50% decrease in execution time for the graph code
+itself. Of course, if there are complicated SQL statements populating the 
+graphs the overall increase might not be as much.
+
+You can freely download the PHPExpress module from NuSphere homepage. 
+Se more information on: http://www.nusphere.com/products/phpexpress.htm
+
+
+Download
+========
+
+The library is available to download from
+
+http://www.aditus.nu/jpgraph/pro_login.php
+
+Note: A valid combination of e-mail and license key is required in order to login.
+
+
+Misplaced license key
+=====================
+If there are problems logging in or the license key has been misplaced please send an email to
+
+jpgraph@aditus.nu
+
+To help us quickly locate a lost license in our database please supply
+* the email address this mail was sent to
+* (optional but helpful) name of original purchaser or company if known
+
+
+[End Of Mail]

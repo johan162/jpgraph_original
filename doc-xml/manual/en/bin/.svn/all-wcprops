@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/repos/jpgraph/!svn/ver/1818/trunk/docbook/manual/en/bin
+END
+create-symchar-images.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/jpgraph/!svn/ver/1247/trunk/docbook/manual/en/bin/create-symchar-images.php
+END
+color_adjustment.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/repos/jpgraph/!svn/ver/1245/trunk/docbook/manual/en/bin/color_adjustment.php
+END
+create-datamatrix-errmsg.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/repos/jpgraph/!svn/ver/1242/trunk/docbook/manual/en/bin/create-datamatrix-errmsg.php
+END
+create-symchar-table.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/repos/jpgraph/!svn/ver/1247/trunk/docbook/manual/en/bin/create-symchar-table.php
+END
+create-flags.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repos/jpgraph/!svn/ver/1380/trunk/docbook/manual/en/bin/create-flags.php
+END
+create-errmsg.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/repos/jpgraph/!svn/ver/1818/trunk/docbook/manual/en/bin/create-errmsg.php
+END
+create-qr-errmsg.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/repos/jpgraph/!svn/ver/1242/trunk/docbook/manual/en/bin/create-qr-errmsg.php
+END
+mkimagelist
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/repos/jpgraph/!svn/ver/1647/trunk/docbook/manual/en/bin/mkimagelist
+END
+create-colors.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/repos/jpgraph/!svn/ver/1605/trunk/docbook/manual/en/bin/create-colors.php
+END
+alpha_adjustment.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/repos/jpgraph/!svn/ver/1245/trunk/docbook/manual/en/bin/alpha_adjustment.php
+END
+phphl
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/repos/jpgraph/!svn/ver/1309/trunk/docbook/manual/en/bin/phphl
+END
+gen_plotmarks.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/repos/jpgraph/!svn/ver/1352/trunk/docbook/manual/en/bin/gen_plotmarks.php
+END
+create-filemanifest.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/repos/jpgraph/!svn/ver/1220/trunk/docbook/manual/en/bin/create-filemanifest.php
+END
+create-faq.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/repos/jpgraph/!svn/ver/1207/trunk/docbook/manual/en/bin/create-faq.php
+END

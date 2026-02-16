@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/repos/jpgraph/!svn/ver/1685/trunk/docbook/manual/en/phingext
+END
+ReplaceTokensWithFile.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/repos/jpgraph/!svn/ver/1231/trunk/docbook/manual/en/phingext/ReplaceTokensWithFile.php
+END
+HighlightSrcTask.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/jpgraph/!svn/ver/1299/trunk/docbook/manual/en/phingext/HighlightSrcTask.php
+END
+SvnCommitTask.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/repos/jpgraph/!svn/ver/1685/trunk/docbook/manual/en/phingext/SvnCommitTask.php
+END

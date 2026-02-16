@@ -1,0 +1,1316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<chapter version="5.0" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Datamatrix (2D-Barcode)</title>
+    <sect1>
+        <title>Principle of Datamatrix Barcodes</title>
+        <para>Datamatrix (or Data Matrix) is a high density 2 dimensional barcode that can encode up
+            to 3116 characters from the entire 256 byte ASCII character set. Compared with DF417
+            barcode symbology the datamatrix barcode belongs to newer family of 2 dimensional
+            barcodes that makes better use of both dimensions and thus can achieve higher data
+            capacity than the PDF417 symbology (~3kB vs ~2kB). The symbol is built on a square grid
+            which have a finder pattern around the edges of the symbol to allow a scanner to
+            identify the barcode. The finder pattern makes it possible to read the barcode
+            regardless of the physical orientation of the code.</para>
+        <para>In the same way as with other 2 dimensional barcodes the datamatrix code includes
+            error correction capability in order to be resilient towards physical damages of a code.
+            Originally data matrix used an older convolutional error correction schema (ECC) but
+            that has later been changed to use a Reed-Solomon type of error correction which is much
+            more efficient. The older ECC version is known as ECC 000 to ECC 140 and should be
+            considered obsolete and should not be used in new applications.</para>
+        <para>The newer error correction schema (with Reed-Solomon codes) is known as ECC 200 schema
+            and is the current and recommended schema. By default the library will use the newer
+            schema but support also exists for legacy applications to use the older ECC schema. (See
+            ??)</para>
+        <para><xref xlink:href="#fig.datamatrix-structure"/> shows the principle of a Datamatrix
+            barcode.</para>
+        <para>
+            <figure  xml:id="fig.datamatrix-structure">
+                <title>Datamatrix structure.</title>
+                <para>The image shows an annotated Datamatrix where the finder and synchronization
+                    patterns have been highlighted.</para>
+                <mediaobject>
+                    <imageobject><imagedata fileref="images/datamatrix-structure-details.png" scale="60"
+                        /></imageobject>
+                </mediaobject>
+            </figure>
+        </para>
+        <para>Even though it is primarily designed to handle the the Western alphabet (ISO-8859/x
+            code tables) it will support user prepared Unicode characters through the use of the
+            "Extended Channel Interpretation" (ECI) mechanism. However description of the ECI
+            standard is out of scope for this manual and the interested reader are referred to the
+            official ECI standard document.</para>
+        <para>Datamatrix standard has been adopted by (among others) "The American National
+            Standards Institute" (ANSI) as a standard symbology and a number of industry standard
+            associations (e.g. EIA, SEMI, AIAG, ATA) where it has been recommended for use.</para>
+        <sect2>
+            <title> Summary of features offered in the library</title>
+            <para>The following list summarizes the features that the library offers for Datamatrix
+                barcodes. Some of the terms used here assumes familiarity with Datamatrix barcodes.
+                All terms are also described in the remainder of this chapter.</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Supports both the new ECC 200 variant and the older ECC 140</para>
+                    </listitem>
+                    <listitem>
+                        <para>Output formats</para>
+                        <para>
+                            <orderedlist>
+                                <listitem>
+                                    <para>Image </para>
+                                </listitem>
+                                <listitem>
+                                    <para>Postscript</para>
+                                </listitem>
+                                <listitem>
+                                    <para>ASCII</para>
+                                </listitem>
+                            </orderedlist>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Supports all recommended encodation formats </para>
+                        <para>
+                            <orderedlist>
+                                <listitem>
+                                    <para>ASCII</para>
+                                </listitem>
+                                <listitem>
+                                    <para>C40</para>
+                                </listitem>
+                                <listitem>
+                                    <para>BASE256</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Text</para>
+                                </listitem>
+                                <listitem>
+                                    <para>X12</para>
+                                </listitem>
+                            </orderedlist>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Supports all specified symbol sizes</para>
+                    </listitem>
+                    <listitem>
+                        <para>Supports both auto and user selectable encodation</para>
+                    </listitem>
+                    <listitem>
+                        <para>Supports both auto and user selectable symbol size</para>
+                    </listitem>
+                    <listitem>
+                        <para>Supports user specified module size</para>
+                    </listitem>
+                    <listitem>
+                        <para>Supports custom color specification (foreground, background)</para>
+                    </listitem>
+                    <listitem>
+                        <para>Supports user specified quiet zone</para>
+                    </listitem>
+                    <listitem>
+                        <para>Supports easy handling of non-printable characters through the use of
+                            special escape sequences ("Tilde" - processing)</para>
+                    </listitem>
+                    <listitem>
+                        <para>Supports concatenated symbols</para>
+                    </listitem>
+                    <listitem>
+                        <para>Symbols can be written directly to a file or sent back as an image to
+                            the browser</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Limitation of the JpGraph Datamatrix implementation</title>
+            <para>This version of the library does not support the EDIFACT compaction standard due
+                to the very specialized and limited use of this encodation schema.</para>
+        </sect2>
+        <sect2>
+            <title>Datamatrix standard</title>
+            <para>Datamatrix as a standard is fully described in the ISO/IEC 16022E International
+                Standard and is available for purchase from the <uri
+                    xlink:href="http://www.iso.ch/iso/en/CombinedQueryResult.CombinedQueryResult?queryString=datamatrix"
+                    >ISO Standard Organization.</uri></para>
+            <para>Additional information about Data Matrix code is available in the following United
+                States patents: 4,939,354; 5,053,609; 5,124,536. See <uri
+                    xlink:href="http://patft.uspto.gov/netahtml/PTO/srchnum.htm">US patent
+                    Office</uri> for full disclosures of these patents.</para>
+        </sect2>
+        <sect2>
+            <title>Structure of Data Matrix codes</title>
+            <para>Datamatrix is a two-dimensional symbology in the shape of a rectangle. The size
+                and shape of the symbol is usually chosen either automatically or by the user.
+                Usually it is chosen to be the smallest size that will have enough data capacity to
+                encode the given data. The symbol rectangle is build up by square dots whose size
+                "the module" is also user specified.</para>
+            <para>The Data Matrix symbol rectangle comes in two basic shapes.</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>It is either a square between the sizes of 10x10 up to 144x144 modules
+                            in even steps</para>
+                    </listitem>
+                    <listitem>
+                        <para>It is a rectangle between the size of 8x16 up to 16x48</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>Examples of the two basic shapes are shown in <xref
+                    xlink:href="#fig.datamatrix-square"/> and <xref
+                    xlink:href="#fig.datamatrix-rect"/></para>
+            <para>
+                <informaltable frame="none">
+                    <tgroup cols="2">
+                        <colspec colname="c1" colnum="1"/>
+                        <colspec colname="c2" colnum="2"/>
+                        <tbody>
+                            <row>
+                                <entry valign="top">
+                                    <figure xml:id="fig.datamatrix-square">
+                                        <title>Datamatrix - Square symbol shape</title>
+                                        <mediaobject>
+                                            <imageobject><imagedata scale="60"
+                                                  fileref="images/datamatrix_square.png"
+                                                /></imageobject>
+                                        </mediaobject>
+                                    </figure>
+                                </entry>
+                                <entry valign="top">
+                                    <figure xml:id="fig.datamatrix-rect">
+                                        <title>Datamatrix - Rectangle symbol shape</title>
+                                        <mediaobject>
+                                            <imageobject><imagedata scale="60"
+                                                  fileref="images/datamatrix_rect.png"
+                                                /></imageobject>
+                                        </mediaobject>
+                                    </figure>
+                                </entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </informaltable>
+            </para>
+            <para>The maximum capacity for Data Matrix codes is up to 3116 numeric characters or up
+                to 2335 alphanumeric characters or up to 1555 bytes of binary information.</para>
+            <para>The exact number of characters that can fit in a Data Matrix symbol depends on the
+                actual encoding (or compaction) schema used. In short this is used to more
+                efficiently encode ASCII characters to fit more data into a fixed number of bytes.
+                For example if only numeric data is to be encoded then instead of using one byte to
+                hold each digit two digits is stored in a single byte hence doubling the amount of
+                data that can be stored in a given number of bytes.</para>
+            <para>To encode data into a Datamatrix symbol the following (principal) steps are
+                taken.</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>The input string (which can be any ASCII values between 0-255) is
+                            encoded using the selected encoding or encodings (it is possible to
+                            switch encoding mid-way through the string). The primary purpose of the
+                            encoding is to compress the data into a much shorter form.</para>
+                    </listitem>
+                    <listitem>
+                        <para>If needed the data is padded to fill up to the capacity of the
+                            selected symbol size.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Once the string has been encoded (and possible padded) a number of
+                            error correcting code words are added so that the data can be recovered
+                            even if part of the printed symbol have been destroyed (perhaps a corner
+                            has been teared off).</para>
+                    </listitem>
+                    <listitem>
+                        <para>Finally the encoded data and the error correcting words are placed in
+                            the symbol according to an algorithm specified in the standard. This is
+                            done by placing each bit of every data byte in a specific position in
+                            the data matrix symbol.</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>The above explanation is by necessity simplified and for those interested into the
+                specific details we refer to the official standard. It is also possible to review
+                the code itself to understand the details.</para>
+        </sect2>
+        <sect2 xml:id="sec.encodation-efficiency">
+            <title> Encodation efficiency</title>
+            <para>As explained in the previous section several compaction schema are used to encode
+                the data to enable more data to fit in a given symbol. Depending on the actual data
+                there are several compaction schema that can be used in order to achieve the
+                greatest possible compression. The standard specifies six different schema. The
+                compaction efficiency are given in <xref
+                    xlink:href="#table.datamatrix-encodation-efficiency"/>. </para>
+            <para>Depending on the application the user of the library may chose to either select a
+                fixed encodation mode but it is usually best to let the library automatically select
+                a combination of encodation schema that will give the smallest possible symbol
+                size.</para>
+            <para>
+                <table frame="all" xml:id="table.datamatrix-encodation-efficiency">
+                    <title>Datamatrix encodation efficiency</title>
+                    <tgroup cols="3">
+                        <colspec colname="c1" colnum="1"/>
+                        <colspec colname="c2" colnum="2"/>
+                        <colspec colname="c3" colnum="3"/>
+                        <thead>
+                            <row>
+                                <entry>
+                                    <para>Encodation schema</para>
+                                </entry>
+                                <entry>
+                                    <para>Characters</para>
+                                </entry>
+                                <entry>
+                                    <para>Bits per character</para>
+                                </entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>ASCII</entry>
+                                <entry><para>Double digit numerics</para> 
+                                        <para>ASCII 0-127 </para>                                    
+                                        <para>Extended ASCII 128-255</para>
+                                    </entry>
+                                <entry align="center"><para>4</para>
+                                        <para>8</para>                                    
+                                        <para>16</para>
+                                    </entry>
+                            </row>
+                            <row>
+                                <entry>C40</entry>
+                                <entry>Primarily upper-case alphanumeric</entry>
+                                <entry align="center">5.33</entry>
+                            </row>
+                            <row>
+                                <entry>Text</entry>
+                                <entry>Primarily lower-case alphanumeric</entry>
+                                <entry align="center">5.33</entry>
+                            </row>
+                            <row>
+                                <entry>X12</entry>
+                                <entry>ANSI X12 EDI data set</entry>
+                                <entry align="center">5.33</entry>
+                            </row>
+                            <row>
+                                <entry>EDIFACT</entry>
+                                <entry>ASCII values 32-94</entry>
+                                <entry align="center">6</entry>
+                            </row>
+                            <row>
+                                <entry>Base 256</entry>
+                                <entry>All byte values 0-255</entry>
+                                <entry align="center">8</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </para>
+        </sect2>
+        <sect2>
+            <title>More on ECC Datamatrix subsets</title>
+            <para>As was mentioned in the introduction there are two main subsets of Datamatrix
+                symbols. Those using convolutional codes for error correction which were used for
+                most of the initial installations of Datamatrix systems, these earlier versions are
+                referenced as ECC-000 to ECC-140 (the number specifies the level of convolutional
+                error correcting code).</para>
+            <para> This first subset will be commonly referred to as ECC-140 in the remainder of
+                this manual. </para>
+            <para>The second subset is referenced ECC-200 and uses Reed-Solomon error correction
+                techniques. The two subsets have the following characteristic:</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>ECC-000 to ECC-140 symbols all have an odd number of modules along
+                            each square side.</para>
+                    </listitem>
+                    <listitem>
+                        <para>ECC-200 symbols have an even number of modules on each side. ECC-200
+                            can have non-square symbol sizes.</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>Hence the type of encoding used is auto-discriminative. The maximum data capacity
+                of an ECC-200 symbol is 3116 numeric digits, or 2335 alpha numeric characters, in
+                the largest 144 modules square symbol.</para>
+            <para>Even though the library supports the creation of both type of Datamatrix symbols
+                it is recommended that all new applications uses the more modern ECC-200 subset.
+                This is also the recommendation in the standard. ECC-140 should only be used in
+                legacy system where old equipment is used which have not be upgraded to handle the
+                modern ECC-200 subset.</para>
+        </sect2>
+        <sect2>
+            <title>Symbology Data capacity</title>
+            <para>As was mentioned in the previous section the actual data capacity depends on the
+                symbol size. By default the library will select the smallest possible symbol size
+                that will encode a given character string with the chosen encoding (possibly
+                automatic). Table 2 below gives the maximum capacity for the three most common
+                encoding schema for each symbol size as well as robustness in each symbol specified
+                as the number of errors (destroyed data) that can be recovered. </para>
+            <para>
+                <table frame="void" cellspacing="0" xml:id="table.datamatrix-ecc200-size"
+                    class="bdtable">
+                    <caption>Maximum data capacity for the different symbol sizes in ECC-200 Data
+                        Matrix subset.</caption>
+                    <thead>
+                        <tr>
+                            <td align="center" class="bdur">Size</td>
+                            <td align="center" class="bdur">Numeric capacity</td>
+                            <td align="center" class="bdur">Alphanumeric capacity</td>
+                            <td align="center" class="bdur">Binary capacity</td>
+                            <td align="center" class="bdu">Max Correctable Error/Erasure</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td align="center" class="bdur">10 x 10</td>
+                            <td align="center" class="bdur">6</td>
+                            <td align="center" class="bdur">3</td>
+                            <td align="center" class="bdur">1</td>
+                            <td align="center" class="bdu">2</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">12 x 12</td>
+                            <td align="center" class="bdur">10</td>
+                            <td align="center" class="bdur">6</td>
+                            <td align="center" class="bdur">3</td>
+                            <td align="center" class="bdu">3</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">14 x 14</td>
+                            <td align="center" class="bdur">16</td>
+                            <td align="center" class="bdur">10</td>
+                            <td align="center" class="bdur">6</td>
+                            <td align="center" class="bdu">5/7</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">16 x 16</td>
+                            <td align="center" class="bdur">24</td>
+                            <td align="center" class="bdur">16</td>
+                            <td align="center" class="bdur">10</td>
+                            <td align="center" class="bdu">6/9</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">18 x 18</td>
+                            <td align="center" class="bdur">36</td>
+                            <td align="center" class="bdur">25</td>
+                            <td align="center" class="bdur">16</td>
+                            <td align="center" class="bdu">7/11</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">20 x 20</td>
+                            <td align="center" class="bdur">44</td>
+                            <td align="center" class="bdur">31</td>
+                            <td align="center" class="bdur">20</td>
+                            <td align="center" class="bdu">9/15</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">22 x 22</td>
+                            <td align="center" class="bdur">60</td>
+                            <td align="center" class="bdur">43</td>
+                            <td align="center" class="bdur">28</td>
+                            <td align="center" class="bdu">10/17</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">24 x 24</td>
+                            <td align="center" class="bdur">72</td>
+                            <td align="center" class="bdur">52</td>
+                            <td align="center" class="bdur">34</td>
+                            <td align="center" class="bdu">12/21</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">26 x 26</td>
+                            <td align="center" class="bdur">88</td>
+                            <td align="center" class="bdur">64</td>
+                            <td align="center" class="bdur">42</td>
+                            <td align="center" class="bdu">14/25</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">32 x 32</td>
+                            <td align="center" class="bdur">124</td>
+                            <td align="center" class="bdur">91</td>
+                            <td align="center" class="bdur">60</td>
+                            <td align="center" class="bdu">18/33</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">36 x 36</td>
+                            <td align="center" class="bdur">172</td>
+                            <td align="center" class="bdur">127</td>
+                            <td align="center" class="bdur">84</td>
+                            <td align="center" class="bdu">21/39</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">40 x 40</td>
+                            <td align="center" class="bdur">228</td>
+                            <td align="center" class="bdur">169</td>
+                            <td align="center" class="bdur">112</td>
+                            <td align="center" class="bdu">24/45</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">44 x 44</td>
+                            <td align="center" class="bdur">288</td>
+                            <td align="center" class="bdur">214</td>
+                            <td align="center" class="bdur">142</td>
+                            <td align="center" class="bdu">28/53</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">48 x 48</td>
+                            <td align="center" class="bdur">348</td>
+                            <td align="center" class="bdur">259</td>
+                            <td align="center" class="bdur">172</td>
+                            <td align="center" class="bdu">34/65</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">52 x 52</td>
+                            <td align="center" class="bdur">408</td>
+                            <td align="center" class="bdur">304</td>
+                            <td align="center" class="bdur">202</td>
+                            <td align="center" class="bdu">42/78</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">64 x 64</td>
+                            <td align="center" class="bdur">560</td>
+                            <td align="center" class="bdur">418</td>
+                            <td align="center" class="bdur">278</td>
+                            <td align="center" class="bdu">56/106</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">72 x 72</td>
+                            <td align="center" class="bdur">736</td>
+                            <td align="center" class="bdur">550</td>
+                            <td align="center" class="bdur">366</td>
+                            <td align="center" class="bdu">72/132</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">80 x 80</td>
+                            <td align="center" class="bdur">912</td>
+                            <td align="center" class="bdur">682</td>
+                            <td align="center" class="bdur">454</td>
+                            <td align="center" class="bdu">96/180</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">88 x 88</td>
+                            <td align="center" class="bdur">1152</td>
+                            <td align="center" class="bdur">862</td>
+                            <td align="center" class="bdur">574</td>
+                            <td align="center" class="bdu">112/212</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">96 x 96</td>
+                            <td align="center" class="bdur">1392</td>
+                            <td align="center" class="bdur">1042</td>
+                            <td align="center" class="bdur">694</td>
+                            <td align="center" class="bdu">136/260</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">104 x 104</td>
+                            <td align="center" class="bdur">1632</td>
+                            <td align="center" class="bdur">1222</td>
+                            <td align="center" class="bdur">814</td>
+                            <td align="center" class="bdu">168/318</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">120 x 120</td>
+                            <td align="center" class="bdur">2100</td>
+                            <td align="center" class="bdur">1573</td>
+                            <td align="center" class="bdur">1048</td>
+                            <td align="center" class="bdu">204/390</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">132 x 132</td>
+                            <td align="center" class="bdur">2608</td>
+                            <td align="center" class="bdur">1954</td>
+                            <td align="center" class="bdur">1302</td>
+                            <td align="center" class="bdu">248/472</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">144 x 144</td>
+                            <td align="center" class="bdur">3116</td>
+                            <td align="center" class="bdur">2335</td>
+                            <td align="center" class="bdur">1556</td>
+                            <td align="center" class="bdu">310/590</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">8 x 18</td>
+                            <td align="center" class="bdur">10</td>
+                            <td align="center" class="bdur">6</td>
+                            <td align="center" class="bdur">3</td>
+                            <td align="center" class="bdu">3</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">8 x 32</td>
+                            <td align="center" class="bdur">20</td>
+                            <td align="center" class="bdur">13</td>
+                            <td align="center" class="bdur">8</td>
+                            <td align="center" class="bdu">5</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">12 x 26</td>
+                            <td align="center" class="bdur">32</td>
+                            <td align="center" class="bdur">22</td>
+                            <td align="center" class="bdur">14</td>
+                            <td align="center" class="bdu">7/11</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">12 x 36</td>
+                            <td align="center" class="bdur">44</td>
+                            <td align="center" class="bdur">31</td>
+                            <td align="center" class="bdur">20</td>
+                            <td align="center" class="bdu">9/15</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">16 x 36</td>
+                            <td align="center" class="bdur">64</td>
+                            <td align="center" class="bdur">46</td>
+                            <td align="center" class="bdur">30</td>
+                            <td align="center" class="bdu">12/21</td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="bdur">16 x 48</td>
+                            <td align="center" class="bdur">98</td>
+                            <td align="center" class="bdur">72</td>
+                            <td align="center" class="bdur">47</td>
+                            <td align="center" class="bdu">14/25</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </para>
+        </sect2>
+    </sect1>
+    <sect1>
+        <title>Creating barcodes</title>
+        <para>In order to use datamatrix barcodes the module
+                "<filename>datamatrix/datamatrix.inc.php</filename>" must first be included.</para>
+        <para>Usage of Datamatrix barcodes follows a similar schema as for the linear and PDF417
+            barcodes with concepts of an encoder and backend. The principle of the overall
+            encodation process is shown in <xref xlink:href="#fig.datamatrix-encodation-principle"
+            /></para>
+        <figure xml:id="fig.datamatrix-encodation-principle">
+            <title>Datamatrix encodation principle</title>
+            <mediaobject>
+                <imageobject><imagedata fileref="images/datamatrix-encodation-principle.png" scale="60"
+                    /></imageobject>
+            </mediaobject>
+        </figure>
+        <sect2>
+            <title>Getting started</title>
+            <para>Assuming that the library is installed where it can be found by PHP it is now very
+                simple to create a basic Data Matrix symbol using just default values. We first show
+                the complete first example and then discuss it. In the following scripts we will
+                assume that the include path has the core JpGraph directory in its path.</para>
+            <para>All barcode creation follows the following basic three steps :</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Create an instance of the encoder with the chosen datamatrix layout as
+                            an instance of <code>class Datamatrix</code></para>
+                    </listitem>
+                    <listitem>
+                        <para>Create an instance of a suitable backend for the chosen output format
+                            (image or postscript) by calling the
+                                <code>DatamatrixBackenFactory::Create()</code></para>
+                    </listitem>
+                    <listitem>
+                        <para>Encode data and send it back to the browser or to a file with a call
+                            to the backend <code>Backend::Stroke()</code> method.</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>The following script shows how to create the simplest possible barcode (in PNG
+                format) representing the data string "<code>The first datamatrix</code>" encoded
+                using all default values. The resulting barcode is shown in <xref
+                    xlink:href="#fig.datamatrix_ex00"/></para>
+            <para>
+                <programlisting>#datamatrix_ex00|The simplest possible datamatrix script#</programlisting>
+            </para>
+            <para>(As can be seen this follows the same principles as the creation of PDF417
+                symbols)</para>
+            <para>The principle is the same for all type of data matrix symbol creations. We first
+                create an instance of the chosen encoder. In this case a standard ECC-200 encoder by
+                creating an instance of <code>class Datamatrix</code>. We then create a suitable
+                backend that handles the output of the barcode. By default the output will be an
+                image encoded in the PNG image format.</para>
+            <para>The final step is to send back the generated image to the browser with a call to
+                the method <code>Backend::Stroke()</code> with the data to be encoded as its first
+                argument.</para>
+            <para>The example above does not have any error handling. If there is some error in the
+                process an exception will be thrown in the same way as in other places in the
+                library. The default exception will display a standard library image error box. An
+                example of this is shown in <xref xlink:href="#fig.datamatrix-error-image"/>. </para>
+            <figure xml:id="fig.datamatrix-error-image">
+                <title>Datamatrix error image</title>
+                <mediaobject>
+                    <imageobject><imagedata fileref="images/datamatrix_errormsg.png" scale="60"/></imageobject>
+                </mediaobject>
+            </figure>
+            <para>If some additional processing is necessary and just display a text based
+                re-formatted error message we could change the above code to catch this exception as
+                the following example shows.</para>
+            <para>
+                <programlisting>#datamatrix_ex0|Datamatrix with basic error handling#</programlisting>
+            </para>
+            <para>In contrast to the PDF417 encodation process there is no option to select an level
+                of error correction. The error correction level is automatically specified in the
+                standard depending on the size of the barcode. As a final initial example the next
+                script uses the backend method <code>Backend::SetModuleWidth($aWidth)</code> to
+                increase the width of one module.</para>
+            <para>
+                <programlisting>#datamatrix_ex1|Datamatrix with modified module width#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Error handling</title>
+            <para>As in other parts of the library the Datamatrix module throws an exception when an
+                error occurs. As shown in the previous section an error image is the default if no
+                explicit <code>try {} catch {}</code> statement is added to the script.</para>
+            <para>The script below shows how to catch the error, do some possible clean up and then
+                explicitly create and send back the error image.</para>
+            <para>
+                <programlisting>&lt;?php
+...
+try {
+    $backend->Stroke($data);
+} catch( Exception $e ) {
+    doCleanup();
+    $errobj = new DMErrObjectImg();
+    $errobj->Raise($e->getMessage());    
+}
+?></programlisting>
+            </para>
+            <para>another variant of this would be to re-throw the exception after the cleanup has
+                been performed as the following example shows</para>
+            <para>
+                <programlisting>&lt;?php
+...
+try {
+    $backend->Stroke($data);
+} catch( Exception $e ) {
+    doCleanup();
+    throw $e;
+}
+?></programlisting>
+            </para>
+            <para>It is also possible to get hold of the internal error code that corresponds to
+                each error message by calling the PHP standard exception method
+                    <code>Exception::getCode()</code> as the following example shows</para>
+            <para>
+                <programlisting>&lt;?php
+...
+try {
+    $backend->Stroke($data);
+} catch (Exception $e) {
+    $errstr = $e->GetMessage();
+    $errcode = $e->GetCode();
+    echo "Datamatrix error ($errcode). Message: $errstr\n";
+}
+?></programlisting>
+            </para>
+            <para><xref xlink:href="#table.datamatrix-error-messages"/> lists the errors that can be
+                thrown by the datamatrix module (the table deliberately excludes internal error
+                messages).</para>
+            <para>
+                <table frame="all" xml:id="table.datamatrix-error-messages">
+                    <title>Datamatrix error messages</title>
+                    <tgroup cols="2">
+                        <colspec colname="newCol1" colnum="1"/>
+                        <colspec colname="c1" colnum="2"/>
+                        <thead>
+                            <row>
+                                <entry align="center">Error number</entry>
+                                <entry align="center">Error messages</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry role="error-number" align="center">-1</entry>
+                                <entry role="error-text">Data is too long to fit specified symbol
+                                    size</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-2</entry>
+                                <entry role="error-text">The BASE256 data is too long to fit
+                                    available symbol size</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-3</entry>
+                                <entry role="error-text">Data must have at least three characters
+                                    for C40 encodation</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-4</entry>
+                                <entry role="error-text">Data must have at least three characters
+                                    for TEXT encodation</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-8</entry>
+                                <entry role="error-text">The given data can not be encoded using X12
+                                    encodation.</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-9</entry>
+                                <entry role="error-text">The "tilde" encoded data is not
+                                    valid.</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-10</entry>
+                                <entry role="error-text">Data must have at least three characters
+                                    for X12 encodation</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-11</entry>
+                                <entry role="error-text">Specified data can not be encoded with
+                                    datamatrix 000 140</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-12</entry>
+                                <entry role="error-text">Can not create image</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-13</entry>
+                                <entry role="error-text">Invalid color specification</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-15</entry>
+                                <entry role="error-text">This PHP installation does not support the
+                                    chosen image encoding format</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-20</entry>
+                                <entry role="error-text">The specification for shape of matrix is
+                                    out of bounds (0,29)</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-21</entry>
+                                <entry role="error-text">Cannot open the data file specifying bit
+                                    placement for Datamatrix 200</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-22</entry>
+                                <entry role="error-text">Datafile for bit placement is corrupt, crc
+                                    checks fails.</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-26</entry>
+                                <entry role="error-text">Cannot open the data file specifying bit
+                                    placement for Datamatrix 140</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-30</entry>
+                                <entry role="error-text">The symbol size specified for ECC140 type
+                                    Datamatrix is not valid</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-31</entry>
+                                <entry role="error-text">Data is too long to fit into any available
+                                    matrix size for datamatrix 140</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-34</entry>
+                                <entry role="error-text">Cannot open file %s for writing.</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-35</entry>
+                                <entry role="error-text">Cannot write to file %s .</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-99</entry>
+                                <entry role="error-text">EDIFACT encodation not implemented</entry>
+                            </row>
+                            <row>
+                                <entry role="error-number" align="center">-100</entry>
+                                <entry role="error-text">
+                                    <para>Datamatrix Error: HTTP headers have already been
+                                        sent.</para>
+                                    <para>Caused by output from file %s at line %d</para>
+                                    <para>Explanation: HTTP headers have already been sent back to
+                                        the browser indicating the data as text before the library
+                                        got a chance to send it's image HTTP header to this browser.
+                                        This makes it impossible for the Datamatrix library to send
+                                        back image data to the browser (since that would be
+                                        interpretated as text by the browser and show up as junk
+                                        text).</para>
+                                    <para>Most likely you have some text in your script before the
+                                        call to DatamatrixBackend::Stroke(). </para>
+                                    <para>If this texts gets sent back to the browser the browser
+                                        will assume that all data is plain text. Look for any text
+                                        (even spaces and newlines) that might have been sent back to
+                                        the browser.</para>
+                                    <para>For example it is a common mistake to leave a blank line
+                                        before the opening "&lt;?php"</para>
+                                </entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Encodation options</title>
+            <para>The primary encodation option is to manually specify the shape of the Datamatrix
+                barcode. By default the symbol size will be chosen as the smallest possible. However
+                some application require that usage of a fixed size symbol shape. </para>
+            <para>The available shapes are listed in <xref
+                    xlink:href="#table.datamatrix-ecc200-size"/>. The wanted shape is specified when
+                the instance of the encoder is created or by a call to
+                    <code>Datamatrix::SetSize()</code>. The shape is specified by a symbolic
+                constant that corresponds to each available shape in <xref
+                    xlink:href="#table.datamatrix-ecc200-size"/>. The symbol name is
+                    "<code>DMAT_&lt;H>x&lt;W></code>" where <code>&lt;H></code> is the height (in
+                modules) and <code>&lt;W></code> is the width (in modules). For example the
+                following line specifies a 24 module square symbol </para>
+            <para>
+                <programlisting>$encoder->SetSize(DMAT_24x24);</programlisting>
+            </para>
+            <para>In addition to the sizes specified in <xref
+                    xlink:href="#table.datamatrix-ecc200-size"/> there is also an option to specify
+                automatic sizing (which is the default). The following script sets the sizing to be
+                automatic.</para>
+            <para>
+                <programlisting>$encoder->SetSize(DMAT_AUTO);</programlisting>
+            </para>
+            <para>As was discussed in <xref xlink:href="#sec.encodation-efficiency"/> there are
+                several ways by which data can be encoded. By default the encoder will use an
+                optimal algorithm to create a combination of the available encodation schema to
+                create the smallest possible symbol. In some application it might however be stated
+                that a specific encodation method should be chosen. </para>
+            <para>The encoding method is a property of the encodation class and is set with a call
+                to </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>Datamatrix::SetEncoding($aEncoding=ENCODING_ASCII)</code>
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The encoding is specified as one of the symbolic constants shown in <xref
+                    xlink:href="#table.datamatrix-symbikc-encoding"/></para>
+            <table frame="all" xml:id="table.datamatrix-symbikc-encoding">
+                <title>Datamatrix encodation schemas</title>
+                <tgroup cols="3">
+                    <colspec colname="c1" colnum="1"/>
+                    <colspec colname="c2" colnum="2"/>
+                    <colspec colname="newCol3" colnum="3"/>
+                    <thead>
+                        <row>
+                            <entry>Symbolic constant</entry>
+                            <entry>Encoding schema</entry>
+                            <entry>Character set</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>ENCODING_AUTO</entry>
+                            <entry>--</entry>
+                            <entry>An optimal combination of all encodation schema</entry>
+                        </row>
+                        <row>
+                            <entry>ENCODING_ASCII</entry>
+                            <entry>ASCII</entry>
+                            <entry>Most efficient for numeric data</entry>
+                        </row>
+                        <row>
+                            <entry>ENCODING_C40</entry>
+                            <entry>C40</entry>
+                            <entry>Primarily upper-case alphanumeric</entry>
+                        </row>
+                        <row>
+                            <entry>ENCODING_TEXT</entry>
+                            <entry>Text</entry>
+                            <entry>Primarily lower-case alphanumeric</entry>
+                        </row>
+                        <row>
+                            <entry>ENCODING_X12</entry>
+                            <entry>X12</entry>
+                            <entry>ANSI X12 EDI data set</entry>
+                        </row>
+                        <row>
+                            <entry>ENCODING_EDIFACT</entry>
+                            <entry>EDIFACT</entry>
+                            <entry>ASCII values 32-94</entry>
+                        </row>
+                        <row>
+                            <entry>ENCODING_BASE256</entry>
+                            <entry>Base 256</entry>
+                            <entry>All byte values 0-255</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+            <para>The following example sets the ASCII encodation schema</para>
+            <para>
+                <programlisting>$encoder->SetEncoding(ENCODING_ASCII);</programlisting>
+            </para>
+            <para>The default automatic encoding is the same as</para>
+            <para>
+                <programlisting>$encoder->SetSize(ENCODING_AUTO);</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Processing special input characters</title>
+            <para>In order to allow the specification of special input data in normal ASCII
+                encodation for easy entering from a keyboard the library supports what is commonly
+                known as "tilde" processing. When this is enabled (it is disabled by default)
+                certain character sequences that begins with a tilde sign (i.e. "~") will be
+                translated to a special ASCII value that cannot normally be entered from a
+                keyboard.</para>
+            <para>When tilde mode is enabled with a call to the method </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>Datamatrix::SetTilde($aFlg=true)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para><xref xlink:href="#table.datamatrix-tilde-processing"/> lists the translations
+                that will then be enabled on the input data. Some of the translations are technical
+                and requires full understanding of Datamatrix standard to be used.</para>
+            <table frame="all" xml:id="table.datamatrix-tilde-processing">
+                <title>Tilde processing translating</title>
+                <tgroup cols="2">
+                    <colspec colname="c1" colnum="1"/>
+                    <colspec colname="c2" colnum="2"/>
+                    <thead>
+                        <row>
+                            <entry>Input sequence</entry>
+                            <entry>Translation</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>~X : where 'X' is a character in the range [@-Z]</entry>
+                            <entry>Translates to ASCII value 0-25, i.e. ~@==0, ~A==1, ~B==2 ,
+                                ...</entry>
+                        </row>
+                        <row>
+                            <entry>~1</entry>
+                            <entry>Represents the character FNC1. Alternate Data Type Identifier.
+                                See Table 6: ISO 16022</entry>
+                        </row>
+                        <row>
+                            <entry>~2nnmmfffggg</entry>
+                            <entry>
+                                <para>Structured Append. This code is only allowed in the first
+                                    position of the data. Up to 16 ECC 200 symbols may be appended
+                                    in a structured format. The structured append is specified with
+                                    symbol index, total number of symbols and a file identification. </para>
+                                <para>The first two values "nn" is the position of this particular
+                                    symbol specified as two digits in the range of 01-16. </para>
+                                <para>The second two values "mm" is the total number of symbols in
+                                    this structured append in the range 02-16 specified as two
+                                    digits. </para>
+                                <para>The last two 3 digit codewords are the file identification
+                                    specified with digits and necessary leading 0:s to make it a
+                                    full three digits. For example. Assume that we want to encode
+                                    the 4:th symbol from a total of 9 symbols and with the file
+                                    identification "0,1". This would then be encoded as
+                                    "~20409000001". Note: Internally this is translated to three
+                                    codewords with the reserved starting codeword of ASCII
+                                    233.</para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>~5 and ~6</entry>
+                            <entry>
+                                <para>The special 05 and 06 Macros. Can only be in the first
+                                    position and is used to encode industry standard headers in
+                                    certain structured formats. </para>
+                                <para>Macro 05 is translated by the barcode reader to : Symbol
+                                    prefix: chr(30) chr(05) chr(29) Symbol postfix: chr(30) chr(04)
+                                    Macro 06 is translated by the barcode reader to : Symbol prefix:
+                                    chr(30) chr(06) chr(29 Symbol postfix: chr(30) chr(04)</para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>~7nnnnnn</entry>
+                            <entry>
+                                <para>Extended Channel Interpretation (ECI) nnnnnn. </para>
+                                <para>The ECI protocol allows the output data stream to have
+                                    interpretations different from that of the default character
+                                    set. See "<emphasis role="italic">Extended Channel
+                                        Interpretation Assignments</emphasis>" document (available
+                                    from ISO) for a list of channels and there meaning. </para>
+                                <para>The ECI is identified by a 6-digit number which is encoded
+                                    according to Table 10: in the ISO 16022:2000 specification. This
+                                    is the encodation that is used for the "~7" tilde specification
+                                    of the ECI protocol.</para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>~9</entry>
+                            <entry>
+                                <para>Send the special control code (ASCII=234) so that the reader
+                                    will interpret the rest of the symbol as a bar code reader
+                                    programming instruction.</para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>~dnnn</entry>
+                            <entry>
+                                <para>Character value as 3 digits, i.e. ~d142 means ASCII value
+                                    142</para>
+                            </entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </sect2>
+        <sect2>
+            <title>Creating different backends</title>
+            <para>In order to create the actual output one or more backends must be created. The
+                Datamatrix supports the following backends:</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>BACKEND_IMAGE</code>, Create an image backend. This is the
+                            default backend if no explicit backend is specified.</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>BACKEND_PS</code>, Create a postscript backend. The text string
+                            that represents the postscript for the barcode is returned directly from
+                            the <code>Backend::Stroke()</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>BACKEND_EPS</code>, Create an encapsulated postscript
+                            backend</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>BACKEND_ASCII</code>, This is a special backend which will
+                            generate an ASCII rendering of the datamatrix barcode. This is mostly
+                            practical for technical investigations regarding the technical structure
+                            of a Datamatrix barcode.</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The following code snippet shows two ways of creating a barcode image
+                backend.</para>
+            <para>
+                <programlisting>// Create an image backend
+$backend = DatamatrixBackendFactory::Create($encoder);</programlisting>
+            </para>
+            <para>
+                <programlisting>// Create an image backend
+$backend = DatamatrixBackendFactory::Create($encoder, BACKEND_IMAGE);</programlisting>
+            </para>
+            <para>The following code shows a complete script to generate a postscript output</para>
+            <para>
+                <programlisting>&lt;?php
+require_once('jpgraph/datamatrix/datamatrix.inc.php');
+$data = '0123456789';
+
+// Create and set parameters for the encoder
+$encoder = DatamatrixFactory::Create();
+
+// Create the image backend (default)
+$backend = DatamatrixBackendFactory::Create($encoder, BACKEND_PS);
+try {
+    $ps_txt = $backend->Stroke($data);
+    echo '&lt;pre>'.$ps_txt.'&lt;/pre>';
+} catch (Exception $e) {
+    $errstr = $e->GetMessage();
+    echo "Datamatrix error message: $errstr\n";
+}
+?></programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Generic backend methods</title>
+            <para>The following methods are available to adjust the final look and feel of the
+                barcode</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para><code>Backend::SetColor($aOne, $aZero,
+                            $aBackground='white')</code></para>
+                        <para>the color of the 'black' and 'white' modules in the barcode and the
+                            quiet area around the barcode</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Backend::SetQuietZone($aSize)</code></para>
+                        <para>the size of the "quiet zone" in pixels for the image backend and in
+                            points (1 pt = 1/72 inch) for the postscript backend</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Backend::SetModuleWidth($aWidth)</code></para>
+                        <para>the module width specified in pixels for the image backend and in
+                            points (1 pt = 1/72 inch) for the postscript backend</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Backend::Stroke($aData, $aFileName='')</code></para>
+                        <para>create the barcode and send it back the client or store it to a file
+                            if the second parameter is set. For postscript backends the postscript
+                            string is returned directly from the method. (See example above)</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Image backend methods</title>
+            <para>For the image backend it is possible to adjust the image encoding format with the
+                following method</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para><code>Backend::SetImgFormat($aFormat,$aQuality=75)</code></para>
+                        <para>Specify image format. Possible values are </para>
+                        <para>
+                            <itemizedlist>
+                                <listitem>
+                                    <para><code>'auto'</code></para>
+                                </listitem>
+                                <listitem>
+                                    <para><code>'png'</code></para>
+                                </listitem>
+                                <listitem>
+                                    <para><code>'jpeg'</code></para>
+                                </listitem>
+                                <listitem>
+                                    <para><code>'gif'</code></para>
+                                </listitem>
+                            </itemizedlist>
+                        </para>
+                        <para>For 'jpeg' format the quality parameter is a number in range [1-100]
+                            and specified how much compression / (Data loss) should be used. 100=no
+                            compression. Normal values are in the range [60-95]</para>
+                        <para>The following example sets the image format to 'JPEG' with quality
+                            80.</para>
+                        <para>
+                            <programlisting>$backend->SetImgFormat('jpeg', 80);</programlisting>
+                        </para>
+                    </listitem>
+                </orderedlist>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Postscript backend format options</title>
+            <para>For postscript backend it is possible to select whether the postscript should be
+                generated as encapsulated postscript. This is controlled by the method</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>Backend::SetEPS($aFlg=true)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </sect2>
+        <sect2>
+            <title>A template to create barcodes</title>
+            <para>In the example directory in the distribution
+                    ('<filename>datamatrix/examples</filename>') you can find many more examples on
+                how to create barcodes. As a good start the following (simple) template may be used
+                as a base for further customizations.</para>
+            <para>
+                <programlisting>&lt;?php
+require_once('jpgraph/datamatrix/datamatrix.inc.php');
+
+$data = '0123456789';
+
+$shape       = DMAT_AUTO;
+$encoding    = ENCODING_AUTO;
+$modulewidth = 3;
+$quietzone   = 10;
+$color1      = 'black';
+$color0      = 'white';
+$colorq      = 'white';
+$outputfile  = '';
+
+// Create and set parameters for the encoder
+$encoder = DatamatrixFactory::Create($shape);
+$encoder->SetEncoding($encoding);
+
+// Create the image backend (default)
+$backend = DatamatrixBackendFactory::Create($encoder);
+
+// By default the module width is 2 pixel so we increase it a bit
+$backend->SetModuleWidth($modulewidth);
+
+// Set Quiet zone
+$backend->SetQuietZone($quietzone);
+
+// Set other than default colors (one, zero, quiet zone/background)
+$backend->SetColor($color1, $color0, $colorq);
+
+// Create the barcode from the given data string and write to output file
+try {
+    $backend->Stroke($data,$outputfile);
+} catch (Exception $e) {
+    $errstr = $e->GetMessage();
+    echo "Datamatrix error message: $errstr\n";
+}
+?></programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Sample application</title>
+            <para>As an example the library includes a WEB-based demo barcode creation application.
+                This application can be used to easily create barcode through it's WEB interface. It
+                is available at '<filename>datamatrix/demoapp/index.html</filename>'</para>
+            <para>This application is primarily included as a demo on the features available in the
+                library and not as a finalized product.</para>
+            <para><xref xlink:href="#fig.datamatrix-demoapp"/> shows a screen shot of the
+                application interface.</para>
+            <figure xml:id="fig.datamatrix-demoapp">
+                <title>Datamatrix WEB-based demo application</title>
+                <mediaobject>
+                    <imageobject><imagedata fileref="images/datamatrix-demoapp.png" scale="60"/></imageobject>
+                </mediaobject>
+            </figure>
+        </sect2>
+    </sect1>
+    <sect1>
+        <title>Example script</title>
+        <sect2>
+            <title>Example 1 - Setting the shape</title>
+            <para>The following example shows how to</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Set the shape to 64x64</para>
+                    </listitem>
+                    <listitem>
+                        <para>Use ASCII encoding</para>
+                    </listitem>
+                    <listitem>
+                        <para>Adjust the quiet zone</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <programlisting>#datamatrix_ex4|Datamatrix example, setting quiet zone and ASCII encoding#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Example 2 - Writing to a file</title>
+            <para>The following example shows how to generate a barcode and write it to a
+                file.</para>
+            <para>
+                <programlisting>#:datamatrix_ex6|Datamatrix example, writing to a file#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Example 3 - Creating postscript output</title>
+            <para>The following example shows hot to generate a postscript output.</para>
+            <para>When </para>
+            <para>
+                <programlisting>#:datamatrix_ex7|Datamatrix example, creating postscript output#</programlisting>
+            </para>
+            <para>The resulting output is shown in <xref
+                    xlink:href="#fig.datamatrix-postscript-output"/> below</para>
+            <figure xml:id="fig.datamatrix-postscript-output">
+                <title>Datamatrix postscript output</title>
+                <mediaobject>
+                    <imageobject><imagedata fileref="images/datamatrix-ps-output.png" scale="60"
+                        /></imageobject>
+                </mediaobject>
+            </figure>
+        </sect2>
+        <sect2>
+            <title>Example 4 - Changing background color</title>
+            <para>The following example shows how to modify the colors in the barcode.</para>
+            <para>
+                <programlisting>#datamatrix_ex5|Datamatrix example, changing colors#</programlisting>
+            </para>
+        </sect2>
+    </sect1>
+</chapter>

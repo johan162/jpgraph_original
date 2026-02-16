@@ -1,0 +1,1476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<appendix version="5.0" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xml:id="app.country-flags">
+    <title>List of all country flags</title>
+    <para>All country flags are included in a pre-compiled efficient format with the library. In
+        addition the flags can be scaled arbitrarily and used as either background images or as plot
+        marks. Flags are specified by either it's index or by the using the whole or a unique part
+        of the country name.</para>
+    <para>The list of all flags are in simple alphabetical order, i.e. by the full name including
+        governance prefix e.g. "Republic". The size of the flags in this table has been chosen as
+            <code>FLAGSIZE2</code>
+    </para>
+    <caution>
+        <para>The dynamics of world politics and geographic boundaries will no doubt make the list
+            of included countries obsolete almost at the same time the library is released. The
+            intention is that all currently known country and similar geographic entities should be
+            included. Any missing flags shall and can not be interpreted as any political stand it
+            is merely a consequence of political changes since the library was released or a
+            possible oversight or simply a mistake either human or algorithmically in how the
+            country flags are produced.</para>
+    </caution>
+    <para>For more information on how to use country flags see <xref
+            xlink:href="#sec2.img-country-background"/></para>
+    <para>It is also possible to easily create a flags for usage outside graphs. The following
+        script takes an index and flag core size as URL arguments and returns the chosen flag. </para>
+    <para>
+        <programlisting>&lt;?php
+require_once 'jpgraph.php';
+require_once 'jpgraph_flags.php';
+
+if( empty($_GET['size']) ) {
+    $size = FLAGSIZE1;
+}
+else {
+    $size = $_GET['size'];
+}
+
+if( empty($_GET['idx']) ) {
+    $idx = 'swdn';
+}
+else {
+    $idx = $_GET['idx'];
+}
+
+
+$flags = new FlagImages($size) ;
+$img = $flags->GetImgByIdx($idx);
+header ("Content-type: image/png");
+ImagePng ($img);
+?></programlisting>
+    </para>
+    <para>
+        <table frame="none">
+            <title>List of all country flags sorted by country name</title>
+            <tgroup cols="4">
+                <thead>
+                    <row><entry>Country name</entry><entry>Short name</entry><entry>Index</entry><entry>Flag</entry></row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry valign="middle" >Afghanistan</entry>
+                        <entry valign="middle"><code>"afgh"</code></entry>
+                        <entry valign="middle">0</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-afgh.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Alderney</entry>
+                        <entry valign="middle"><code>"alde"</code></entry>
+                        <entry valign="middle">3</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-alde.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Antarctica</entry>
+                        <entry valign="middle"><code>"anta"</code></entry>
+                        <entry valign="middle">8</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-anta.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Arab Republic of Egypt</entry>
+                        <entry valign="middle"><code>"egyp"</code></entry>
+                        <entry valign="middle">63</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-egyp.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Argentine Republic</entry>
+                        <entry valign="middle"><code>"arge"</code></entry>
+                        <entry valign="middle">9</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-arge.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Aruba</entry>
+                        <entry valign="middle"><code>"arub"</code></entry>
+                        <entry valign="middle">12</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-arub.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Autonomous Region of Tibet</entry>
+                        <entry valign="middle"><code>"tibe"</code></entry>
+                        <entry valign="middle">210</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-tibe.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Azerbaijani Republic</entry>
+                        <entry valign="middle"><code>"azer"</code></entry>
+                        <entry valign="middle">15</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-azer.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Bangladesh</entry>
+                        <entry valign="middle"><code>"bngl"</code></entry>
+                        <entry valign="middle">16</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-bngl.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Barbados</entry>
+                        <entry valign="middle"><code>"brbd"</code></entry>
+                        <entry valign="middle">28</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-brbd.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Belize</entry>
+                        <entry valign="middle"><code>"blze"</code></entry>
+                        <entry valign="middle">24</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-blze.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Bolivarian Republic of Venezuela</entry>
+                        <entry valign="middle"><code>"venz"</code></entry>
+                        <entry valign="middle">231</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-venz.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >British Antarctic Territory</entry>
+                        <entry valign="middle"><code>"bant"</code></entry>
+                        <entry valign="middle">17</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-bant.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >British Indian Ocean Territory</entry>
+                        <entry valign="middle"><code>"brin"</code></entry>
+                        <entry valign="middle">29</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-brin.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >British Overseas Territory of Anguilla</entry>
+                        <entry valign="middle"><code>"angu"</code></entry>
+                        <entry valign="middle">7</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-angu.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >British Overseas Territory of Bermuda</entry>
+                        <entry valign="middle"><code>"berm"</code></entry>
+                        <entry valign="middle">19</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-berm.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >British Overseas Territory of Montserrat</entry>
+                        <entry valign="middle"><code>"mont"</code></entry>
+                        <entry valign="middle">138</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-mont.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >British Overseas Territory of the Cayman Islands</entry>
+                        <entry valign="middle"><code>"cyis"</code></entry>
+                        <entry valign="middle">55</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-cyis.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >British Overseas Territory of the Falkland Islands</entry>
+                        <entry valign="middle"><code>"fais"</code></entry>
+                        <entry valign="middle">71</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-fais.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >British Overseas Territory of the Pitcairn Islands</entry>
+                        <entry valign="middle"><code>"piis"</code></entry>
+                        <entry valign="middle">171</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-piis.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Brunei Darussalam</entry>
+                        <entry valign="middle"><code>"brun"</code></entry>
+                        <entry valign="middle">30</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-brun.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Caribbean Community</entry>
+                        <entry valign="middle"><code>"cari"</code></entry>
+                        <entry valign="middle">39</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-cari.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Central African Republic</entry>
+                        <entry valign="middle"><code>"cafr"</code></entry>
+                        <entry valign="middle">35</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-cafr.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Commonwealth</entry>
+                        <entry valign="middle"><code>"comn"</code></entry>
+                        <entry valign="middle">49</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-comn.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Commonwealth of Australia</entry>
+                        <entry valign="middle"><code>"astl"</code></entry>
+                        <entry valign="middle">13</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-astl.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Commonwealth of Dominica</entry>
+                        <entry valign="middle"><code>"domn"</code></entry>
+                        <entry valign="middle">60</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-domn.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Commonwealth of Independent States</entry>
+                        <entry valign="middle"><code>"cins"</code></entry>
+                        <entry valign="middle">45</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-cins.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Commonwealth of Puerto Rico</entry>
+                        <entry valign="middle"><code>"purc"</code></entry>
+                        <entry valign="middle">174</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-purc.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Commonwealth of the Bahamas</entry>
+                        <entry valign="middle"><code>"bhms"</code></entry>
+                        <entry valign="middle">20</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-bhms.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Commonwealth of the Northern Mariana Islands</entry>
+                        <entry valign="middle"><code>"nmar"</code></entry>
+                        <entry valign="middle">155</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-nmar.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Cook Islands</entry>
+                        <entry valign="middle"><code>"ckis"</code></entry>
+                        <entry valign="middle">46</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-ckis.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Democratic Republic of Congo</entry>
+                        <entry valign="middle"><code>"zare"</code></entry>
+                        <entry valign="middle">233</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-zare.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Democratic Socialist Republic of Sri Lanka</entry>
+                        <entry valign="middle"><code>"srla"</code></entry>
+                        <entry valign="middle">196</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-srla.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Democratic and Popular Republic of Algeria</entry>
+                        <entry valign="middle"><code>"alge"</code></entry>
+                        <entry valign="middle">4</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-alge.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Dominican Republic</entry>
+                        <entry valign="middle"><code>"dore"</code></entry>
+                        <entry valign="middle">61</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-dore.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Dominion of Canada</entry>
+                        <entry valign="middle"><code>"cana"</code></entry>
+                        <entry valign="middle">38</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-cana.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >England</entry>
+                        <entry valign="middle"><code>"engl"</code></entry>
+                        <entry valign="middle">65</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-engl.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Ethiopia</entry>
+                        <entry valign="middle"><code>"ethp"</code></entry>
+                        <entry valign="middle">69</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-ethp.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >European Union</entry>
+                        <entry valign="middle"><code>"euun"</code></entry>
+                        <entry valign="middle">70</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-euun.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Federal Republic of Germany</entry>
+                        <entry valign="middle"><code>"germ"</code></entry>
+                        <entry valign="middle">81</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-germ.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Federal Republic of Nigeria</entry>
+                        <entry valign="middle"><code>"ngra"</code></entry>
+                        <entry valign="middle">151</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-ngra.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Federated States of Micronesia</entry>
+                        <entry valign="middle"><code>"micr"</code></entry>
+                        <entry valign="middle">133</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-micr.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Federation of Malaysia</entry>
+                        <entry valign="middle"><code>"mals"</code></entry>
+                        <entry valign="middle">126</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-mals.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Federative Republic of Brazil</entry>
+                        <entry valign="middle"><code>"braz"</code></entry>
+                        <entry valign="middle">27</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-braz.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >French Republic</entry>
+                        <entry valign="middle"><code>"fran"</code></entry>
+                        <entry valign="middle">76</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-fran.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Gabonese Republic</entry>
+                        <entry valign="middle"><code>"gabn"</code></entry>
+                        <entry valign="middle">78</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-gabn.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Gibraltar</entry>
+                        <entry valign="middle"><code>"gibr"</code></entry>
+                        <entry valign="middle">83</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-gibr.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Grand Duchy of Luxembourg</entry>
+                        <entry valign="middle"><code>"luxe"</code></entry>
+                        <entry valign="middle">120</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-luxe.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Hashemite Kingdom of Jordan</entry>
+                        <entry valign="middle"><code>"jord"</code></entry>
+                        <entry valign="middle">108</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-jord.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Hellenic Republic</entry>
+                        <entry valign="middle"><code>"grec"</code></entry>
+                        <entry valign="middle">84</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-grec.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Hong Kong Special Administrative Region</entry>
+                        <entry valign="middle"><code>"hokn"</code></entry>
+                        <entry valign="middle">92</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-hokn.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Independent State of Papua New Guinea</entry>
+                        <entry valign="middle"><code>"pang"</code></entry>
+                        <entry valign="middle">167</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-pang.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >International Committee of the Red Cross</entry>
+                        <entry valign="middle"><code>"icrc"</code></entry>
+                        <entry valign="middle">96</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-icrc.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >International Federation of Vexillological Associations</entry>
+                        <entry valign="middle"><code>"fiav"</code></entry>
+                        <entry valign="middle">72</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-fiav.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >International Olympic Committee</entry>
+                        <entry valign="middle"><code>"olym"</code></entry>
+                        <entry valign="middle">163</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-olym.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Islamic Republic of Mauritania</entry>
+                        <entry valign="middle"><code>"maur"</code></entry>
+                        <entry valign="middle">130</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-maur.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Islamic Republic of Pakistan</entry>
+                        <entry valign="middle"><code>"paks"</code></entry>
+                        <entry valign="middle">165</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-paks.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Isle of Man</entry>
+                        <entry valign="middle"><code>"isma"</code></entry>
+                        <entry valign="middle">102</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-isma.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Italian Republic</entry>
+                        <entry valign="middle"><code>"ital"</code></entry>
+                        <entry valign="middle">104</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-ital.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Jamaica</entry>
+                        <entry valign="middle"><code>"jama"</code></entry>
+                        <entry valign="middle">105</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-jama.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Japan</entry>
+                        <entry valign="middle"><code>"japa"</code></entry>
+                        <entry valign="middle">106</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-japa.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Kingdom of Bahrain</entry>
+                        <entry valign="middle"><code>"bhrn"</code></entry>
+                        <entry valign="middle">21</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-bhrn.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Kingdom of Belgium</entry>
+                        <entry valign="middle"><code>"belg"</code></entry>
+                        <entry valign="middle">18</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-belg.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Kingdom of Cambodia</entry>
+                        <entry valign="middle"><code>"camb"</code></entry>
+                        <entry valign="middle">36</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-camb.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Kingdom of Denmark</entry>
+                        <entry valign="middle"><code>"denm"</code></entry>
+                        <entry valign="middle">58</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-denm.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Kingdom of Lesotho</entry>
+                        <entry valign="middle"><code>"lest"</code></entry>
+                        <entry valign="middle">116</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-lest.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Kingdom of Morocco</entry>
+                        <entry valign="middle"><code>"morc"</code></entry>
+                        <entry valign="middle">139</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-morc.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Kingdom of Nepal</entry>
+                        <entry valign="middle"><code>"nepa"</code></entry>
+                        <entry valign="middle">148</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-nepa.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Kingdom of Norway</entry>
+                        <entry valign="middle"><code>"norw"</code></entry>
+                        <entry valign="middle">158</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-norw.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Kingdom of Saudi Arabia</entry>
+                        <entry valign="middle"><code>"saar"</code></entry>
+                        <entry valign="middle">179</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-saar.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Kingdom of Spain</entry>
+                        <entry valign="middle"><code>"span"</code></entry>
+                        <entry valign="middle">194</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-span.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Kingdom of Swaziland</entry>
+                        <entry valign="middle"><code>"szld"</code></entry>
+                        <entry valign="middle">204</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-szld.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Kingdom of Sweden</entry>
+                        <entry valign="middle"><code>"swdn"</code></entry>
+                        <entry valign="middle">201</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-swdn.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Kingdom of Thailand</entry>
+                        <entry valign="middle"><code>"thal"</code></entry>
+                        <entry valign="middle">209</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-thal.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Kingdom of Tonga</entry>
+                        <entry valign="middle"><code>"tong"</code></entry>
+                        <entry valign="middle">214</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-tong.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Kingdom of the Netherlands</entry>
+                        <entry valign="middle"><code>"neth"</code></entry>
+                        <entry valign="middle">149</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-neth.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Kyrgyz Republic</entry>
+                        <entry valign="middle"><code>"kyrg"</code></entry>
+                        <entry valign="middle">113</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-kyrg.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >League of Arab States</entry>
+                        <entry valign="middle"><code>"arle"</code></entry>
+                        <entry valign="middle">10</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-arle.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Lebanese Republic</entry>
+                        <entry valign="middle"><code>"leba"</code></entry>
+                        <entry valign="middle">115</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-leba.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Macao Special Administrative Region</entry>
+                        <entry valign="middle"><code>"maca"</code></entry>
+                        <entry valign="middle">121</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-maca.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Midway Islands</entry>
+                        <entry valign="middle"><code>"miis"</code></entry>
+                        <entry valign="middle">134</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-miis.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Netherlands Antilles</entry>
+                        <entry valign="middle"><code>"nean"</code></entry>
+                        <entry valign="middle">147</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-nean.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >New Zealand</entry>
+                        <entry valign="middle"><code>"nwze"</code></entry>
+                        <entry valign="middle">160</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-nwze.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Niue</entry>
+                        <entry valign="middle"><code>"niue"</code></entry>
+                        <entry valign="middle">154</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-niue.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Nordic Council</entry>
+                        <entry valign="middle"><code>"nord"</code></entry>
+                        <entry valign="middle">157</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-nord.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Nordic Sami Conference</entry>
+                        <entry valign="middle"><code>"sami"</code></entry>
+                        <entry valign="middle">181</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-sami.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >North Atlantic Treaty Organization</entry>
+                        <entry valign="middle"><code>"nato"</code></entry>
+                        <entry valign="middle">144</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-nato.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Organization of African Unity</entry>
+                        <entry valign="middle"><code>"oaun"</code></entry>
+                        <entry valign="middle">162</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-oaun.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Organization of American States</entry>
+                        <entry valign="middle"><code>"oast"</code></entry>
+                        <entry valign="middle">161</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-oast.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Organization of the Islamic Conference</entry>
+                        <entry valign="middle"><code>"isco"</code></entry>
+                        <entry valign="middle">101</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-isco.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Oriental Republic of Uruguay</entry>
+                        <entry valign="middle"><code>"urgy"</code></entry>
+                        <entry valign="middle">226</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-urgy.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Overseas Department of French Guiana</entry>
+                        <entry valign="middle"><code>"frgu"</code></entry>
+                        <entry valign="middle">77</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-frgu.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Overseas Department of Guadeloupe</entry>
+                        <entry valign="middle"><code>"guad"</code></entry>
+                        <entry valign="middle">86</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-guad.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Overseas Department of Martinique</entry>
+                        <entry valign="middle"><code>"mart"</code></entry>
+                        <entry valign="middle">129</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-mart.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Overseas Territory of the British Virgin Islands</entry>
+                        <entry valign="middle"><code>"bvis"</code></entry>
+                        <entry valign="middle">34</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-bvis.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Peoples Republic of China</entry>
+                        <entry valign="middle"><code>"chin"</code></entry>
+                        <entry valign="middle">43</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-chin.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Principality of Andorra</entry>
+                        <entry valign="middle"><code>"andr"</code></entry>
+                        <entry valign="middle">6</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-andr.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Principality of Liechtenstein</entry>
+                        <entry valign="middle"><code>"liec"</code></entry>
+                        <entry valign="middle">118</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-liec.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Principality of Monaco</entry>
+                        <entry valign="middle"><code>"mona"</code></entry>
+                        <entry valign="middle">136</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-mona.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Principality of Seborga</entry>
+                        <entry valign="middle"><code>"sebo"</code></entry>
+                        <entry valign="middle">184</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-sebo.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Province of Northern Ireland</entry>
+                        <entry valign="middle"><code>"noir"</code></entry>
+                        <entry valign="middle">156</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-noir.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Albania</entry>
+                        <entry valign="middle"><code>"alba"</code></entry>
+                        <entry valign="middle">2</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-alba.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Angola</entry>
+                        <entry valign="middle"><code>"agla"</code></entry>
+                        <entry valign="middle">1</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-agla.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Armenia</entry>
+                        <entry valign="middle"><code>"arme"</code></entry>
+                        <entry valign="middle">11</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-arme.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Austria</entry>
+                        <entry valign="middle"><code>"aust"</code></entry>
+                        <entry valign="middle">14</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-aust.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Belarus</entry>
+                        <entry valign="middle"><code>"blru"</code></entry>
+                        <entry valign="middle">22</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-blru.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Benin</entry>
+                        <entry valign="middle"><code>"bnin"</code></entry>
+                        <entry valign="middle">25</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-bnin.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Bolivia</entry>
+                        <entry valign="middle"><code>"blva"</code></entry>
+                        <entry valign="middle">23</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-blva.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Botswana</entry>
+                        <entry valign="middle"><code>"bots"</code></entry>
+                        <entry valign="middle">26</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-bots.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Bulgaria</entry>
+                        <entry valign="middle"><code>"bulg"</code></entry>
+                        <entry valign="middle">32</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-bulg.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Burkina</entry>
+                        <entry valign="middle"><code>"bufa"</code></entry>
+                        <entry valign="middle">31</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-bufa.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Burundi</entry>
+                        <entry valign="middle"><code>"buru"</code></entry>
+                        <entry valign="middle">33</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-buru.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Cameroon</entry>
+                        <entry valign="middle"><code>"came"</code></entry>
+                        <entry valign="middle">37</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-came.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Cape Verde</entry>
+                        <entry valign="middle"><code>"cave"</code></entry>
+                        <entry valign="middle">40</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-cave.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Chad</entry>
+                        <entry valign="middle"><code>"chad"</code></entry>
+                        <entry valign="middle">41</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-chad.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Chile</entry>
+                        <entry valign="middle"><code>"chil"</code></entry>
+                        <entry valign="middle">42</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-chil.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of China</entry>
+                        <entry valign="middle"><code>"taiw"</code></entry>
+                        <entry valign="middle">205</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-taiw.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Colombia</entry>
+                        <entry valign="middle"><code>"clmb"</code></entry>
+                        <entry valign="middle">47</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-clmb.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Costa Rica</entry>
+                        <entry valign="middle"><code>"corc"</code></entry>
+                        <entry valign="middle">52</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-corc.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Croatia</entry>
+                        <entry valign="middle"><code>"croa"</code></entry>
+                        <entry valign="middle">53</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-croa.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Cuba</entry>
+                        <entry valign="middle"><code>"cuba"</code></entry>
+                        <entry valign="middle">54</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-cuba.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Cyprus</entry>
+                        <entry valign="middle"><code>"cypr"</code></entry>
+                        <entry valign="middle">56</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-cypr.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Djibouti</entry>
+                        <entry valign="middle"><code>"djib"</code></entry>
+                        <entry valign="middle">59</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-djib.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Ecuador</entry>
+                        <entry valign="middle"><code>"ecua"</code></entry>
+                        <entry valign="middle">62</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-ecua.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of El Salvador</entry>
+                        <entry valign="middle"><code>"elsa"</code></entry>
+                        <entry valign="middle">64</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-elsa.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Equatorial Guinea</entry>
+                        <entry valign="middle"><code>"eqgu"</code></entry>
+                        <entry valign="middle">66</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-eqgu.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Estonia</entry>
+                        <entry valign="middle"><code>"estn"</code></entry>
+                        <entry valign="middle">68</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-estn.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Fiji</entry>
+                        <entry valign="middle"><code>"fiji"</code></entry>
+                        <entry valign="middle">73</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-fiji.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Finland</entry>
+                        <entry valign="middle"><code>"finl"</code></entry>
+                        <entry valign="middle">74</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-finl.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Georgia</entry>
+                        <entry valign="middle"><code>"geor"</code></entry>
+                        <entry valign="middle">80</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-geor.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Ghana</entry>
+                        <entry valign="middle"><code>"ghan"</code></entry>
+                        <entry valign="middle">82</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-ghan.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Guatemala</entry>
+                        <entry valign="middle"><code>"guat"</code></entry>
+                        <entry valign="middle">88</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-guat.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Guinea</entry>
+                        <entry valign="middle"><code>"guin"</code></entry>
+                        <entry valign="middle">90</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-guin.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Haiti</entry>
+                        <entry valign="middle"><code>"hait"</code></entry>
+                        <entry valign="middle">91</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-hait.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Honduras</entry>
+                        <entry valign="middle"><code>"hond"</code></entry>
+                        <entry valign="middle">93</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-hond.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Hungary</entry>
+                        <entry valign="middle"><code>"hung"</code></entry>
+                        <entry valign="middle">94</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-hung.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Iceland</entry>
+                        <entry valign="middle"><code>"icel"</code></entry>
+                        <entry valign="middle">95</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-icel.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of India</entry>
+                        <entry valign="middle"><code>"inda"</code></entry>
+                        <entry valign="middle">97</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-inda.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Indonesia</entry>
+                        <entry valign="middle"><code>"indn"</code></entry>
+                        <entry valign="middle">98</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-indn.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Iraq</entry>
+                        <entry valign="middle"><code>"iraq"</code></entry>
+                        <entry valign="middle">99</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-iraq.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Ireland</entry>
+                        <entry valign="middle"><code>"irel"</code></entry>
+                        <entry valign="middle">100</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-irel.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Kazakhstan</entry>
+                        <entry valign="middle"><code>"kazk"</code></entry>
+                        <entry valign="middle">109</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-kazk.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Kenya</entry>
+                        <entry valign="middle"><code>"keny"</code></entry>
+                        <entry valign="middle">110</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-keny.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Kiribati</entry>
+                        <entry valign="middle"><code>"kirb"</code></entry>
+                        <entry valign="middle">111</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-kirb.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Korea</entry>
+                        <entry valign="middle"><code>"skor"</code></entry>
+                        <entry valign="middle">188</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-skor.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Latvia</entry>
+                        <entry valign="middle"><code>"latv"</code></entry>
+                        <entry valign="middle">114</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-latv.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Liberia</entry>
+                        <entry valign="middle"><code>"libe"</code></entry>
+                        <entry valign="middle">117</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-libe.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Lithuania</entry>
+                        <entry valign="middle"><code>"lith"</code></entry>
+                        <entry valign="middle">119</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-lith.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Macedonia</entry>
+                        <entry valign="middle"><code>"mace"</code></entry>
+                        <entry valign="middle">122</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-mace.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Madagascar</entry>
+                        <entry valign="middle"><code>"mada"</code></entry>
+                        <entry valign="middle">123</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-mada.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Malawi</entry>
+                        <entry valign="middle"><code>"malw"</code></entry>
+                        <entry valign="middle">128</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-malw.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Mali</entry>
+                        <entry valign="middle"><code>"mali"</code></entry>
+                        <entry valign="middle">125</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-mali.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Malta</entry>
+                        <entry valign="middle"><code>"malt"</code></entry>
+                        <entry valign="middle">127</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-malt.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Mauritius</entry>
+                        <entry valign="middle"><code>"mrts"</code></entry>
+                        <entry valign="middle">141</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-mrts.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Moldova</entry>
+                        <entry valign="middle"><code>"mold"</code></entry>
+                        <entry valign="middle">135</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-mold.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Mongolia</entry>
+                        <entry valign="middle"><code>"mong"</code></entry>
+                        <entry valign="middle">137</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-mong.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Mozambique</entry>
+                        <entry valign="middle"><code>"moza"</code></entry>
+                        <entry valign="middle">140</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-moza.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Namibia</entry>
+                        <entry valign="middle"><code>"namb"</code></entry>
+                        <entry valign="middle">143</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-namb.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Nauru</entry>
+                        <entry valign="middle"><code>"naur"</code></entry>
+                        <entry valign="middle">145</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-naur.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Nicaragua</entry>
+                        <entry valign="middle"><code>"nica"</code></entry>
+                        <entry valign="middle">152</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-nica.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Niger</entry>
+                        <entry valign="middle"><code>"nigr"</code></entry>
+                        <entry valign="middle">153</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-nigr.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Palau</entry>
+                        <entry valign="middle"><code>"pala"</code></entry>
+                        <entry valign="middle">166</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-pala.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Paraguay</entry>
+                        <entry valign="middle"><code>"para"</code></entry>
+                        <entry valign="middle">168</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-para.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Peru</entry>
+                        <entry valign="middle"><code>"peru"</code></entry>
+                        <entry valign="middle">169</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-peru.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Poland</entry>
+                        <entry valign="middle"><code>"pola"</code></entry>
+                        <entry valign="middle">172</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-pola.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Portugal</entry>
+                        <entry valign="middle"><code>"port"</code></entry>
+                        <entry valign="middle">173</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-port.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Rwanda</entry>
+                        <entry valign="middle"><code>"rwan"</code></entry>
+                        <entry valign="middle">178</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-rwan.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of San Marino</entry>
+                        <entry valign="middle"><code>"sama"</code></entry>
+                        <entry valign="middle">180</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-sama.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Serbia</entry>
+                        <entry valign="middle"><code>"serb"</code></entry>
+                        <entry valign="middle">185</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-serb.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Sierra Leone</entry>
+                        <entry valign="middle"><code>"sile"</code></entry>
+                        <entry valign="middle">186</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-sile.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Singapore</entry>
+                        <entry valign="middle"><code>"sing"</code></entry>
+                        <entry valign="middle">187</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-sing.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Slovenia</entry>
+                        <entry valign="middle"><code>"slva"</code></entry>
+                        <entry valign="middle">189</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-slva.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Somaliland</entry>
+                        <entry valign="middle"><code>"smld"</code></entry>
+                        <entry valign="middle">191</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-smld.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of South Africa</entry>
+                        <entry valign="middle"><code>"soaf"</code></entry>
+                        <entry valign="middle">192</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-soaf.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Suriname</entry>
+                        <entry valign="middle"><code>"surn"</code></entry>
+                        <entry valign="middle">199</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-surn.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Tajikistan</entry>
+                        <entry valign="middle"><code>"tajk"</code></entry>
+                        <entry valign="middle">207</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-tajk.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Tunisia</entry>
+                        <entry valign="middle"><code>"tuns"</code></entry>
+                        <entry valign="middle">217</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-tuns.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Turkey</entry>
+                        <entry valign="middle"><code>"turk"</code></entry>
+                        <entry valign="middle">218</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-turk.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Uganda</entry>
+                        <entry valign="middle"><code>"ugan"</code></entry>
+                        <entry valign="middle">221</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-ugan.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Uzbekistan</entry>
+                        <entry valign="middle"><code>"uzbk"</code></entry>
+                        <entry valign="middle">228</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-uzbk.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Vanuatu</entry>
+                        <entry valign="middle"><code>"vant"</code></entry>
+                        <entry valign="middle">230</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-vant.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Yemen</entry>
+                        <entry valign="middle"><code>"yemn"</code></entry>
+                        <entry valign="middle">232</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-yemn.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of Zimbabwe</entry>
+                        <entry valign="middle"><code>"zbwe"</code></entry>
+                        <entry valign="middle">234</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-zbwe.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of the Congo</entry>
+                        <entry valign="middle"><code>"cong"</code></entry>
+                        <entry valign="middle">51</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-cong.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of the Gambia</entry>
+                        <entry valign="middle"><code>"gamb"</code></entry>
+                        <entry valign="middle">79</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-gamb.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of the Marshall Islands</entry>
+                        <entry valign="middle"><code>"mais"</code></entry>
+                        <entry valign="middle">124</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-mais.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of the Philippines</entry>
+                        <entry valign="middle"><code>"phil"</code></entry>
+                        <entry valign="middle">170</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-phil.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Republic of the Sudan</entry>
+                        <entry valign="middle"><code>"suda"</code></entry>
+                        <entry valign="middle">198</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-suda.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Romania</entry>
+                        <entry valign="middle"><code>"rmna"</code></entry>
+                        <entry valign="middle">177</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-rmna.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Russian Federation</entry>
+                        <entry valign="middle"><code>"russ"</code></entry>
+                        <entry valign="middle">176</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-russ.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Saint Lucia</entry>
+                        <entry valign="middle"><code>"stlu"</code></entry>
+                        <entry valign="middle">197</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-stlu.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Sark</entry>
+                        <entry valign="middle"><code>"sark"</code></entry>
+                        <entry valign="middle">182</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-sark.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Scotland</entry>
+                        <entry valign="middle"><code>"scot"</code></entry>
+                        <entry valign="middle">183</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-scot.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Secretariat of the Pacific Community</entry>
+                        <entry valign="middle"><code>"spco"</code></entry>
+                        <entry valign="middle">195</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-spco.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Slovak Republic</entry>
+                        <entry valign="middle"><code>"svka"</code></entry>
+                        <entry valign="middle">200</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-svka.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Solomon Islands</entry>
+                        <entry valign="middle"><code>"sois"</code></entry>
+                        <entry valign="middle">193</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-sois.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Somali Republic</entry>
+                        <entry valign="middle"><code>"smla"</code></entry>
+                        <entry valign="middle">190</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-smla.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >State of Eritrea</entry>
+                        <entry valign="middle"><code>"erit"</code></entry>
+                        <entry valign="middle">67</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-erit.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >State of Grenada</entry>
+                        <entry valign="middle"><code>"gren"</code></entry>
+                        <entry valign="middle">85</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-gren.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >State of Israel</entry>
+                        <entry valign="middle"><code>"isra"</code></entry>
+                        <entry valign="middle">103</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-isra.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >State of Kuwait</entry>
+                        <entry valign="middle"><code>"kuwa"</code></entry>
+                        <entry valign="middle">112</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-kuwa.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >State of Qatar</entry>
+                        <entry valign="middle"><code>"qata"</code></entry>
+                        <entry valign="middle">175</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-qata.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >State of the Vatican City</entry>
+                        <entry valign="middle"><code>"vacy"</code></entry>
+                        <entry valign="middle">229</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-vacy.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Sultanate of Oman</entry>
+                        <entry valign="middle"><code>"oman"</code></entry>
+                        <entry valign="middle">164</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-oman.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Swiss Confederation</entry>
+                        <entry valign="middle"><code>"swit"</code></entry>
+                        <entry valign="middle">202</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-swit.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Syrian Arab Republic</entry>
+                        <entry valign="middle"><code>"syra"</code></entry>
+                        <entry valign="middle">203</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-syra.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Taiwan</entry>
+                        <entry valign="middle"><code>"taiw"</code></entry>
+                        <entry valign="middle">206</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-taiw.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Territorial Collectivity of Mayotte</entry>
+                        <entry valign="middle"><code>"mayt"</code></entry>
+                        <entry valign="middle">131</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-mayt.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Territory of American Samoa</entry>
+                        <entry valign="middle"><code>"amsa"</code></entry>
+                        <entry valign="middle">5</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-amsa.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Territory of Christmas Island</entry>
+                        <entry valign="middle"><code>"chms"</code></entry>
+                        <entry valign="middle">44</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-chms.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Territory of Cocos Islands</entry>
+                        <entry valign="middle"><code>"cois"</code></entry>
+                        <entry valign="middle">48</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-cois.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Territory of French Polynesia</entry>
+                        <entry valign="middle"><code>"fpol"</code></entry>
+                        <entry valign="middle">75</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-fpol.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Territory of Guam</entry>
+                        <entry valign="middle"><code>"guam"</code></entry>
+                        <entry valign="middle">87</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-guam.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Territory of New Caledonia and Dependencies</entry>
+                        <entry valign="middle"><code>"nwca"</code></entry>
+                        <entry valign="middle">159</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-nwca.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Territory of Norfolk Island</entry>
+                        <entry valign="middle"><code>"nfis"</code></entry>
+                        <entry valign="middle">150</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-nfis.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >The Bailiwick of Guernsey</entry>
+                        <entry valign="middle"><code>"guer"</code></entry>
+                        <entry valign="middle">89</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-guer.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >The Bailiwick of Jersey</entry>
+                        <entry valign="middle"><code>"jers"</code></entry>
+                        <entry valign="middle">107</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-jers.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >The Czech Republic</entry>
+                        <entry valign="middle"><code>"czec"</code></entry>
+                        <entry valign="middle">57</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-czec.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Togolese Republic</entry>
+                        <entry valign="middle"><code>"togo"</code></entry>
+                        <entry valign="middle">212</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-togo.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Tokelau</entry>
+                        <entry valign="middle"><code>"toke"</code></entry>
+                        <entry valign="middle">213</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-toke.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Tristan da Cunha</entry>
+                        <entry valign="middle"><code>"trdc"</code></entry>
+                        <entry valign="middle">215</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-trdc.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Tromelin</entry>
+                        <entry valign="middle"><code>"tris"</code></entry>
+                        <entry valign="middle">216</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-tris.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Turkish Republic of Northern Cyprus</entry>
+                        <entry valign="middle"><code>"ncyp"</code></entry>
+                        <entry valign="middle">146</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-ncyp.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Turkmenistan</entry>
+                        <entry valign="middle"><code>"tkst"</code></entry>
+                        <entry valign="middle">211</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-tkst.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Tuvalu</entry>
+                        <entry valign="middle"><code>"tuva"</code></entry>
+                        <entry valign="middle">219</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-tuva.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Ukraine</entry>
+                        <entry valign="middle"><code>"ukrn"</code></entry>
+                        <entry valign="middle">222</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-ukrn.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Union of Myanmar</entry>
+                        <entry valign="middle"><code>"myan"</code></entry>
+                        <entry valign="middle">142</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-myan.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Union of the Comoros</entry>
+                        <entry valign="middle"><code>"como"</code></entry>
+                        <entry valign="middle">50</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-como.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >United Arab Emirates</entry>
+                        <entry valign="middle"><code>"uaem"</code></entry>
+                        <entry valign="middle">220</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-uaem.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >United Kingdom of Great Britain</entry>
+                        <entry valign="middle"><code>"unkg"</code></entry>
+                        <entry valign="middle">223</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-unkg.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >United Mexican States</entry>
+                        <entry valign="middle"><code>"mexc"</code></entry>
+                        <entry valign="middle">132</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-mexc.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >United Nations</entry>
+                        <entry valign="middle"><code>"unna"</code></entry>
+                        <entry valign="middle">224</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-unna.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >United Republic of Tanzania</entry>
+                        <entry valign="middle"><code>"tanz"</code></entry>
+                        <entry valign="middle">208</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-tanz.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >United States of America</entry>
+                        <entry valign="middle"><code>"unst"</code></entry>
+                        <entry valign="middle">225</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-unst.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                    <row>
+                        <entry valign="middle" >Virgin Islands of the United States</entry>
+                        <entry valign="middle"><code>"usvs"</code></entry>
+                        <entry valign="middle">227</entry>
+                        <entry><inlinemediaobject><imageobject><imagedata fileref="images/flag-usvs.png" /></imageobject></inlinemediaobject> </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+    </para>
+</appendix>

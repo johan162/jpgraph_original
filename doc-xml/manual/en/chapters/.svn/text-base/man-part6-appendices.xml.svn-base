@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<part version="5.0" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Appendices</title>
+    <appendix xml:id="app.how-was-this-manual-produced">
+        <title>How this manual was produced</title>
+        <para>Unfortunately we couldn't locate any off-the-shelf system for producing this fairly
+            large manual with some special requirements like automatic inclusion of PHP source that
+            should be highlighted and in addition rendered by running the scripts and automatically
+            include the resulting images in the resulting manual. To solve this we have based our
+            solution around a DocBook5 setup with some custom steps that are described below.</para>
+        <para><emphasis role="bold">DocBook5</emphasis></para>
+        <para>The source for the manual is written as a number of split <uri
+                xlink:href="http://www.docbook.org/">DocBook5</uri> XML compliant documents using
+                <uri xlink:href="http://www.w3.org/TR/xinclude/">XInclude</uri> to bring them
+            together into one master document. </para>
+        <para>The transformation of the XML source files was done by the means of a DocBook XSL
+            stylesheet using the <command>xsltproc</command> XSL processor. (see <uri
+                xlink:href="http://xmlsoft.org/XSLT/xsltproc2.html">libxslt</uri>) The DocBook5
+            style sheets can directly produce either single file HTML or chunked (many files) HTML
+            (or XHTML). </para>
+        <para>In addition there is a style sheet to produce FO (Formatted Objects) output which can
+            be further refined to PDF with the help of the <command>fop</command> processor (see
+                <uri xlink:href="http://xmlgraphics.apache.org/fop/">Apache FOP</uri>).
+            Unfortunately some formatting instructions in the source are lost in the transformation
+            to PDF output. This means that some aspects of the manual doesn't come out perfect in
+            the PDF output. For this reason the PDF version of the documentation should only be seen
+            as a complementary documentation. The master output format is the chunked HTML.</para>
+        <para>
+            <note>
+                <para>In formatting the chunked output we have prioritized to keep down the number
+                    of files to avoid many pages with only a small amount of text on them. Our view
+                    is that documentation which breaks the pages down to very low levels are
+                    extremely tiresome to read.</para>
+            </note>
+        </para>
+        <para><emphasis role="bold">Phing based build system</emphasis></para>
+        <para>The overall build process is drive by a <command>Phing</command> XML build script.
+                <command>Phing</command> (See <uri xlink:href="http://phing.info/trac/"
+                >http://phing.info/trac/</uri> ) is most easily described as a PHP version of the
+            Java build system <command>Ant</command>. It has several advantages compared with a more
+            traditional <command>make</command> setup, the build files are all written in clear XML
+            which makes them easy to read and maintain. In addition there are a number of built-in
+            commands that makes deploying and handling of files extremely easy compared with a
+            traditional make system which must rely on external tools to do everything. </para>
+        <para><emphasis role="bold">Syntax highlighting of example code</emphasis></para>
+        <para>The syntax highlighting and handling of the numerous example images initially posed a
+            small problem since there are no off-the-shelf good support for handling this. As a
+            basic requirement we needed all PHP scripts to be runnable and kept in the normal
+            example directories and then automatically included when the DocBook source was
+            processed. </para>
+        <para>What was needed was some easy way by which we could just mark in the DocBook source
+            (and still maintain valid DocBook XML) that we wanted a particular named example
+            included and either show just the image, just the source or both. In addition we
+            required the source to be syntax highlighted. </para>
+        <para>To handle this we had to write some custom tasks to extend Phing. In principal our
+            build system works as follows.</para>
+        <orderedlist>
+            <listitem>
+                <para>When a new example have been added or an old one removed a special target in
+                    our build file are run which extracts all scripts from the example sections in
+                    the *.XML files. The name of each found example script in the XML source
+                    corresponds to an existing PHP script in the Example directory in the JpGraph
+                    distribution. A batch file is then automatically created which is subsequently
+                    run and all generated images stored on disk.</para>
+            </listitem>
+            <listitem>
+                <para>When the normal DocBook XSL processing is done all the special example markups
+                    in the XML source is replaced with XML tags to include the image and make sure
+                    that the referred script is a proper PHP file name.</para>
+            </listitem>
+            <listitem>
+                <para>After the XSL process has been run all programlisting tags will have a special
+                    token, for example "<code>\#\#example0.php\#\#</code>" this then instructs a
+                    custom <command>Phing</command> task to replace the name in the double "#" tags
+                    with the corresponding source (in the resulting HTML code). At the same time
+                    this source is included it is also passed through the custom syntax highlight
+                    filter so that it comes out as proper marked up source which is inserted
+                    directly in the resulting HTML file.</para>
+            </listitem>
+        </orderedlist>
+        <para>The overall build system is illustrated in <xref
+                xlink:href="#fig.documentation-build-system"/></para>
+        <figure xml:id="fig.documentation-build-system">
+            <title>The documentation build process</title>
+            <mediaobject>
+                <imageobject><imagedata fileref="images/documentation_buildprocess.png" scale="60"
+                    /></imageobject>
+            </mediaobject>
+        </figure>
+        <para>The way the special markup works is that whenever we want a full example (source and
+            image) we create a &lt;programlisting> tag with the file name and title within (single)
+            "#" characters. For example to include the very first example in this manual we have the
+            following tags in the docbook XML source</para>
+        <para>
+            <screen>&lt;programlisting>#example0|The very first example#&lt;/programlisting></screen>
+        </para>
+        <para>The first part (before the "|") is the file name without extension that we want to
+            include and the second part (after the "|") is the title we want to use. This markup
+            will include both the source as well as the generated graph/image directly in the
+            resulting HTML.</para>
+        <para>When new examples have been added the examples target in our build file is run and
+            that extracts all the example script used in the book (in the above example
+                "<code>example0.php</code>") and creates a batch file which is then run to create
+            all the images used in the examples. </para>
+        <para>The syntax highlighting is handled by a custom written filter extensions to
+                <command>Phing</command> which internally uses the PEAR package
+                <filename>Pear::Text_Highlight</filename>.</para>
+        <para><emphasis role="bold">Notes:</emphasis></para>
+        <para>
+            <orderedlist>
+                <listitem>
+                    <para>In the current setup a regular expression in the Phing build script is
+                        responsible for replacing the markup in the programlisting with a
+                        &lt;figure> tag and a new &lt;programlisting>. This should be done with a
+                        custom XSL layer instead and we will update this for the next major
+                        revision.</para>
+                </listitem>
+                <listitem>
+                    <para>Since the syntax highlighting makes use of HTML markup code for the colors
+                        the PDF output does not support syntax highlighting</para>
+                </listitem>
+                <listitem>
+                    <para>For the reference manual we still use our old DB based documentation
+                        system which stores all the methods and classes in a DB augmented with
+                        source documentation. (We actually prefer this in front of adding a lot of
+                        end user documentation with PHPDoc comment sin the source which have a
+                        tendency of cluttering up the code as well as making it prone to error since
+                        the source files have to be modified in order to update a simple typo in the
+                        documentations. Our next step is therefor to update that old system to be
+                        able to produce DocBook5 compliant XML for further formatting and
+                        processing.</para>
+                </listitem>
+            </orderedlist>
+        </para>
+    </appendix>
+    <xi:include href="app-jpglicense.xml" parse="xml"/>
+    <xi:include href="FAQ.xml" parse="xml"/>
+    <xi:include href="named-colors.xml" parse="xml"/>
+    <xi:include href="plotmark-list.xml" parse="xml"/>
+    <xi:include href="country-flags.xml" parse="xml"/>
+    <xi:include href="file-manifest.xml" parse="xml"/>
+    <xi:include href="error-messages.xml" parse="xml"/>
+    <xi:include href="compiling-php.xml" parse="xml"/>
+    <xi:include href="setting-up-php5-php4.xml" parse="xml"/>
+    <appendix xml:id="app.adding-svg">
+        <title>Why it is not possible to add a SVG backend to JpGraph</title>
+        <sect1>
+            <title>Background</title>
+            <para>We have received many suggestions to add SVG as output from the library to achieve
+                better quality in off-screen reproduction of graphs. Adding SVG output would
+                significantly enhance the print quality as well as adding the possibility of
+                seamless zooming in graphs. For this reason we have done a brief pre-study on the
+                feasibility of such a backend. This short note will describe our findings. </para>
+        </sect1>
+        <sect1>
+            <title>Summary of findings</title>
+            <para>To our surprise we have to conclude that with the current SVG standard 1.1 as well
+                as with the upcoming 1.2 (based on SVG-T) it will not be possible to implement a
+                full backend in SVG. </para>
+            <para>The primary hinder is the lack of adequate text manipulation in the current SVG
+                standard. In addition the implementation of the text supporting feature in current
+                SVG viewers range from poor and erroneous to non-existing. </para>
+            <para>The only way to solve this would be to drastically reduce some functionality of
+                the library in regards to text handling and require the user of the library to
+                supply text sizes to be used in many places of the library where that is needed.
+            </para>
+        </sect1>
+        <sect1>
+            <title>Detailing the issue</title>
+            <sect2>
+                <title>The core problem</title>
+                <para>It all boils down to one critical issue: </para>
+                <para>With the current SVG 1.1 (and draft 1.2) standard there is no way to
+                    statically find out the bounding box of an arbitrary text string for later usage
+                    in the SVG script. </para>
+                <para>This very surprising omission in the SVG standard makes it in principal
+                    impossible to even do such a simple thing as drawing a frame around a text
+                    programatically since there is no easy way to find out the size, in the given
+                    coordinate system, of the string. </para>
+                <para>Since the actual bounding box is dependent on both font, style, size, etc as
+                    well as the actual SVG viewer text-layout engine implementation this calculation
+                    cannot be done outside the viewer. It must be part of the SVG standard elements. </para>
+                <note>
+                    <para> Now, anyone who are familiar with SVG would jump in here and point out
+                        that this is not entirely correct. For the specific case of a frame around a
+                        text it would be possible to use a filter function as specified by the
+                        standard but that is a special case that just could be used to draw an
+                        effect that looks like a frame around a text (using the objectBoundingBox
+                        property). It is still not possible to find out the bounding box. </para>
+                    <para>The second approach would be to to add some DOM Javascript code in the SVG
+                        script which upon execution of the script could in theory find out the
+                        bounding box and adjust suitable attributes in the script. </para>
+                </note>
+            </sect2>
+            <sect2>
+                <title>Why is this a problem ?</title>
+                <para>There are many places in the library where it is absolutely essential to find
+                    out the bounding box of a text string to adjust the position of other object in
+                    the graph. For example margins for titles, column width in gantt charts and
+                    legends and so on. Without this functionality it will be impossible to add SVG
+                    output without significantly reducing the functionality and in essence create a
+                    new version of the library suitable for this reduced functionality that is
+                    brought upon us by the use of SVG. </para>
+            </sect2>
+            <sect2>
+                <title>Possible workarounds</title>
+                <para>Looking at this from a more positive view instead of explaining why it cannot
+                    be done there are in principal only two workarounds (neither which is a 100%
+                    solution) </para>
+                <orderedlist>
+                    <listitem>
+                        <para>Using a single fixed font. Restricting the library to one specific
+                            fixed font would make it possible to calculate the bounding box for the
+                            string. Due to differences in the existing viewers it would be necessary
+                            to have some safety margins built in when doing this calculation.
+                            However this would significantly impact the visual appearance of the
+                            graphs. </para>
+                    </listitem>
+                    <listitem>
+                        <para>Using heuristics By establishing some "good enough" heuristics for a
+                            plain font we can try to find a guesstimate of the size of the string.
+                            Unfortunately it is a big difference in length between "iiiii" and
+                            "wwwww" even though they have the same number of characters. So without
+                            fully implementing the same algorithm as some SVG viewer text-layout
+                            engine uses this method cannot guarantee that the text will always fit
+                            without making the box fit the worst case. In addition this method will
+                            have some difficulty in handling rotated text strings. </para>
+                    </listitem>
+                </orderedlist>
+            </sect2>
+            <sect2>
+                <title>What would be required ?</title>
+                <para>What would be required in the standard to solve this is a new basis element
+                    which could be used to record the bounding box of a particular text string for
+                    later reference. To just give some idea on what is needed some "pseudo-SVG" that
+                    we would need is something along the lines of: </para>
+                <programlisting>&lt;def>
+  &lt;boundingbox id="bb1" 
+               text="This is a text" style=" />
+&lt;/def>
+&lt;rect x="50+#bb1.x1-10" y="50+#bb1.y1-10" 
+      width="#bb1.width+20" 
+      height="#bb1.height+20" />
+&lt;text x="50" y="50" >
+  &lt;tref xlink:href="#bb1" />
+&lt;/text>    </programlisting>
+                <para>The basic idea is that in the def-section all text strings to later be used in
+                    the script is defined together with the font (and any other formatting
+                    applicable). These text strings are defined in the new SVG element "boundingbox"
+                    which will calculate the bounding box of the given text. These text string is
+                    later referenced in the actual text with a standard tref element. The bounding
+                    box attributes can then be used in the positioning of the text with a "#"
+                    reference based on the id of the new introduced element "boundingbox" The above
+                    script would then draw a text string positioned at (50,50) with a frame around
+                    it with a 10 units margin all around.</para>
+            </sect2>
+            <sect2>
+                <title>DOM scripting and GetBBox()</title>
+                <para>Since we make no claim to be experts in all aspects of the SVG standard (which
+                    is fairly big) it might be possible that there is some way to still solve this
+                    that has eluded us so we would be very interested in getting a second opinion of
+                    these findings. We are aware of the SVG method GetBBox() but this would not work
+                    in the library very well. The reason is that this is not a static function but
+                    requires the context of a DOM script. This would require a substantially rewrite
+                    of the library since there are graphs where every single coordinate would have
+                    to be back-patched in the end (possible in multiple passes - since the
+                    calculation of one bounding box would be needed to adjust another element). </para>
+                <para>This means that the script would no longer be static but would require the
+                    library to generate "self-modifying" DOM script at the end. The logic of the
+                    library assumes that the bounding box of text can be found out at the place of
+                    creation and then this bounding box can be used to adjust subsequent
+                    coordinates. </para>
+                <para>So to summarize this we do not feel that the potential back patching of every
+                    single element in the SVG image at the end in a DOM script is a solution.
+                </para>
+            </sect2>
+            <sect2>
+                <title>A final comment</title>
+                <para>Since we still find it very hard to believe this giant oversight in the
+                    standard we would be happy to receive comments on these conclusions. </para>
+            </sect2>
+        </sect1>
+    </appendix>
+    <appendix xml:id="app.jpg-config">
+        <title>The JpGraph configuration file</title>
+        <programlisting><xi:include href="jpg-config.inc.php" parse="text">
+<xi:fallback>Ooops! Cannot find the file to include !</xi:fallback>
+</xi:include>
+        </programlisting>
+    </appendix>
+</part>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<appendix version="5.0" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xml:id="app.jpg-license">
+    <title>JpGraph Professional License</title>
+    <section>
+        <title>Single License</title>
+        <orderedlist>
+            <listitem>
+                <para>The JpGraph Professional License will be referred to as "The license" in the
+                    remainder of this text.</para>
+            </listitem>
+            <listitem>
+                <para>This irrevocable, perpetual license covers versions 1.x &amp; 2.x of
+                    JpGraph</para>
+            </listitem>
+            <listitem>
+                <para>This license gives the holder right to install JpGraph libraries on One Server
+                    which can run one or several virtual HTTP servers.</para>
+            </listitem>
+            <listitem>
+                <para>The license holder is allowed to make modifications to the JpGraph sources but
+                    in no event will the original copyright holders of this library be held
+                    responsible for action or actions resulting from any modifications of the
+                    source.</para>
+            </listitem>
+            <listitem>
+                <para>The license holder is not required to publicize or otherwise make available
+                    any software used in conjunction with JpGraph.</para>
+            </listitem>
+            <listitem>
+                <para>The license holder may not re-distribute the library on it's own or versions
+                    thereof to third party without prior written permission of the copyright
+                    holder.</para>
+            </listitem>
+            <listitem>
+                <para>JpGraph License does not allow the library to be redistributed as part of
+                    another product.</para>
+            </listitem>
+            <listitem>
+                <para>In no event shall the copyright notice in any of the source files supplied in
+                    JpGraph be removed or modified.</para>
+            </listitem>
+            <listitem>
+                <para>The names "JpGraph" or "Aditus" must not be used to endorse or promote
+                    products derived from this software without prior written permission.</para>
+            </listitem>
+            <listitem>
+                <para>The license may be transferred to another server by removing all installed
+                    files from the old server.</para>
+            </listitem>
+            <listitem>
+                <para>The wording of this license may change without notice for future versions of
+                    JpGraph.</para>
+            </listitem>
+            <listitem>
+                <para>By acquiring a license the licensee agrees to all terms and conditions in this
+                    license text.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Limitations of Liability</emphasis></para>
+                <para>In no event, except for intellectual property claim, shall the initial
+                    developers or copyright holders be liable for any damages whatsoever, including
+                    - but not restricted to - lost revenue or profits or other direct, indirect,
+                    special, incidental or consequential damages, even if they have been advised of
+                    the possibility of such damages, except to the extent invariable law, if any,
+                    provides otherwise.</para>
+                <para>In addition, in no event does this license authorize you to use JpGraph in
+                    applications or systems where JpGraphs failure to perform can reasonably be
+                    expected to result in a physical injury, loss of life or any economical damage.
+                    Any such use by the licensee is entirely at the licensees own risk, and the
+                    licensee agrees to hold the original copyright holders of JpGraph harmless from
+                    any claims or losses relating to any such unauthorized use.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Limited Warranty</emphasis></para>
+                <para>JpGraph warrants that licensor is owner of the software with authority to
+                    license the software to licensee and that the software does not infringe third
+                    party intellectual property rights. Licensor agrees to indemnify, defend and
+                    hold harmless licensee from any claims either that licensor does not own the
+                    software or that the software infringes a third party's intellectual
+                    property.</para>
+                <para>THE SOFTWARE AND THIS LICENSE DOCUMENT ARE PROVIDED AS IS. THE FOREGOING
+                    WARRANTY IS IN LIEU OF ALL OTHER WARRANTIES, EXPRESS OR IMPLIED, OF ANY KIND,
+                    INCLUDING WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+                    PURPOSE.</para>
+            </listitem>
+        </orderedlist>
+    </section>
+    <section>
+        <title>Bulk (Re-seller license)</title>
+        <orderedlist>
+            <listitem>
+                <para>The JpGraph Professional License will be referred to as "The license" in the
+                    remainder of this text.</para>
+            </listitem>
+            <listitem>
+                <para>This irrevocable, perpetual license covers versions 1.x &amp; 2.x of
+                    JpGraph</para>
+            </listitem>
+            <listitem>
+                <para>This license gives the licensee the right to distribute the JpGraph libraries,
+                    as part of its product portfolio and to use the Jpgraph libraries with its
+                    hosted service offerings. Specifically this license gives the licensee the right
+                    to deploy an unlimited number of JpGraph installations as part of their product
+                    portfolio and offer an unlimited number of hosted services that use the JpGraph
+                    libraries to an unlimited number of users.</para>
+            </listitem>
+            <listitem>
+                <para>The license holder is allowed to make modifications to the JpGraph sources but
+                    in no event will the original copyright holders of this library be held
+                    responsible for action or actions resulting from any modifications of the
+                    source.</para>
+            </listitem>
+            <listitem>
+                <para>JpGraph libraries is only licensed to be redistributed as a part of the
+                    licensees products. Specifically it may not be sold or re-distributed on it's
+                    own.</para>
+            </listitem>
+            <listitem>
+                <para>In no event shall the copyright notice in any of the source files supplied in
+                    JpGraph be removed or modified.</para>
+            </listitem>
+            <listitem>
+                <para>The names "JpGraph" or "Aditus" must not be used to endorse or promote
+                    products derived from this software without prior written permission.</para>
+            </listitem>
+            <listitem>
+                <para>The wording of this license may change without notice for future versions of
+                    JpGraph.</para>
+            </listitem>
+            <listitem>
+                <para>By acquiring a license the licensee agrees to all terms and conditions in this
+                    license text.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Limitations of Liability</emphasis></para>
+                <para>In no event, except for intellectual property claim, shall the initial
+                    developers or copyright holders be liable for any damages whatsoever, including
+                    - but not restricted to - lost revenue or profits or other direct, indirect,
+                    special, incidental or consequential damages, even if they have been advised of
+                    the possibility of such damages, except to the extent invariable law, if any,
+                    provides otherwise.</para>
+                <para>In addition, in no event does this license authorize you to use JpGraph in
+                    applications or systems where JpGraphs failure to perform can reasonably be
+                    expected to result in a physical injury, loss of life or any economical damage.
+                    Any such use by the licensee is entirely at the licensees own risk, and the
+                    licensee agrees to hold the original copyright holders of JpGraph harmless from
+                    any claims or losses relating to any such unauthorized use.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Limited Warranty</emphasis></para>
+                <para>JpGraph warrants that licensor is owner of the software with authority to
+                    license the software to licensee and that the software does not infringe third
+                    party intellectual property rights. Licensor agrees to indemnify, defend and
+                    hold harmless licensee from any claims either that licensor does not own the
+                    software or that the software infringes a third party's intellectual
+                    property.</para>
+                <para>THE SOFTWARE AND THIS LICENSE DOCUMENT ARE PROVIDED AS IS. THE FOREGOING
+                    WARRANTY IS IN LIEU OF ALL OTHER WARRANTIES, EXPRESS OR IMPLIED, OF ANY KIND,
+                    INCLUDING WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+                    PURPOSE.</para>
+            </listitem>
+        </orderedlist>
+    </section>
+</appendix>

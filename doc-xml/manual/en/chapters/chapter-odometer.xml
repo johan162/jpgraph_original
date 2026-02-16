@@ -1,0 +1,994 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<chapter version="5.0" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Odometer</title>
+    <sect1>
+        <title>Introduction</title>
+        <note><para>This module is only available in the pro-version of the library.</para></note>
+        <para>Odometer graphs uses the metaphor of an old fashioned speedometer for cars. It is
+            normally used to give a quick overview of one specific parameter. Experience have shown
+            that this type of metaphor is easily and quickly understood by most people. By adding
+            color indications to the odometer it is very quick to see whether or not a specific
+            value is within a allowed range or outside. </para>
+        <para><xref xlink:href="#fig.odometer-bulletin"/> shows an overview of some typical
+            odometers created with the library.</para>
+        <figure xml:id="fig.odometer-bulletin">
+            <title>Odometers</title>
+            <mediaobject>
+                <imageobject><imagedata fileref="images/odometer_bulletin.png" scale="60"
+                    /></imageobject>
+            </mediaobject>
+        </figure>
+        <sect2>
+            <title>Features</title>
+            <para>Odometers produced with this package have a wide range of functionality and as you
+                would expect almost every bit of visual layout is in one way or the other
+                customisable. For simple use there are suitable default values for most parameters
+                which will make creation of simple Odometer just a matter of a few lines of code. </para>
+            <para>Among other things Odometers support the following features: </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Both half (semi-circle) and full (circle) odometers are supported
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Fully customizable scales and odometer sizes</para>
+                    </listitem>
+                    <listitem>
+                        <para>Different size and shapes of the indicator needles</para>
+                    </listitem>
+                    <listitem>
+                        <para>Scale color indicators</para>
+                    </listitem>
+                    <listitem>
+                        <para>Multiple dials in the same graph</para>
+                    </listitem>
+                    <listitem>
+                        <para>Full support for library standard fonts and colors</para>
+                    </listitem>
+                    <listitem>
+                        <para>Automatic layout engine for multiple plots in the same graph which
+                            aids in positioning of the graphs without having to specify pixel
+                            coordinates</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </sect2>
+    </sect1>
+    <sect1>
+        <title>Creating and formatting basic odometer graphs</title>
+        <para>In order to use odometer graphs the extension module
+                "<filename>jpgraph_odo.php</filename>" must be included in the script (in addition
+            to the ordinary "<filename>jpgraph.php</filename>" code module).</para>
+        <para>The creation of Odometer graphs otherwise follows the traditional steps in the library
+            of creating a graph and then adding one or several plots to the canvas.<orderedlist>
+                <listitem>
+                    <para>Create a basic canvas graph as an instance of <code>class
+                        OdoGraph</code></para>
+                </listitem>
+                <listitem>
+                    <para>Create an instance of one or several odometer plots (the dials) as
+                        instances of <code>class OdoPlot</code>, set up the scale and appearance and
+                        then add them to the graph canvas.</para>
+                </listitem>
+                <listitem>
+                    <para>Send back the graph to the client with a call to
+                            <code>OdoGraph::Stroke()</code></para>
+                </listitem>
+            </orderedlist></para>
+        <para>The following script shows the principles</para>
+        <para>
+            <programlisting>&lt;?php
+// Create a new canvas 300x200 pixels
+$graph = new OdoGraph(300,200);
+
+// Adjust parameters as needed
+$graph->title->Set(.......)
+$graph->caption->Set(...)
+
+// Create one of more Odometer
+$odo1 = new Odometer();
+$odo2 = new Odometer();
+
+...
+
+// Adjust odometer parameters, colors etc
+$odo1->needle->Set(21);
+$odo2->needle->Set(47);
+
+...
+
+// Position the odometer plots vertically
+$l = new LayoutVert( array($odo1, $odo2, ...) );
+
+// Add the odometers with the proper layout to the canvas
+$graph->Add( $l );
+
+// If you only have a single odometer you may also write
+// $graph->Add( $odo1 );
+
+// Send back the image to the client
+$graph->Stroke();  
+?></programlisting>
+        </para>
+        <para/>
+        <sect2>
+            <title>A basic odometer</title>
+            <para>The following script shows the simplest possible odometer using just default
+                values</para>
+            <para>
+                <programlisting>#odotutex00|A basic odometer#</programlisting>
+            </para>
+            <para>The size of the Odometer is determined automatically to fit the given image size
+                as good as possible. Since the size of the odometer automatically adjust itself to
+                allow for any odometer caption, graph titles or graph captions there is rarely need
+                to manually override this automation. </para>
+            <para>However it is still possible to manually specify the absolute size (of the radius)
+                in pixels or as a fraction of the image size. </para>
+            <para>To set a specific value top the Odometer radius the following method is
+                used</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>OdoPlot::SetSize($aRadius)</code>
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>Since clas OdoGraph inherits all the basic graph features we can easily augment
+                the graph in <xref xlink:href="#fig.odotutex00"/> to, for example, have titles by
+                adding the line</para>
+            <para>
+                <programlisting>$graph->title->Set('A suitable graph title');</programlisting>
+            </para>
+            <para>In the following chapters we will go through all the options that exists to modify
+                the size, shape and appearance of the graph.</para>
+            <para>
+                <tip>
+                    <para>Remember that since Odometer inherits all the basic graph feature it will
+                        support functionality like image cache (see <xref
+                            xlink:href="#sec.efficient-graph-generation"/>.) </para>
+                </tip>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Half and Full Odometers</title>
+            <para>Odometers comes in two fundamental shapes, full and half circle. The default if
+                nothing else is specified is to create a half circle. The type of odometer is
+                specified in the creation of the odometer. </para>
+            <para>The type is controlled by the two constants </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>ODO_FULL</code> Create a full circle odometer </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>ODO_HALF</code> Create a half circle odometer. This is also the
+                            default value.</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>As an example the following odometer plot instantiation will create a full
+                odometer plot</para>
+            <para>
+                <programlisting>$odo = new Odometer(ODO_FULL);</programlisting>
+            </para>
+            <para>and the following a half odometer plot</para>
+            <para>
+                <programlisting>$odo = new Odometer(ODO_HALF);</programlisting>
+            </para>
+            <para>In ?? an example of a very basic full circle odometer is shown</para>
+            <para>
+                <programlisting>#=odotutex01|A full circle odometer#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Adding titles and captions</title>
+            <para>Remember that each graph can have a title, a subtitle and subsubtitle. In addition
+                the Odmeter graphs offers the possibility to have a caption string. This is a text
+                (much like the title) but is drawn at the bottom of the graph instead of at the top. </para>
+            <para>The following script shows how to add a tite, subtitle and caption to our previous
+                example</para>
+            <para>
+                <programlisting>#odotutex02|Adding titles and captions#</programlisting>
+            </para>
+            <para>As can be see from the figure the margins will automatically adjust to hold the
+                specified titles and captions. </para>
+            <para>Remember that text strings can have multiple lines by separating lines with a '\n'
+                character. The following example shows how to add a more descriptive caption to the
+                graph</para>
+            <para>
+                <programlisting>#odotutex03|Adding a multi line caption#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Adjusting colors</title>
+            <para>Almost all areas in the graph have a customizable color. This means that for the
+                Odometer graph itself it is possible to adjust </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Margin colors</para>
+                    </listitem>
+                    <listitem>
+                        <para>The plot area (the rectangular area where the plot(s) are added</para>
+                    </listitem>
+                    <listitem>
+                        <para>The border line colors</para>
+                    </listitem>
+                    <listitem>
+                        <para>Shadow color</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>For example the following line changes the margin color of the graph</para>
+            <para>
+                <programlisting>&lt;?php
+// Make the border 40% darker than normal "khaki"
+$graph->SetMarginColor("khaki:0.6"); 
+$graph->SetColor("khaki");
+?></programlisting>
+            </para>
+            <para>For the odometer plot itself it is possible to adjust</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Fascia color</para>
+                    </listitem>
+                    <listitem>
+                        <para>Scale label color (and font)</para>
+                    </listitem>
+                    <listitem>
+                        <para>Frame color (and width)</para>
+                    </listitem>
+                    <listitem>
+                        <para>Indicator color (the color of the odometer "needle"</para>
+                    </listitem>
+                    <listitem>
+                        <para>Adding colored segment for scale areas</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>For example the following lines would change the fascia, indicator and scale label
+                color</para>
+            <para>
+                <programlisting>&lt;?php
+$odo->SetColor("white");
+$odo->scale->label->SetColor("blue");
+$odo->needle->SetFillColor("yellow");
+?></programlisting>
+            </para>
+            <para><xref xlink:href="#fig.odotutex04"/> shows the effect of adding the two code
+                snippets above to our previous example.</para>
+            <para>
+                <programlisting>#=odotutex04|Changing colors#</programlisting>
+            </para>
+            <para/>
+        </sect2>
+        <sect2>
+            <title>Changing indicator needle style</title>
+            <para>The indicator is accessed through the "<code>$needle</code>" property of the plot.
+                The indicator needle for the odometer can have six basic shapes. which are set by
+                the method</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>Needle::SetStyle($aStyle,$aStyleOption=null)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The style is defined by one of the following symbolic constants.</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para><code>NEEDLE_STYLE_SIMPLE</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>NEEDLE_STYLE_STRAIGHT</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>NEEDLE_STYLE_ENDARROW</code>, (default)</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>NEEDLE_STYLE_SMALL_TRIANGLE</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>NEEDLE_STYLE_MEDIUM_TRIANGLE</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>NEEDLE_STYLE_LARGE_TRIANGLE</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>NEEDLE_STYLE_HUGE_TRIANGLE</code></para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>The following line would therefore create a plot with a "simple" indicator.</para>
+            <para>
+                <programlisting>$odo->needle->SetStyle(NEEDLE_STYLE_SIMPLE);</programlisting>
+            </para>
+            <para>The different styles are illustrated in <xref xlink:href="#fig.odotutex06"
+                /></para>
+            <para>
+                <programlisting>#=odotutex06|Possible shapes of the odometer indicator#</programlisting>
+            </para>
+            <para>For the needle style "<code>NEEDLE_STYLE_ENDARROW</code>" it is also possible to
+                adjust the ending arrow. This is done by specifying the particular end arrow size as
+                the second parameter to <code>SetStyle()</code>. , the <code>$aStyleOption</code>
+                parameter.</para>
+            <para>To simplify the arrow style setting a number of predefined sizes are available.
+                When choosing an arrowhead the width and length are specified in three different
+                steps, small , medium and large. </para>
+            <para>The available end arrow styles are listed in ?? below</para>
+            <para>
+                <table frame="all">
+                    <title>Available arrow size</title>
+                    <tgroup cols="2">
+                        <colspec colname="c1" colnum="1"/>
+                        <colspec colname="c2" colnum="2"/>
+                        <thead>
+                            <row>
+                                <entry>Symbolic name</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry><code>NEEDLE_ARROW_SS</code></entry>
+                                <entry>Small width, small length</entry>
+                            </row>
+                            <row>
+                                <entry><code>NEEDLE_ARROW_SM</code></entry>
+                                <entry>Small width, small length</entry>
+                            </row>
+                            <row>
+                                <entry><code>NEEDLE_ARROW_SL</code></entry>
+                                <entry>Small width, large length</entry>
+                            </row>
+                            <row>
+                                <entry><code>NEEDLE_ARROW_MS</code></entry>
+                                <entry>Medium width, small length</entry>
+                            </row>
+                            <row>
+                                <entry><code>NEEDLE_ARROW_MM</code></entry>
+                                <entry>Medium width, small length</entry>
+                            </row>
+                            <row>
+                                <entry><code>NEEDLE_ARROW_ML</code></entry>
+                                <entry>Medium width, large length</entry>
+                            </row>
+                            <row>
+                                <entry><code>NEEDLE_ARROW_LS</code></entry>
+                                <entry>Large width, small length</entry>
+                            </row>
+                            <row>
+                                <entry><code>NEEDLE_ARROW_LM</code></entry>
+                                <entry>Large width, medium length</entry>
+                            </row>
+                            <row>
+                                <entry><code>NEEDLE_ARROW_LL</code></entry>
+                                <entry>Large width, large length</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </para>
+            <para>The following code specifies a the largest available arrowhead</para>
+            <para>
+                <programlisting>$odo->needle->SetStyle(NEEDLE_STYLE_ARROWHEAD, NEEDLE_ARROW_LL);</programlisting>
+            </para>
+            <para>An illustration of the various arrow heads are given in <xref
+                    xlink:href="#fig.odotutex07"/></para>
+            <para>
+                <programlisting>#=odotutex07|Illustration of various sizes of arrow heads#</programlisting>
+            </para>
+            <para>The basic length and weight of the needle is specified with the methods</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>Needle::SetLength($aLength)</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Needle::SetWeight($aWeight)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The needle size is specified as fractions of the radius. So for example the
+                following line wold create a needle halfway into the plot area</para>
+            <para>
+                <programlisting>$odo->needle->SetLength(0.5);</programlisting>
+            </para>
+            <para>The default size for a needles is 60% of the radius. </para>
+            <para/>
+        </sect2>
+        <sect2>
+            <title>Adding drop shadows</title>
+            <para>It is possible to add drop shadows to both the overall graph s well as the
+                indicator needle. To add a drop shadow to the overall graph the method is as
+                usual</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>OdoGraph::SetShadow($aShadow=true,$aColor="gray@0.5",$aDx=4,$aDy=4)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>and to add a drop shadow to the indicator needle the method</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>OdoNeedle::SetShadow($aShadow=true,$aColor="gray@0.5",$aDx=4,$aDy=4)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>must be used.</para>
+            <para>The following two lines add both types of drop shadows to an odometer graph with
+                the result shown in ??</para>
+            <para>
+                <programlisting>&lt;?php
+$graph->SetShadow();
+...
+$odo->needle->SetShadow();
+?></programlisting>
+            </para>
+            <para>
+                <programlisting>#=odotutex08|Adding drop shadows#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Changing sizes and margins</title>
+            <para>The size of the odometer is automatically adjusted to fit the available space in
+                the image after margins for titles and captions have been taken into account. This
+                means that normally it is not necessary to adjust the margins manually.</para>
+            <para>The odometer plot can be adjusted with the method</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>OdoPlot::SetSiz&lt;e($aSize)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>Each odometer also have a margin surrounding it. This is the amount of "space"
+                around each individual odometer. The amount of space is adjusted by the method </para>
+            <para>OdoPlot::SetMargin($aMargin)</para>
+            <para>If we take the example in <xref xlink:href="#fig.odotutex07"/> and increase the
+                individual margin around all odometers they will become smaller (if we keep the
+                original image size) and the result is shown in <xref xlink:href="#fig.odotutex09"
+                /></para>
+            <para>
+                <programlisting>#=odotutex09|Increasing the individual margins around the plots#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Adding color indications in the scale</title>
+            <para>An odometer usually have some colored markings to indicate safe and dangerous
+                values. The library allows the addition of any number of colored scale areas with
+                one or several calls to the method</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>OdoPlot::AddIndication($aMin,$aMax,$aColor)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>This method allows the specification of a min and max value of the scale which
+                will be given the background color specified as the third parameter.</para>
+            <para>The example in <xref xlink:href="#fig.odotutex10"/> adds three different scale
+                area with 6 different scale areas</para>
+            <para>
+                <programlisting>#=odotutex10|Adding colored scale indicators#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Changing size of the non-colored center area</title>
+            <para>In <xref xlink:href="#fig.odotutex10"/> it can be seen that by default the scale
+                color indication goes all the way down to the base of the needle. It is however
+                possible to adjust this to the colored area stops a bit above the base of the
+                needle. The non colored area is adjusted with a call to the method</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>OdoPlot::SetCenterAreaWidth($aWidth)</code></para>
+                        <para>The width is specified as a fraction of the radius of the plot.</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The following example in <xref xlink:href="#fig.odotutex11"/>set the size of this
+                base area to be 45% of the plot radius.</para>
+            <para>
+                <programlisting>#=odotutex11|Adjusting the non-colored center area#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Using multiple indicator needles in one odometer</title>
+            <para>In all the previous example the odometer plots have all had a single indicator. It
+                is however possible to add up to four indicators to each plot. This could for
+                example be sued to show the current value and a sliding 3-day average.</para>
+            <para>The extra needles are accessed through the properties </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>OdoPlot::needle2</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>OdoPlot::needle3</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>OdoPlot::needle4</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>In order to enable one of these extra needles the method OdoNeedle::Show() has to
+                be called. The value of the indicator can then be set as the following example
+                shows.</para>
+            <para>
+                <programlisting>$odo->needle2->Show();
+$odo->needle2->Set(44);</programlisting>
+            </para>
+            <para>By default all the needles will have the same color so the color should be
+                manually changed to be able to differentiate among multiple needles. The example in
+                    <xref xlink:href="#fig.odotutex12"/> shows an example of this where we also have
+                made the second indicator a bit shorter to further make it easier to read.</para>
+            <para>
+                <programlisting>#=odotutex12|Adding a second scale indicator#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Adding an odometer legend (label)</title>
+            <para>Most types of odometers have a legend in the middle of the meter usually
+                indicating what the scale shows. The odometer have a specific text property to add
+                text in that position.</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>OdoPlot::label</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The following code adds the label "mBar" as the scale indicator and also adjusts
+                the default font</para>
+            <para>
+                <programlisting>$odo->label->Set("mBar");
+$odo->label->SetFont(FF_FONT2,FS_BOLD);</programlisting>
+            </para>
+            <para>The result of this cane be seen in <xref xlink:href="#fig.odotutex13"/></para>
+            <para>
+                <programlisting>#=odotutex13|Adding a scale legend by using the label property#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Adjusting the width and color of the odometer frame (border)</title>
+            <para>The border of the odometer plot can be adjusted with a call to</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>OdoPlot::SetBorder($aColor,$aWidth=1)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The following example shows the effect of making the odometer plot border
+                thicker</para>
+            <para>
+                <programlisting>"=odotutex08.1|Adding a thicker border around the odometer plot"</programlisting>
+            </para>
+        </sect2>
+    </sect1>
+    <sect1>
+        <title>Working with the odometer scale</title>
+        <para>In the previous section we ignored the actual scale in order to focus on the
+            formatting options. Now we will do the (almost) opposite, only focus on how to
+            manipulate the scale and the scale labels. </para>
+        <para>There are a number of properties that can be adjusted in the scale.</para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>The min and max values </para>
+                </listitem>
+                <listitem>
+                    <para>The fonts and for the scale</para>
+                </listitem>
+                <listitem>
+                    <para>The formatting of the scale values </para>
+                </listitem>
+                <listitem>
+                    <para>The start and end angles for the min and max values </para>
+                </listitem>
+                <listitem>
+                    <para>The tick interval </para>
+                </listitem>
+                <listitem>
+                    <para>The intervall of the scale labels </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>The scale is an instance of <code>class OdoScale</code> and is instantiated as an
+            object that is accessed through the "$scale" property of the plot</para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para><code>OdoPlot::scale</code></para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <sect2>
+            <title>Adjusting the scale, ticks and labels</title>
+            <para>By default the scale runs between 0 (inclusively) and 100 (inclusively). trying to
+                set the indicator needle to a value outside this range will result in an
+                error.</para>
+            <para>The min an max values o the scale are specified with the method</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>OdoScale::Set($aMin,$aMax)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The min/max values can be specified to any numeric value with the restriction that
+                    <code>$aMin &lt;= $aMax</code></para>
+            <para>To adjust which scale position should have tick marks and which tick marks should
+                have a labels the following method is used.</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>OdoScle::SetTicks($aTickInterval, $aLabelInterval)</code></para>
+                        <para>The first argument specifies the tick interval, i.e. the interval tick
+                            marks will be drawn in the odometer. The second argument specifies that
+                            every n:th tick should have a label. </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The following line specifies that every 20 unit of the scale should have a tick
+                mark and that every second tick mark should have a label</para>
+            <para>
+                <programlisting>$odo->scale->SetTicks(20,2)</programlisting>
+            </para>
+            <para>
+                <tip>
+                    <para>To make sure that both the min and max value of the scale gets a tick mark
+                        the tick multiplier should be an even divider to the scale range and the
+                        label multiplier should be a factor in the tick multiplier.</para>
+                </tip>
+            </para>
+            <para><xref xlink:href="#fig.odotutex14"/> shows and example of how to change the scale,
+                tick and label positions.</para>
+            <para>
+                <programlisting>#=odotutex14#</programlisting>
+            </para>
+            <para>To adjust the appearance of the tick marks in respect to line weight, length and
+                color the following three methods can be used:</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>OdoScale::SetTickLength($aLength)</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>OdoScale::SetTickWeight($aWeight)</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>OdoScale::SetTickColor('red')</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <note>
+                    <para> The tick length of a major tick mark (which have labels) are 1.5 times
+                        that of a minor tick mark. This factor can not be adjusted. </para>
+                </note>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Adjusting scale label format</title>
+            <para>The following section will show hot to customize the appearance of scale and
+                labels.</para>
+            <para>The scale labels can, as all other texts in the library have there font and color
+                adjusted. The text property for the labels i accessed through the property</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>OdoScale::label</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>Since this is a standard Text object we can adjust the font and color as the
+                following example shows</para>
+            <para>
+                <programlisting>$odo->scale->label->SetFont(FF_FONT1,FS_BOLD);
+$odo->scale->label->SetColor('navy');</programlisting>
+            </para>
+            <para>The way the labels are formatted are controlled by a format string with the
+                standard "<code>printf()</code>" syntax, e.g "<code>%d</code>" (as default) displays
+                an integer and "<code>%02f.1</code>" displays a label zero padded to two positions
+                and with one decimal place. </para>
+            <para>The format string is applied by using the <code>OdoScale::SetLabelFormat()</code>
+                method of the scale class as in </para>
+            <para>
+                <programlisting>$odo->scale->SetLabelFormat('%d%%');</programlisting>
+            </para>
+            <para>The other aspect of the label formatting is exactly how the labels are positioned
+                within the scale. By using the method</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>OdoScale::SetLabelPos($aPos)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>it is possible to specify the distance from the center to the label edge. By
+                default this is 80% (i.e. specified as 0.8)</para>
+            <para>The following example shows the effect of applying some of these formatting
+                options.</para>
+            <para>
+                <programlisting>#odotutex15|Adjusting the scale format#</programlisting>
+            </para>
+            <para>
+                <note>
+                    <para>As can be seen in <xref xlink:href="#fig.odotutex15"/> we have used the
+                        utility <code>class SymChar</code> in order to get hold of the extended
+                        character that represents the degree mark. Remember that in order to get the
+                        extended character it is necessary to use a TTF scale.</para>
+                </note>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Adjusting the start and stop angle for the scale</title>
+            <para>By default the scale labels start at 180 degree (9'a clock) and ends at 0 degree
+                (3'a clock). To offer full flexibility this can be adjusted.</para>
+            <para>The method used for this is</para>
+            <para><itemizedlist>
+                    <listitem>
+                        <para><code>OdoScale::SetAngle($aStart, $aEnd)</code></para>
+                        <para>the angle is counted clockwise from the 6'a clock position. This means
+                            that the normal half odometer has a start angle of 90 degrees and an end
+                            angle of 270 degrees. </para>
+                    </listitem>
+                </itemizedlist>For full circle odometers the standard start angle is 40 degrees and
+                the end angle is 320. This leaves a sector of 80 degrees free at the bottom of the
+                odometer. </para>
+            <para>For example we could decide that the scale will start and stop 20 degrees above
+                the horizontal line. The following example shows two odometer plots. The left uses
+                the default start and end angle while the right odometer plot have adjusted start
+                and end angles.</para>
+            <para>
+                <programlisting>#=odotutex16|Adjusting start and end angles of scale#</programlisting>
+            </para>
+            <para>To further emphasize that the scale below the start and stop angles are "invalid"
+                we could add a scale indicator in some gray:ish color that would signal that the
+                area below 0 and 100 is not a valid scale area. We can do this by setting the range
+                of the scale indicator to values outside the scale that would correspond to the
+                horizontal line.</para>
+            <para>In <xref xlink:href="#fig.odotutex16"/> we can accomplish this by adding the
+                following two lines to the second odometer</para>
+            <para>
+                <programlisting>$odo2->AddIndication(-15,0,'lightgray');
+$odo2->AddIndication(100,115,'lightgray');</programlisting>
+            </para>
+            <para>The result of this is shown in <xref xlink:href="#fig.odotutex16.1"/></para>
+            <para>
+                <programlisting>#=odotutex16.1|Adding gray areas below the min and max scale values#</programlisting>
+            </para>
+        </sect2>
+    </sect1>
+    <sect1>
+        <title>Adding and positioning multiple odometers to a graph</title>
+        <para>The library supports unlimited number of odometers plots in a single graph. They can
+            either be positioned manually within the graph by specifying absolute coordinates for
+            the centers of the odometers or it can be done in a semi automatically way to avoid the
+            hassle of calculating exact pixels positions.</para>
+        <para>
+            <tip>
+                <para>Remember that there is a caption property of the odometer plot as well as the
+                    main graph class and it is suitable to add a separate caption text to every
+                    odometer to separate them.</para>
+            </tip>
+        </para>
+        <para>As have been shown in the previous example adding several odometer to the same graph
+            is simply a matter of creating multiple instances of <code>class Odometer</code> and
+            then adding them to the graph by calling the <code>OdoGraph::Add()</code> method.</para>
+        <sect2>
+            <title>Manual positioning </title>
+            <para>To manually position the odometer plot the following method is used</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>OdoPlot::SetPos($aX, $aY)</code></para>
+                        <para>Specifies the position of the odometer plot in either absolute
+                            coordinates (>1) or as fraction of the width/height when specified as
+                            fractions (in range (0.0 to 1.0)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <note>
+                    <para>There is a minor difference when using odometer captions and specifying
+                        the y coordinate using fractions in that the y-coordinate and the radius
+                        will automatically adjust to the height of the caption size. This guarantees
+                        that the total image (odometer+caption) will always occupy the same total
+                        height in the image regardless of the size of the caption. </para>
+                </note>
+            </para>
+            <para>The top left corner of the graph is (0,0)</para>
+            <para>The following example manually positions to odometer plots in the graph, one at
+                the top right corner and one in the bottom left corner.</para>
+            <para>
+                <programlisting>#=odotutex17|Manually specifying the position of odometer plots#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Using layout classes</title>
+            <para>
+                <note>
+                    <para>Those familiar with Java AWT classes will recognize this concept</para>
+                </note>
+            </para>
+            <para>Normally we don't want to have to calculate the absolute x and y coordinates when
+                positioning odometers. A much better concept would be to just tell the library to
+                position three odometer horizontally or perhaps vertically without us having to
+                figure out the exact coordinates our self.</para>
+            <para>This is where layout classes come in handy.</para>
+            <para>There are two types of layout horizontal and vertical. To specify that two
+                odometers should be positioned side by side (horizontal) first a new layout object
+                is created and then the odometer plots are added as object within the layout class.
+                Later on when the object are put to the image the horizontal layout class will take
+                all its objects and spread them out evenly along a horizontal line. The
+                corresponding applies to the vertical layout class with the obvious change in
+                direction.</para>
+            <para>The layout object are added to the graph in exactly the same was as odometers, by
+                calling the <code>OdoGraph::Add()</code> method. </para>
+            <para>The following line would create a horizontal line of odometer plots</para>
+            <para>
+                <programlisting>&lt;?php
+$row1 = new LayoutHor( array($odo1, $odo2, $odo3) );
+$graph->Add( $row1 );
+?></programlisting>
+            </para>
+            <para>If we instead wanted the odometer stacked on top of each other the lines above
+                would have to be changed to</para>
+            <para>
+                <programlisting>&lt;?php
+$row1 = new LayoutVert( array($odo1, $odo2, $odo3) );
+$graph->Add( $row1 );
+?></programlisting>
+            </para>
+            <para>There is no limit to how many object can be added to a layout class.</para>
+            <para>If it was only possible to add odometers in the creation of layout classes it
+                would be of limited use. The real power of layout classes is that they can be
+                combined. </para>
+            <para>So for example if we wanted two odometers in the top row and three in the bottom
+                row we can think of this as first creating two horizontal layout object which are
+                then in there turn layout out vertically.</para>
+            <para>The following code shows how this could be done</para>
+            <para>
+                <programlisting>&lt;?php
+$row1 = new LayoutHor( array($odo1, $odo2) );
+$row2 = new LayoutHor( array($odo3, $odo4, $odo5) );
+
+// Combine the two rows in a column
+$col1 = new LayoutVert( array($row1, $row2) );
+
+// The image will now have 5 odometers!
+$graph->Add( $col1 );
+?></programlisting>
+            </para>
+            <para>The following code shows a full example on how this is done</para>
+            <para>
+                <programlisting>#odotutex18|Using layout classes for automatic positioning#</programlisting>
+            </para>
+        </sect2>
+    </sect1>
+    <sect1>
+        <title>Adding icon and text objects to the graph</title>
+        <para>Odometer plots supports the ordinary way of adding icon and text objects to the graph. </para>
+        <sect2>
+            <title>Adding a text object</title>
+            <para>Text objects are added by first creating an instance of <code>class Text</code>
+                for each text needed and then adding the text to the graph with the usual call to
+                    <code>MatrixGraph::Add()</code>. </para>
+            <para>A basic text will only require two additional lines of code</para>
+            <para>
+                <programlisting>&lt;?php
+$txt = new Text('Simple string',20,20);
+$graph->Add($txt); 
+?></programlisting>
+            </para>
+            <para>The following code snippet is slightly more complicated and will create a boxed
+                text in the upper right corner of the graph. </para>
+            <para>
+                <programlisting>&lt;?php
+// Add a boxed text
+$txt = new Text();
+$txt->SetFont(FF_ARIAL,FS_NORMAL,10);
+$txt->Set("Arbitrary text\non a\nMatrix Plot");
+$txt->SetParagraphAlign('center');
+$txt->SetPos(0.95,0.15,'right');
+$txt->SetBox('lightyellow');
+$txt->SetShadow();
+$graph->Add($txt); 
+?></programlisting>
+            </para>
+            <para>The snippet above adds a text at coordinates X=20, Y=20 using the default lower
+                left corner as the text anchor point.</para>
+            <para>
+                <note>
+                    <para>To add a newline you must remember to use double-quotes to enclose the
+                        text otherwise the "\n" will only be interpreted literally. </para>
+                </note>
+            </para>
+            <para>
+                <note>
+                    <para>Remember that the "text align", as adjusted with <code>SetAlign()</code>,
+                        specifies the anchor point for the text, i.e. what part of the text is
+                        aligned with the specified position. </para>
+                </note>
+            </para>
+            <para>To add many text strings it is often useful to specify them in an array and then
+                have a loop creating the text object and add the text array of all the created
+                objects to the graph as the following short snippet shows.</para>
+            <para>
+                <programlisting>&lt;?php
+//--------------------------------------------------------------
+// Add texts to the graph
+//--------------------------------------------------------------
+$txts = array( 
+    array('Textstring one ...',$tx1,$ty1),
+    array('Textstring two ...',$tx2,$ty2),
+    array('Textstring three ...',$tx3,$ty3),
+
+$n=count($txts);
+$t=array();
+for($i=0; $i &lt; $n; ++$i){
+    $t[$i] = new Text($txts[$i][0],$txts[$i][1],$txts[$i][2]);
+    $t[$i]->SetFont(FF_ARIAL,FS_NORMAL,12);
+    $t[$i]->SetColor('brown');
+    $t[$i]->SetAlign('center','top');
+}
+$graph->Add($t);
+?></programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Adding icons to the graph</title>
+            <para>Icons are added as instances of <code>class IconPlot</code> to the graph (as usual
+                with a call to <code>OdometerGraph::Add()</code>). This means that to use icons the
+                library module "<filename>jpgraph_iconplot.php</filename>" must first be included. </para>
+            <para>The following example shows how to add a small icon in the lower right corner of
+                the graph. For more information on formatting icons that are added to a graph see
+                    <xref xlink:href="#sec.adding-icons-to-graph"/></para>
+            <para>
+                <caution>
+                    <para>Since Odometer graphs doesn't have a ny concept of linear scale the
+                        position of icons can only be specified as absolute pixels or as fractions
+                        of the width/height.</para>
+                </caution>
+            </para>
+            <para>
+                <programlisting>#=odotutex19|Adding an icon and text to a Odometer graph#</programlisting>
+            </para>
+            <para>We also recall that it is possible to use country flags as icons by making use of
+                the method</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>IconPlot::SetCountryFlag($aFlag,$aX=0,$aY=0,$aScale=1.0,$aMix=100,$aStdSize=3)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Adding background images</title>
+            <para>In just the same way as for all other plots it is possible to add a background
+                images, background gradients and a background flag to the graph. Since this has been
+                discussed several time previously in the manual we only show a simple example
+                here.</para>
+            <para>
+                <note>
+                    <para>Since odometer graphs does not have the concept of plot area the
+                        background image positioning alternative <code>BGIMG_FILLPLOT</code> is the
+                        same as <code>BGIMG_FILLFRAME</code> as we have used in this example
+                        below.</para>
+                </note>
+            </para>
+        </sect2>
+    </sect1>
+</chapter>

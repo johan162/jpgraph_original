@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<appendix version="5.0" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xml:id="app.compile-php">
+    <title>Compiling PHP</title>
+    <para>Usually the included PHP version is adequate but if problems persists it is a good idea to
+        be able to compile PHP yourself. This way you will also be able to more quickly upgrade to
+        newer version of PHP which might have fix for a particular nasty bug that may have crept
+        in.</para>
+    <para> In the following sections we give examples of Unix shell scripts that will show typical
+        compile configuration for a downloaded PHP distribution. These compile configuration scripts
+        will make both the GD and FreeType libraries included in the executable. </para>
+    <para>In order to compile your downloaded PHP distribution first copy and save these scripts to
+        a local file and make that file runnable. Then run one of the selected configurations below
+        and do a normal "make". </para>
+    <tip>
+        <para>When running <code>make</code> you can speed up the compilation by telling make to use
+            a number of parallel compile processes. Since most modern system have at least two cores
+            a typical invocation of make would be to make use of three parallel compile time
+            processes. This is done by using the <code>-j</code> argument. For example as
+            <screen>make -j3</screen></para>
+    </tip>
+    <para>It is possible to compile PHP into (at least) three variants </para>
+    <para><orderedlist>
+            <listitem>
+                <para>as a command line tool</para>
+            </listitem>
+            <listitem>
+                <para>as a Apache extension module (this is probably the most common variant)</para>
+            </listitem>
+            <listitem>
+                <para>as a CGI module to be used by a HTTP server (this is slower than running PHP
+                    as a module since it needs to be read from disk and the process created every
+                    time a PHP script needs to be executed.)</para>
+            </listitem>
+        </orderedlist>There is one crucial difference of importance when using PHP to generate
+        images. Both the CGI module and the client variant are both standalone executables so what
+        is the difference? The crucial difference is that the CGI module will by default output a
+        MIME header before it outputs data while the client version will not. </para>
+    <para>The following sections have one compile script for each of the three major
+        versions.</para>
+    <caution>
+        <para>You should make sure that the proposed directory paths in the scripts match your
+            particular server setup as this can vary from system to system. </para>
+    </caution>
+    <sect1>
+        <title>Compiling PHP4</title>
+        <sect2>
+            <title>Client version</title>
+            <screen>#!mkphp4-cli#</screen>
+        </sect2>
+        <sect2>
+            <title>Apache module</title>
+            <screen>#!mkphp4-sapi#</screen>
+        </sect2>
+        <sect2>
+            <title>CGI extension</title>
+            <screen>#!mkphp4-cgi#</screen>
+        </sect2>
+    </sect1>
+    <sect1>
+        <title>Compiling PHP5</title>
+        <sect2>
+            <title>Client version</title>
+            <screen>#!mkphp5-cli#</screen>
+        </sect2>
+        <sect2>
+            <title>Apache module</title>
+            <screen>#!mkphp5-sapi#!#</screen>
+        </sect2>
+        <sect2>
+            <title>CGI extension</title>
+            <screen>#!mkphp5-cgi#</screen>
+        </sect2>
+    </sect1>
+</appendix>

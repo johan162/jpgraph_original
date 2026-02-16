@@ -1,0 +1,1571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<chapter version="5.0" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
+        <title>Linear Barcodes (One Dimensional Barcodes)</title>
+        <sect1>
+            <title>Introduction</title>
+            <note><para>This module is only available in the pro-version of the library.</para></note>
+            <para>With the linear (One-dimensional) barcode extension it is possible to create bar
+                codes using all the commonly accepted symbologies. The resulting bar code can be
+                created as either an image (in PNG or JPEG format) or as a Postscript file ready for
+                printing on high resolution printers. </para>
+            <para>The bar code extension provides extensive data verification which makes sure that
+                the created barcode follows the official applicable standards.</para>
+            <para>
+                <note>
+                    <para>All generated bar codes (except CODE 11 which have little support in
+                        Europe) have been extensively verified using Metrologic CCD-47 handhold
+                        scanner. </para>
+                </note>
+            </para>
+            <para>In order to create a linear barcode the module
+                    "<filename>jpgraph_barcode.php</filename>" must be included.</para>
+            <para>There are several types of linear barcode even though they all use the same
+                principle. The reason for several different types (or symbologies as it is known) is
+                partly to handle different requirements (for example encoding just numerical data or
+                both numerical and alphabetical data) and partly because they were initially created
+                by different companies to solve similar problems. The library supports most of the
+                common linear barcode. These types of barcode look like what can be usually seen on
+                consumer goods.</para>
+            <para>The different types of barcodes are often referred to as different
+                symbologies.</para>
+            <para>Most of the commonly used symbologies has been elevated to ISO/IEC standards. Some
+                barcode which have not yet been accepted as ISO standard are available from AIM
+                    (<uri xlink:href="http://www.aimglobal.org">http://www.aimglobal.org</uri>). In
+                USA the organization responsible for issuing retail codes used in barcodes are the
+                    <emphasis role="italic">Uniform Code Council</emphasis>, (UCC) <uri
+                    xlink:href="http://www.uc-council.org/">http://www.uc-council.org</uri>.</para>
+            <para>While these standards are very comprehensive they are of little interest to end
+                user of the barcode. For an end user the three most important question when
+                selecting a barcode symbology are</para>
+            <para><orderedlist>
+                    <listitem>
+                        <para>What characters can be encoded in this symbology?</para>
+                    </listitem>
+                    <listitem>
+                        <para>How efficient is the symbology, i.e. how large will the barcode be for
+                            a given input data string? </para>
+                        <para>Linear barcodes typically encode alphanumerical strings up to maximum
+                            of ~20 characters. </para>
+                        <para>
+                            <note>
+                                <para>While many of the barcode symbologies can handle, in theory
+                                    unlimited, string lengths there are practical limitation to how
+                                    wide barcode a given reader/scanner can interpret. Most handhold
+                                    scanners can usually not reliable read a barcode wider than
+                                    ~10cm.</para>
+                            </note>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>How strong is the tolerance against physical damage, i.e. how large
+                            percentage of the barcode can be destroyed while still be readable by a
+                            scanner?</para>
+                        <para>The tolerance for linear barcode are in general low. If one ore more
+                            of the bars (making up the barcode) is unreadable the whole barcode is
+                            in practice unreadable. While some barcode symbologies include a check
+                            digit this is not enough to re-create damaged data. It is only enough to
+                            verify with some confidence that the data is intact, however there is
+                            still no guarantee since two errors might, by coincidence, make the
+                            check digit correct. </para>
+                        <para>A common way to strengthen linear barcodes is to make them physically
+                            larger/taller.</para>
+                    </listitem>
+                </orderedlist>While linear barcodes is still widely used in legacy applications
+                there are almost no new applications that uses linear barcode due in part to the
+                limitations listed above (poor fault tolerance and low capacity). Most new
+                applications uses either RFID tags or two dimensional barcodes (described in the
+                following chapters) which have much higher data capacity and fault tolerance.</para>
+        </sect1>
+        <sect1>
+            <title>How does linear barcodes work?</title>
+            <para>Linear barcodes are created by translating the supported characters that should be
+                displayed into combination of narrow and wide bars which are combined into a
+                barcode. To identify the start and end of a barcode special "guard" patterns are
+                used to indicate to the scanner that the barcode starts and also identify what type
+                of symbology is used.</para>
+            <para>To illustrate this <xref xlink:href="#fig.explaining-barcode"/> shows an enlarged
+                and amended barcode thats uses the Code 25 symbology and encodes the numeric string
+                "123". In order to illustrate the different parts we have colored the start and stop
+                pattern and the three digits to make it clear how it is encoded.</para>
+            <para>
+                <figure xml:id="fig.explaining-barcode">
+                    <title>Understanding linear barcodes. Example with Code 25 symbology</title>
+                    <mediaobject>
+                        <imageobject><imagedata fileref="images/barcode-explained-1.png" scale="60"
+                            /></imageobject>
+                    </mediaobject>
+                </figure>
+            </para>
+            <para>We have chosen to illustrate the principle with the code 25 symbology since it is
+                easy to understand. Each character is encoded with 5 black elements with spaces in
+                between, 2 wide and three narrow elements, hence the name 2 of 5 (or 25). The width
+                of the thinnest element is also known as the module width. Other symbologies have
+                more complicated patterns to achieve higher density (more encoded characters in a
+                given width) but the principle still stands.</para>
+            <para>The typical scanner sends out light which is reflected and is them measured as the
+                scanner swipes from left to right. The relative size of the black and white areas
+                are measured and translated back to a the encoded data.</para>
+            <para>The human readable string, usually at the bottom of the barcode is strictly
+                speaking not a part of the barcode. It is only there to help a human reader
+                interpret the barcode.</para>
+            <para>Some barcode symbologies also add a check digit at the end of the data. This check
+                digit (or digits) is used to verify that the interpretated data has been read
+                correctly.</para>
+        </sect1>
+        <sect1>
+            <title>Barcode symbologies</title>
+            <sect2>
+                <title>Numerical only barcode symbologies</title>
+                <para>The following supported symbologies only supports numerical data and in some
+                    cases special characters like "-,+,:,$" . A more detailed description and
+                    example of each barcode is given in <xref
+                        xlink:href="#sec.desc-supported-symbologies"/></para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>Codabar. Older code not widely used today apart from some library
+                                system primarily in USA.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Code 11. Used primarily for labeling telecommunications
+                                equipment</para>
+                        </listitem>
+                        <listitem>
+                            <para>EAN-13 (ISO/IEC 15420). European Article Numbering, 13-digits.
+                                International retail product code</para>
+                            <para>(Also known as UPC-13 in USA)</para>
+                        </listitem>
+                        <listitem>
+                            <para>EAN-8. European Article Numbering, 8-digits. Compressed version of
+                                EAN code for use on small products</para>
+                        </listitem>
+                        <listitem>
+                            <para>Industrial 2 of 5. Older low density code not commonly used
+                                today</para>
+                        </listitem>
+                        <listitem>
+                            <para>Interleaved 2 of 5 (ISO/IEC 16390). Compact numeric code, widely
+                                used in industry, driving licenses, transportation</para>
+                        </listitem>
+                        <listitem>
+                            <para>UPC-A. Universal product code seen on almost all retail products
+                                in the USA and Canada</para>
+                        </listitem>
+                        <listitem>
+                            <para>UPC-E. Compressed version of UPC-A code for use on small
+                                products</para>
+                        </listitem>
+                        <listitem>
+                            <para>Bookland. Used to encode ISBN (International Standard Book Number)
+                                numbers used in book and magazines</para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </sect2>
+            <sect2>
+                <title>Alphanumerical barcode symbologies</title>
+                <para>The following supported symbologies supports alpha numerical data and in some
+                    cases special characters like "-,+,&amp;,#,!". A more detailed description and
+                    example of each barcode is given in <xref
+                        xlink:href="#sec.desc-supported-symbologies"/></para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>Code 128 (ISO/IEC 15417). A flexible high capacity code in wide
+                                use. There are variants of Code 128 (e.g EAN-128) that impose a
+                                strict structure of the data.</para>
+                        </listitem>
+                        <listitem>
+                            <para>EAN 128 (ISO/IEC 15420). Structured variant of Code 128. This is
+                                not really a barcode symbology in itself but rather a structure for
+                                how to format the input data to Code 128.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Code 39 (ISO/IEC 16388). General purpose code. Used
+                                worldwide.</para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </sect2>
+            <sect2>
+                <title>Which symbology should be used?</title>
+                <para>Usually the application dictates what standard should be followed and there is
+                    no choice other than following the applicable industry standard. </para>
+                <para>However, if the usage is strictly internal it is possible to chose any
+                    symbology. However for generic usage we would recommends using either Code 39 or
+                    Code 128 since they offer great flexibility, supports large character sets and
+                    is fairly efficient in terms of space/datasize ratio.</para>
+            </sect2>
+        </sect1>
+        <sect1>
+            <title>Features</title>
+            <para>This is a summary of the features available in the JpGraph barcode extension. </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Supports the following symbologies (with data validation)</para>
+                        <para>
+                            <orderedlist>
+                                <listitem>
+                                    <para>UPC A</para>
+                                </listitem>
+                                <listitem>
+                                    <para>UPC E</para>
+                                </listitem>
+                                <listitem>
+                                    <para>EAN 128</para>
+                                </listitem>
+                                <listitem>
+                                    <para>EAN 13</para>
+                                </listitem>
+                                <listitem>
+                                    <para>EAN 8</para>
+                                </listitem>
+                                <listitem>
+                                    <para>CODE 11 (USD-8)</para>
+                                </listitem>
+                                <listitem>
+                                    <para>CODE 39</para>
+                                </listitem>
+                                <listitem>
+                                    <para>CODE 128</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Industrial 2 of 5</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Interleaved 2 of 5</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Codabar</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Bookland (ISBN)</para>
+                                </listitem>
+                            </orderedlist>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Input data is verified against the official specification of each
+                            symbologies and makes it impossible to create invalid bar codes.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Output format </para>
+                        <para>
+                            <orderedlist>
+                                <listitem>
+                                    <para>Image format (either PNG or JPG encoding) </para>
+                                </listitem>
+                                <listitem>
+                                    <para>Postscript</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Encapsulated postscript</para>
+                                </listitem>
+                            </orderedlist>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Formatting options </para>
+                        <para>
+                            <orderedlist>
+                                <listitem>
+                                    <para>User specified module width. This controls the width of
+                                        the smallest unity in the barcode.</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Automatic calculation of optional checksum for symbologies
+                                        where the checksum is optional</para>
+                                </listitem>
+                                <listitem>
+                                    <para>User specified scaling of resulting bar code</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Horizontal or vertical bar code layout</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Suppression of human readable text on barcodes</para>
+                                </listitem>
+                                <listitem>
+                                    <para>Selectable font for human readable text</para>
+                                </listitem>
+                            </orderedlist>
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <note>
+                    <para>The term "symbology" is the term used to describe the combination of
+                        encodation method (how characters are translated to bars) and the layout of
+                        the bars specified by a particular barcode standard. All of the listed
+                        standard symbologies above are still widely used. Many of the symbologies
+                        overlap in terms of functionality and multiple symbologies might be possible
+                        to use for a particular application unless there is a strict standard that
+                        stipulates that a particular symbology should be used. </para>
+                    <para>The reason for the existence of so many symbologies with overlapping
+                        functionality is in some cases the result of different companies early on
+                        specifying there own patented barcodes in order to gain market shares or in
+                        some cases lock customers to a specific brand of scanner. In other cases it
+                        is simply the result of that earlier barcodes could not handle new
+                        demands.</para>
+                </note>
+            </para>
+            <sect2>
+                <title> Sample application</title>
+                <para>Even though primarily the JpGraph bar code extension is meant, and designed,
+                    to be used as a library within a larger system there is a small demo web
+                    application to allow easy creation of linear barcodes bar codes. This
+                    application is primarily included as a demo of the features available and not as
+                    a finalized product.</para>
+                <para>The application is available under the directory
+                        "<filename>barcode/demoapp</filename>" as "<filename>index.html</filename>"
+                    in the main library directory</para>
+                <para><xref xlink:href="#fig.linear-barcode-demoapp"/> shows a screen shot of the
+                    demo application</para>
+                <para>
+                    <figure xml:id="fig.linear-barcode-demoapp">
+                        <title>Linear Barcode Demo application (screen shot from running in
+                            WEB-browser)</title>
+                        <mediaobject>
+                            <imageobject><imagedata fileref="images/barcode-demoapp.png" scale="60"
+                                /></imageobject>
+                        </mediaobject>
+                    </figure>
+                </para>
+                <para>We strongly suggest running this demo application to get a feel for what
+                    formatting options and how the different symbologies behave.</para>
+                <para>
+                    <tip>
+                        <para>There is also a command line utility that allows the creation of
+                            barcodes from the command line
+                            "<filename>mkbarcode.php</filename>"</para>
+                    </tip>
+                </para>
+            </sect2>
+        </sect1>
+        <sect1>
+            <title>Creating barcodes - quick start</title>
+            <para>The creation of all linear barcode follows the same chema:</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Create an instance of the encoder for the chosen symbology</para>
+                    </listitem>
+                    <listitem>
+                        <para>Create an instance of the backend for the chosen output format (image
+                            or postscript)</para>
+                    </listitem>
+                    <listitem>
+                        <para>Encode the data and generate the barcode</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>Normally only three lines of code is needed to create a basic barcode.</para>
+            <para>For example, the following code will create a barcode encoded as an image
+                representing the data string "ABC123" using symbology "CODE 39".</para>
+            <para>
+                <programlisting>&lt;?php
+require_once('jpgraph_barcode.php');
+
+$symbology = BarcodeFactory::Create (ENCODING_CODE39 );
+$barcode = BackendFactory ::Create(BACKEND_IMAGE, $symbology);
+$barcode ->Stroke('ABC123');
+?></programlisting>
+            </para>
+            <para>The generated barcode is shown in </para>
+            <para>
+                <figure>
+                    <title>Encoding "ABC123" with CODE 39.</title>
+                    <mediaobject>
+                        <imageobject><imagedata fileref="images/barcode_c39_abc123_ex1.png" scale="60"
+                            /></imageobject>
+                    </mediaobject>
+                </figure>
+            </para>
+            <para>As can be seen from the code above the basic interface to the library makes use of
+                two abstract factories which creates the appropriate encoder and output backend.
+                This design makes the addition of new output formats and new symbologies transparent
+                for the end user of the library.</para>
+            <para>If instead we wanted to encode the data string using symbology "CODE 128" instead,
+                it would only be necessary to modify the first line in the above code so instead it
+                would become.</para>
+            <para>
+                <programlisting>&lt;?php
+require_once('jpgraph_barcode.php');
+
+$symbology = BarcodeFactory::Create (ENCODING_CODE128 );
+$barcode = BackendFactory ::Create(BACKEND_IMAGE, $symbology);
+$barcode ->Stroke('ABC123');
+?></programlisting>
+            </para>
+            <para>the result of this script is shown in <xref xlink:href="#fig.c128-abc123"/></para>
+            <para>
+                <figure xml:id="fig.c128-abc123">
+                    <title>Encoding "ABC123" with CODE 128.</title>
+                    <mediaobject>
+                        <imageobject><imagedata fileref="images/barcode_c128_abc123_ex1.png" scale="60"
+                            /></imageobject>
+                    </mediaobject>
+                </figure>
+            </para>
+            <para>As can be seen in the examples above both the backend and the symbology is
+                specified by means of a symbolic constant. The following list shows the symbolic
+                constants available to specify the different supported symbologies. </para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>ENCODING_EAN128</para>
+                    </listitem>
+                    <listitem>
+                        <para>ENCODING_EAN13</para>
+                    </listitem>
+                    <listitem>
+                        <para>ENCODING_EAN8</para>
+                    </listitem>
+                    <listitem>
+                        <para>ENCODING_UPCA</para>
+                    </listitem>
+                    <listitem>
+                        <para>ENCODING_UPCE</para>
+                    </listitem>
+                    <listitem>
+                        <para>ENCODING_CODE39</para>
+                    </listitem>
+                    <listitem>
+                        <para>ENCODING_CODE128</para>
+                    </listitem>
+                    <listitem>
+                        <para>ENCODING_CODE25</para>
+                    </listitem>
+                    <listitem>
+                        <para>ENCODING_CODEI25</para>
+                    </listitem>
+                    <listitem>
+                        <para>ENCODING_CODABAR</para>
+                    </listitem>
+                    <listitem>
+                        <para>ENCODING_CODE11</para>
+                    </listitem>
+                    <listitem>
+                        <para>ENCODING_BOOKLAND</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>The usage and typical application of each symbology is discussed in <xref
+                    xlink:href="#sec.desc-supported-symbologies"/>.</para>
+        </sect1>
+        <sect1>
+            <title>Error handling</title>
+            <para>The barcode module uses the standard library error handling which mean that in
+                case of an error (most likely that the data validation fails) an exception will be
+                raised. Errors can be handled in two ways.</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>By enclosing the script in a <code>try { ... } catch { ... }</code>
+                            statement</para>
+                    </listitem>
+                    <listitem>
+                        <para>By installing a custom default error handler with
+                                <code>set_exception_handler()</code> when the library throws an
+                            error the specified error handler will be called with an instance of the
+                                <code>JpGraphException</code> class.</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>The following code snippet shows an example of using a try-catch statment</para>
+            <para>
+                <programlisting>&lt;?php
+try {
+    $encoder = BarcodeFactory::Create(ENCODING_CODE39);
+    $e = BackendFactory::Create(BACKEND_IMAGE,$encoder);
+    $e->Stroke('abc123');
+} catch( JpGraphException $e ) {
+	    echo 'Error: ' . $e->getMessage()."\n";
+}
+?></programlisting>
+            </para>
+            <para>The code when run will give the error</para>
+            <para>
+                <screen>Error: Data validation failed. Can't encode [abc123] using encoding "CODE 39" </screen>
+            </para>
+            <para>The problem with the input data string is that Code 39 does not support encoding
+                lower case letters. In the case some error handling is still needed but the image
+                error should be displayed it is possible to re-raise the original exception as the
+                following example shows</para>
+            <para>
+                <programlisting>&lt;?php
+try {
+    $encoder = BarcodeFactory::Create(ENCODING_CODE39);
+    $e = BackendFactory::Create(BACKEND_IMAGE,$encoder);
+    $e->Stroke('abc123');
+} catch( JpGraphException $e ) {
+    JpGraphError::Raise($e->getMessage());
+}
+?></programlisting>
+            </para>
+            <para>The line</para>
+            <para>
+                <programlisting>JpGraphError::Raise($e->getMessage());</programlisting>
+            </para>
+            <para>will display the image error as shown in <xref
+                    xlink:href="#fig.barcode-validation-error"/></para>
+            <para>
+                <figure xml:id="fig.barcode-validation-error">
+                    <title>Image error - Failed barcode data validation</title>
+                    <mediaobject>
+                        <imageobject><imagedata fileref="images/barcode_data_validation_failed.png" scale="60"
+                            /></imageobject>
+                    </mediaobject>
+                </figure>
+            </para>
+            <para>In the command line barcode utility ( <xref xlink:href="#sec.command-line-barcode"
+                />) the alternative method of installing a different default error handler can be
+                seen.</para>
+        </sect1>
+        <sect1 xml:id="sec.command-line-barcode">
+            <title>Generating barcodes on the command line</title>
+            <para>The library includes a command line utility as an additional example on how to use
+                the library.</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><filename>mkbarcode.php</filename></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>This utility can be found in the "<filename>barcode/</filename>" directory. This
+                utility should be used from the command line as the following example shows</para>
+            <para>
+                <screen>$>php mkbarcode.php -b code39 ABC123 > barcode.png</screen>
+            </para>
+            <para>The line above will create a barcode from the data string "abc123" using the Code
+                39 symbology and store the resulting image in the file
+                    "<filename>barcode.png</filename>".</para>
+            <para>Using the command utility as above assumes that the client version of PHP is
+                available at the command line. </para>
+            <para>This utility has the following syntax</para>
+            <para>
+                <screen>mkbarcode.php -b &lt;symbology> [-r -h -c -o &lt;output format> -m &lt;width> -s &lt;scale>\\ 
+-y &lt;height> -f &lt;filename> ] datastring
+
+Create the specified barcode
+-b           What symbology to use, one of the following strings (case insensitive)
+             UPCA
+             UPCE
+             EAN128
+             EAN13
+             EAN8
+             CODE11
+             CODE39
+             CODE128
+             CODE25
+             CODEI25
+             CODABAR
+             BOOKLAND
+-c           Add checkdigit for symbologies where this is optional
+-o           Output format. 0=Image, 1=PS, 2=EPS
+-m           Module width
+-s           Scale factor
+-h           Show this help
+-f           Filename to write to
+-r           Rotate barcode 90 degrees
+-y height    Set height in pixels
+-x           Hide the human readable text
+--silent     Silent. Don't give any error mesages
+</screen>
+            </para>
+            <para>If no filename is given the image will be sent back to the console which means it
+                should be redirected to a file.</para>
+        </sect1>
+        <sect1>
+            <title>Format options for barcodes</title>
+            <sect2>
+                <title>Adjusting the encodation process</title>
+                <para>For the encoding there is basically only one modification available. </para>
+                <para>For those symbologies that include an optional checksum it is possible to
+                    enable or disable this calculation.</para>
+                <para>The following symbologies may have optional checksum character(s)</para>
+                <para>
+                    <orderedlist>
+                        <listitem>
+                            <para>Industrial 2 of 5</para>
+                        </listitem>
+                        <listitem>
+                            <para>Interleaved 2 of 5</para>
+                        </listitem>
+                        <listitem>
+                            <para>Code 39</para>
+                        </listitem>
+                        <listitem>
+                            <para>Code 39 Extended</para>
+                        </listitem>
+                        <listitem>
+                            <para>Code 11</para>
+                        </listitem>
+                    </orderedlist>
+                </para>
+                <para>Turning on/off checksum calculation for other symbologies will have no affect.
+                    Checksum calculation is enabled with a call to <code>AddChecksum()</code> on the
+                    chosen backend. </para>
+                <para>For example to augment the previous "CODE 39" example to include the checksum
+                    the code would be changed to</para>
+                <para>
+                    <programlisting>&lt;?php
+$symbology = BarcodeFactory::Create (ENCODING_CODE39 );
+$symbology->AddChecksum();
+$barcode = BackendFactory ::Create('IMAGE', $symbology);
+$barcode->Stroke('ABC123');
+?></programlisting>
+                </para>
+                <para>Which would give the result shown in <xref xlink:href="#fig.adding-chk-c39"
+                    /></para>
+                <para>
+                    <figure xml:id="fig.adding-chk-c39">
+                        <title>Encoding "ABC123" with CODE 39 adding checksum (checksum=4).</title>
+                        <mediaobject>
+                            <imageobject><imagedata fileref="images/barcode_c39_abc123_ex3.png" scale="60"
+                                /></imageobject>
+                        </mediaobject>
+                    </figure>
+                </para>
+            </sect2>
+            <sect2>
+                <title>Selecting output format</title>
+                <para>The output format can be adjusted by specifying/creating the appropriate
+                    backend. The library supports image and postscript (and encapsulated postscript)
+                    backends. </para>
+                <para>The backend is created by calling the static factory method </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>BackendFactory::Create($aBackend,$aEncoder,$aReport=false)</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>So to create an image backend the following code is needed</para>
+                <para>
+                    <programlisting>$barcode = BackendFactory::Create (BACKEND_IMAGE ,$symbology);</programlisting>
+                </para>
+                <para>Where "<code>$symbology</code>" is the chosen symbology as created by the
+                        <code>BarcodeFactory::Create()</code> factory method. Please note that both
+                    factory functions are called as static methods.</para>
+                <para>The output format is specified by using one of the following symbolic
+                    defines</para>
+                <para>
+                    <orderedlist>
+                        <listitem>
+                            <para><code>BACKEND_IMAGE</code>, Creates a standard JPEG or PNG
+                                (default) image</para>
+                        </listitem>
+                        <listitem>
+                            <para><code>BACKEND_PS</code>, Creates a standard postscript file as
+                                output. It is possible to modify this output to become EPS
+                                (Encapsulated postscript) by calling the <code>SetEPS()</code>
+                                method on the backend as the following code snippet shows</para>
+                            <para>
+                                <programlisting>$barcode = BackendFactory::Create (BACKEND_PS,$symbology);
+$barcode->SetEPS()</programlisting>
+                            </para>
+                            <para>Please note that for the postscript backend the postscript code is
+                                returned as a string from the <code>Stroke()</code> method. </para>
+                        </listitem>
+                    </orderedlist>
+                </para>
+                <para>To send the created stream (either image or postscript) back to the browser or
+                    to a file the <code>Backend::Stroke()</code> method shall be used. The parameter
+                    to the Stroke() method shall be the string to be encoded.</para>
+                <para>Assume we want to create an image that is sent back to the browser. We would
+                    then use the following code</para>
+                <para>
+                    <programlisting>&lt;?php
+$symbology = BarcodeFactory::Create (ENCODING_CODE128 );
+$barcode = BackendFactory ::Create(BACKEND_IMAGE, $symbology);
+$barcode->Stroke('ABC123');
+?></programlisting>
+                </para>
+                <para>It is also possible to write the barcode directly to a file by specifying a
+                    second argument to the <code>Stroke()</code> method above. So if we instead
+                    wanted the barcode to be stored in the file
+                        "<filename>/tmp/barcode.png</filename>" we could write </para>
+                <para>
+                    <programlisting>$symbology = BarcodeFactory::Create (ENCODING_CODE128 );
+$barcode = BackendFactory ::Create(BACKEND_IMAGE, $symbology);
+$barcode->Stroke('ABC123','/tmp/barcode.png');</programlisting>
+                </para>
+                <para>
+                    <note>
+                        <para>There is no automatic added extension to the file name.</para>
+                    </note>
+                </para>
+                <para>Again, please note that for the Postscript background the
+                        <code>Backend::Stroke()</code> method normally returns the postscript file
+                    as a string if everything went well.</para>
+            </sect2>
+            <sect2>
+                <title>Writing barcodes to a file</title>
+                <para>This is done by adding a second argument, the file name, to the
+                        <code>Backend::Stroke()</code> method. This works for all backends. The file
+                    name should be an absolute path name. Since it is the PHP process that writes
+                    the file the permissions must allow the PHP process to write to the directory if
+                    PHP is called from a browser. If the command line version of PHP is used this
+                    does of course not apply.</para>
+            </sect2>
+            <sect2>
+                <title>Hiding the human readable text</title>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>Backend::HideText($aHide=true)</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>The human readable text is the string that can optionally be displayed at the
+                    bottom of the bar. By default this is enabled. </para>
+            </sect2>
+            <sect2>
+                <title>Adjusting the module width</title>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>Backend::SetModuleWidth($aWidth)</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>There are however some subtle facts regarding the module width and backend
+                    that needs to be explained. </para>
+                <para>
+                    <orderedlist>
+                        <listitem>
+                            <para>For image type backends the module width specifies the number of
+                                pixels used for a module.</para>
+                        </listitem>
+                        <listitem>
+                            <para>For Postscript (and Encapsulated PS) backends the module width
+                                specifies the width in points (i.e. 1/72 inch). </para>
+                        </listitem>
+                    </orderedlist>
+                </para>
+                <para>This also means that for image type backends only integer values makes
+                    sense.</para>
+                <para>
+                    <caution>
+                        <para>Depending on the quality of the printer (and paper) very small module
+                            width might not be readable with all bar code readers. For images it is
+                            therefore recommended to use "2" pixels as the minimum module width and
+                            for postscript output the minimum recommended width is "0.8" pt.</para>
+                    </caution>
+                </para>
+                <para>The following code shows how to both change the module width to 2 pixels and
+                    hide the human readable text </para>
+                <para>
+                    <programlisting>&lt;?php
+$symbology = BarcodeFactory::Create (ENCODING_CODE39 );
+$barcode = BackendFactory ::Create('IMAGE', $symbology);
+$barcode ->SetModuleWidth (2);
+$barcode ->HideText();
+$barcode ->Stroke('ABC123');
+?></programlisting>
+                </para>
+                <para>which would give the result shown in <xref xlink:href="#fig.barcode-c39-ex2"/>
+                    below</para>
+                <para>
+                    <figure xml:id="fig.barcode-c39-ex2">
+                        <title>Encoding "ABC123" with CODE 39, hiding the text.</title>
+                        <mediaobject>
+                            <imageobject><imagedata fileref="images/barcode_c39_abc123_ex2.png" scale="60"
+                                /></imageobject>
+                        </mediaobject>
+                    </figure>
+                </para>
+            </sect2>
+            <sect2>
+                <title> Setting vertical or horizontal layout</title>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>Backend::SetVertical($aVertical=true)</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>Will rotate the barcode 90 degrees to create a vertical view of the
+                    barcode.</para>
+            </sect2>
+            <sect2>
+                <title>Adjusting height of bar code</title>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>
+                                <code>Backend::SetHeight($aHeight)</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>The height of the bar codes is specified with the
+                        <code>Backend::SetHeight()</code> method. For images the height is
+                    interpreted as pixels and for postscript files it is interpreted as points (1 pt
+                    = 1/72 inch)</para>
+            </sect2>
+            <sect2>
+                <title>Scaling of bar codes</title>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>Backend::SetScale($aScaleFactor)</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>The scale factor is real number and specifies a scale factor for the overall
+                    barcode image. </para>
+            </sect2>
+            <sect2>
+                <title>Add frame around bar code</title>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>Backend::ShowFrame($aFlag=true)</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>This method will enable a frame around the edges of the barcode image</para>
+            </sect2>
+            <sect2>
+                <title>Examples of adjusting the output</title>
+                <para>The following example outputs a postscript file representing the bar code with
+                    a module width of 1.2 pt, using a vertical layout and scaling the image 2 times.
+                    For this example we are using CODE 39 with a checksum (which is automatically
+                    generated) </para>
+                <para>
+                    <programlisting>&lt;?php
+$symbology = BarcodeFactory::Create (ENCODING_CODE128 );
+$barcode = BackendFactory ::Create(BACKEND_PS, $symbology);
+$barcode->SetVertical(true);
+$barcode->Scale(2);
+$barcode->SetModuleWidth(1.2);
+$barcode ->Stroke('ABC123') ) {
+?></programlisting>
+                </para>
+            </sect2>
+        </sect1>
+        <sect1 xml:id="sec.desc-supported-symbologies">
+            <title>Short description of supported symbologies</title>
+            <para>In the following section we will describe the requirements to encode in each of
+                the supported symbologies. Some symbologies have strict standard for the data to be
+                encoded. Trying to encode illegal (or not supported data) will result in a "Data
+                validation" error as shown in <xref xlink:href="#fig.barcode-validation-error"
+                />.</para>
+            <para>
+                <warning>
+                    <para>Please note that the information given here is in no way a replacement for
+                        the official AIM and ISO standards these encoding are based on. It is
+                        assumed that the reader have access to the official standards describing
+                        each of these encodings before applying a particular symbology.</para>
+                </warning>
+            </para>
+            <sect2>
+                <title>UPC A</title>
+                <para>UPC A = Universal Product Code Version A. </para>
+                <para>UPC A encodes 12 numeric digits. The first digit identifies the number system
+                    used. The next group of 5 digits identifies the manufacturer. This number is
+                    assigned by the Uniform Code Council (<uri
+                        xlink:href="http://www.uc-council.org">UCC</uri>). The next 5 digits
+                    identify the particular product and are assigned by the manufacturer. The final
+                    digit is a check digit.</para>
+                <sect3>
+                    <title>Usage</title>
+                    <para>Used for consumer goods. Is being slowly replaced by EAN13. UPCA is a
+                        special case of EAN 13 where the first digit is always 0. </para>
+                </sect3>
+                <sect3>
+                    <title>Input data/character set</title>
+                    <para>Eleven digit. First digit is always 0. </para>
+                </sect3>
+                <sect3>
+                    <title>Checksum</title>
+                    <para>Automatic, mandatory. </para>
+                </sect3>
+                <sect3>
+                    <title>Example</title>
+                    <para>Encoded string = <code>"03456781233"</code>
+                    </para>
+                    <para>
+                        <figure>
+                            <title>UPC A Example</title>
+                            <mediaobject>
+                                <imageobject><imagedata scale="60"
+                                        fileref="images/barcode_upca_03456781233_ex1.png"
+                                    /></imageobject>
+                            </mediaobject>
+                        </figure>
+                    </para>
+                </sect3>
+            </sect2>
+            <sect2>
+                <title>UPC E</title>
+                <para>UPC E = Universal Product Code Version E. </para>
+                <sect3>
+                    <title>Usage</title>
+                    <para>Same general use as UPC A. Can be considered a subset and a more compact
+                        version of UPC A. Used where UPC A bar codes are to wide. </para>
+                    <para>The 6 resulting digits is take from the UPC A according to the following 4
+                        rules:</para>
+                    <para>
+                        <orderedlist>
+                            <listitem>
+                                <para>If a manufacturer's number ends in 000 or 100 or 200, he has
+                                    available to him 1,000 item numbers between 00000 and 00999. The
+                                    six characters are obtained from the first two characters of the
+                                    manufacturer's number followed by the last three characters of
+                                    the item number, followed by the third character of the
+                                    manufacturer's number.</para>
+                            </listitem>
+                            <listitem>
+                                <para>If a manufacturer's number ends in 300, 400, 500, 600, 700,
+                                    800 or 900, he has available to him 100 item numbers between
+                                    00000 and 00099. The six characters are obtained from the first
+                                    three characters of the manufacturer's number followed by the
+                                    last two characters of the item number, followed by "3".</para>
+                            </listitem>
+                            <listitem>
+                                <para>If a manufacturer's number ends in 10, 20, 30, 40, 50, 60, 70,
+                                    80 or 90, he has available to him 10 item numbers between 00000
+                                    and 00009. The six characters are obtained from the first four
+                                    characters of the manufacturer's number followed by the last
+                                    character of the item number, followed by "4".</para>
+                            </listitem>
+                            <listitem>
+                                <para>If a manufacturer's number does not end in zero, then five
+                                    item numbers between 00005 and 00009 are available. The six
+                                    characters are obtained from all five of the manufacturer's
+                                    identification number followed by the last character of the item
+                                    number.</para>
+                            </listitem>
+                        </orderedlist>
+                    </para>
+                </sect3>
+                <sect3>
+                    <title>Input data/character set</title>
+                    <para>Eleven digits. First digit is always 0. Data input must follow UPC rule
+                        for construction of UPC E data. </para>
+                </sect3>
+                <sect3>
+                    <title>Checksum</title>
+                    <para>Automatic, mandatory </para>
+                </sect3>
+                <sect3>
+                    <title>Example</title>
+                    <para>Encoded string = <code>"05510000120" </code></para>
+                    <para>As an example of the smaller size of UPC E the same data string is also
+                        encoded with UPC A below.</para>
+                    <para>
+                        <informaltable frame="none">
+                            <tgroup cols="2">
+                                <colspec colname="c1" colnum="1"/>
+                                <colspec colname="c2" colnum="2"/>
+                                <tbody>
+                                    <row>
+                                        <entry>
+                                            <para>
+                                                <figure>
+                                                  <title>UPC E Encoding of "05510000120"</title>
+                                                  <mediaobject>
+                                                  <imageobject><imagedata scale="60"
+                                                  fileref="images/barcode_upce_055_ex1.png"
+                                                  /></imageobject>
+                                                  </mediaobject>
+                                                </figure>
+                                            </para>
+                                        </entry>
+                                        <entry>
+                                            <para>
+                                                <figure>
+                                                  <title>UPC A Encoding of "05510000120"</title>
+                                                  <mediaobject>
+                                                  <imageobject><imagedata scale="60"
+                                                  fileref="images/barcode_upca_055_ex1.png"
+                                                  /></imageobject>
+                                                  </mediaobject>
+                                                </figure>
+                                            </para>
+                                        </entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </para>
+                </sect3>
+            </sect2>
+            <sect2>
+                <title>EAN 8</title>
+                <para>General purpose short barcodes</para>
+                <sect3>
+                    <title>Usage</title>
+                    <para> A shorter version of EAN13 using only 7 digits + checksum digit. </para>
+                </sect3>
+                <sect3>
+                    <title>Input data/character set</title>
+                    <para>Seven digits. </para>
+                </sect3>
+                <sect3>
+                    <title>Checksum</title>
+                    <para>Automatic, mandatory </para>
+                </sect3>
+                <sect3>
+                    <title>Example</title>
+                    <para>Encode string = <code>"3776221"</code>. Note the automatically added check
+                        digit.</para>
+                    <para>
+                        <figure>
+                            <title>EAN 8 Example</title>
+                            <mediaobject>
+                                <imageobject><imagedata scale="60"
+                                        fileref="images/barcode_ean8_3776221_ex1.png"
+                                    /></imageobject>
+                            </mediaobject>
+                        </figure>
+                    </para>
+                </sect3>
+            </sect2>
+            <sect2>
+                <title>EAN 13</title>
+                <para>The names comes from that this symbology encodes 13 characters. It is widely
+                    used in the manufacturing industry.</para>
+                <para>The first two or three digits are a country code which identify the country in
+                    which the manufacturer is registered. The country code is followed by 9 or 10
+                    data digits (depending on the length of the country code) and a finally a single
+                    digit checksum. </para>
+                <sect3>
+                    <title>Usage</title>
+                    <para>Generic code for consumer goods. Is replacing UPC-A as worldwide standard.
+                    </para>
+                </sect3>
+                <sect3>
+                    <title>Input data/character set</title>
+                    <para>Twelve digits. </para>
+                </sect3>
+                <sect3>
+                    <title>Checksum</title>
+                    <para>Automatic, mandatory </para>
+                </sect3>
+                <sect3>
+                    <title>Example</title>
+                    <para>Encoded string = <code>"377622153812"</code>
+                    </para>
+                    <para>
+                        <figure>
+                            <title>EAN 13 Example</title>
+                            <mediaobject>
+                                <imageobject><imagedata scale="60"
+                                        fileref="images/barcode_ean13_377622153812_ex1.png"
+                                    /></imageobject>
+                            </mediaobject>
+                        </figure>
+                    </para>
+                </sect3>
+            </sect2>
+            <sect2>
+                <title>EAN 128</title>
+                <para>
+                    <note>
+                        <para>The GS1 (<uri xlink:href="www.gs1.com">www.gs1.com</uri>) organization
+                            has renamed several barcode standards built on Code 128 such as EAN-128
+                            to GS1-128. </para>
+                    </note>
+                </para>
+                <sect3>
+                    <title>Usage</title>
+                    <para>EAN 128 is a CODE 128 where the data structure is strictly regulated.
+                        Please refer to the official EAN-128 specifications for details. </para>
+                </sect3>
+                <sect3>
+                    <title>Input data/character set</title>
+                    <para>An alphanumeric data string following EAN 128 rules. This means for one
+                        thing that the string must start with a FUNC1 character which is encoded
+                        using ASCII 128 in JpGraph Barcode available as constant EA_FUNC1. The
+                        validation routines checks these rules and will fail any data string not
+                        following the EAN 128 rules. </para>
+                </sect3>
+                <sect3>
+                    <title>Checksum</title>
+                    <para>Automatic, mandatory. </para>
+                </sect3>
+                <sect3>
+                    <title>Example</title>
+                    <para>Encoded string = <code>"3125134772" </code></para>
+                    <para>
+                        <figure>
+                            <title>EAN 128 Example</title>
+                            <mediaobject>
+                                <imageobject><imagedata scale="60"
+                                        fileref="images/barcode_ean128_3125134772_ex1.png"
+                                    /></imageobject>
+                            </mediaobject>
+                        </figure>
+                    </para>
+                </sect3>
+            </sect2>
+            <sect2>
+                <title> Industrial 2 of 5</title>
+                <para>The names comes from that each character is encoded in 5 bars and 2 of those
+                    are 3 modules wide and the rest 1 module wide</para>
+                <sect3>
+                    <title>Usage</title>
+                    <para>Old low density standard. For newer applications it should not be used.
+                        Use interleaved 2 of 5 instead since this is a higher density code. </para>
+                </sect3>
+                <sect3>
+                    <title>Input data/character set</title>
+                    <para>Digits.</para>
+                </sect3>
+                <sect3>
+                    <title>Checksum</title>
+                    <para>Optional.</para>
+                </sect3>
+                <sect3>
+                    <title>Example</title>
+                    <para>Encoded string = <code>"13729" </code></para>
+                    <para>
+                        <informaltable frame="none">
+                            <tgroup cols="2">
+                                <colspec colname="c1" colnum="1"/>
+                                <colspec colname="c2" colnum="2"/>
+                                <tbody>
+                                    <row>
+                                        <entry>
+                                            <para>
+                                                <figure>
+                                                  <title>Industrial 2 of 5, without check
+                                                  digit</title>
+                                                  <mediaobject>
+                                                  <imageobject><imagedata scale="60"
+                                                  fileref="images/barcode_c25_13729_ex1.png"
+                                                  /></imageobject>
+                                                  </mediaobject>
+                                                </figure>
+                                            </para>
+                                        </entry>
+                                        <entry>
+                                            <para>
+                                                <figure>
+                                                  <title>Industrial 2 of 5, with check digit</title>
+                                                  <mediaobject>
+                                                  <imageobject><imagedata scale="60"
+                                                  fileref="images/barcode_c25_13729_ex2.png"
+                                                  /></imageobject>
+                                                  </mediaobject>
+                                                </figure>
+                                            </para>
+                                        </entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </para>
+                </sect3>
+            </sect2>
+            <sect2>
+                <title>Interleaved 2 of 5</title>
+                <para>The name comes from the that each data character is composed of 5 elements,
+                    either 5 bars or 5 spaces. Two elements are 3 modules wide and three elements
+                    have a width of 1 module. Adjacent characters are interleaved, mixing the spaces
+                    from one character with the bars of the other.</para>
+                <para>
+                    <note>
+                        <para>This symbology is sometimes referred to as "Code 25" but since this
+                            could also refer to "Industry 2 of 5" symbology this name is ambiguous
+                            without further discriminating information.</para>
+                    </note>
+                </para>
+                <sect3>
+                    <title>Usage</title>
+                    <para>Various. Relative hight density numeric code. Used for example on some
+                        driving licenses. </para>
+                </sect3>
+                <sect3>
+                    <title>Input data/character set</title>
+                    <para>Even length numeric string when not using checksum. Odd length string when
+                        using checksum. </para>
+                </sect3>
+                <sect3>
+                    <title>Checksum</title>
+                    <para>Optional.</para>
+                </sect3>
+                <sect3>
+                    <title>Example</title>
+                    <para>Encoded string = <code>"137291"</code></para>
+                    <para>Since using a checksum requires an odd number of digits we add a '0' in
+                        the beginning to get a data string with an even number of digits. </para>
+                    <para>
+                        <informaltable frame="none">
+                            <tgroup cols="2">
+                                <colspec colname="c1" colnum="1"/>
+                                <colspec colname="c2" colnum="2"/>
+                                <tbody>
+                                    <row>
+                                        <entry>
+                                            <para>
+                                                <figure>
+                                                  <title>Industrial 2 of 5, without check
+                                                  digit</title>
+                                                  <mediaobject>
+                                                  <imageobject><imagedata scale="60"
+                                                  fileref="images/barcode_i25_137291_ex1.png"
+                                                  /></imageobject>
+                                                  </mediaobject>
+                                                </figure>
+                                            </para>
+                                        </entry>
+                                        <entry>
+                                            <para>
+                                                <figure>
+                                                  <title>Industrial 2 of 5, with check digit</title>
+                                                  <mediaobject>
+                                                  <imageobject><imagedata scale="60"
+                                                  fileref="images/barcode_i25_137291_ex2.png"
+                                                  /></imageobject>
+                                                  </mediaobject>
+                                                </figure>
+                                            </para>
+                                        </entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </para>
+                </sect3>
+            </sect2>
+            <sect2>
+                <title>CODE 11 (USD 8)</title>
+                <warning>
+                    <para><emphasis role="bold">THIS IS AN EXPERIMENTAL ENCODER </emphasis></para>
+                    <para>Due to the lack of CCD scanners supporting this code in Europe we have not
+                        been able to verify this Code against any scanning equipment. </para>
+                </warning>
+                <sect3>
+                    <title>Usage</title>
+                    <para>Numeric only code. Used primarily on telecommunication equipment. Not
+                        recommended for general usage. Note: This code is not widely supported by
+                        handhold CCD scanners. </para>
+                </sect3>
+                <sect3>
+                    <title>Input data/character set</title>
+                    <para>Numeric including the dash "-" character. </para>
+                </sect3>
+                <sect3>
+                    <title>Checksum</title>
+                    <para>Optional.</para>
+                </sect3>
+                <sect3>
+                    <title>Example</title>
+                    <para>Encoded string = <code>"0137291"</code></para>
+                    <para>
+                        <informaltable frame="none">
+                            <tgroup cols="2">
+                                <colspec colname="c1" colnum="1"/>
+                                <colspec colname="c2" colnum="2"/>
+                                <tbody>
+                                    <row>
+                                        <entry>
+                                            <para>
+                                                <figure>
+                                                  <title>Code 11, without check digit</title>
+                                                  <mediaobject>
+                                                  <imageobject><imagedata scale="60"
+                                                  fileref="images/barcode_c11_0137291_ex1.png"
+                                                  /></imageobject>
+                                                  </mediaobject>
+                                                </figure>
+                                            </para>
+                                        </entry>
+                                        <entry>
+                                            <para>
+                                                <figure>
+                                                  <title>Code 11, with check digit</title>
+                                                  <mediaobject>
+                                                  <imageobject><imagedata scale="60"
+                                                  fileref="images/barcode_c11_0137291_ex2.png"
+                                                  /></imageobject>
+                                                  </mediaobject>
+                                                </figure>
+                                            </para>
+                                        </entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </para>
+                </sect3>
+            </sect2>
+            <sect2>
+                <title>CODE 39</title>
+                <para>This is also known as "<emphasis role="italic">Code 3 of 9</emphasis>" or
+                        "<emphasis role="italic">USD 3</emphasis>" . This names comes from that each
+                    character consists of 9 elements. 5 bars and 4 spaces. Three of those elements
+                    are 2 modules wide and the rest one module wide. Code 39 is defined in <emphasis
+                        role="italic">American National Standards Institute</emphasis> (ANSI)
+                    standard MH10.8M-1983.</para>
+                <para>The full 128 ASCII character set can be encoded in Code 39. </para>
+                <para>Code 39 is a very widely used barcode and basically every scanner/reader on
+                    the market is able to decode Code 39 barcodes which makes it for a very good
+                    selection as a generic linear barcode.</para>
+                <sect3>
+                    <title>Usage</title>
+                    <para>General alphanumeric data (Capitals only) </para>
+                </sect3>
+                <sect3>
+                    <title>Input data/character set</title>
+                    <para>Alphanumeric (CAPITALS only) including the special characters "$", "/",
+                        "+", "%" and "*" </para>
+                </sect3>
+                <sect3>
+                    <title>Checksum</title>
+                    <para>Optional.</para>
+                </sect3>
+                <sect3>
+                    <title>Example</title>
+                    <para>Encoded string = <code>"GRAPH12"</code></para>
+                    <para>
+                        <informaltable frame="none">
+                            <tgroup cols="2">
+                                <colspec colname="c1" colnum="1"/>
+                                <colspec colname="c2" colnum="2"/>
+                                <tbody>
+                                    <row>
+                                        <entry>
+                                            <para>
+                                                <figure>
+                                                  <title>Code 39, without check digit</title>
+                                                  <mediaobject>
+                                                  <imageobject><imagedata scale="60"
+                                                  fileref="images/barcode_c39_0137291_ex1.png"
+                                                  /></imageobject>
+                                                  </mediaobject>
+                                                </figure>
+                                            </para>
+                                        </entry>
+                                        <entry>
+                                            <para>
+                                                <figure>
+                                                  <title>Code 39, with check digit</title>
+                                                  <mediaobject>
+                                                  <imageobject><imagedata scale="60"
+                                                  fileref="images/barcode_c39_0137291_ex2.png"
+                                                  /></imageobject>
+                                                  </mediaobject>
+                                                </figure>
+                                            </para>
+                                        </entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </para>
+                </sect3>
+            </sect2>
+            <sect2>
+                <title>CODE 39 Extended</title>
+                <para>Code 39 Extended was developed to provide a means of encoding additional
+                    characters that are not normally part of the Code 39 character set (lower case
+                    characters and symbols). </para>
+                <sect3>
+                    <title>Usage</title>
+                    <para>Same as Code 39 with the change that it supports lower case characters
+                        ("a,b,c,d,...") but do not support the special characters "+/%$+*". </para>
+                </sect3>
+                <sect3>
+                    <title>Input data/character set</title>
+                    <para>Alphanumeric data. </para>
+                </sect3>
+                <sect3>
+                    <title>Checksum</title>
+                    <para>Optional.</para>
+                </sect3>
+                <sect3>
+                    <title>Example</title>
+                    <para>Encoded string = <code>"Code39"</code></para>
+                    <para>
+                        <informaltable frame="none">
+                            <tgroup cols="2">
+                                <colspec colname="c1" colnum="1"/>
+                                <colspec colname="c2" colnum="2"/>
+                                <tbody>
+                                    <row>
+                                        <entry>
+                                            <para>
+                                                <figure>
+                                                  <title>Code 39 Extended, without check
+                                                  digit</title>
+                                                  <mediaobject>
+                                                  <imageobject><imagedata scale="60"
+                                                  fileref="images/barcode_c39e_Code39_ex1.png"
+                                                  /></imageobject>
+                                                  </mediaobject>
+                                                </figure>
+                                            </para>
+                                        </entry>
+                                        <entry>
+                                            <para>
+                                                <figure>
+                                                  <title>Code 39 Extended, with check digit</title>
+                                                  <mediaobject>
+                                                  <imageobject><imagedata scale="60"
+                                                  fileref="images/barcode_c39e_Code39_ex2.png"
+                                                  /></imageobject>
+                                                  </mediaobject>
+                                                </figure>
+                                            </para>
+                                        </entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </para>
+                </sect3>
+            </sect2>
+            <sect2>
+                <title>CODE 128</title>
+                <para>Named so since it can encode the entire 128 ASCII character set (from ASCII 0
+                    to ASCII 128.)</para>
+                <sect3>
+                    <title>Usage</title>
+                    <para>Generic high density code which supports the full ASCII set. </para>
+                </sect3>
+                <sect3>
+                    <title>Input data/character set</title>
+                    <para>Alphanumeric characters. </para>
+                </sect3>
+                <sect3>
+                    <title>Checksum</title>
+                    <para>Automatic, mandatory. </para>
+                </sect3>
+                <sect3>
+                    <title>Example</title>
+                    <para>Encoded string = <code>"Code128"</code></para>
+                    <para>
+                        <figure>
+                            <title>Code 128</title>
+                            <mediaobject>
+                                <imageobject><imagedata scale="60"
+                                        fileref="images/barcode_c128_Code128_ex1.png"
+                                    /></imageobject>
+                            </mediaobject>
+                        </figure>
+                    </para>
+                </sect3>
+            </sect2>
+            <sect2>
+                <title>CODABAR</title>
+                <para>Codabar is primarily used in libraries in the USA. It is also sometimes used
+                    in health care and transportation systems.</para>
+                <sect3>
+                    <title>Usage</title>
+                    <para>Old, numeric + some alpha capability, code. Primarily used in the USA.
+                    </para>
+                </sect3>
+                <sect3>
+                    <title>Input data/character set</title>
+                    <para>Numbers 0-9, Special characters "-$:/.+" </para>
+                </sect3>
+                <sect3>
+                    <title>Checksum</title>
+                    <para>None.</para>
+                </sect3>
+                <sect3>
+                    <title>Example</title>
+                    <para>Encoded string = <code>"12354" </code></para>
+                    <para>
+                        <figure>
+                            <title>Codabar</title>
+                            <mediaobject>
+                                <imageobject><imagedata scale="60"
+                                        fileref="images/barcode_codabar_12345_ex1.png"
+                                    /></imageobject>
+                            </mediaobject>
+                        </figure>
+                    </para>
+                </sect3>
+            </sect2>
+            <sect2>
+                <title>Bookland (ISBN)</title>
+                <para>This is a specially formatted EAN13 Code. This is primarily used to encode the
+                        <emphasis role="italic">International Standard Book Number</emphasis> (ISBN)
+                    on magazines and books.</para>
+                <sect3>
+                    <title>Usage</title>
+                    <para>Encodes ISBN codes in books and magazines. </para>
+                </sect3>
+                <sect3>
+                    <title>Input data/character set</title>
+                    <para>A valid ISBN number without last digit (check digit) and "-" signs. An
+                        ISBN is a 10-digit number which is made up of</para>
+                    <para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>Group identifier (1 digit, typically 0 or 1 for
+                                    English-speaking countries)</para>
+                            </listitem>
+                            <listitem>
+                                <para>Publisher identifier</para>
+                            </listitem>
+                            <listitem>
+                                <para>Title identifier</para>
+                            </listitem>
+                            <listitem>
+                                <para>Check digit</para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                </sect3>
+                <sect3>
+                    <title>Checksum</title>
+                    <para>Automatic, mandatory. </para>
+                </sect3>
+                <sect3>
+                    <title>Example</title>
+                    <para>The input data must be a valid ISBN (<emphasis role="italic"><emphasis
+                                role="bold">I</emphasis>nternational <emphasis role="bold"
+                                >S</emphasis>tandard <emphasis role="bold">B</emphasis>ook <emphasis
+                                role="bold">N</emphasis>umber</emphasis>) </para>
+                    <para>Encoded string = <code>"0-486-63926-6"</code>
+                    </para>
+                    <para>
+                        <figure>
+                            <title>Bookland (ISBN)</title>
+                            <mediaobject>
+                                <imageobject><imagedata scale="60"
+                                        fileref="images/barcode_bookland_048663926_ex1.png"
+                                    /></imageobject>
+                            </mediaobject>
+                        </figure>
+                    </para>
+                    <para>
+                        <note>
+                            <para>The ISBN check digit "6" is automatically removed and replaced by
+                                the EAN 13 check digit.</para>
+                        </note>
+                    </para>
+                    <para>
+                        <note>
+                            <para>A bookland code will always have the digits "978" as the first
+                                three digits (the standard also allows "979" but that is currently
+                                not in use)</para>
+                        </note>
+                    </para>
+                    <para>
+                        <note>
+                            <para>ISBN numbers are organized in Europe by:</para>
+                            <para>
+                                <screen>International Standard Book Number Agency, 
+Staatsbibliothek Preussischer Kulturbesitz
+Posdamer Strasse 33
+D-1000 Berlin 30 Germany</screen>
+                            </para>
+                        </note>
+                    </para>
+                </sect3>
+            </sect2>
+        </sect1>
+    </chapter>        

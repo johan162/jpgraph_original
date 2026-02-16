@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ * ==============================================================================
+ * Main build file for producing the JpGraph Documentation 
+ * Possible targets are:
+ *  
+ * html (default)    Produce single page HTML output
+ * chunk             Produce chunked HTML output
+ * pdf               Produce PDF output
+ * examples          Re-generate all examples
+ * errmsg            Re-generate core error messages
+ *   
+ * Revision: $Id: build.xml 1909 2009-10-06 19:32:02Z ljp $
+ * ==============================================================================    
+-->
+<project name="JpGraph Manual" 
+         default="chunk" 
+         basedir="." 
+         description="Build script for JpGraph manual" >
+
+    <!-- Which CSS stylesheet to use for the HTML output-->
+    <property name="css.style" value="css_stylesheets/jpg_style.css" />
+    
+    <!-- Which CSS stylesheet to use for the syntax highlitning -->
+    <property name="css.hlstyle" value="css_stylesheets/phphl.css" />    
+    
+    <!-- Which CSS checkmar image to use in the final HTML -->
+    <property name="css.checkmark" value="css_stylesheets/checkmark-green.png" />    
+
+    <!-- Which CSS checkmar image to use in the final HTML -->
+    <property name="css.checkmarkplain" value="css_stylesheets/checkmark-plain.gif" />
+    
+    <!-- Which icon is used to mark URI links to highlihgted source. -->
+    <property name="css.icontextdoc" value="css_stylesheets/text-document.png" />       
+
+    <!-- What we will renamen the stylesheet to in the output directory -->
+    <property name="css.name" value="manual.css" />
+
+    <!-- Basedirectory for XSL stylesheets processed by xsltproc -->
+    <property name="dbxsl.dir" value="/usr/share/xml/docbook/stylesheet/nwalsh5/current" />
+
+    <!-- Should we generate HTML or XHTML as output -->
+    <property name="html.type" value="html" />
+    
+    <!-- Where to find all the example source we include -->
+    <property name="examplesrc.dir" value="../../../jpgraph-src/Examples/" />    
+
+    <!-- The relative path to example images used for href:s in the manual -->
+    <property name="eximg.dir" value="images/" />    
+
+    <!-- The relative path to example source used for URI -->
+    <property name="exsrc.dir" value="example_src/" />           
+
+    <!-- The temporary build directory -->
+    <property name="tmp.dir" value="./tmp/" />    
+    
+    <!-- What token is used to identify file replacement -->
+    <property name="repl.token" value="##" />           
+    
+    <!-- Check if version was specified on the command line -->
+    <php function="preg_match" returnProperty="version_match">
+        <param value="/[\d]+\.[\d]+\.[\d]+/"/>
+        <param value="${version}"/>
+    </php>
+
+    <!-- Regexp and XML string that adds a <mediaobject> tag to each <programlisting> tag in
+         the XML file. The purpose is to have the automatically generated image associate to
+         each programlisting inserted in the original XML code. There are three vaiants that
+         can be used in the code
+         1) <programlisting>#FILENAME | DESCRIPTION#</programlisting>
+                 Will show both highlighted code generate an image
+         2) <programlisting>#:FILENAME | DESCRIPTION#</programlisting>
+                 Will show code only and not try to generate an image
+         3) <programlisting>#=FILENAME | DESCRIPTION#</programlisting>
+                 Will generate an image with a link to a popup showing the actual code
+    -->
+    <property name="img.regexp" 
+        value="&lt;programlisting&gt;#=([\w\-\_\.]+)(\|([A-Za-z0-9\.\(\)\_\-&lt;&gt;\/\%\=\:\,\;\?\'&quot;\$ ]*))?#&lt;\/programlisting&gt;" />    
+    <property name="img.xmlstring" 
+        value="&lt;figure xml:id=&quot;fig.\1&quot; &gt; &lt;title&gt;\3 &lt;uri xlink:href=&quot;${exsrc.dir}\1.html&quot;  &gt;(&lt;filename&gt;\1.php&lt;/filename&gt;)&lt;/uri&gt; &lt;/title&gt; &lt;inlinemediaobject&gt; &lt;imageobject&gt;&lt;imagedata scale=&quot;60&quot; fileref=&quot;${eximg.dir}\1.png&quot; /&gt;&lt;/imageobject&gt; &lt;/inlinemediaobject&gt; &lt;/figure&gt;" />
+
+    <property name="progl.regexp" 
+        value="&lt;programlisting&gt;#:([\w\-\_\.]+)(\|([A-Za-z0-9\.\(\)\_\-\&lt;\&gt;\/\%\=\:\,\;\?\'&quot;\$ ]*))?#&lt;\/programlisting&gt;" />           
+    <property name="progl.xmlstring" 
+        value="&lt;example xml:id=&quot;example.\1&quot; &gt; &lt;title&gt;\3 (&lt;filename&gt;\1.php&lt;/filename&gt;) &lt;/title&gt; &lt;programlisting&gt;##\1##&lt;/programlisting&gt;&lt;/example&gt; "/> 
+
+    <property name="proglimg.regexp" 
+        value="&lt;programlisting&gt;#([\w\-\_\.]+)(\|([A-Za-z0-9\.\(\)\_\-\&lt;\&gt;\/\%\=\:\,\;\?\'&quot;\$ ]*))?#&lt;\/programlisting&gt;" />           
+    <property name="proglimg.xmlstring" 
+        value="${progl.xmlstring} ${img.xmlstring}" />
+        
+    <!-- Runtime parameters for HTML output -->
+    <property name="xsl.html.params" value =
+           "--xinclude  
+            --stringparam chunker.output.encoding UTF-8
+            --stringparam html.stylesheet ${css.name}  
+            --stringparam section.autolabel 1 
+            --stringparam section.autolabel.max.depth 2 
+            --stringparam section.label.includes.component.label 1 
+            --stringparam part.autolabel I 
+            --stringparam generate.section.toc.level 0
+            --stringparam toc.max.depth 3
+            --stringparam ignore.image.scaling 1            
+            --stringparam xref.with.number.and.title 0" />
+
+    <!-- Runtime parameters for PDF output -->
+    <property name="xsl.pdf.params" value =
+        "--xinclude  
+        --stringparam paper.type a4
+        --stringparam double.sided 0
+        --stringparam fop1.extensions 1
+        --stringparam section.autolabel 1 
+        --stringparam section.autolabel.max.depth 2 
+        --stringparam section.label.includes.component.label 1 
+        --stringparam part.autolabel I 
+        --stringparam toc.max.depth 2" />
+
+    <!-- Our custom task to do syntax highlitning -->
+    <taskdef classname="phing.tasks.ext.HighlightSrcTask" name="highlightsrc" />
+            
+    <!-- Fileset for admon graphics used in HTML output -->
+    <fileset dir="css_stylesheets/" id="admon">
+        <include name="admon*.png"/>
+    </fileset>
+    
+    <!-- 
+        ================================================================================
+        Update the error messages from the English locale
+        ================================================================================
+    -->
+    <target name="errmsg">
+        <exec command="bin/create-errmsg.php > chapter/core-error-messages.xml " />
+    </target>
+    
+    <!-- 
+        ================================================================================
+        Generate the images for examples that are needed in the manual. This is done by
+        first extracting the filenames from all examples in the XML source
+        and then generating the images using those script files. In addition
+        the corresponding source for each image is passed throug a syntax
+        highlighning step and put in a separate directory so it can be linked
+        from the manual instead of showing the source inline. This is done by a small
+        AWK script
+        ================================================================================        
+    -->
+    <target name="examples">
+        <mkdir dir="output/ex_img" />
+        <mkdir dir="output/ex_src" />
+        <exec command="bin/mkimagelist chapters/*.xml > bin/_genimages.sh" />
+        <exec command="sh bin/_genimages.sh" />
+        <copy file="css_stylesheets/phphl.css" todir="output/ex_src/" />
+    </target>
+           
+    <!--
+        ================================================================================
+        Before processing the XML files wwe make some small adjustments in order
+        to add some XML to include the image whenever we have a programlisting
+        in the code. This task is only meant to be called from within this
+        build file and not as a separate target 
+        ================================================================================
+    -->    
+    
+    <target name="setup.tmp">
+        <delete dir="${tmp.dir}" />
+        <mkdir dir="${tmp.dir}" />
+        <mkdir dir="${tmp.dir}chapters/" />
+        <copy todir="${tmp.dir}chapters/" overwrite="true">
+            <fileset dir="chapters/">
+                <include name="*.xml" />
+                <include name="*.php" />
+            </fileset>
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="${img.regexp}" replace="${img.xmlstring}" />
+                    <regexp pattern="${progl.regexp}" replace="${progl.xmlstring}" />                    
+                    <regexp pattern="${proglimg.regexp}" replace="${proglimg.xmlstring}" /> 
+                    <regexp pattern="\.\.\/css_stylesheets\/" replace=""/>
+                </replaceregexp>
+            </filterchain>
+        </copy>
+        
+        
+        <!-- ================================================== 
+            ** Update version in manual.xml
+            ** ==================================================== -->
+        <if>
+            <equals arg1="${version_match}" arg2="1"/>
+            <then>
+                <copy file="manual.xml" tofile="_manual.xml" overwrite="true">
+                    <filterchain>
+                        <replacetokens begintoken="@" endtoken="@">
+                            <token value="${version}" key="VERSION"/>
+                        </replacetokens>
+                    </filterchain>
+                </copy>                
+                <move file="_manual.xml"  tofile="${tmp.dir}/manual.xml" overwrite="true" />
+            </then>
+            <else>
+                <copy file="manual.xml" todir="${tmp.dir}" />        
+            </else>
+       </if>
+        
+    </target>
+
+    <target name="prepare.output">
+        <!-- <delete dir="output/${dir}" /> -->
+        
+        <mkdir dir="output/${dir}" />      
+        <mkdir dir="output/${dir}/${exsrc.dir}" />
+        <copy file="${css.style}" tofile="output/${dir}/${css.name}"/> 
+        <copy file="${css.hlstyle}" tofile="output/${dir}/phphl.css"/>        
+        <copy file="${css.checkmark}" tofile="output/${dir}/checkmark.png"/>
+        <copy file="${css.checkmarkplain}" tofile="output/${dir}/checkmark-plain.gif"/>
+        <copy file="${css.icontextdoc}" tofile="output/${dir}/text-document.png"/>
+        <copy todir="output/${dir}/${exsrc.dir}">
+            <fileset dir="output/ex_src">
+                <include name="*.html"/>
+            </fileset>                        
+        </copy>
+        <copy todir="output/${dir}/images">
+            <fileset dir="chapters/images">
+                <include name="*.png"/>
+                <include name="*.jpg"/>
+            </fileset>
+            <fileset dir="flags">
+                <include name="*.png"/>
+                <include name="*.jpg"/>
+            </fileset>            
+            <fileset dir="output/ex_img">
+                <include name="*.png"/>
+                <include name="*.jpg"/>
+            </fileset>            
+        </copy>        
+        <copy todir="output/${dir}/">
+            <fileset refid="admon" />            
+        </copy>
+
+    </target>        
+
+
+    <!--
+        ================================================================================
+        Targets for creating zipped tar balls of the corresponding type of manual 
+        ================================================================================
+    -->    
+    
+    <target name="zhtml" depends="html">
+        <delete file="output/manual-html.tar.gz" />
+        <tar destfile="output/manual-html.tar.gz" compression="gzip">
+            <fileset dir="output">
+                <include name="html"/>
+            </fileset>
+        </tar>
+    </target>    
+    
+    <target name="zchunk" depends="chunk">
+        <delete file="output/manual-chunk.tar.gz" />
+        <tar destfile="output/manual-chunk.tar.gz" compression="gzip">
+            <fileset dir="output">
+                <include name="chunkhtml"/>
+            </fileset>            
+        </tar>
+    </target>
+    
+    <!--
+        ================================================================================
+        Target for clean 
+        ================================================================================
+    -->
+    
+    <target name="clean">
+        <delete dir="output/img"/>
+        <delete dir="output/ex_src"/>
+        <delete file="bin/_genimages.sh"/>
+        <delete dir="output/html"/>
+        <delete dir="output/chunkhtml"/>
+        <delete dir="output/pdf"/>        
+        <delete dir="output/"/>
+    </target>
+    
+    <!--
+        ================================================================================
+        Target and preparation for HTML output 
+        ================================================================================
+    -->
+    
+    <target name="html">
+        
+        <phingcall target="prepare.output" >
+            <property name="dir" value="html" />
+        </phingcall>
+        <phingcall target="setup.tmp" />
+        
+        <exec command="xsltproc ${xsl.html.params} 
+            --output 'output/html/index.html' 
+            ${dbxsl.dir}/${html.type}/onechunk.xsl ${tmp.dir}manual.xml" 
+            checkreturn="true" passthru="true" dir="./" />
+       
+        <highlightsrc linenumber="true" >
+            <fileset dir="output/html/">
+                <include name="index.html"/>
+            </fileset>
+            <filterchain>                  
+                <filterreader classname="phing.filters.ReplaceTokensWithFile" >
+                    <param type="tokenchar" name="begintoken" value="${repl.token}"/>
+                    <param type="tokenchar" name="endtoken" value="${repl.token}"/>
+                    <param name="postfix" value=".php"/>
+                    <param name="dir" value="${examplesrc.dir}"/> 
+                </filterreader> 
+                <filterreader classname="phing.filters.ReplaceTokensWithFile" >
+                    <param type="tokenchar" name="begintoken" value="#!"/>
+                    <param type="tokenchar" name="endtoken" value="#"/>
+                    <param name="dir" value="./misc-includes/"/> 
+                </filterreader>                
+            </filterchain>                       
+        </highlightsrc>
+        
+        <exec command="tidy -m -utf8 output/html/index.html" /> 
+        
+        <delete dir="${tmp.dir}" />
+
+        <echo message="HTML version of manual ready." />
+        
+    </target>
+
+    <!--
+        ================================================================================
+        Target and preparation for CHUNKED HTML output 
+        ================================================================================
+    -->
+    
+    <target name="chunk" >
+
+        <phingcall target="prepare.output" >
+            <property name="dir" value="chunkhtml" />
+        </phingcall>
+        <phingcall target="setup.tmp" />
+        
+        <exec command="xsltproc ${xsl.html.params}  
+            --stringparam base.dir 'output/chunkhtml/' 
+            ${dbxsl.dir}/${html.type}/chunkfast.xsl ${tmp.dir}manual.xml" 
+            checkreturn="true" passthru="true" dir="./" />
+        
+        <highlightsrc linenumber="true" >
+            <fileset dir="output/chunkhtml/">
+                <include name="*.html"/>
+            </fileset>
+            <filterchain>                  
+                <filterreader classname="phing.filters.ReplaceTokensWithFile" >
+                    <param type="tokenchar" name="begintoken" value="${repl.token}"/>
+                    <param type="tokenchar" name="endtoken" value="${repl.token}"/>
+                    <param name="postfix" value=".php"/>
+                    <param name="dir" value="${examplesrc.dir}"/> 
+                </filterreader> 
+                <filterreader classname="phing.filters.ReplaceTokensWithFile" >
+                    <param type="tokenchar" name="begintoken" value="#!"/>
+                    <param type="tokenchar" name="endtoken" value="#"/>
+                    <param name="dir" value="./misc-includes/"/> 
+                </filterreader>                                
+            </filterchain>                       
+        </highlightsrc>   
+
+        <delete dir="${tmp.dir}" />
+        <echo message="Chunked HTML version of manual ready." />
+
+    </target>
+   
+    <!--
+        ================================================================================
+        Target and preparation for PDF output 
+        Note: This format does not yet support syntax highlightning
+        ================================================================================
+    -->
+    <target name="prepare.pdf">
+                
+        <mkdir dir="output/${dir}" />      
+
+        <copy todir="${tmp.dir}chapters/images">
+            <fileset dir="chapters/images">
+                <include name="*.png"/>
+                <include name="*.jpg"/>
+            </fileset>
+            <fileset dir="flags">
+                <include name="*.png"/>
+                <include name="*.jpg"/>                
+            </fileset>            
+            <fileset dir="output/ex_img">
+                <include name="*.png"/>
+                <include name="*.jpg"/>                
+            </fileset>            
+        </copy>        
+        <copy todir="${tmp.dir}">
+            <fileset refid="admon" />            
+        </copy>        
+
+        <copy file="${css.checkmark}" tofile="${tmp.dir}chapters/checkmark.png"/>        
+        <copy file="${css.checkmarkplain}" tofile="${tmp.dir}chapters/checkmark-plain.gif"/>
+        
+    </target>
+    
+    <target name="pdf" >
+        
+        <phingcall target="setup.tmp" />        
+        <phingcall target="prepare.pdf" >
+            <property name="dir" value="pdf" />
+        </phingcall>
+
+        <reflexive>
+            <fileset dir="${tmp.dir}">
+                <include name="*.xml"/>
+                <include name="chapters/*.xml"/>
+            </fileset>            
+            <filterchain>                  
+                <filterreader classname="phing.filters.ReplaceTokensWithFile" >
+                    <param type="tokenchar" name="begintoken" value="${repl.token}"/>
+                    <param type="tokenchar" name="endtoken" value="${repl.token}"/>
+                    <param name="postfix" value=".php"/>
+                    <param name="dir" value="${examplesrc.dir}"/> 
+                </filterreader> 
+                <filterreader classname="phing.filters.ReplaceTokensWithFile" >
+                    <param type="tokenchar" name="begintoken" value="#!"/>
+                    <param type="tokenchar" name="endtoken" value="#"/>
+                    <param name="dir" value="./misc-includes/"/> 
+                </filterreader>                                
+            </filterchain>                                   
+        </reflexive>        
+
+        <exec command="xsltproc ${xsl.pdf.params}
+            --output ${tmp.dir}manual.fo    
+            --stringparam shade.verbatim 1
+            ${dbxsl.dir}/fo/docbook.xsl ${tmp.dir}manual.xml" 
+            checkreturn="true" passthru="true" dir="./" />
+        
+        <exec command="fop manual.fo -pdf ../output/pdf/manual.pdf" dir="${tmp.dir}"
+            checkreturn="true" passthru="true" />   
+        
+        <delete dir="${tmp.dir}" />
+        
+        <echo message="PDF version of manual ready." />        
+        
+    </target>
+    
+</project>

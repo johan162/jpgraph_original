@@ -1,0 +1,1148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<chapter version="5.0" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xml:id="chapter.graphic-tables">
+    <title>Graphical tables</title>
+    <sect1>
+        <title>Introduction</title>
+        <note><para>This module is only available in the pro-version of the library.</para></note>
+        <para>When visualizing data it is often useful to have both a quick graphical view which can
+            show high level trends and a detailed table view with the exact figures. The table
+            module supports the creation of an almost endless varieties of tables. </para>
+        <para>The table library module will allow any kind of rectangular table with an arbitrary
+            number of rows and columns. user selectable size, cells may be merged with other cells,
+            have individual background colors, different fonts and various types of borders. </para>
+        <para>Since graphic tables can be created as objects this also means that they can be added
+            to ordinary graph types in much the same way as for example icons and text
+            objects.</para>
+        <para>A good way to get an idea of the capabilities of the library is to review <xref
+                xlink:href="#fig.table-overview"/> where a number of different tables that all have
+            ben created with the library are shown. In the remainder of this chapter the APIs
+            available will be explained by means of a number of worked through examples.</para>
+        <para>Since table has full support for Client Side Image Maps (CSIM) they can also be used a
+            launch pad to take the user to further detailed information.</para>
+        <para>In addition to adding data tables to graphs it is also possible to create graphic
+            tables on the fly all by its own. This has the advantage compared with HTML tables to
+            allow users to make copies of the table while maintaining the exact formatting of the
+            table. </para>
+        <figure xml:id="fig.table-overview">
+            <title>Standalone table examples</title>
+            <mediaobject>
+                <imageobject><imagedata fileref="images/table_clipboard.png" scale="60"/></imageobject>
+            </mediaobject>
+        </figure>
+        <para>In addition to the standalone tables shown above another common usage is to combine a
+            graph and a table. An example of how this can be done is shown in <xref
+                xlink:href="#fig.bartable_intro"/> below. The exact steps how to create this graph
+            is described in <xref xlink:href="#sec.table-case-study"/>.</para>
+        <figure xml:id="fig.bartable_intro">
+            <title>Combining a graphic table and a bar graph</title>
+            <mediaobject>
+                <imageobject><imagedata fileref="images/bartable_intro.png" scale="60"/></imageobject>
+            </mediaobject>
+        </figure>
+    </sect1>
+    <sect1>
+        <title>Constructing tables</title>
+        <para>In this section we will introduce the basic concepts of tables and explain the basic
+            formatting possibilities that are available. </para>
+        <sect2>
+            <title>Basic tables</title>
+            <para>A table is created as an instance of the <code>class GTextTable</code> and can be
+                managed in much the same way as for example Icons, Texts or other plot objects. It
+                can be added to the graph (at specified X and Y coordinates) using the standard
+                    <code>Graph::Add()</code> method. </para>
+            <para>The creation of a table starts with including the necessary file
+                    "<filename>jpgraph_table.php</filename>" which contains the class definition for
+                the <code>GTextTable</code> class. In order to create a table we also need a graph
+                context to which the table can be added. This can be either one of the ordinary
+                graphs which used an instance of <code>class Graph</code> or to create a stand alone
+                table by using an instance of <code>class CanvasGraph</code></para>
+            <para>Creating a new table is then just matter of creating a new instance of the
+                    <code>class GTextTable</code> and calling the initialization method with the
+                desired size (in rows and columns) of the table. To display the table stand alone we
+                also need to create a canvas graph and then add the table to the graph.</para>
+            <para>
+                <programlisting>&lt;?php
+require_once "jprgraph/jpgraph.php";
+require_once 'jpgraph/jpgraph_canvas.php';
+require_once "jprgaph/jpgraph_table.php";
+
+// Setup a basic canvas graph context
+$graph = new CanvasGraph(630,600);
+
+// Create a basic graph
+$table = new GTextTable();
+$table->Init(5,7); // Create a 5 rows x 7 columns table
+
+...
+
+// Add the table to the graph
+$graph->Add($table);
+
+// and send back to the client
+$graph->Stroke();
+?></programlisting>
+            </para>
+            <para>As can be seen above it is not necessary (but still possible) to specify an
+                explicit physical size for the table. The physical size of the table will be
+                automatically determined depending on the content of the table.</para>
+            <para>The cells in the table are numbered sequentially where (0,0) is the top left and
+                (n-1, m-1) is the bottom right cell in a table with <emphasis role="italic"
+                    >n</emphasis> rows and <emphasis role="italic">m</emphasis> columns.</para>
+            <para>The next step is to populate the table with some data. The content in one cell is
+                specified with the using one of the following methods</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>GTextTable::Set($aRow, $aCol, $aText)</code></para>
+                        <para>Set the specified text in cell (<code>$aRow</code>,
+                            <code>$aCol</code>)</para>
+                        <para><code>GTextTable::Set($aData)</code></para>
+                        <para>Copy the data in the two dimensional array <code>$aData</code> to the
+                            table</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>GTextTable::SetImage($aRow, $aCol, $aText,
+                            $aImage)</code></para>
+                        <para>Set the specified image in cell (<code>$aRow</code>,
+                                <code>$aCol</code>)</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>GTextTable::SetCellCountryFlag($aRow,$aCol,$aFlag,$aScale=1.0,$aMix=100,$aStdSize=3)</code></para>
+                        <para>Set the specified country flag in cell (<code>$aRow</code>,
+                                <code>$aCol</code>)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The <code>Set()</code> method is polymorphic and can be called in two different
+                ways. </para>
+            <para>It can either be used to specify the value of each individual cell by identifying
+                the cell by its row and column index (starting at 0) ways. For example to continue
+                the example above we set the first two cells on the first row to 1 and 2 vi the two
+                calls </para>
+            <para>
+                <programlisting>...
+$table->Set(0,0,1);
+$table->Set(0,1,1);
+...</programlisting>
+            </para>
+            <para>The second, and probably less tedious way is to setup a 2-dimensional array
+                (matrix) with suitable values and then pass that 2-dimensional array as the first
+                and only argument to the <code>Set()</code> method as the following example
+                shows</para>
+            <para>
+                <programlisting>$data = array( array( 12, 7),
+               array( 10, 5));
+$table->Set($data)</programlisting>
+            </para>
+            <para>If the table is specified by a matrix directly it is not necessary to make the
+                initial <code>Init()</code> call since it will be automatically determined by the
+                size of the matrix. </para>
+            <para>The following basic full example creates a 2 rows by 4 columns table with
+                consecutive values. Note here that we make use of <code>CanvasGraph</code> to
+                provide the graph on which to add the table. The result of this script is shown in
+                    <xref xlink:href="#fig.table_howto1"/></para>
+            <para>
+                <programlisting>#table_howto1|The most basic 2x4 table#</programlisting>
+            </para>
+            <para>In the example above we also made use of a minor shortcut. If the data to the
+                table is specified with a 2-dimensional array there is no need to call the
+                    <code>Init()</code> method since the size will be determined by the supplied
+                array. </para>
+            <para>We will not yet begin discussion how to change fonts, colors and grids. Instead we
+                will focus on the structure of the table and introduce the merge operation. </para>
+        </sect2>
+        <sect2>
+            <title>Merging cells</title>
+            <para>The only way to change the structure (as opposed to the look &amp; feel) of the
+                table is by merging two or more cells. The merge operation is done via one of three
+                method calls: </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>MergeRow()</code></para>
+                        <para>Merge all cells in a specified row</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>MergeCol()</code></para>
+                        <para>Merge all cells in a specified column</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>MergeCells()</code></para>
+                        <para>Merge a rectangular range of cells</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The first two methods are really just simplifications for the third most generic
+                method. The first two methods merge all the cells in a specified row or column and
+                the third method merges any arbitrary rectangular range of cells specified by the
+                upper left nd lower right corner. </para>
+            <para>In addition, by default, these calls will also center align the text in the merged
+                cells (both horizontally and vertically). This can however be adjusted by giving the
+                wanted alignment as additional argument to the methods or by calling the specific
+                APIs that controls the alignment of the data within each cell. </para>
+            <para>The third (and most generic) method merge a range of cells specified by the top
+                left and bottom right corner. So, for example, the following line will merge the
+                rightmost four cells in the previous example </para>
+            <para>
+                <programlisting>$table->MergeCells(0,2,1,3);</programlisting>
+            </para>
+            <para>
+                <programlisting>#=table_howto2|Merging the rightmost 4 cells in the table#</programlisting>
+            </para>
+            <para>The merged cell can later on be referenced by the top left of the original merged
+                cell range. This means that the merged cell in the above example is referred to as
+                the (0,2) cell. </para>
+            <para>If we instead wanted to merge the top row of the table we could have simplified
+                the call by using one of the alternative merge methods. In this case the<code>
+                    MergeRow()</code> method would be applicable as in </para>
+            <para>
+                <programlisting>$table->MergeRow(0);</programlisting>
+            </para>
+            <para>which would then give the table as shown in <xref xlink:href="#fig.table_howto3"
+                /></para>
+            <para>
+                <programlisting>#=table_howto3|Merging the top row#</programlisting>
+            </para>
+            <para>In summary, the following three rules apply to merging and/or merged cells </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>It is an error to try o merge already merged cells. </para>
+                    </listitem>
+                    <listitem>
+                        <para>A merged cell is referenced by the top left cell in the merged range.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>All formatting that can be applied to a single cell can also be
+                            applied to a merged cell. </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Font adjustment</title>
+            <para>The most basic way to change the look and feel of the table is to adjust the font
+                that is used in the different cells in the table. To adjust the font within the
+                table the following methods are available <itemizedlist>
+                    <listitem>
+                        <para><code>SetFont()</code>, Specify the default font for the entire table
+                            or for a specified range of cells </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetRowFont()</code>, Specify the font for an entire row of cells
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetColFont()</code>, Specify the font for an entire column of
+                            cells </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetCellFont()</code>, Specify the font for a single cell </para>
+                    </listitem>
+                </itemizedlist></para>
+            <para>By default the font in the table is set to <code>FF_FONT1</code>, i.e. the
+                built-in bit mapped font of medium size. The default color of the font is 'black'. </para>
+            <para>
+                <note>
+                    <para>If several font settings are applied to the same cell it will be the last
+                        method call before the table <code>Stroke()</code> method that will take
+                        precedence.</para>
+                </note>
+            </para>
+            <para>As a simple example the following script shows how to adjust the font used in the
+                first merged row in the previous example. </para>
+            <para>
+                <programlisting>#=table_howto5|Adjusting the font in the top row#</programlisting>
+            </para>
+            <para>The font in <xref xlink:href="#fig.table_howto5"/> was adjusted with a call to </para>
+            <para>
+                <programlisting>$table->SetCellFont(0,0,FF_ARIAL,FS_BOLD,14);</programlisting>
+            </para>
+            <para><emphasis role="bold"> Polymorphic <code>SetFont()</code></emphasis></para>
+            <para>Before finishing this section it is worth noting that the <code>SetFont()</code>
+                method is polymorphic and can be called in two different ways. </para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>In the first way it can be called with a single font (triple)
+                            argument. That font specification will then become the default for all
+                            cells in the table, for example </para>
+                        <para>
+                            <programlisting>$table->SetFont(FF_TIMES,FS_NORMAL,12);</programlisting>
+                        </para>
+                        <para>will set the entire table to use Times TTF font. </para>
+                    </listitem>
+                    <listitem>
+                        <para>In the second way the first four arguments specifies a cell range (top
+                            left, bottom right) to apply the font setting to, for example </para>
+                        <para>
+                            <programlisting>$table->SetFont(0,1,1,2,FF_TIMES,FS_NORMAL,12);</programlisting>
+                        </para>
+                    </listitem>
+                </orderedlist>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Color adjustment</title>
+            <para>In order to adjust the look and feel of the table it is possible to set the
+                following colors of the table: </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>The color of the text/number in each cell </para>
+                    </listitem>
+                    <listitem>
+                        <para>The background color of each cell </para>
+                    </listitem>
+                    <listitem>
+                        <para>The color of the grid (inside the table) and border (around the table)
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The font color for a cell (or range of cells) is specified with one of </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>SetColor()</code>, Set the color for a range of cells or the
+                            entire table </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetRowColor()</code>, Set the color for a specified row of cells
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetColColor()</code>, Set the color for a specified column of
+                            cells </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetCellColor()</code>, Set the color for a specified cells
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>In a similar way the background color (or the fill color) of a cell can be
+                specified with </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>SetFillColor()</code>, Set the fill color for a range of cells
+                            or the entire table </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetRowFillColor()</code>, Set the fill color for a specified row
+                            of cells </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetColFillColor()</code>, Set the fill color for a specified
+                            column of cells </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetCellFillColor()</code>, Set the fill color for a specified
+                            cells </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The way to adjust the color of the grid and border will be discussed in the
+                section regarding borders and grids below. </para>
+            <para><emphasis role="bold">Polymorphic <code>SetColor()</code> and
+                        <code>SetFillColor()</code></emphasis></para>
+            <para>In the same manner as <code>SetFont()</code> can act on both all cells and a
+                specified range of cells the two color setting methods work in the same way. Both
+                    <code>SetColor()</code> and <code>SetFillColor()</code> can both be called
+                either with a single argument (in which all cells will be addressed) or by giving a
+                range (top left and bottom right cell) to be acted upon. </para>
+            <para>The following method calls will set the background color of the first three cells
+                in row 2 and 3 and the entire table </para>
+            <para>
+                <programlisting>...
+// First set the default fill color to lightgray
+$table->SetFillColor('lightgray');
+
+// The Set a range to yellow
+$table->SetFillColor(2,0,3,2,'yellow');
+...</programlisting>
+            </para>
+            <para>Finally we give some concluding examples to make the usage of these methods more
+                clear. </para>
+            <para>
+                <programlisting>...
+// Set the default font color for all table cells
+$table->SetColor('darkgray');
+
+// Set the font color for all cells in row one 
+$table->SetRowColor(1,'darkgray');
+
+// Set the font color for the first two cells in the second row 
+// (row with index=1)
+$table->SetColor(1,0,1,1,'darkgray');
+...</programlisting>
+            </para>
+            <note>
+                <para>If there are multiple color settings for the same cell then the last method
+                    called before the final Stroke() call will be the color that shows. </para>
+                <para>For example the following script sets the color of cell (0,0) to both 'black'
+                    and 'yellow' but since the yellow is the last method to be called this is the
+                    color that will be used for cell (0,0) </para>
+                <para>
+                    <programlisting>...
+$table->SetRowColor(0,'black');
+$table->SetColColor(0,'yellow');
+...
+$graph->Stroke();</programlisting>
+                </para>
+            </note>
+            <para>Finally, we illustrate the usage of these method by continuing with the previous
+                example and coloring row 0 as shown in <xref xlink:href="#fig.table_howto4"/></para>
+            <para>
+                <programlisting>#=table_howto4|Merging and setting the colors the top row#</programlisting>
+            </para>
+            <para>The coloring in <xref xlink:href="#fig.table_howto4"/> was accomplished by adding
+                the following two lines to the previous script. </para>
+            <para>
+                <programlisting>$table->SetCellFillColor(0,0,'orange@0.7');
+$table->SetCellColor(0,0,'darkred');</programlisting>
+            </para>
+            <para>The same effect could also have been accomplished by using the row version of the
+                color methods as in </para>
+            <para>
+                <programlisting>$table->SetRowFillColor(0,'orange@0.7');
+$table->SetRowColor(0,'darkred');</programlisting>
+            </para>
+            <para>Which sets of methods to use in this case is a matter of personal preference since
+                both achieve the same effect. </para>
+        </sect2>
+        <sect2>
+            <title>Adjusting table and cell sizes</title>
+            <para>The exact size of the table can only be indirectly controlled by specifying the
+                width of the columns and the height of the rows. The width/height can either be
+                controlled individually on a row by row (or column by column) basis or by giving all
+                rows/columns the same width/height. This is accomplished by the methods </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>SetMinRowHeight()</code>, Sets the minimum height of rows
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetMinColWidth()</code>, Sets the minimum width of columns
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>As can be noted from the name of the methods the width and height specified is not
+                necessarily the exact size of the row/column. It's just the minimum size. The actual
+                size is depending on the text in the cells. The row height (and column width) will
+                always grow in order to fit the text within the largest cell. </para>
+            <para><emphasis role="bold">Polymorphic functions</emphasis></para>
+            <para>The number of arguments to the two methods can in fact be either one or two. If
+                only one argument is supplied then it is interpretated as the minimum width/height
+                for all columns/rows in the table. If two arguments are used then the first argument
+                will specify what row/columns the height/width is specified for. </para>
+            <para>Continuing with the table in <xref xlink:href="#fig.table_howto4"/> . If we want
+                to make sure that all the cells in row 1 is at least 35 pixels wide we could add to
+                add the following in the previous script </para>
+            <para>
+                <programlisting>...
+$table->SetMinColWidth(35);
+...</programlisting>
+            </para>
+            <para>Which would then give the table shown in <xref xlink:href="#fig.table_howto6"
+                /></para>
+            <para>
+                <programlisting>#=table_howto6|Setting the minimum column width to 35 pixels.#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Fine tuning cell alignment and cell padding</title>
+            <para>The final bit of important formatting is the ability to specify the alignment of
+                the data in each of the cells within the table. It is possible to specify both the
+                horizontal and vertical alignment. The alignment can be specified as one of </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Horizontal alignment: "left", "right", "center" </para>
+                    </listitem>
+                    <listitem>
+                        <para>Vertical alignment: "top", "bottom", "center" </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>As usual there are four variants of the alignment methods </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>SetAlign()</code>, Set the align for a range of cells or the
+                            entire table </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetRowAlign()</code>, Set the alignment for an entire row
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetColAlign()</code>, Set the alignment for an entire column
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetCellAlign()</code>, Set the alignment for a specific cell
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>Each of the methods accepts two alignment arguments, the horizontal and the
+                vertical alignment. We don't give any examples here since the usage of these methods
+                should be obvious. </para>
+            <para>
+                <note>
+                    <para>It should be mentioned that in addition to using these methods the
+                        alignment can also be set when using the merge methods (as discussed above).
+                        This is purely as a convenience since it is such a common use case to adjust
+                        the alignment when merging cells. </para>
+                </note>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Adjusting border and grid lines</title>
+            <para>The final formatting option available is the shape, size and color of the border
+                and grid lines in the table. As of this writing the library supports the following
+                styles of grid lines. </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>TGRID_SINGLE</code>, a basic solid line of specified width and
+                            color (default) </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>TGRID_DOUBLE</code>, two lines of equal width separated by the
+                            same width as the line width. </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>TGRID_DOUBLE2</code>, two lines where the left/top line is twice
+                            as thick as the bottom/right line. </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <informaltable frame="none">
+                    <tgroup cols="2">
+                        <colspec colname="c1" colnum="1"/>
+                        <colspec colname="c2" colnum="2"/>
+                        <tbody>
+                            <row>
+                                <entry>
+                                    <programlisting>#=table_howto7.1|Double lines 1#</programlisting>
+                                </entry>
+                                <entry>
+                                    <programlisting>#=table_howto7.2|Double lines 2#</programlisting>
+                                </entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </informaltable>
+            </para>
+            <para>The methods available to adjust the grid lines are </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>SetGrid()</code>, Set the grid line style for all grid lines
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetColGrid()</code>, Set the specified vertical grid line
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetRowGrid()</code>, Set the specified horizontal grid line
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The borders in <xref xlink:href="#fig.table_howto7.1"/> was modified by adding the
+                following call to the basic table script. </para>
+            <para>
+                <programlisting>$table->SetRowGrid(2,1,'black',TGRID_DOUBLE);</programlisting>
+            </para>
+            <para>and in <xref xlink:href="#fig.table_howto7.2"/>
+            </para>
+            <para>
+                <programlisting>$table->SetRowGrid(2,1,'black',TGRID_DOUBLE2);</programlisting>
+            </para>
+            <para>The order of the arguments are 1) Row, 2) Width (weight) and 3) Line style. </para>
+            <para>Finally, in order to adjust the outer border of the table there is one last method
+                available </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>SetBorder()</code>, Set the width and color of the outer border
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <tip>
+                    <para>In order to remove a specific grid line or the border the width is
+                        specified as 0 </para>
+                </tip>
+            </para>
+            <para>As a final example the following script snippet removes many of the grid lines and
+                borders by adding the following lines to the previous basic table script. </para>
+            <para>
+                <programlisting>...
+$table->SetBorder(0);
+$table->SetGrid(0);
+$table->SetRowGrid(2,1,'black',TGRID_DOUBLE2);
+...</programlisting>
+            </para>
+            <para>The result of this modification is shown in <xref xlink:href="#fig.table_howto8"/>
+                below. </para>
+            <para>
+                <programlisting>#=table_howto8|Removing some grid lines and border. In addition we have right aligned all the cells as is common practice for numeric data.#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Specific number formatting</title>
+            <para>The final method of formatting we will briefly touch upon is the number
+                formatting. By setting a specific number formatting it is possible to have numeric
+                values formatted in a uniform way regardless of the original format. The number
+                format is the same format string that would be used with the <code>printf()</code>
+                family. </para>
+            <para>The available methods for this formatting follows the usual structure </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>SetNumberFormat()</code>, Set the number format for a range or
+                            the whole table </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetRowNumberFormat()</code>, Set the number format for a
+                            specific row </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetColNumberFormat()</code>, Set the number format for a
+                            specific column </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetCellNumberFormat()</code>, Set the number format for a
+                            specific cell </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>To illustrate the use of this formatting we start with the table in <xref
+                    xlink:href="#fig.table_howto8"/>. and apply the format string
+                    <code>"%0.1f"</code> which will format the values as floating point values with
+                one decimal. We do this by adding the method following method call</para>
+            <para>
+                <programlisting>$table->SetNumberFormat('%0.1f');</programlisting>
+            </para>
+            <para>
+                <programlisting>#=table_howto9|Applying a number format to the data in the cells#</programlisting>
+            </para>
+            <para>
+                <note>
+                    <para>The number format will only set the number format it will not do any
+                        rounding of the actual values. This is the responsibility of the client.
+                    </para>
+                </note>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Using images and country flags in the table</title>
+            <para>In addition to ordinary text it is also possible to have arbitrary images (read
+                from a file) or use one of the built-in country flags available in the library as
+                background images in the table cells. </para>
+            <para>
+                <note>
+                    <para>Remember to include "<filename>jpgraph_iconplot.php</filename>" if images
+                        should be included and "<filename>jpgraph_flags.php</filename>" if country
+                        flags are included.</para>
+                </note>
+            </para>
+            <para>The methods available for this purpose are </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>SetImage()</code>, Set the same image for all cells or a range
+                            of cells </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetCellImage()</code>, Set the image for a specific cell </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetRowImage()</code>, Set the image for a row of cells </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetColImage()</code>, Set the image for a column of cells
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetCellImageConstrain()</code>, Set the height or width of an
+                            image in a specified cell </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetCellCountryFlag()</code>, Use a specified country flag as
+                            image in a specified cell </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>For example, to add the United Kingdoms flag in cell (2,1) in the table one would
+                have to add the call </para>
+            <para>
+                <programlisting>$table->SetCellCountryFlag(2,1,'united kingdom');</programlisting>
+            </para>
+            <para>as usual with the background images it is possible to scale it and also adjust the
+                mix-in factor by using additional arguments to the above methods. </para>
+            <para>However there is on extra feature available with images and tables. If we wanted
+                to make sure that the flag is of a specific height or width it is possible to
+                specify this and have the library auto-scale the image to fit the specified
+                parameter. </para>
+            <para>For example to restrict the height of the UK flag set in cell (2,1) to 20 pixels
+                the call would be </para>
+            <para>
+                <programlisting>$table->SetCellImageConstrain(2,1,TIMG_HEIGHT,20);</programlisting>
+            </para>
+            <para>We conclude this section with a small example on the use of country flags in a
+                table in <xref xlink:href="#fig.table_flagex1"/></para>
+            <para>
+                <programlisting>#=table_flagex1|Using country flags in the table cells#</programlisting>
+            </para>
+        </sect2>
+    </sect1>
+    <sect1>
+        <title>CSIM Table support</title>
+        <para>Each cell in a table can be a hotspot target. The following line will make cell (1,1)
+            a hotspot</para>
+        <para>
+            <programlisting>$table->SetCellCSIMTarget(1,1,'tableex02.php','View details');</programlisting>
+        </para>
+        <para>As usual it is necessary to call <code>Graph::StrokeCSIM()</code> instead of the
+            ordinary <code>Graph::Stroke()</code> method to generate the CSIM result.</para>
+    </sect1>
+    <sect1>
+        <title>Table API Overview</title>
+        <para>In this overview we do not give details about the arguments required by each method.
+            Instead this is meant as an overview to get a feel for what is available in the library.
+            All details are provided in the class reference. </para>
+        <para>
+            <table cellspacing="0" frame="border" width="800">
+                <caption>Table API Overview</caption>
+                <col width="33%"/>
+                <col width="67%"/>
+                <thead>
+                    <tr>
+                        <th>Method name</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="border-top:black solid 1px;background-color:#bfdebf;"
+                            align="center"><emphasis role="bold">Constructing</emphasis></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>GTextTable()</code></td>
+                        <td>Create a new table</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>Init()</code></td>
+                        <td>Specify table size</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>Set()</code></td>
+                        <td>Specify data in table</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetPos()</code></td>
+                        <td>Specify position of table in graph</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetScalePos()</code></td>
+                        <td>Specify scale position of table in graph</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetAnchorPos()</code></td>
+                        <td>Specify anchor position for table. By default the top left corner of the
+                            table will be aligned with the specified position.</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border-top:black solid 1px;background-color:#bfdebf;"
+                            align="center"><emphasis role="bold">Merging cells</emphasis></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>MergeCol()</code></td>
+                        <td>Merge all cells in the same column</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>MergeRow()</code></td>
+                        <td>Merge all cells in the same row</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>MergeCells()</code></td>
+                        <td>Merge all cells in a range</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border-top:black solid 1px;background-color:#bfdebf;"
+                            align="center"><emphasis role="bold">Font specification</emphasis></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetFont()</code></td>
+                        <td>Set default font for range or entire table</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetRowFont()</code></td>
+                        <td>Set font for a specific row</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetColFont()</code></td>
+                        <td>Set font for a specific column</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetCellFont()</code></td>
+                        <td>Set font for a specific cell</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border-top:black solid 1px;background-color:#bfdebf;"
+                            align="center"><emphasis role="bold">Font color</emphasis></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetColor()</code></td>
+                        <td>Set default font color for range or entire table</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetRowColor()</code></td>
+                        <td>Set font color for a specific row</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetColColor()</code></td>
+                        <td>Set font color for a specific column</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetCellColor()</code></td>
+                        <td>Set font color for a specific cell</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border-top:black solid 1px;background-color:#bfdebf;"
+                            align="center"><emphasis role="bold">Fill color</emphasis></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetFillColor()</code></td>
+                        <td>Set fill color for range or entire table</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetRowFillColor()</code></td>
+                        <td>Set fill color for an entire row</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetColFillColor()</code></td>
+                        <td>Set fill color for an entire column</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetCellFillColor()</code></td>
+                        <td>Set fill color fro a specific cell</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border-top:black solid 1px;background-color:#bfdebf;"
+                            align="center"><emphasis role="bold">Alignment in cells</emphasis></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetAlign()</code></td>
+                        <td>Set default align for range or entire table</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetRowAlign()</code></td>
+                        <td>Set align in a specific row</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetColAlign()</code></td>
+                        <td>Set align in a specific column</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetCellAlign()</code></td>
+                        <td>Set align in a specific cell</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border-top:black solid 1px;background-color:#bfdebf;"
+                            align="center"><emphasis role="bold">Borders and grid</emphasis></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetBorder()</code></td>
+                        <td>Set weight of border around the table</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetGrid()</code></td>
+                        <td>Set style and weight for interior grid</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetColGrid()</code></td>
+                        <td>Specify grid for a specific column</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetRowGrid()</code></td>
+                        <td>Specify grid for a specific row</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border-top:black solid 1px;background-color:#bfdebf;"
+                            align="center"><emphasis role="bold">Background images &amp; country
+                                flags</emphasis></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetImage()</code></td>
+                        <td>Use the specified image as background</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetCellImage()</code></td>
+                        <td>Use the specified image as background</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetRowImage()</code></td>
+                        <td>Use the specified image as background</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetColImage()</code></td>
+                        <td>Use the specified image as background</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetCountryFlag()</code></td>
+                        <td>Use a country flag as background</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetImageConstrain()</code></td>
+                        <td>Specify width or height for cell image (or flag)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border-top:black solid 1px;background-color:#bfdebf;"
+                            align="center"><emphasis role="bold">Width and height of
+                                cells</emphasis></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetMinColWidth()</code></td>
+                        <td>Set minumum column width</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetMinRowHeight()</code></td>
+                        <td>Set minimum row height</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border-top:black solid 1px;background-color:#bfdebf;"
+                            align="center"><emphasis role="bold">Number formatting</emphasis></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetNumberFormat()</code></td>
+                        <td>Set number format for range or entire table</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetRowNumberFormat()</code></td>
+                        <td>Number format fro a specific row</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetColNumberFormat()</code></td>
+                        <td>Number format fro a specific column</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetCellNumberFormat()</code></td>
+                        <td>Number format fro a specific cell</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border-top:black solid 1px;background-color:#bfdebf;"
+                            align="center"><emphasis role="bold">Cell padding and
+                            margins</emphasis></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetPadding()</code></td>
+                        <td>Set default padding for range or all cells</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetRowPadding()</code></td>
+                        <td>Set padding in a specific row</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetColPadding()</code></td>
+                        <td>Set padding in a specific column</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetCellPadding()</code></td>
+                        <td>Set padding in a specific cell</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border-top:black solid 1px;background-color:#bfdebf;"
+                            align="center"><emphasis role="bold">Text orientation</emphasis></td>
+                    </tr>
+                    <tr>
+                        <td><code>SetTextOrientation()</code></td>
+                        <td>Set text orientation for entire table</td>
+                    </tr>
+                    <tr>
+                        <td><code>SetCellTextOrientation()</code></td>
+                        <td>Set text orientation for a specific cell</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border-top:black solid 1px;background-color:#bfdebf;"
+                            align="center"><emphasis role="bold">CSIM Handling</emphasis></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetCellCSIMTarget()</code></td>
+                        <td>Set URL target for specified cell</td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><code>SetCSIMTarget()</code></td>
+                        <td>Set URL target for all cells. By using this method it is also possible
+                            to have an automatic row and column index appended to the target URL as
+                            GET parameters</td>
+                    </tr>
+                </tbody>
+            </table>
+        </para>
+    </sect1>
+    <sect1>
+        <title>Examples</title>
+        <sect2>
+            <title>Example 1</title>
+            <para>Table formatting, variant 1, right adjusted Times font </para>
+            <para>
+                <programlisting>#=table_mex00|xx#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Example 2</title>
+            <para>Table formatting, variant 1, using Times font for data and a sans serit font for
+                headings together with removed grid lines and filled headers. </para>
+            <para>
+                <programlisting>#=table_mex0|xx#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Example 3</title>
+            <para>Table formatting, variant 2, using the same sans serit font for all information
+                but with some grid lines. </para>
+            <para>
+                <programlisting>#=table_mex1|xx#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Example 4</title>
+            <para>Table formatting, variant 3, where some data is highlighted and we use a thicker
+                border. </para>
+            <para>
+                <programlisting>#=table_mex3|xx#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Example 5</title>
+            <para>Show how the table can be turned 90 degrees</para>
+            <para>
+                <programlisting>#=table_vtext|Vertical text#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Example 6</title>
+            <para>The following example shows how to add images (icons) to a number of cells.</para>
+            <para>
+                <programlisting>#=table_iconex1|Adding an icon (image) in a table cell#</programlisting>
+            </para>
+        </sect2>
+    </sect1>
+    <sect1 xml:id="sec.table-case-study">
+        <title>Case study: Adding a table to a bar graph</title>
+        <para>The goal of this example is to explain in detail how to achieve the graphs shown in
+                <xref xlink:href="#fig.tablebarex1"/></para>
+        <para>
+            <programlisting>#=tablebarex1|Combining a bar graph and a table#</programlisting>
+        </para>
+        <para>The graph in <xref xlink:href="#fig.tablebarex1"/> consists of a standard accumulated
+            bar graph combined with a table just below the X-axis. The way to create such a graph is
+            very basic. First create a standard bar graph with some extra bottom margin (to make
+            room for the table) and then create and position the table below the graph. The only
+            challenge here is to make sure that the width of the table and graph matches to line up
+            each column under each bar. </para>
+        <para>Lets walk through the steps to do this. </para>
+        <para>The data to be plotted in the bar and in the table is created in a table as follows </para>
+        <para>
+            <programlisting>&lt;?php
+$datay = array(
+    array('Jan','Feb','Mar','Apr','May','Jun'),
+    array(12,18,19,7,17,6),
+    array(3,5,2,7,5,25),
+    array(6,1.5,2.4,2.1,6.9,12.3));
+?></programlisting>
+        </para>
+        <para>each line in this matrix corresponds to one row in the table and one set of bars that
+            will make up the accumulated bar plot. </para>
+        <para>First let's define some constants that will control the size and position of the graph
+            and table. </para>
+        <para>
+            <programlisting>&lt;?php
+$nbrbar = 6; // number of bars and hence number of columns in table
+$cellwidth = 50;  // width of each column in the table
+$tableypos = 200; // top left Y-coordinate for table
+$tablexpos = 60;  // top left X-coordinate for table
+$tablewidth = $nbrbar*$cellwidth; // overall table width
+$rightmargin = 30;  // right margin in the graph
+$topmargin = 30  // top margin of graph
+?></programlisting>
+        </para>
+        <para>The next step is to calculate a suitable size for the entire graph, i.e. the entire
+            image. </para>
+        <para>
+            <programlisting>&lt;?php
+$height = 320;  // a suitable height for the image
+$width = $tablexpos+$tablewidth+$rightmargin; // the width of the image
+?></programlisting>
+        </para>
+        <para>Finally its time ot make use of these constants to rceate the basic graph. Note that
+            we calculate the bottom margin to just fit the tables selected Y-coordinate position. </para>
+        <para>
+            <programlisting>&lt;?php
+$graph = new Graph($width,$height);	
+$graph->img->SetMargin($tablexpos,$rightmargin,$topmargin,$height-$tableypos);
+$graph->SetScale('textlin');
+$graph->SetMarginColor('white');
+?></programlisting>
+        </para>
+        <para>The rest of the code to create the accumulated bar plot is pretty mundane and we just
+            show the code here without further comment. </para>
+        <para>
+            <programlisting>&lt;?php
+// Create the bars and the accbar plot
+$bplot = new BarPlot($datay[3]);
+$bplot->SetFillColor('orange');
+$bplot2 = new BarPlot($datay[2]);
+$bplot2->SetFillColor('red');
+$bplot3 = new BarPlot($datay[1]);
+$bplot3->SetFillColor('darkgreen');
+$accbplot = new AccBarPlot(array($bplot,$bplot2,$bplot3));
+$accbplot->value->Show();
+$graph->Add($accbplot);
+?></programlisting>
+        </para>
+        <para>It's now time to setup the table. The position of the table is determined by the
+            previous set constants and the original data as specified above. </para>
+        <para>
+            <programlisting>&lt;?php
+$table = new GTextTable();
+$table->Set($datay);
+$table->SetPos($tablexpos,$tableypos+1);
+?></programlisting>
+        </para>
+        <para>The rest of the table formatting is fairly basic and again we just show the necessary
+            script without further comment. </para>
+        <para>
+            <programlisting>&lt;?php
+$table->SetFont(FF_ARIAL,FS_NORMAL,10);
+$table->SetAlign('right');
+$table->SetMinColWidth($cellwidth);
+$table->SetNumberFormat('%0.1f');
+
+// Format table header row
+$table->SetRowFillColor(0,'teal@0.7');
+$table->SetRowFont(0,FF_ARIAL,FS_BOLD,11);
+$table->SetRowAlign(0,'center');
+
+// .. and add it to the graph
+$graph->Add($table);
+?></programlisting>
+        </para>
+    </sect1>
+</chapter>

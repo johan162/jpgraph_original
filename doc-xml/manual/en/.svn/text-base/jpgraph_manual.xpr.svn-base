@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <meta>
+        <filters directoryPatterns="" filePatterns=""
+            positiveFilePatterns="" showHiddenFiles="true"/>
+        <options/>
+    </meta>
+    <projectTree name="jpgraph_manual.xpr">
+        <file name="build.xml"/>
+        <file name="chapters/chapter-add-graph-types.xml"/>
+        <file name="chapters/chapter-datamatrix.xml"/>
+        <file name="chapters/chapter-graphical-tables.xml"/>
+        <file name="chapters/chapter-linear-barcodes.xml"/>
+        <file name="chapters/chapter-matrix.xml"/>
+        <file name="chapters/chapter-odometer.xml"/>
+        <file name="chapters/chapter-pdf417.xml"/>
+        <file name="chapters/chapter-qr.xml"/>
+        <file name="chapters/chapter-windrose.xml"/>
+        <file name="chapters/compiling-php.xml"/>
+        <file name="chapters/country-flags.xml"/>
+        <file name="chapters/error-messages.xml"/>
+        <file name="chapters/FAQ.xml"/>
+        <file name="chapters/feature-matrix.xml"/>
+        <file name="css_stylesheets/jpg_style.css"/>
+        <file name="chapters/man-part1-installing.xml"/>
+        <file name="chapters/man-part2-graphtypes.xml"/>
+        <file name="chapters/man-part3-addgraphtypes.xml"/>
+        <file name="chapters/man-part4-barcodes.xml"/>
+        <file name="chapters/man-part5-casestudies.xml"/>
+        <file name="chapters/man-part6-appendices.xml"/>
+        <file name="chapters/man-part-basic-graph.xml"/>
+        <file name="chapters/man-part-commons.xml"/>
+        <file name="manual.xml"/>
+        <file name="chapters/named-colors.xml"/>
+        <file name="css_stylesheets/phphl.css"/>
+        <file name="chapters/plotmark-list.xml"/>
+        <file name="README.txt"/>
+        <file name="chapters/section-gantt.xml"/>
+        <file name="chapters/setting-up-php5-php4.xml"/>
+    </projectTree>
+</project>

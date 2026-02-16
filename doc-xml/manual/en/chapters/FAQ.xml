@@ -1,0 +1,1469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appendix version="5.0" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+        xml:id="app.faq"><title>FAQ</title><para>Revision: $Id: FAQ.xml 1233 2009-05-24 22:29:53Z ljp $</para>
+    <qandaset>
+        <qandaentry>
+            <question>
+                <para>Where should I install the library?</para>
+            </question>
+            <answer>
+                <para> The simple answer is: Anywhere You like! Since the necessary library files
+                    are included in Your own script with an "include" (or more likely a
+                    require_once) statement it doesn't matter where You put the library as long as
+                    Your scripts can access it. A common place is to store the library is in a
+                    directory where PHP searches for include files (as specified in Your
+                        <filename>php.ini</filename> file), for example in
+                        "<filename>/usr/share/php</filename>" or perhaps
+                        "<filename>/usr/local/php</filename>" depending on Your PHP configuration. </para>
+                <para> An even simpler way is to just store the library in a directory where Your
+                    scripts are executed from. However , this is not really recommended. </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para>Can I use JpGraph with Windows/Unix/Linux etc? </para>
+            </question>
+            <answer>
+                <para> Yes. The library itself is OS-agnostic. As long as you have a WEB server
+                    which supports PHP 4.3.x (or above) and have the GD library. Please note though
+                    that the behavior of PHP/Apache on Unix and Windows seems to have some subtle
+                    differences which might affect things like path specification using '/' or '\'. </para>
+                <para>
+                    <caution>
+                        <para>The library does not support any 64bit OS and there are known issues
+                            with running the library on a 64bit OS (either Unix or Windows). There
+                            are currently no plans to address this in the near future.</para>
+                    </caution>
+                </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> My Web-admin does not allow PHP any write permissions and hence I can't use
+                    the cache feature of JpGraph. Is there any way to completely turn off the
+                    caching feature?</para>
+            </question>
+            <answer>
+                <para> Yes, set the constant "<code>USE_CACHE</code>" to <code>FALSE</code> in
+                    jpg-config.php. This way will skip writing file even if a filename has been
+                    submitted in the Graph() creation call. You can also accomplish this by not
+                    having any file name at all in the call to Graph().</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> After installation all I get is an empty page when I try any of the
+                    examples?</para>
+            </question>
+            <answer>
+                <para> If the HTTP server response is truly absolutely empty (verify that by looking
+                    at the source of the page that gets returned to the browser) then the only
+                    answer is that the HTTP server has crashed. Most likely it is the PHP process
+                    within the server that has crashed. Even though PHP is fairly stable there are
+                    still ways of crashing it. To investigate this further You might try to: <itemizedlist>
+                        <listitem>
+                            <para>... investigate the system log for traces of a server
+                                crash.</para>
+                        </listitem>
+                        <listitem>
+                            <para>... try increase the maximum allowed memory for PHP in php.ini. As
+                                a rule it should be a minimum of 32MB (and preferable 64MB)</para>
+                        </listitem>
+                        <listitem>
+                            <para>... upgrade PHP to the latest stable version (and use the compile
+                                options shown further down in this FAQ.</para>
+                        </listitem>
+                        <listitem>
+                            <para>... upgrade PHP to the latest stable version (and use the compile
+                                options shown further down in this FAQ.</para>
+                        </listitem>
+                        <listitem>
+                            <para>... enable all errors and warning for PHP (in php.ini) to help
+                                track down the problem.</para>
+                        </listitem>
+                        <listitem>
+                            <para>... disable output buffering to get errors send back to the
+                                browser as soon as possible (in <filename>php.ini</filename>)</para>
+                        </listitem>
+                    </itemizedlist></para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I send the generated graph to both the browser and a file at the same
+                    time?</para>
+            </question>
+            <answer>
+                <para> This is not directly supported by means of any particular option or setting
+                    in the library but with small "trick" this is easy enough to accomplish. </para>
+                <para> The idea is to use the _IMG_HANDLER option that forces the
+                        <code>Graph::Stroke()</code> to just return the image handler and then stop.
+                    We can then manually first send the image to the chosen file and then stream it
+                    back to the browser using some internal methods in the library. </para>
+                <para> The following code snippet shows how this is done </para>
+                <programlisting>&lt;?php
+$graph = new Graph(400,300);  
+&lt;... code to generate a graph ...&gt;  
+// Get the  handler to prevent the library from sending the 
+// image to the browser
+$gdImgHandler = $graph-&gt;Stroke(_IMG_HANDLER);
+  
+// Stroke image to a file and  browser  
+// Default is PNG so use ".png" as suffix 
+$fileName = "/tmp/imagefile.png"; $graph-&gt;img-&gt;Stream($fileName);  
+
+// Send it back to browser 
+$graph-&gt;img-&gt;Headers(); 
+$graph-&gt;img-&gt;Stream();
+?></programlisting>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> What is this 'auto' I see in all the Graph() creating in the Examples
+                    directory? Do I need it?</para>
+            </question>
+            <answer>
+                <para> No. The third argument in the graph call is an optional cache file name and
+                    is not necessary unless You want to use the caching feature of JpGraph. By
+                    specifying 'auto' the filename is automatically created based on the name of the
+                    script file.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> The Client side image map examples does not work on my machine?</para>
+            </question>
+            <answer>
+                <para> In order to run the examples the code generates HTML to read the image from
+                    the cache directory as Apache sees it. You must adjust the image tag to have the
+                    correct path to your cache directory. </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> When I run 'testsuit_jpgraph.php' I get a warning "Due to insufficient
+                    permission the source files can't be automatically created"</para>
+            </question>
+            <answer>
+                <para> This is not a serious problem. When the testsuit is run it tries to create a
+                    symbolic link with the same base name as the individual testfile but with
+                    extension ".phps". This is just so it is possible to click on an image and then
+                    view the source syntax colored. If Apache doesn't have write permissions to the
+                    directory where 'testsuit_jpgraph.php' is executed from you will get this
+                    warning.</para>
+                <para> If you want to use this feature just change the permissions so Apache may
+                    write to the directory.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I pass data to my image generating script?</para>
+            </question>
+            <answer>
+                <para> There are basically three(four) ways:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Read the data from a file</para>
+                    </listitem>
+                    <listitem>
+                        <para>Read the data from a DB</para>
+                    </listitem>
+                    <listitem>
+                        <para>Pass the data in the &lt;<markup>img</markup>&gt; tag using URL
+                            parameter passing. For example <code> &lt;img
+                                src="myimg.php?d1=2&amp;d2=7&amp;d3=12" border=0&gt;
+                            </code> This method is not suitable for large data sets since there is
+                            an upper bound to the length of an URL specification (around 255
+                            characters)</para>
+                    </listitem>
+                    <listitem>
+                        <para>A fourth way might be to use session variables to pass the data
+                            between different scripts. For large data sets the only practical way is
+                            to read the data from a file or from a DB to construct the data
+                            vectors.</para>
+                    </listitem>
+                </itemizedlist>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I use data from an Excel spreadsheet?</para>
+            </question>
+            <answer>
+                <para> Export the data from Excel as a CSV (Comma separated Values) file to be able
+                    to easily read the file. Then either write your own routine to read and parse
+                    the data from that file or use the utility class "ReadCSV" in
+                    "jpgraph_utils.php". </para>
+                <para> A basic example on how to do this for a line graph assuming the name of the
+                    data file is "data.csv".</para>
+                <programlisting>&lt;?php include ("../jpgraph.php"); 
+include ("../jpgraph_line.php"); 
+include ("../jpgraph_utils.inc");  
+$n = ReadFileData::FromCSV('data.csv',$datay); 
+if( $n == false ) {     
+    die("Can't read data.csv."); 
+}  
+
+// Setup the graph $graph = new Graph(400,300);
+$graph-&gt;title->Set('Reading CSV file with '.$n.' data points');
+$graph-&gt;SetScale("intlin");  
+
+$l1 = new LinePlot($datay); 
+$graph-&gt;Add($l1);
+$graph-&gt;Stroke(); 
+?&gt;</programlisting>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How do I pass data from a Database (e.g. MySQL) to a script to produce a
+                    graph?</para>
+            </question>
+            <answer>
+                <para> By adding some SQL statements in Your graph scripts that creates the data
+                    arrays from the DB. </para>
+                <para> Watch out for empty values and strings. JpGraph doesn't know how to plot
+                    strings. Any value passed into JpGraph should be only valid numeric data. See
+                    the online discussions on populating from a DB Populating DB or the discussion
+                    on how to read data from file Reading from file. </para>
+                <para> See <uri xlink:href="http://jpgraph.intellit.nl/viewtopic.php?t=8">How to
+                        populate arrays from mySQL</uri>
+                </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I change my data but my image does not get updated? The old image is still
+                    send back to the browser?</para>
+            </question>
+            <answer>
+                <para> What you are seeing is a cached version of Your image. Depending on your
+                    setup it could either be that the browser has a cached image or You are using
+                    the built-in cache system in the library by accident. </para>
+                <para>
+                    <emphasis role="bold">Fixing the browser cache</emphasis> Since the script from
+                    the browser point of view is the same it just displays the old image. To fix
+                    this you need to turn of the browser image caching. </para>
+                <para> Another "trick" that can be used since normally it is impossible to control
+                    the browser for the end user is ot add a "dummy" URL argument which changes.
+                    This way the browser will always see a new URL and then always reload that file.
+                    This could be done for example as:</para>
+                <programlisting>echo ('&lt;img src="graphscript.php?' .microtime().'"&gt;'); </programlisting>
+                <para>
+                    <emphasis role="bold">Fixing the library cache</emphasis></para>
+                <para> The other reason might be that You have enabled the built-in cache feature in
+                    JpGraph. To turn it of You can either <itemizedlist>
+                        <listitem>
+                            <para> Not specify a cache name in the call to Graph(). Just call new
+                                Graph(200,200) for example.</para>
+                        </listitem>
+                        <listitem>
+                            <para> Turn off the reading from the cache by setting READ_CACHE to
+                                false (in jpg-config.inc)</para>
+                        </listitem>
+                        <listitem>
+                            <para> Turn off the reading and writing from the cache by setting
+                                USE_CACHE to false (in jpg-config.php)</para>
+                        </listitem>
+                        <listitem>
+                            <para> Use the cache but with a timeout so that the image will be
+                                re-generated if the cached image is older then the specified timeout
+                                value in the call to Graph().</para>
+                        </listitem>
+                    </itemizedlist></para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> Can I run JpGraph in batch-mode just outputting an image directly to a file
+                    and not streamed back to the browser? </para>
+            </question>
+            <answer>
+                <para> Yes. Just specify an absolute file name in the call to Graph::Stroke(). To
+                    store the image in the local temp directory use: <programlisting>$myGraph-&gt;Stroke("/tmp/myimage.png");</programlisting><caution>
+                        <para>Note: You must match the file ending Yourself to the format you have
+                            chosen to generate the image in.</para>
+                    </caution></para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> Is there a mailing list for JpGraph? </para>
+            </question>
+            <answer>
+                <para> No, but there is a user <uri
+                        xlink:href="http://jpgraph.intellit.nl/index.php">community forum</uri> at
+                        <uri xlink:href="http://jpgraph.intellit.nl/index.php"
+                        >http://jpgraph.intellit.nl/index.php</uri> where users discuss various
+                    aspects of the library.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> Do you offer a commercial version of JpGraph with full support and no
+                    QPL?</para>
+            </question>
+            <answer>
+                <para> Yes, For commercial (non-open-source) you will need to get the "JpGraph
+                    Professional License". This allows you you deploy JpGraph in a commercial
+                    context. Further details upon contact.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> Some of my script just return a blank image and no error messages? </para>
+            </question>
+            <answer>
+                <para> This could potentially be a lot of things depending on which browser you are
+                    using. One thing you might want to check is that your script doesn't take to
+                    long time. In that case they might hit the time limit for running a PHP script
+                    as specified in php.ini. You can adjust that time limit with a call to
+                    set_time_limit().</para>
+                <para> If You are seeing just an empty page (really empty) then this is a sign that
+                    Your server has crashed. Most likely an old version of PHP is being used which
+                    has taken down the HTTP server process. </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I can see the generated image fine in the browser but I can't print it?
+                </para>
+            </question>
+            <answer>
+                <para> This is again browser dependent. Some browser does not like to print an image
+                    which is generated on-line and does exist as a *.jpg, *.png etc file. No good
+                    workaround has been identified short of changing browser. Some browsers (and
+                    versions) can print others not. The only real safe way (if you need printing) is
+                    to generate the image on disk and then have the browser read the image from
+                    there. </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I generate an image directly to disk without streaming it back to the
+                    browser?</para>
+            </question>
+            <answer>
+                <para> Two ways: (Preferred way) If you supply a filename in the call to
+                    $graph->Stroke() the image will be written to that file and not be streamed back
+                    to the browser. If you prefer to have the image going to the cache directory but
+                    not streamed back then you could just set the '$aInlineFlag' in the initial call
+                    to Graph() (fifth argument) to false as in
+                    <programlisting>$mygraph = new Graph(200,200,"auto",0,false); </programlisting>
+                    The "auto" argument makes an automatic file name in the cache based on the
+                    script name. The 0 indicates that we have no timeout. The advantage with this
+                    method is that you can specify a timeout to avoid having the image generated to
+                    often. </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> When I try to plot graphs with many 1000:s of data points I only get a blank
+                    page. Is there a limit in JpGraph to the number of data points you can plot?
+                </para>
+            </question>
+            <answer>
+                <para> No, there is no such limit. The problem is most likely that your script takes
+                    so long time that the PHP execution limit (as specified in php.ini) aborts the
+                    script. If you have more than 10,000 data points JpGraph will work but doing
+                    this kind of heavy data analysis on a WEB-server extension is probably not a
+                    good idea to start with.</para>
+                <para> The other reason could be that the script exhausts the allowed memory limit
+                    for PHP as specified in the "php.ini" file. By default this is often set to 8Mb
+                    which is to low for a complex JpGraph script. Try increasing the memory limit to
+                    a minimum of 16Mb. For very complex graphs with 1000s of data points there might
+                    be a need to increase the memory even further. </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I use an image in a dynamically created PDF?</para>
+            </question>
+            <answer>
+                <para> You can do this in two ways, you can either stroke the image created with the
+                    library directly to a file where it can be used with Your PDF library of choice.
+                    For example, using FPDF (<uri xlink:href="http://www.fpdf.org/"
+                        >www.fpdf.org</uri>) the Image() function would have to be used to read an
+                    image from the filesystem. </para>
+                <para> If You are using the PDF library (APIs included in the PHP distribution but
+                    the library itself might require a license depending on Your usage.) you can
+                    avoid the storage of the file by getting the image handler for the image
+                    directly and use it with PDF. </para>
+                <para> With the PDF library you must first open the in memory image with a call to
+                        <code>pdf_open_memory_image($pdf, $im)</code>. The following script places
+                    an image from JpGraph directly into a PDF page that is returned when running
+                    this script. </para>
+                <programlisting>&lt;?php  
+
+$graph = new Graph(...);  
+
+// Code to create the graph 
+// .........................
+
+// Put the image in a PDF page 
+$im = $graph->Stroke(_IMG_HANDLER);  
+$pdf = pdf_new(); 
+pdf_open_file($pdf, '');  
+
+// Convert the GD image to somehing the 
+// PDFlibrary knows how to handle 
+$pimg = pdf_open_memory_image($pdf, $im);
+
+pdf_begin_page($pdf, 595, 842); 
+pdf_add_outline($pdf, 'Page 1');
+pdf_place_image($pdf, $pimg, 0, 500, 1); 
+pdf_close_image($pdf, $pimg);
+pdf_end_page($pdf); 
+pdf_close($pdf);  
+
+$buf = pdf_get_buffer($pdf); 
+$len =strlen($buf);  
+
+// Send PDF mime headers 
+header('Content-type: application/pdf');
+header("Content-Length: $len"); 
+header("Content-Disposition: inline; filename=foo.pdf");  
+
+// Send the content of the PDF file 
+
+echo $buf;  
+
+// .. and clean up 
+pdf_delete($pdf);  
+?&gt;</programlisting>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I force the user to get a question to download the generated image
+                    instead of just displaying it in the browser? </para>
+            </question>
+            <answer>
+                <para> Change your code for creating the image: </para>
+                <programlisting>&lt;?php
+$im=$graph->Stroke(_IMG_HANDLER); $filename="chart"; 
+$file_type = "image/png";
+$file_ending = "png"; 
+$filename=$filename.".".$file_ending;
+
+header("Content-Type: application/$file_type"); 
+header("Content-Disposition:attachment; filename=".$filename); 
+header("Pragma: no-cache"); 
+header("Expires:0"); 
+ImagePNG($im); 
+?></programlisting>
+                <para> A html link, which directs to the php page (assuming the filename is
+                    chart.php): Download Then, if you click on the link, a download dialog appears
+                    and you can download the "chart.png". <note>
+                        <para>If you directly open chart.php, the image is directly streamed to the
+                            browser and the download dialog will not open. </para>
+                    </note></para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I open up a CSIM link in a graph in a separate window?</para>
+            </question>
+            <answer>
+                <para> To open a target CSIM (drill down) in a separate window some javascript in
+                    the target link is necessary since this action must be performed in the browser.
+                    The target URL needs top be in the form of an action to open up a window (with
+                    any optional URL argument that might be needed). For example, assume we have a
+                    bar graph and that theb user can click on each bar to get more details. When the
+                    user clicks on a bar we open up the detaails witha call to the helper script
+                    "bar_details.php" and send the parameter "id" to the script to separate the
+                    individual bars. We would then use the following URL link (with javascript) </para>
+                <programlisting>"javascript:window.open('bar_details.php?id=%d','_new','width=500,height=300');void(0)"</programlisting>
+                <para> Where the '%d' placeholder must be replaced by the appropriate Id for each
+                    bar. To assign the appropriate id we could use the following construct </para>
+                <programlisting>&lt;?php
+// Create targets for the image maps so that the details are opened 
+// in a separate window 
+$fmtStr = "javascript:window.open('bar_details.php?id=%d','_new','width=500,height=300');
+void(0)";  
+$n = count($datay); 
+$targ=array();
+$alts=array(); 
+for($i=0; $i &lt; $n; ++$i) {     
+    $targ[$i] = sprintf($fmtStr,$i+1);     
+    $alts[$i] = 'val=%d'; 
+}
+                    
+$bplot-&gt;SetCSIMTargets($targ,$alts); 
+$graph-&gt;Add($bplot); 
+... 
+// Send back the HTML page to browser 
+$graph-&gt;StrokeCSIM();  
+?></programlisting>
+                <para> It should be noted that in the above Javascript code we have used the special
+                    window name '_new' which means that a new window will be opened each time a user
+                    clicks on a bar. By giving the window a specific name the same window would be
+                    re-used every time. </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> No TTF fonts are displayed.</para>
+            </question>
+            <answer>
+                <para> There are potentially many reasons for this Please start by trying the
+                    following bare bones PHP script to see if basic TTF support is available in the
+                    PHP setup. </para>
+                <programlisting>&lt;?php 
+// Change this defines to where Your fonts are stored 
+DEFINE("TTF_DIR","/usr/X11R6/lib/X11/fonts/truetype/"); 
+
+// Change this define to a font file that You know that You have
+DEFINE("TTF_FONTFILE","arial.ttf"); 
+
+// Text to display 
+DEFINE("TTF_TEXT","Hello World!");  
+
+$im = imagecreatetruecolor (400, 100); 
+$white = imagecolorallocate($im, 255, 255, 255); 
+$black = imagecolorallocate ($im, 0, 0, 0);
+
+imagefilledrectangle($im,0,0,399,99,$white); 
+imagettftext ($im, 30, 0, 10, 40,$black, TTF_DIR.TTF_FONTFILE,TTF_TEXT);  
+header ("Content-type: image/png");
+imagepng ($im); 
+?&gt;</programlisting>
+                <para> The above script when run should produce an image with a black text string on
+                    a white background. If this doesn't work then there is a setup problem with PHP
+                    + TTF. </para>
+                <para> As a first step to resolve this recompile Your PHP4 setup using the following
+                    basic configuration (depending on the local conditions some options/path might
+                    have to be changed). The critical options are marked in bold. </para>
+                <programlisting>./configure
+--prefix=/usr/share \ 
+--datadir=/usr/share/php \ 
+--with-apxs=/usr/sbin/apxs \
+--libdir=/usr/share --includedir=/usr/include \ 
+--bindir=/usr/bin \
+--with-config-file-path=/etc \ 
+--enable-mbstring --enable-mbregex \ 
+--with-mysql \ 
+<emphasis role="bold">--with-gd \ 
+--enable-gd-imgstrttf \ 
+--enable-gd-native-ttf \
+--with-ttf-dir=/usr/lib \ 
+--with-freetype-dir=/usr/lib \
+--with-zlib-dir=/usr/lib \ 
+--with-png-dir=/usr/lib \
+--with-jpeg-dir=/usr/lib \
+</emphasis>--with-xpm-dir=/usr/X11R6 \
+--with-tiff-dir=/usr/lib \ 
+--enable-memory-limit --enable-safe-mode \
+--bindir=/usr/bin \ 
+--enable-bcmath -enable-calendar \ 
+--enable-ctype --with-ftp \ 
+--enable-magic-quotes \ 
+--enable-inline-optimization \ 
+--with-iconv</programlisting>
+                <para> If there is still no TTF fonts displayed then the next step is to upgrade
+                    Your TTF libraries to the latest version. The FreeType version 2.1.9 is known to
+                    work well. </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> All my TTF fonts are yellow no matter what color I specify?</para>
+            </question>
+            <answer>
+                <para> You have a old buggy version of the FreeType library, most likely the old
+                    FreeType I library is being used. Please upgrade to the latest version of
+                    FreeType II.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I get an error "This PHP build has not been configured with TTF support. You
+                    need to recompile your PHP installation with FreeType support."</para>
+            </question>
+            <answer>
+                <para> This error is reported if the built-in PHP/GD function <uri
+                        xlink:href="http://www.php.net/manual/en/function.imagettfbbox.php"
+                        >"imagettfbbox()"</uri> is not available. This is a crucial method to make
+                    TTF fonts work with JpGraph. The most likely reason for this problem is that the
+                    PHP configuration is faulty and does not have correct support for TTF fonts.
+                    Please recompile PHP as shown above and make sure that the built-in version of
+                    GD is being used and not the stand-alone library. </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I get an error <emphasis role="errmsg">"Fatal error: Font cant be
+                        found"</emphasis></para>
+            </question>
+            <answer>
+                <para> You have either not specified a correct path where your fonts are stored (see
+                    top of jpg-config.inc) or you have tried to use a font you do not have
+                    installed.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I get the error <emphasis role="errmsg">"Can't find font file
+                        FONT_PATHarial.ttf"</emphasis> (or some other font)</para>
+            </question>
+            <answer>
+                <para> You are most likely running on Windows. This seems to be caused by a bug in
+                    PHP/Apache (or PHP/IIS) specifically on Windows. The problem seems to be that
+                    PHP doesn't remember a DEFINE() setting across two or more include directive. A
+                    simple workaround is to hard-code the font path in class TTF in file
+                    jpgraph.php. Note: If you have this problem you will most likely also have a
+                    problem with the path to the cache directory.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I get an error <emphasis>"Font file ... is not readable or does not
+                        exist"</emphasis></para>
+            </question>
+            <answer>
+                <para> This error is caused by the inability of PHP/JpGraph to read the font file.
+                    This could have several reasons: </para>
+                <itemizedlist>
+                    <listitem>
+                        <para>The file path or name is wrong and the file really doesn't exist.
+                            Please check that the file and path (as shown in the error message)
+                            really exists.</para>
+                    </listitem>
+                    <listitem>
+                        <para>If the file exists it might still not be possible for PHP to read the
+                            file due to permission problem. Please make sure that PHP can read a
+                            file in the TTF directory. This can be verified with the following short
+                            script </para>
+                        <programlisting>&lt;?php 
+// Change this defines to where Your fonts are stored 
+DEFINE("TTF_DIR","/usr/X11R6/lib/X11/fonts/truetype/");
+
+// Change this define to a font file that You know that You have
+DEFINE("TTF_FONTFILE","arial.ttf");  
+
+$f = TTF_DIR.TTF_FONTFILE; 
+if( file_exists($f) === false || is_readable($f) === false ) {     
+    echo "FAIL: Can not read font file \"$f\"."; 
+} else {     
+    echo "PASS: Successfully read font file \"$f\"."; 
+} 
+?&gt;</programlisting>
+                        <para> If the script reports <emphasis>FAIL</emphasis> then it must be
+                            investigated whether the file names or permissions are wrong. </para>
+                    </listitem>
+                </itemizedlist>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I install additional TTF font families? </para>
+            </question>
+            <answer>
+                <para> See the <uri xlink:href="phptip04.php">Adding additional TTF font
+                        families</uri> section on this site for a full explanation of the necessary
+                    steps.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I display special characters that isn't available on the
+                    keyboard?</para>
+            </question>
+            <answer>
+                <para> By using the standard "&amp;#dddd" encoding of the symbol in a text string.
+                    For example, to get the character for the "copyright" symbol &amp;copy; which
+                    has the numeric code "00A9" (in Hex) </para>
+                <programlisting>$copy = sprintf('&amp;#%04d;',hexdec('00A9')); 
+</programlisting>
+                <para>In a similar way this can be used to show Greek letters, for example
+                    "&amp;#0946;" (beta) is displayed by</para>
+                <programlisting>$beta = sprintf('&amp;#%04d;',hexdec('03B2')); 
+</programlisting>
+                <tip>
+                    <para>Use the class "<code>SymChar</code>" defined in jpgraph_utils.php to get
+                        easy access to greek and special mathematical symbols. This class allow the
+                        specification of common symbols by name. Some examples:</para>
+                    <programlisting>// &amp;#0948; (delta)
+$gamma = SymChar::Get('delta'); 
+
+// &amp;#0956; (mu) 
+$mu = SymChar::Get('mu'); 
+
+// &amp;#0960; (pi) 
+$pi = SymChar::Get('pi'); 
+
+// &amp;#0955; (lambda) 
+$lambda = SymChar::Get('lambda'); 
+
+// &amp;#8747; (integral sign) 
+$integral = SymChar::Get('int'); 
+
+// &amp;#8776; (approximation sign) 
+$approx = SymChar::Get('approx');</programlisting>
+                </tip>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> When I put a text object on a graph and use Set90AndMargin() it doesn't
+                    show?</para>
+            </question>
+            <answer>
+                <para> The main cause for this behaviour is that the text object position is rotated
+                    90 degrees. For example, putting a text object at Pos(0,0) it will become
+                    "invisible". The reason for this behaviour is that the texts position (not the
+                    text itself) is rotated around the center of the image 90 degrees clockwise. </para>
+                <para> For example, assuming the image is WxH in size. Rotating position (0,0) which
+                    is the top left corner of the image gives the rotated position: </para>
+                <para>
+                    <code>(0,0) => rotate 90 degrees => (W,0)</code>
+                </para>
+                <para> Now, if a string was put at position (W,0) it will be drawn outside the image
+                    and hence become invisible. </para>
+                <para> If You need to position text with rotated images just keep this in mind and
+                    swap the meaning of the X and Y position since the X-position will become the Y
+                    position and vice versa after a 90 degree rotation. Some experiments will soon
+                    allow You to get the hang of it. </para>
+                <tip>
+                    <para>Start with an image that is equal in W and H since this makes it easier to
+                        understand the rotation.</para>
+                </tip>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I get an error <emphasis role="errmsg">"Error: Cannot add header information
+                        - headers already sent ..."</emphasis>
+                </para>
+            </question>
+            <answer>
+                <para> First, this is not a problem with JpGraph per se. What has happened is that
+                    your PHP file which produces the image has already returned some data to the
+                    browser before the image has been sent. This is most often caused by one or more
+                    spaces before the first "&lt;?php" The browser will now implicitly set the
+                    header to plain text. </para>
+                <para> When later JpGraph tries to send the correct image header the browser gets
+                    confused since it has already received a header for the current document. (Each
+                    document can only have one and only one type). Check your files for any output
+                    (even a single space) before the call to Graph::Graph() (or Graph::Stroke()) </para>
+                <para> If you are running on Windows this problem could be caused by a blank line at
+                    the end of any of the jpgraph_*.php files. All files in jpgraph ends in a
+                    newline which some configurations on Windows doesn't like. Remove the newline so
+                    that the file ends just after the final "?&gt;" </para>
+                <para> Also remember that when you include external file using include/include_once
+                    and so on Php include the whole content of the file; this content of the file
+                    also include any potential carriage return/line feed or "blank" space before
+                    "&lt;?php" and after "?&gt;" These "dirty characters" will stop the JpGraph
+                    being properly sent back because they are included in the image streaming.
+                </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I get an error <emphasis role="errmsg">"Unknown function
+                            <code>imagecreate</code>"</emphasis></para>
+            </question>
+            <answer>
+                <para> You have not compiled PHP with support for the GD graphic library. See PHP
+                    documentation for details. Note that you also need to configure PHP to use GD
+                    and/or TTF fonts to get JpGraph full functionality</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I get an error <emphasis role="errmsg">"Unknown function
+                            <code>imagecreatejpeg</code>"</emphasis></para>
+            </question>
+            <answer>
+                <para> You have not compiled PHP with support for the JPG format. See PHP
+                    documentation for details</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I get an error <emphasis role="errmsg">"Warning: MkDir failed (Permission
+                        denied) in jpgraph.php on line XXXX"</emphasis></para>
+            </question>
+            <answer>
+                <para> This is a permission problem. To use the cache Apache/PHP must have write
+                    permission to the cache directory. Make sure that Apache/PHP have sufficient
+                    permissions to write to the specified cache directory.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I get an error <emphasis role="errmsg">"Fatal error: Undefined class name
+                        "parent" in jpgraph.php on line xxxx"</emphasis></para>
+            </question>
+            <answer>
+                <para> You are using an older version of PHP. JpGraph 1.x requires at least PHP
+                    4.3</para>
+                <para>
+                    <note>
+                        <para>Remember that JpGraph 1.x has reached its end of life and is no longer
+                            maintained.</para>
+                    </note>
+                </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I get an error <emphasis role="errmsg">"Your data contains non-numeric
+                        values."</emphasis></para>
+            </question>
+            <answer>
+                <para> Most likely Your data really contains non-numeric data which You need to
+                    further investigate (for example by printing out the array with a
+                        <code>var_dump()</code>. One additional thing to watch out for is if the
+                    data looks like ".56" (or "-.56") which is a shortform of "0.56". The problem is
+                    that the number starts with an "." (dot) which is non-numeric. The solution is
+                    to replace the single dot with a "0."</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I get an error <emphasis role="errmsg">"Date is outside specified scale
+                        range"</emphasis> trying to create a Gantt chart</para>
+            </question>
+            <answer>
+                <para> As the error says, you start or end date for a activity is larger/smaller
+                    than the max/min value in the scale. If you get this error and you are using
+                    automatic scale then you are probably using a null value (empty string "") as
+                    start or end date. Check your data</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I get an error <emphasis role="errmsg">"Invalid file handle in jpgraph.php at
+                        line XXXX"</emphasis></para>
+            </question>
+            <answer>
+                <para> This is a permission problem. Check that your cache directory has the right
+                    permissions to let JpGraph access and write to it. </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I get an error <emphasis role="errmsg">"Fatal error: Call to undefined
+                        function: getcsimareas() ..."</emphasis>
+                </para>
+            </question>
+            <answer>
+                <para> You have enabled the <code>DEFINE("JPG_DEBUG",true)</code> in jpgraph.php.
+                    This is an internal debug flag which should always be left untouched. </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I get an error <emphasis role="errmsg">"Fatal error: Call to undefined
+                        function: imagetypes()"</emphasis></para>
+            </question>
+            <answer>
+                <para> You have not installed the core GD library correct. <code>imagetypes()</code>
+                    is a standard GD function. Please refer to the installation section in the
+                    manual for more information on how to verify You setup.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I get an error saying something like <emphasis role="errmsg">"Error:
+                        'parent::' not valid in context..."</emphasis></para>
+            </question>
+            <answer>
+                <para> You are most likely using the Zend cache. There is a bug with some versions
+                    of the Zend cache together with the "parent" meta class. If the referenced
+                    parent class is in another file that is included this problem seems to occur.
+                    The workaround seems to be to put all classes in the same physical file or
+                    upgrade the Zend cache to a more recent version.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I get an error <emphasis role="errmsg">"Image cannot be displayed because it
+                        contains errors.."</emphasis></para>
+            </question>
+            <answer>
+                <para> First of all this is an error message from the browser and not the library.
+                    There could be various reasons for this but the most likely scenario is that
+                    Your installation of PHP has both enabled output buffering and enabled strict
+                    error checking. </para>
+                <para> What could now happen is that with output buffering enabled PHP will buffer
+                    up any text error messages. This could for example be som "Notice:" warnings if
+                    You have forgotten to initialize some variables. When then the library adds the
+                    proper image header and the buffered error messages together with the image gets
+                    sent back the browser it all falls apart. </para>
+                <para> The browser tries to interpret both the error messages and the image data as
+                    an image and it of course fails and gives this error message. Why? Because the
+                    textual error messages that was buffered is interpreted as if they would belong
+                    to the image which of course is nonsense. </para>
+                <para> The solution is to disable output-buffering until You are convinced that Your
+                    code is without any problem. On a development server it is recommended to always
+                    have output buffering disabled. </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> When I use PHP5 + JpGraph 2.x I get <emphasis role="errmsg">"A plot has an
+                        illegal scale..."</emphasis></para>
+            </question>
+            <answer>
+                <para> There have been a few reports of this problem and it seems to be due to a
+                    faulty PHP 5.x installation. For example a standard SuSE 9.3 PHP5 installation
+                    gives this problem. The exact reason for the problem has not been established
+                    but it all points to a PHP5 problem since it can be solved by adjusting the PHP
+                    installation without any change in the library. </para>
+                <para><emphasis role="bold"> Step 1: </emphasis></para>
+                <para> First check that Your php.ini file have compatibility mode turned off (in
+                        <filename>php.ini</filename>)</para>
+                <programlisting>zend.ze1_compatibility_mode=off</programlisting>
+                <para>
+                    <emphasis role="bold">Step 2: </emphasis></para>
+                <para> If turning the compatibility mode off still doesn't solve the problem the
+                    only remaining solution is to re-compile PHP 5. For example on our development
+                    servers we use the following configuration Note: We place "php.ini" in
+                    "/etc/php5/apache2" and You might want to change this to suit Your specific
+                    setup. </para>
+                <programlisting>./configure
+--prefix=/usr/share --datadir=/usr/share/php \
+--with-apxs2=/usr/sbin/apxs2-prefork \ 
+--libdir=/usr/share
+--includedir=/usr/include \ 
+--bindir=/usr/bin \
+--with-config-file-path=/etc/php5/apache2 \ 
+--enable-mbstring --enable-mbregex \
+--with-mysql  \ 
+--with-gd --enable-gd-imgstrttf --enable-gd-native-ttf \
+--with-zlib-dir=/usr/lib \ 
+--with-png-dir=/usr/lib --with-jpeg-dir=/usr/lib --with-xpm-dir=/usr/X11R6 \ 
+--with-tiff-dir=/usr/lib --with-ttf-dir=/usr/lib \
+--with-freetype-dir=/usr/lib \ 
+--enable-ftp \ 
+--enable-memory-limit
+--enable-safe-mode \ 
+--bindir=/usr/bin \ 
+--enable-bcmath -enable-calendar \
+--enable-ctype --with-ftp \ 
+--enable-magic-quotes \ 
+--enable-inline-optimization \ 
+--with-bz2 \ 
+--with-iconv </programlisting>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I try to mix bar and line graphs and the bars doesn't get centered and the
+                    labels are not correctly aligned?</para>
+            </question>
+            <answer>
+                <para> This is a known problem. The best way to partly solve this is to make sure
+                    you add the bar plot as the last plot to the graph. The reason behind this
+                    problem is that plot that gets added to the graph internally makes modification
+                    to the alignment of the plot. Since each plot does not know what other plot has
+                    been added it will happily overwrite previous plots settings in the graph. Hence
+                    the workaround by adding the bar last. conflicting settings.)</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How do I turn off anti-aliasing for TTF fonts?</para>
+            </question>
+            <answer>
+                <para> There is not any built in support in JpGraph to do this. Since the whole
+                    purpose of TTF fonts is to provide a smooth font experience there is really no
+                    point in wanting to do this. If you want non-aliased fonts you should use the
+                    built-in bitmap fonts.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> The auto-scaling algorithm chooses very tight limits around my Y-values. How
+                    do I get more "space" between the end of the scale and the min/max values?
+                </para>
+            </question>
+            <answer>
+                <para> Use the <code>SetGrace()</code> to specify some extra space (as percentage of
+                    the scale) between the min/max value and the limits of the scale. For example
+                        <code>$graph->yscale->SetGrace(10)</code> gives 10% extra space at the
+                    ends.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I want to use autoscaling to handle the maximum value but I always want the
+                    Y-axis to start at 0 regardless of the actual minimum value?</para>
+            </question>
+            <answer>
+                <para> Use the <code>SetAutoMin()</code> method. For example as in </para>
+                <programlisting>...
+$graph = new Graph(400,350); 
+$graph->SetScale("intlin");
+$graph->yaxis-&gt;scale-&gt;SetAutoMin(0); 
+... 
+</programlisting>
+                <tip>
+                    <para>If you need to limit the maximum value but auto-scale the minimum value
+                        use the <code>SetAutoMax() </code>method.</para>
+                </tip>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I want the position of the X-axis to be at the bottom of the Y-scale and not
+                    always at the position Y=0?</para>
+            </question>
+            <answer>
+                <para> To adjust the position of the Axis Use the <code>Axis::SetPos()</code>
+                    method. The argument to this method can be either the numerical scale value on
+                    the Y-axis where the X-axis should be positioned or it can be one of the two
+                    special value "min" or "max". In the latter case the axis will be positioned on
+                    either the minimum or the maximum value of the scale. For example
+                    <programlisting>...
+$graph->xaxis-&gt;SetPos("min"); 
+... 
+</programlisting>
+                    Will put the X-axis at the lowest value of the Y-axis. <note>
+                        <para>The same positioning is possible for the Y-axis.</para>
+                    </note></para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I specify color X in the image but the color displayed is not exactly what I
+                    specified?</para>
+            </question>
+            <answer>
+                <para> This is a result of a finite color palette for GIF, PNG formats. If you are
+                    using anti-aliasing, perhaps a background image or even gradient fill you might
+                    exhaust the color palette supported in the GD library. Try set the constant
+                        <code>USE_APPROX_COLORS</code> to false and generate the picture again. If
+                    you now get an error message saying that no more colors can be allocated this is
+                    the problem. There is no good workaround if you are using GD 1.x since for PNG
+                    the GD 1.x library does not support "True-color". </para>
+                <para> The only real solution is to upgrade to GD 2.x to get full true-color
+                    support. If you are using a background image try to "degrade" it to have a
+                    smaller color palette or turn of anti-aliasing and you might have enough free
+                    palette entries to cater for all the colors you want and still use GD 1.x </para>
+                <note>
+                    <para>This problem is only seen in very, very old installations that use GD 1.x
+                        library which has been deprecated since around 2005</para>
+                </note>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> Can I have labels at an arbitrary angle on the X-axis? </para>
+            </question>
+            <answer>
+                <para> Yes, almost any text can be stroked at an arbitrary angle. For example to
+                    have the labels at 45 degrees angle use </para>
+                <programlisting>...
+$graph->xaxis-&gt;SetTickLabels($labels);
+$graph->xaxis-&gt;SetLabelAngle(45); 
+... </programlisting>
+                <note>
+                    <para>Internal fonts support 0 and 90 degrees text. If you need to use, say 45
+                        degree (or any other arbitrary angle), you must use TTF fonts. </para>
+                </note>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How do I invert the Y-scale so that it has the minimum value on top and the
+                    largest value at the bottom?</para>
+            </question>
+            <answer>
+                <para> The easiest way to do this is by following a two step process</para>
+                <para>a) Negating all Your values and then </para>
+                <para>b) Create a callback function for the Y-axis that negates all the display
+                    values. </para>
+                <para> What will happen now is that after the negative values have been feed into
+                    the graph it will create a scale starting at the lowest value, say -8, then go
+                    up to the highest, say -1. If these values are then inverted when printed it
+                    will in affect achieve the inverted axis appearance. The code snippet below
+                    shows a basic example of this technique. </para>
+                <programlisting>... // Callback to negate the argument
+function _cb_negate($aVal) {     
+    return round(-$aVal); 
+}  // A fake depth curve
+$ydata = ....  
+// Negate all data 
+$n = count($ydata); 
+for($i=0; $i&lt;$n; ++$i) {     
+    $ydata[$i] = -$ydata[$i]; 
+}  
+
+// Basic graph setup 
+$graph = new Graph(400,300); 
+$graph-&gt;SetScale("linlin");  
+
+// Setup axis
+$graph-&gt;yaxis->SetLabelFormatCallback("_cb_negate"); 
+$plot = new LinePlot($ydata,$xdata); 
+$graph-&gt;Add($plot); 
+$graph-&gt;Stroke();
+</programlisting>
+                <para> Two scripts that uses this technique can be found in the
+                        <filename>Examples/</filename> directory in the distribution,
+                        <filename>"inyaxisex1.php"</filename> and
+                        <filename>"inyaxisex2.php"</filename>. </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> Can I have the auto-scaling algorithm restrict itself to whole
+                    numbers?</para>
+            </question>
+            <answer>
+                <para> Yes, use the "int" scale specification, for example
+                        <code>$graph->SetScale('inttext')</code> will make the Y-axis have an
+                    integer scale and the X-axis a text-scale</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> Is it possible to have horizontal bar graphs?</para>
+            </question>
+            <answer>
+                <para> Yes, Just create a normal bar and call the method
+                        <code>Set90AndMargin()</code> to rotate the graph.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> Line weight does not seem to work in my graphs? I specify a thick line but
+                    still get a thin line?</para>
+            </question>
+            <answer>
+                <para> You have probably enabled Anti-aliasing. If anti-aliasing is enabled setting
+                    line-weight will have no affect.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I have more space between the Y-axis and the title? </para>
+            </question>
+            <answer>
+                <para> Use the <code>Axis::SetTitleMargin()</code> method. For example to have a 25
+                    pixels margin for the Y-title you could use:
+                    <programlisting>$mygraph-&gt;yaxis-&gt;SetTitleMargin(25);</programlisting></para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I display both X and Y values above each data point in a line, bar or
+                    scatter plot?</para>
+            </question>
+            <answer>
+                <para> You need to use a value formatting callback. The callback function is called
+                    for each data point and is passed the Y-value as argument. This means that if
+                    You also need to display the x-value it must be available in the callback
+                    function,perhaps as a global data array. </para>
+                <para> Something along the lines of</para>
+                <programlisting>&lt;?php
+$datay = array(...); 
+$datax = array(...);
+$idx=0; 
+
+function xyCallback($yval) {   
+    global $datax, $idx;   
+    return '('.$datax[$idx++].", $yval)"; 
+} 
+
+// Some more code ... 
+
+$graph = new Graph(...);
+$graph-&gt;SetScale("intlin"); 
+$p1 = new LinePlot($datay,$datax);
+$p1-&gt;value-&gt;SetFormatCallback('xyCallback'); 
+$p1-&gt;value-&gt;Show(); 
+
+// Some more code ... 
+
+$graph-&gt;Stroke(); 
+?></programlisting>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> Can I display stock box-charts (open, close, high, low) with JpGraph? </para>
+            </question>
+            <answer>
+                <para> Yes, just create a <code>StockPlot()</code> graph.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> Is there any way to specify a newline in the legend box for a specific
+                    legend?</para>
+            </question>
+            <answer>
+                <para> Yes. From version 1.8 full multi-line text paragraphs are supported. Just
+                    make sure that your text uses double-quotes and a newline character. </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I print unicode characters?</para>
+            </question>
+            <answer>
+                <para> Use &amp;#XXXX; format in your strings where XXXX is the decimal value for
+                    the unicode character. You may find a list of Unicode characters and there
+                    encodings at <uri xlink:href="http://www.unicode.org/charts/"
+                        >www.unicode.org</uri> Please observe that the encoding in the lists are
+                    given in hexadecimal and these values must be converted to decimal. </para>
+                <para> Note: If You are working in an UTF-8 environment then the characters may be
+                    input directly.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> My background images doesn't display properly. It just shows a black solid
+                    square? </para>
+            </question>
+            <answer>
+                <para> You are using a very old GD version (probably 2.0.1). Background images only
+                    work with a truecolor image, (enable the USE_TRUECOLOR constant). Some people
+                    have reported that it works as long as the background image is not in PNG
+                    format. The drawback with truecolor images is that truefont doesn't work
+                    properly in GD versions &lt; 2.0.8 </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How do I make each bar in a bar plot have it's own color?</para>
+            </question>
+            <answer>
+                <para> Specify an array as argument to <code>BarPlot::SetColor()</code> as in
+                    <programlisting>$mybarplot-&gt;SetColor(array("red","green","blue","gray"));</programlisting></para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I adjust the position of the axis title?</para>
+            </question>
+            <answer>
+                <para> You can add an alignment parameter when you specify the title. You specify
+                    one of "high", "low" or "center" as in </para>
+                <programlisting>$mygraph-&gt;xaxis-&gt;SetTitle("mytitle","high");
+$mygraph-&gt;xaxis-&gt;SetTitle("mytitle","center");
+$mygraph-&gt;xaxis-&gt;SetTitle("mytitle","low"); </programlisting>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I change the image format, i.e jpeg, gif or png? </para>
+            </question>
+            <answer>
+                <para> Use the <code>Image::SetImgFormat()</code> method at runtime. You can also
+                    change the default value with the <code>DEFAULT_GFORMAT</code> define in
+                    jpg-config.php. This is normally set to 'auto' format which means that JpGraph
+                    will automatically choose the format depending on what is available.</para>
+                <para>For example to use the JPEG format :</para>
+                <programlisting>$graph-&gt;img-&gt;SetImgFormat('jpeg');</programlisting>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How do I specify the font for legends?</para>
+            </question>
+            <answer>
+                <para> Use the Legend::SetFont() method. As in </para>
+                <programlisting>$graph->legend-&gt;SetFont(FF_FONT1,FS_BOLD);</programlisting>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> When I rotate text and labels the text is not rotated correctly?</para>
+            </question>
+            <answer>
+                <para> Red Hat 7.2 has a bug in it's TTF libraries (FreeType 2.0.3) that comes with
+                    the distribution. Upgrade to FreeType 2.0.9.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> When I rotate a paragraph (multi-line) text the paragraph is always left
+                    aligned even though I have specified another alignment. It seems fine for
+                    non-rotated paragraphs though. What is the problem? </para>
+            </question>
+            <answer>
+                <para> This is a limitation with the current implementation. (The reason is that GD
+                    does not support inter-paragraph alignment so all that logic is done within the
+                    libraries string-layout engine. </para>
+                <para> At the moment the logic only implements this paragraph alignment for
+                    non-rotated paragraphs.) For rotated paragraphs left-alignment will always be
+                    used regardless of specified paragraph alignment.</para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> I have a huge number of data points and I only want labels (which I want to
+                    specify as text string) and ticks on every n:th data. Can I do this?</para>
+            </question>
+            <answer>
+                <para> Yes. What most users stumble on is the fact that the label array must still
+                    contain data for all the data points even though only every n:th data label is
+                    displayed. </para>
+                <para> This means that if your original data array only contains just the display
+                    values it is necessary first to augment the label array with padding spaces to
+                    fill it out. </para>
+                <para> It is then possible to use the method
+                        <code>Axis::SetTextTickInterval()</code> to specify that only every n:th
+                    tick+label should be displayed. Something like:
+                    <programlisting>// Setup the X-axis 
+$graph-&gt;xaxis-&gt;SetTickLabels($datax);
+$graph-&gt;xaxis-&gt;SetTextTickInterval( ... ); </programlisting></para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I make the labels have a 1000 comma separator?</para>
+            </question>
+            <answer>
+                <para> The easiest way is to use the PHP built-in function
+                        "<code>number_format()</code>" as a callback (see php manual. <uri
+                        xlink:href="http://www.php.net/manual/en/function.number-format.php"
+                        >number_format()</uri>)</para>
+                <para>For example, to have the line plot display values using this format first
+                    setup and install the callback function as: </para>
+                <programlisting>$lineplot-&gt;value-&gt;SetFormatCallback("number_format");</programlisting>
+                <para> If you instead want the Y-axis label to use this kind of formatting install
+                    the callback using </para>
+                <programlisting>$graph-&gt;yaxis-&gt;SetLabelFormatCallback("number_format");</programlisting>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> The Y2 axis is no longer positioned at the right side of the graph</para>
+            </question>
+            <answer>
+                <para> This will happen after that You have manually specified the sclae and/or the
+                    tick spacing. If the user manipulates the default scale the library defaults to
+                    setting the position of the Y2 axis to the 0 X-position. It is easy to re-adjust
+                    the Y2 axis position by calling SetPos() as the following code snippet
+                    demonstrates
+                    <programlisting>$graph-&gt;y2axis-&gt;SetPos('max');
+$graph-&gt;y2axis-&gt;SetTitleSide('right');</programlisting></para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I include several graphs in the same image?</para>
+            </question>
+            <answer>
+                <para> This can be solved by a bit of extra GD code since the library by default do
+                    not directly support this functionality. The easiest way to solve this is to
+                    manually create a big enough empty graph with plain GD commands. Then get the
+                    image handles from the Stroke() methods in the graphs that should be included.
+                    It is then possible to use these handles together with the GD copy command and
+                    copy the individual graphs to the previously created empty large GD image. </para>
+                <para> This is illustrated in the following code snippet. In the example below we
+                    assume that graph1 is the same size as the final combined graph we would like to
+                    create. This way our combined graph get a background and color as specified in
+                    the first graph. </para>
+                <programlisting>// Assume we would like to combine graph1,2 and 3 
+
+// ...... create graph 1 here....... 
+$handle1 = $graph1-&gt;Stroke( _IMG_HANDLER);  
+
+// ...... create graph 2 here.......
+$handle2 =  $graph2-&gt;Stroke( _IMG_HANDLER);  
+
+// ...... create graph 3 here....... 
+$handle3 = $graph3-&gt;Stroke( _IMG_HANDLER);   
+
+// Now create the "melting graph" which should contain all three graphs 
+// $WIDTH1 and $HEIGHT1 are width and height of graph 1 ($handle1) 
+// $WIDTH2 and $HEIGHT2 are width and height of graph 2 ($handle2) 
+// $WIDTH3 and $HEIGHT3 are width and height of graph 3 ($handle3) 
+// $x2,$x3 and $y2,$y3 shift from top left of global graph (ie position of 
+// graph2 and graph3 in global graph)  
+$image = imagecreatetruecolor($WIDTH1,$HEIGHT1); 
+imagecopy($image, $handle1,0, 0, 0, 0, $WIDTH1,$HEIGHT1); 
+imagecopy($image, $handle1,$x1,$y1,0,0,$WIDTH2,$HEIGHT2);
+imagecopy($image, $handle1,$x2,$y2,0,0,$WIDTH3,$HEIGHT3);  
+
+// Stream the result back as a PNG 
+image header("Content-type: image/png"); 
+imagepng ($image);</programlisting>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I have an exploded slice with 3D pie plots?</para>
+            </question>
+            <answer>
+                <para> Use either <code>Pi3DPLot::ExplodeSlice()</code> or
+                        <code>Pie3DPlot::Explode()</code>
+                </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I display values for each slice close to the pie?</para>
+            </question>
+            <answer>
+                <para> Use the method <code>PiePlot::value::Show()</code></para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I change between percentage and absolute values for pie slices?
+                </para>
+            </question>
+            <answer>
+                <para> Use <code>PiePlot::SetValueType($aType)</code> where <code>$aType</code> is
+                    either <code>PIE_VALUE_ABS</code> or <code>PIE_VALUE_PERCENTAGE</code>. To
+                    hide/show values on the pie you access the value property of the plot (just like
+                    in line plots) If you want some special format of the string you also need to
+                    specify a format string. By default just a number gets printed. If you (for
+                    example) want percent with a "%" sign you should use a format string like "%d%%"
+                    (assuming you just want to display whole numbers)
+                    <programlisting>$mypieplot-&gt;value->SetFormat("%d%%");
+$mypieplot-&gt;value->Show(); // Defaults to TRUE
+$mypieplot-&gt;SetValueType(PIE_VALUE_PERCENTAGE); </programlisting></para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> Can I display the actual value as labels on the pie bar instead of the
+                    percentage?</para>
+            </question>
+            <answer>
+                <para> Yes, use
+                    <programlisting>$pieplot-&gt;SetLabelType(PIE_LABEL_ABS);</programlisting> and
+                    make sure labels are not hidden. </para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> How can I adust the start angle of the first slice?</para>
+            </question>
+            <answer>
+                <para> Use <programlisting>$pieplot-&gt;SetStartAngle(45); </programlisting></para>
+            </answer>
+        </qandaentry>
+        <qandaentry>
+            <question>
+                <para> When I use IE v5 or v6 I can only save the generated graph image in the
+                    browser as a BMP file even if it was generated as a JPEG or PNG encoded
+                    image?</para>
+            </question>
+            <answer>
+                <para> This is a bug in the way IE handles HTTP headers. By default the library
+                    sends no-cache headers to instruct the browser to always make a HTTP request to
+                    the server. This is necessary since graph scripts normally have the same name
+                    but the graphs may change over time and we don't want the browser to be fooled
+                    by thinking it has already fetched the graph before. </para>
+                <para> The only known workaround is to tell the library not to send back any
+                    no-cache headers as illustrated below. </para>
+                <programlisting>$graph->img-&gt;SetExpired(false);                     
+$graph-&gt;Stroke();</programlisting>
+                <para> The <code>SetExpired(false)</code> call instructs the library to not send
+                    back any has-expired headers.</para>
+            </answer>
+        </qandaentry>
+    </qandaset>
+</appendix>

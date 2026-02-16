@@ -1,0 +1,1105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<part version="5.0" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Case studies</title>
+    <chapter>
+        <title>Synchronized Y-axis</title>
+        <para>The purpose of this chapter is to show how one can have one set of data displayed with
+            two different scales that are still synchronized meaning that the tick marks are at
+            identical positions.</para>
+        <para> One classic example of when this can be useful is to show temperature in both Celsius
+            and Fahrenheit. <xref xlink:href="#fig.y2synch"/> below illustrates what we would like
+            to accomplish. </para>
+        <para>
+            <programlisting>#=y2synch|Synchronized y and y2 scales#</programlisting>
+        </para>
+        <section>
+            <title>Creating two scales</title>
+            <para>Normally the auto scaling puts tick marks at "nice" positions that for example are
+                multiples of 5,2,10 and so on. This would mean that it seems like the graph in <xref
+                    xlink:href="#fig.y2synch"/> with tick positions at 59 F and 68 F can not be auto
+                scaled. </para>
+            <para>The simplest method of creating two scales as in the example above is to add a
+                secondary Y-axis, add the same plot to that axis. This would then mean that the two
+                axes would be identical. The magic now happens in the last step when we add a format
+                callback method to the second Y-axis. This format callback will be applied to each
+                label. All we have to do now is create a callback function that does the proper
+                scale conversion.</para>
+            <para>This way also means that we have too chose one of the scales as the "master" which
+                will be auto scaled with tick positions at "nice" intervals. </para>
+            <para>
+                <caution>
+                    <para>For the second scale one can add the same plot or one could create a new
+                        plot from the same data set. If the data set to be plotted is very large it
+                        can be advantageous to create a new plot and set the line weight to 0
+                        (zero). This way the line will not actually be plotted and that plot time is
+                        eliminated. </para>
+                </caution>
+            </para>
+            <para>The script to create the graph in <xref xlink:href="#fig.y2synch"/> is given
+                below. </para>
+            <para>
+                <programlisting>#:y2synch#</programlisting>
+            </para>
+            <para>The same principle will also work with othrr plot variants, for example bar plots.
+                By making the first plot an instance of <code>class BarPlot</code> the graph in
+                    <xref xlink:href="#fig.y2synch2"/> can be created. </para>
+            <para>
+                <programlisting>#=y2synch2|Using a barplot with two different scales#</programlisting>
+            </para>
+        </section>
+    </chapter>
+    <chapter>
+        <title>USPS Confirmation Barcodes</title>
+        <para>US Postal Service (USPS) uses EAN-128 barcodes to tag confirmation codes for the
+            sender of parcels and letters in the case the sender is a registered business entity.
+            The confirmation barcode gives feedback to the sender on the date, ZIP Code and the time
+            the article was delivered. </para>
+        <figure>
+            <title>usps_exhibit44.png</title>
+            <mediaobject>
+                <imageobject><imagedata fileref="images/usps_exhibit44.png" scale="60"
+                    /></imageobject>
+            </mediaobject>
+        </figure>
+        <para>The full standard describing this is available in "<uri
+                xlink:href="http://www.usps.com/cpim/ftp/pubs/pub91/welcome.htm">Confirmation
+                Services Technical Guide</uri>" </para>
+        <para>In order to create labels adhering to this strict standard it is possible to use
+            JpGraph as a basic building block in order to create the barcode part (which uses
+            UCC/EAN128 as mandatory coding from 2004 and onwards). The standard describes two basic
+            forms of labels :</para>
+        <para>
+            <orderedlist>
+                <listitem>
+                    <para>Inclusion of postal service routing information (destination ZIP code)
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Exclusion of the destination ZIP code. This will then only include the Dun
+                        &amp; Bradstreet Number (DUNS). The DUNS uniquely identifies businesses at
+                        specific geographical locations. For more information regarding this and how
+                        to obtain such a number please refer to USPS technical documentation.
+                    </para>
+                </listitem>
+            </orderedlist>
+        </para>
+        <sect1>
+            <title>Creating the confirmation codes</title>
+            <para>In order to create the final Package Identification Code (PIC) the following three
+                steps must be taken </para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Determine the basic element of the code. This consists of identifying
+                            the Zip code (of the addressee), USPS service type, the DUNS and
+                            Sequence number of parcel (as determined by the business). These number
+                            are input and the process of how to get those number is not described
+                            further in this short note. It is assumed that a potential client will
+                            now how these numbers are obtained. </para>
+                    </listitem>
+                    <listitem>
+                        <para>Determine what type of confirmation code should be used (with or
+                            without Zip code) </para>
+                    </listitem>
+                    <listitem>
+                        <para>Calculate the additional checkdigit for the code and append that code
+                            to the digit sequence. </para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>The final code that one arrives at in the final stage is then the barcode that
+                should be created. However creating this code requires knowledge of the EAN-128
+                barcode format and the rules for creating barcodes that follow the highly
+                standardized format for a EAN-128 barcode. </para>
+            <para>EAN-128 barcodes are the same as CODE-128 barcodes from a technical barcode point
+                of view but the data to be encoded must follow a rigorous standard. The JpGraph
+                library has built in validation to ensure that any data that is encoded using the
+                EAN-128 symbology follows this standard. </para>
+            <para>This standard requires that special control character is inserted at specific
+                points in the data stream. In the discussion below we will simply state what those
+                control characters are and not discuss the general format of the EAN-128 barcodes in
+                too much details. </para>
+            <para>In order to do this we will create a utility class with methods that does the
+                following three things </para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Create the additional USPS Modulo-10 check digit. </para>
+                    </listitem>
+                    <listitem>
+                        <para>Create a confirmation code without the ZIP number </para>
+                    </listitem>
+                    <listitem>
+                        <para>Create a confirmation code with ZIP number </para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para><emphasis role="bold">The USPS_Confirmation Utility class</emphasis></para>
+            <para>For both types of confirmation code USPS uses its own checkdigit (a variant of a
+                Modulo-10 checkdigit) at the end of the complete Package Identification Code (PIC),
+                (the exact process for calculating this number is also described in the technical
+                documentation released by USPS). The utility class will therefore consist of three
+                methods, one to calculate the checkdigit and one method each to create PIC with and
+                without ZIP code. The three methods are listed below </para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para><emphasis role="bold"><code>function
+                                _USPS_chkd($aData)</code></emphasis></para>
+                        <para>
+                            <programlisting>&lt;?php
+// Calculate the single digit check digit from sequence of numbers
+// in a string
+function _USPS_chkd($aData) {
+    $n = strlen($aData);
+    
+    // Add all numbers at position 0,2,4,.. from the end
+    $et = 0 ;
+    for( $i=1; $i &lt;= $n; $i+=2 ) {
+	$d = intval(substr($aData,-$i,1));
+	$et += $d;
+    }
+
+    // Add all numbers at position 1,3,5,... from the end
+    $ot = 0 ;
+    for( $i=2; $i &lt;= $n; $i+=2 ) {
+	$d = intval(substr($aData,-$i,1));
+	$ot += $d;
+    }
+
+    // Calculate the checkdigit
+    $tot = 3*$et + $ot;
+    return (10 - ($tot % 10))%10;
+}
+?></programlisting>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold"><code>function
+                                    GetPIC($aServiceType,$aDUNS,$aSeqNbr)</code></emphasis></para>
+                        <para>
+                            <programlisting>&lt;?php
+// Get type 2 of confirmation code (without ZIP)
+function GetPIC($aServiceType,$aDUNS,$aSeqNbr) {
+  // Convert to USPS format with AI=91
+  $data = '91' . $aServiceType . $aDUNS . $aSeqNbr;
+  $cd = $this->_USPS_chkd($data);
+  return $data . $cd;
+}
+?></programlisting>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold"><code>function
+                                    GetPICwithZIP($aZIP,$aServiceType,$aDUNS,$aSeqNbr)</code></emphasis></para>
+                        <para>
+                            <programlisting>&lt;?php
+// Get type 1 of confirmation code (with ZIP)
+function GetPICwithZIP($aZIP,$aServiceType,$aDUNS,$aSeqNbr) {
+   // Convert to USPS format with AI=420 and extension starting 
+   // with AI=91
+   $data = '420'. $aZIP . '91' . $aServiceType . 
+             $aDUNS . $aSeqNbr;
+   // Only calculate the checkdigit from the AI=91 and forward
+   // and do not include the ~1 (FUNC1) in the calculation
+   $cd = $this->_USPS_chkd(substr($data,8));
+   $data = '420'. $aZIP . '~191' . $aServiceType . 
+              $aDUNS . $aSeqNbr;
+   return $data . $cd;
+}
+?></programlisting>
+                        </para>
+                        <para>All that now remains is to tie this together with the EAN-128 standard
+                            barcode generation in order to crate the confirmation code. The
+                            following script shows how this can be done </para>
+                        <para>
+                            <programlisting>&lt;?php
+$zip     = '92663';     // Zip code
+$service = '21';        // Service 21 = Priority Mail
+$DUNS    = '805213907'; // DUNS
+$seqnr   = '04508735';  // Seqnr
+
+$usps = new USPS_Confirmation();
+$data = $usps->GetPICwithZIP($zip,$service,$DUNS,$seqnr);
+
+$encoder = BarcodeFactory::Create(ENCODING_EAN128);
+$e = BackendFactory::Create(BACKEND_IMAGE,$encoder);
+$e->SetModuleWidth(2);
+$e->SetFont(FF_ARIAL,FS_NORMAL,14);
+$e->Stroke($data);
+?></programlisting>
+                        </para>
+                        <para>The script above will then generate the following barcode </para>
+                        <figure>
+                            <title>USPS example 1</title>
+                            <mediaobject>
+                                <imageobject><imagedata fileref="images/usps_ex1.png" scale="60"
+                                    /></imageobject>
+                            </mediaobject>
+                        </figure>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>
+                <caution>
+                    <para>Even though only numbers are input to the PIC, integers should not be used
+                        since initial "0":s will be lost. Use strings as the example above shows.
+                    </para>
+                </caution>
+            </para>
+            <para><emphasis role="bold">Additional example</emphasis></para>
+            <para>The following script shows how to generate PIC that does not use Zip codes. </para>
+            <para>
+                <programlisting>&lt;?php
+$service = '01';         // Priority mail
+$DUNS    = '123456789';  // DUNS
+$seqnr   = '00000001';   // Seqnr
+
+$usps = new USPS_Confirmation();
+$data = $usps->GetPIC($service,$DUNS,$seqnr);
+
+$encoder = BarcodeFactory::Create(ENCODING_EAN128);
+$e = BackendFactory::Create(BACKEND_IMAGE,$encoder);
+$e->SetModuleWidth(2);
+$e->SetFont(FF_ARIAL,FS_NORMAL,14);
+$e->Stroke($data);
+?></programlisting>
+            </para>
+            <para>The script above will generate the following confirmation barcode.</para>
+            <figure>
+                <title>USPS example 2</title>
+                <mediaobject>
+                    <imageobject><imagedata fileref="images/usps_ex2.png" scale="60"/></imageobject>
+                </mediaobject>
+            </figure>
+            <para>A complete script to implement this is available in the distribution as
+                    "<filename>barcode/examples/barcode_usps_example.php</filename>"</para>
+        </sect1>
+    </chapter>
+    <chapter xml:id="chapter.showing-spam-stat">
+        <title>Showing SPAM statistics</title>
+        <sect1>
+            <title>Introduction and purpose</title>
+            <para>This worked example will show hot to setup a graph that is periodically generated
+                offline to show Spam statistics for a mail server. The graph will show daily
+                summaries for the three things; <emphasis role="bold">a)</emphasis> The total number
+                of identified spam mails <emphasis role="bold">b)</emphasis> The number of
+                immediately deleted spams and <emphasis role="bold">c)</emphasis> The number of
+                suspected spams that was stored in the "spam" folder instead of being immediately
+                deleted.</para>
+            <para>An example of the graph we will generate is shown in <xref
+                    xlink:href="#fig.spam-stats"/></para>
+            <figure xml:id="fig.spam-stats">
+                <title>Spam statistics</title>
+                <mediaobject>
+                    <imageobject><imagedata fileref="images/spamstat.png" scale="60"/></imageobject>
+                </mediaobject>
+            </figure>
+            <para>The graph above makes two assumption;</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>The spam setup has two levels of identifications and how spams are
+                            handled. Suspected email are either deleted immediately (by sending them
+                            to <command>dev/null</command>) or storing the email in the users spam
+                            folder.</para>
+                    </listitem>
+                    <listitem>
+                        <para>The log files from the mail server are available for analysis.</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>In the following we will construct a complete PHP command line script that will be
+                run periodically and analyse the email logs and produce a graph similar to what is
+                shown above. The script assume that the log file uses <command>procmail</command>
+                log format so that the folder where each mail is stored are logged.</para>
+            <para>
+                <warning>
+                    <para>For very high load email servers doing log file analysis in PHP is
+                        probably not a very good idea due to performance reasons in regards to both
+                        time and memory constraints. We do not make any claim that the scripts below
+                        is enough optimized to be used on high volume mail servers.</para>
+                </warning>
+            </para>
+            <para>The script will consist of three parts</para>
+            <para><orderedlist>
+                    <listitem>
+                        <para>A parser to scan the log file and create the data</para>
+                    </listitem>
+                    <listitem>
+                        <para>A suitable graph script to create an accumulated bar graph</para>
+                    </listitem>
+                    <listitem>
+                        <para>Uploading of the created image file with the graph to a server where
+                            it will be displayed</para>
+                    </listitem>
+                </orderedlist>We will therefore use three classes that corresponds to each step
+                above. </para>
+            <para>To define the different files and ftp credentials we will use the following
+                symbolic constants which will need to be defined depending on the system setup.
+                Constants that must be adjusted is marked as <code>"..."</code>.</para>
+            <para>
+                <programlisting>&lt;?php
+/ FTP Server credentials
+DEFINE('FTP_SERVER','...');
+DEFINE('FTP_UID','...');
+DEFINE('FTP_PWD','...');
+
+// Directory on FTP server where the image should be stored
+DEFINE('FTP_DIR','...');
+
+// Which procmail logfile to read
+DEFINE('PROCMAIL_LOGFILE','...');
+
+// 2 Weeks windows to display
+DEFINE('WINDOWSIZE',14); 
+
+// Where to store the temporary image file
+DEFINE('IMGFILE','/tmp/spamstat.png');
+?></programlisting>
+            </para>
+            <para>The whole process is then driven by the following relative small main
+                script:</para>
+            <para>
+                <programlisting>&lt;?php
+// Use the text based error handling and log potential errors to the 
+// system default system logger
+JpGraphError::SetImageFlag(false); 
+JpGraphError::SetLogFile('syslog');
+JpGraphError::SetTitle('Spamstat Message: ');
+
+//---------------------------------------------------------------------------    
+// Step 1) Get the statistics. We return a window of WINDOWSIZE days
+//---------------------------------------------------------------------------
+$parser = new ParseProcmailLogFile(PROCMAIL_LOGFILE);
+list($xdata, $ydata, $y2data) = $parser->GetStat(WINDOWSIZE);
+
+//---------------------------------------------------------------------------
+// Step 2) Create the graph and store it in the file IMGFILE
+//---------------------------------------------------------------------------
+$width = 650; $height = 420;
+$sgraph = new SpamGraph($width,$height);
+$sgraph->Create(IMGFILE,$xdata,$ydata,$y2data);
+
+//---------------------------------------------------------------------------
+// Step 3) Upload the file to the FTP_SERVER server and store the
+// local file IMGFILE with the same base name in directory FTP_DIR  
+//---------------------------------------------------------------------------
+$ftp = new FTPUploader(FTP_SERVER,FTP_UID,FTP_PWD);
+$ftp->Upload(IMGFILE,FTP_DIR);
+?></programlisting>
+            </para>
+            <para>For brevity we have excluded the lines that defines the symbolic constants above
+                and also the inclusion of the necessary library files.</para>
+            <para>In the following sections we will shortly discuss each of the three support
+                classes.</para>
+            <para>
+                <note>
+                    <para>An actual usage of this can be found on JpGraph home page where the result
+                        of this script is run by a daily cronjob. The graph is available at <uri
+                            xlink:href="http://www.aditus.nu/jpgraph/spamstat.php"
+                            >http://www.aditus.nu/jpgraph/spamstat.php</uri></para>
+                </note>
+            </para>
+        </sect1>
+        <sect1>
+            <title>Step 1: Parsing the log file</title>
+            <para>The log file we will be parsing is the standard <command>procmail</command> log.
+                An authentic example of the log file from our main mail server (that receives around
+                ~10,000 spam mails per month) is shown below (slightly anonymized to remove the real
+                name of the mailbox)</para>
+            <para>
+                <screen>...
+From sterne@gvt.net.br  Thu Jul 16 00:03:32 2009
+ Subject: *** SPAM (5.3) *** =?koi8-r?B?79DUyc3J2sHDydEg08HK1ME=?=
+  Folder: /dev/null                                                       14278
+From yhrtjgommsg@boomboomroom.com  Thu Jul 16 00:13:33 2009
+ Subject: *** SPAM (6.7) *** Women will be begging you to sleep with you.
+  Folder: /srv/mail/john/.Spam/new/1247696013.18366_0.lambda                2070
+From ErikaFrazier12@aol.com  Thu Jul 16 00:13:33 2009
+ Subject: *** SPAM (41.5) *** Obama Allows Meds Sold Online
+  Folder: /dev/null 
+...</screen>
+            </para>
+            <para>Each entry for a received mail in the log are three lines, sender, subject and the
+                folder the mail will be stored in. For mails that are identified with (according to
+                this setup) 100% confidence as spams the destination is set to
+                    <filename>/dev/null</filename> , i.e they are immediately deleted. For mails
+                that are determined to be spams but where there might be a chance that they are
+                legitimate they are store in the users Spam folder. From the above log we can see
+                that two mails are deleted immediately and one mail is stored in the users Spam
+                folder.</para>
+            <para>To analyze this we will create the class <code>ParseProcmailLogFile</code> the
+                constructor will take a file name of the log file as the only argument and to get
+                hold of the statistics we use the method </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>ParseProcmailLogFile::GetStat($aWindowSize)</code></para>
+                        <para><code>$aWindowSize</code> is the number of days back the stats should
+                            be based on. The returned statistics will be an array with three array
+                            elements with the following layout:</para>
+                        <para><code>($dateArray, nbrDevNull, nbrSpamFolder)</code></para>
+                        <para>These returned values are both arrays indexed by date and value the
+                            number of spams for that date (key)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <caution>
+                    <para>Remember that the PHP process or user running the script must have read
+                        privileges for the log file.</para>
+                </caution>
+            </para>
+            <para>We will not walk through the parsing class in any more details than what is given
+                in the phpdoc comments in the source below</para>
+            <para>
+                <programlisting>#!parseprocmaillogfile.class.php#</programlisting>
+            </para>
+        </sect1>
+        <sect1>
+            <title>Step 2: Creating the graph</title>
+            <para>We will use a basic accumulated bar graphs with a text scale and integer y-scale.
+                The remainder of the script should be fairly self explanatory since this is a
+                straightforward graph with no "tricks".</para>
+            <para>
+                <programlisting>#!spamgraph.class.php#</programlisting>
+            </para>
+        </sect1>
+        <sect1>
+            <title>Step 3: Uploading the image file to a server</title>
+            <para>This class assumes that PHP has been built with support for FTP. Since the script
+                is straightforward we do not discuss it any more in details other than noting that
+                we use the default system logger to store information that we have uploaded the file
+                successfully. This is done via the PHP method <command>syslog()</command>.</para>
+            <para>
+                <programlisting>#!ftpuploader.class.php#</programlisting>
+            </para>
+        </sect1>
+        <sect1>
+            <title>Step 0: The full driver script</title>
+            <para>For completeness we also include the exact main script we use</para>
+            <para>
+                <programlisting>#!spamstat.php#</programlisting>
+            </para>
+        </sect1>
+    </chapter>
+    <chapter>
+        <title>Creating Critical chain buffer penetration charts</title>
+        <section>
+            <title>Introduction and purpose</title>
+            <para>Critical chain is one (of many) suggested principles for project management that
+                actually makes some sense in the meaning that it tries to take into account both the
+                human aspect of making time estimates (it is difficult) as well as the different
+                constraints put upon (for example) a SW project. Such constraints are typically that
+                there are only two persons with the knowledge to do task X or that task Y has never
+                been done before and therefore is almost impossible to estimate correctly.</para>
+            <para>Since this manual has no intention to serve as an introduction to full critical
+                chain project management (CCPM) we will not dwell on the finer details instead we
+                will take out one particular part, or rather a tool, that is one of the fundamental
+                ways of keeping track of a projects using CCPM. The buffer penetration chart. </para>
+            <para>Even though CCPM in general might not be of interest to the reader the particular
+                graph we will create is s good way to show how to think "out-of-the-box" in creating
+                some graphs with the this library. So it is fully possible to read this case without
+                understanding the underlying methodology.</para>
+            <para>The graph we will create makes use of ( among other things)</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Filled area graphs combined with scatter plots</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to modify the default fill behavior (from the
+                            x-axis)</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to disable the 0-labels</para>
+                    </listitem>
+                    <listitem>
+                        <para>Adjusting the display depth for grid lines (and changing the styler of
+                            grid lines)</para>
+                    </listitem>
+                    <listitem>
+                        <para>Using different colors on individual scale labels</para>
+                    </listitem>
+                    <listitem>
+                        <para>How to create a custom graph class that can be reused</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para><xref xlink:href="#fig.ccpm-intro"/> shows a typical example of what we will
+                accomplish by the end of this case study</para>
+            <figure xml:id="fig.ccpm-intro">
+                <title>Critical chain buffer penetration. Each white scatter dot represents the
+                    state of one task.</title>
+                <mediaobject>
+                    <imageobject><imagedata fileref="images/ccpm_principle.png" scale="60"
+                        /></imageobject>
+                </mediaobject>
+            </figure>
+            <section>
+                <title>The principle behind buffer penetration charts</title>
+                <para>While not strictly necessary in order to create the graph the following crash
+                    course on buffer penetration might help see the usefulness of these types of
+                    charts in large projects.</para>
+                <para>
+                    <note>
+                        <para>Those wanting to know more about Critical Chain planning are referred
+                            to the book and online references at the end of this chapter, see <xref
+                                xlink:href="#bibref.uc.ccpm"/> and <xref xlink:href="#bibref.uc.toc"
+                            />.</para>
+                    </note>
+                </para>
+                <para>To understand the principles of this graph we need to shortly discuss how task
+                    (time) estimation is done using the CC methodology. Time estimation for a task
+                    is divided in two parts; 1) the optimum time and 2) the contingency buffer.
+                    Together they will make up the allocated time for a task. On average each task
+                    is expected to make use of some of the contingency buffer (typically as much as
+                    50-75%). </para>
+                <para>This might seem very strange for people with experience with other
+                    methodologies where use of contingency time is an indication of some kind of
+                    failure. However, that is not the case in CCPM. The usage of (some) of the
+                    allocated buffers are expected. This comes from the way the buffer and the
+                    "optimum" time are estimated. The optimum time is a 50% estimate, meaning that
+                    the task is only expected to be able to go that fast in 50% of all the times the
+                    task is performed. Hence a very optimistic estimate. With the contingency buffer
+                    added the estimate should correspond to a 90% estimate, i.e. in 90% of the times
+                    the task is performed it will finish within this time.</para>
+                <para>The graph in <xref xlink:href="#fig.ccpm-intro"/> is a way to visualise the
+                    status of an entire project in terms of buffer penetration. The x-axis shows how
+                    much of a particular task is completed and the y-axis shows how much buffer up
+                    to now have been used. Another way of viewing this is to show how far off the
+                    optimum 50% time estimate for the task we are in practice.</para>
+                <para>The different colored background is a "health" monitor for the tasks. As long
+                    as a task is in the green area that task is not in the focus for corrective
+                    actions. However as the task moves from green through yellow and into the red
+                    this is a signal that immediate actions are needed to secure the end delivery
+                    time. If a task has gone into the dark red (or brown) area this is an indication
+                    that corrective actions are probably not going to help and a re-planning of the
+                    task (and potentially the project is needed). Hence we do not want any tasks in
+                    the brown area!</para>
+                <para>The exact limits for what is considered "green", "yellow" and "red" varies
+                    depending on the context and to some degree the flexibility and size of the team
+                    but the default values shown above represents a fairly average limits that have
+                    been shown to be useful indicators across several industries.</para>
+                <para>The final key to why this works fairly well in practice is that each team
+                    member only have to report one figure in order to track the progress he or she
+                    is making and that is how much time more he or she will need to complete the
+                    task. Since we now at what day the team member made the estimate we have all the
+                    information we need in order to update the plans to see how well we are tracking
+                    the original plan.</para>
+                <para>With the CC methodology we do not bother looking in the mirror and asking the
+                    team member to estimate how much of the task he or she has done because that is
+                    really irrelevant. The only key figure we need to complete the project on time
+                    is to how much more effort/time is needed from the team member. How much of the
+                    task has been completed can easily be calculated by knowing how much time is
+                    left and compare that with the original estimate. For example, if the original
+                    estimate was12 days and the team member at a particular day estimates that
+                    he/she has 10 days left we can say that we have completed (12-10)/12 ~ 17% of
+                    the task. </para>
+                <para>This also explains how it can come that we could get negative completion. This
+                    is just an indication that the original estimate was too low. For example if the
+                    task was originally estimated to 12 days and at a particular day the team member
+                    estimates that he/she will need at least 16 more days to complete the task the
+                    completion % would be (12-16)/12 ~ -33%</para>
+                <para>An example will illustrate how this works. </para>
+                <para>
+                    <example>
+                        <title>Buffer penetration example</title>
+                        <para>Assume we have one task that has a 50% estimate of 6 days and a buffer
+                            of 5 days (indicating the volatility in the 50% estimate). The following
+                            table shows how much time left the team member estimates he has at the
+                            end of each working day. This single number allows us to compute (in
+                            relation to the original estimate) how much of the task is completed and
+                            how much buffer the member has used.</para>
+                        <para>
+                            <informaltable frame="all">
+                                <tgroup cols="5">
+                                    <colspec colname="c1" colnum="1" colwidth="57.29pt"/>
+                                    <colspec colname="c2" colnum="2" colwidth="82.84pt"/>
+                                    <colspec colname="newCol3" colnum="3" colwidth="116.9pt"/>
+                                    <colspec colname="c3" colnum="4" colwidth="130.06pt"/>
+                                    <colspec colname="c4" colnum="5" colwidth="137.81pt"/>
+                                    <thead>
+                                        <row>
+                                            <entry align="center">Day</entry>
+                                            <entry align="center">
+                                                <para>Est. time left</para>
+                                                <para>(days)</para>
+                                            </entry>
+                                            <entry align="center">
+                                                <para>Completion</para>
+                                                <para>%</para>
+                                            </entry>
+                                            <entry align="center">
+                                                <para>Buffer penetration</para>
+                                                <para>(days)</para>
+                                            </entry>
+                                            <entry align="center">
+                                                <para>Buffer penetration</para>
+                                                <para>(%)</para>
+                                            </entry>
+                                        </row>
+                                    </thead>
+                                    <tbody>
+                                        <row>
+                                            <entry align="center">1</entry>
+                                            <entry align="center">5</entry>
+                                            <entry align="center">0</entry>
+                                            <entry align="center">0</entry>
+                                            <entry align="center">0</entry>
+                                        </row>
+                                        <row>
+                                            <entry align="center">2</entry>
+                                            <entry align="center">5</entry>
+                                            <entry align="center">(6-5)/6 ~ 17%</entry>
+                                            <entry align="center">1</entry>
+                                            <entry align="center">1/5 = 20%</entry>
+                                        </row>
+                                        <row>
+                                            <entry align="center">3</entry>
+                                            <entry align="center">5</entry>
+                                            <entry align="center">(6-5)/6 ~17%</entry>
+                                            <entry align="center">2</entry>
+                                            <entry align="center">2/5 = 40%</entry>
+                                        </row>
+                                        <row>
+                                            <entry align="center">4</entry>
+                                            <entry align="center">5</entry>
+                                            <entry align="center">(6-5)/6 ~ 17%</entry>
+                                            <entry align="center">3</entry>
+                                            <entry align="center">3/5 = 60%</entry>
+                                        </row>
+                                        <row>
+                                            <entry align="center">5</entry>
+                                            <entry align="center">4</entry>
+                                            <entry align="center">(6-4)/6 ~ 33%</entry>
+                                            <entry align="center">3</entry>
+                                            <entry align="center">3/5 = 60%</entry>
+                                        </row>
+                                        <row>
+                                            <entry align="center">6</entry>
+                                            <entry align="center">3</entry>
+                                            <entry align="center">(6-3)/6 ~ 50%</entry>
+                                            <entry align="center">3</entry>
+                                            <entry align="center">3/5 = 60%</entry>
+                                        </row>
+                                        <row>
+                                            <entry align="center">7</entry>
+                                            <entry align="center">2</entry>
+                                            <entry align="center">(6-2)/6 ~ 67%</entry>
+                                            <entry align="center">3</entry>
+                                            <entry align="center">3/5 = 60%</entry>
+                                        </row>
+                                        <row>
+                                            <entry align="center">8</entry>
+                                            <entry align="center">1</entry>
+                                            <entry align="center">(6-1)/6 ~ 83 %</entry>
+                                            <entry align="center">3</entry>
+                                            <entry align="center">3/5 = 60%</entry>
+                                        </row>
+                                        <row>
+                                            <entry align="center">9</entry>
+                                            <entry align="center">0</entry>
+                                            <entry align="center">(6-0)/6 = 100%</entry>
+                                            <entry align="center">3</entry>
+                                            <entry align="center">3/5 = 60%</entry>
+                                        </row>
+                                    </tbody>
+                                </tgroup>
+                            </informaltable>
+                        </para>
+                        <para>The following three (small) buffer penetration diagram shows how the
+                            task at end of days 2,5 and 8</para>
+                        <figure xml:id="fig.cc-penetration-charts">
+                            <title>Buffer penetration chart for example</title>
+                            <mediaobject>
+                                <imageobject><imagedata fileref="images/ccbp_example_charts.png"
+                                        scale="60"/></imageobject>
+                            </mediaobject>
+                        </figure>
+                        <para><xref xlink:href="#fig.cc-penetration-charts"/> hows a fairly typical
+                            (albeit not ideal) progress for a task. It gets a rocky start, has some
+                            problems halfway through and then manages to recover towards the end of
+                            the execution.</para>
+                        <para>A common extension to the graph above is to also add a "historic" tail
+                            to the scatter point to show how it historically has moved. Adding a
+                            historic "tail" at day 8 would give the following penetration
+                            chart</para>
+                        <figure xml:id="fig.ccbp-historic-chart">
+                            <title>Buffer penetration chart with "historic" tail</title>
+                            <mediaobject>
+                                <imageobject><imagedata fileref="images/ccbp_hist_example.png"
+                                        scale="60"/></imageobject>
+                            </mediaobject>
+                        </figure>
+                    </example>
+                </para>
+                <para>For an entire project these kind of "falling star" traces can be quite
+                    effective ways to see how tasks are progressing. We end this chapter with a
+                    final complete example (which uses the code we will develop in the following
+                    sections) to create a buffer chart for two tasks.</para>
+                <para>
+                    <programlisting>#=ccbp_ex1|Complete buffer penetration example with history trace#</programlisting>
+                </para>
+                <para>We can also use the alternative color map for this and get the result shown in
+                        <xref xlink:href="#fig.ccbp_ex2"/></para>
+                <para>
+                    <programlisting>#=ccbp_ex2|Using the alternative color map#</programlisting>
+                </para>
+                <para>The next section will explain in some details how to create a class that can
+                    mae these types of charts with an easy to use interface.</para>
+            </section>
+        </section>
+        <section>
+            <title>Creating a utility class to construct CC BP charts</title>
+            <para>We will start from a high level and think about how we would like to be able to
+                use such a utility class. Ideally it would be similar to other types of graphs
+                classes. To keep things simple we want the following parameter to be
+                adjustable</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>The min and max x- and y-axis scale values to be displayed in the
+                            graph</para>
+                    </listitem>
+                    <listitem>
+                        <para>The limits for the color indications, i.e. exactly what is the green,
+                            yellow, red and brown areas should be customizable. In oder to keep the
+                            interface simple we assume that the areas are bounded by straight lines
+                            and that we want to be able to specify the areas by stating the value at
+                            x=0 and the value at x=maximum x-scale </para>
+                        <para>So for example the standard green area is limited by the specification
+                            (5,75) meaning that the green line crosses y=5 at x=0 and y=75 at
+                            x=100</para>
+                    </listitem>
+                    <listitem>
+                        <para>We would also like to be ale to adjust the colors used as
+                            indicators</para>
+                    </listitem>
+                    <listitem>
+                        <para>We want to be able to add both scatter marks and lines (to show
+                            history)</para>
+                    </listitem>
+                    <listitem>
+                        <para>We also need to be able to specify the title and the sub title</para>
+                    </listitem>
+                    <listitem>
+                        <para>The rest of the graph options and setting we would like the utility
+                            class to handle for us. As a bonus it would be nice if the class
+                            adjusted the size of the fonts to the overall size we have specified for
+                            the graph automatically to make it look visually proportional.</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>When doing designs like this it is always good to first write a small test driver
+                without having to think about how to actually implement it. This keeps an end user
+                perspective on things. Later on we can do changes if it turns out that a particular
+                simplification for the user is simply too complex to implement.</para>
+            <para>So, lets think about how we (ideally) would like to be able to create the chart
+                shown in <xref xlink:href="#fig.ccbp-historic-chart"/></para>
+            <para>
+                <programlisting>&lt;?php
+$graph = new CCBPGraph(300,250);
+$graph->SetTitle('Buffer penetration','(history)');
+
+$datax=array(83); $datay=array(60);
+$datax_history = array(0,17,17,17,33,50,67,83); 
+$datay_history = array(0,20,40,60,60,60,60,60);
+
+$sp = new ScatterPlot($datay,$datax);
+$sp->mark->SetType(MARK_DIAMOND);
+$sp->mark->SetFillColor('white');
+$sp->mark->SetSize(10);
+
+$sp_hist = new LinePlot($datay2,$datax2);
+$sp_hist->SetWeight(2);
+$sp_hist->SetColor('black');
+
+$graph->Add($sp_hist);
+$graph->Add($sp);
+
+$graph->Stroke();
+?></programlisting>
+            </para>
+            <para>We cannot hope to have the class make it any simpler than this. This is as close
+                to a "normal" line graph we can get (apart from the color indications in the
+                background). So now its just a matter on designing this class.</para>
+            <para>Since the utility class will be a rather restricted graph class it with a very
+                specific usage it doesn't make sense to implement it as an extension to the normal
+                graph. Instead we will create contain class that contains a graph that we can modify
+                and setup. (In UML language a <emphasis role="italic">has-a</emphasis>
+                relation.)</para>
+            <para>We will name our utility class <code>CCBPGraph</code> (Short for <emphasis
+                    role="italic">Critical chain Buffer Penetration Graph</emphasis>). The class
+                should have the following signature</para>
+            <para>
+                <programlisting>&lt;?php
+class CCBPGraph{ 
+    private $graph = null ; // The real graph instance
+
+    // The "normal" constructor
+	public function __construct($aWidth,$aHeight) {}
+
+    // Methods that will control the appearance
+	public function SetTitle($aTitle,$aSubTitle) {}
+	public function SetXMinMax($aMin,$aMax) {}
+	public function SetYMinMax($aMin,$aMax) {}
+	public function SetColorIndication($aSpec,$aColors=null) {}
+    public function SetColorMap($aMap) {}
+	
+    // Internal function to create and setup the graph
+	private function Init() {}
+    
+    // Mimix the standard graph functions Add() and Stroke()
+	public function Add($aPlots) {}
+	public function Stroke($aFile='') {}
+}
+?></programlisting>
+            </para>
+            <para>In addition the class must have a number of instance variables that are used to
+                store the settings until we need them when we create the graph. However to keep
+                things simple here we do not list them above. Lets now walk through the four groups
+                of methods.</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>The constructor</para>
+                        <para>
+                            <screen>public function __construct($aWidth,$aHeight) {}</screen>
+                        </para>
+                        <para>The constructor doesn't need to do very much. It just needs to store
+                            the user specified width and height so we get them back when we create
+                            the actual graph. We could also make use of the constructor to create an
+                            instance of the real graph class but we prefer to do as late as possible
+                            instantiation.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Controlling the appearance of the graph. </para>
+                        <para>Again these methods will be very basic "setter" methods that will just
+                            store the user specified options until we need them when we construct
+                            the graph</para>
+                        <para>
+                            <screen>public function SetTitle($aTitle,$aSubTitle) {} 
+public function SetXMinMax($aMin,$aMax) {} 
+public function SetYMinMax($aMin,$aMax) {} 
+public function SetColorIndication($aSpec,$aColors=null) {}
+public function SetColorMap($aMap) {}</screen>
+                        </para>
+                        <para>For the color setter we should also add some basic error checking so
+                            that the parameter makes sense.</para>
+                    </listitem>
+                    <listitem>
+                        <para>The real worker method</para>
+                        <para>
+                            <screen>private function Init() {}</screen>
+                        </para>
+                        <para>Since this is the method is where we will do the actual work and will
+                            be fairly large we will spend the entire next section on this
+                            method.</para>
+                    </listitem>
+                    <listitem>
+                        <para>The "fake" standard methods. Add() and Stroke(). Since these are
+                            fairly short we will show them here in there entirety</para>
+                        <para>
+                            <programlisting>&lt;?php
+function Add($aPlots) {
+    if( is_array($aPlots) ) {
+        $this->iPlots = array_merge($this->iPlots,$aPlots);                
+    }
+    else {
+        $this->iPlots[] = $aPlots;
+    }
+}
+    
+function Stroke($aFile='') {
+    $this->Init();
+    $this->graph->Add($this->iPlots);
+    $this->graph->Stroke($aFile);
+}
+?></programlisting>
+                        </para>
+                        <para>When adding plots (with the <code>Add()</code> method) we have to take
+                            into account that the parameter can be either a single object or an
+                            array of plot objects (line and scatter plots) and we must handle that
+                            accordingly as is done above.</para>
+                        <para>For the <code>Stroke()</code> method we use this to call the
+                            initialization method (to actually create the graph) and then add the
+                            user specified plots and finally call the real
+                                <code>Graph::Stroke()</code> of the graph.</para>
+                        <para>These methods are very simple but from the outside it will look like a
+                            "real" graph class with a clean and simple interface. </para>
+                    </listitem>
+                </orderedlist>
+            </para>
+        </section>
+        <section>
+            <title>The Init() method</title>
+            <para>This is the real method that actually constructs the graph. While we will not go
+                through every single line in details we will highlight the complications and some
+                formatting options we have used.</para>
+            <section>
+                <title>Creating the colored backgrounds</title>
+                <para>In order to create the colored background we create filled area plots and add
+                    them to the graph. Starting with the "brown" and successively adding the rest to
+                    create the colored band effect we want. <xref
+                        xlink:href="#fig.ccbp-background-step"/> shows in "slow-motion" how this is
+                    done by adding four area plots, one at a time.</para>
+                <figure xml:id="fig.ccbp-background-step">
+                    <title>Steps to create the background</title>
+                    <mediaobject>
+                        <imageobject><imagedata
+                                fileref="images/ccbp-creating-background-indicators.png" scale="60"
+                            /></imageobject>
+                    </mediaobject>
+                </figure>
+                <para>The exact position for the lines are calculated with the positions given for
+                    each color band. The position for each color band is specified by giving the
+                    y-coordinate at x=0 and the y-coordinate at the maximum x-scale value.</para>
+                <para>When adding the area plots there is one thing we have to modify. By default
+                    the fill is done between the line and the y=0 line. In our case we need the fill
+                    to go all the way down to the min y-value. To change this behavior we need to
+                    call the method</para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>LinePlot::SetFillFromYMin()</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>for each of the areas.</para>
+            </section>
+            <section>
+                <title>Getting the grid lines right</title>
+                <para>Since we want some discrete horizontal grid lines we might think that it is
+                    enough to do the normal</para>
+                <para>
+                    <programlisting>$graph->ygrid->Show();</programlisting>
+                </para>
+                <para>However, doing that will not show any grid lines. The reason is hat by default
+                    the grid lines are drawn at the bottom of the plot. Since we have filled area
+                    plots covering 100% of the pot area no grid lines would show. In order to change
+                    this we need to move the grid line to the front with a call to the method</para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>Graph::SetGridDepth($aDepth)</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>using the argument <code>DEPTH_FRONT</code>. The rest of the grid line
+                    formatting is just basic style and color modification to make the grid visible
+                    but just barely.</para>
+            </section>
+            <section>
+                <title>Getting the scale and labels right</title>
+                <para>For this type of graph we have manually set the distance between each tick
+                    label to 25 units. This would put labels as 0,25,50, and so on. The maximum
+                    value (the user specifies) will be adjusted so that it is always an even
+                    multiple of 25 to allow the last tick mark to be at the end of the axis.</para>
+                <para>As can be seen from the previous images we are using one feature that hasn't
+                    been previously exemplified and that is the possibility to have unique colors on
+                    each label on the scale. We use this for the x-scale by having the negative
+                    labels in black and the positive labels in white. The reason is purely
+                    functional to allow the scale labels to be more easy to read against the colored
+                    background.</para>
+                <para>The color of the labels are specified as the second argument to </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>Axis::SetColor($aAxisColor,$aLabelColor)</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>In addition we have also hidden the zero labels since they would just be
+                    disturbing in the middle and doesn't really add any information we don't already
+                    have.</para>
+                <para>Finally the labels are formatted to show a percentage sign after each label.
+                    This is done by a format string</para>
+            </section>
+            <section>
+                <title>Adjusting the margin and text sizes</title>
+                <para>In the beginning of the <code>Init()</code> method the margins for the graph
+                    is adjusted depending on the actual size the user specified. The same goes with
+                    establishing the basic font size used for the scale labels as well as the titles
+                    (both graph and axis). The size is just based on heuristics on what (in our
+                    view) gives a well balanced graph.</para>
+            </section>
+        </section>
+        <section>
+            <title>Suggested improvements</title>
+            <para>As means for further individual exploration the <code>CCBPGraph</code> class could
+                be extended by adding (for example) the following features. (There is always a
+                balance to be had between adding a lot of feature and still keeping the interface
+                simple enough to be manageable)</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Add customization for the titles of the two axis</para>
+                    </listitem>
+                    <listitem>
+                        <para>Make it possible to adjust the margin color</para>
+                    </listitem>
+                    <listitem>
+                        <para>Make the number of background color bands user adjustable</para>
+                    </listitem>
+                    <listitem>
+                        <para>Add data manipulation so that the input data is specified as a number
+                            of historic values for each task. The latest value should be displayed
+                            as a mark and the last <emphasis role="italic">n</emphasis> values (user
+                            selectable window size) shown as a trailing path behind the mark to see
+                            how it has moved as shown in for example <xref
+                                xlink:href="#fig.ccbp_ex1"/></para>
+                    </listitem>
+                    <listitem>
+                        <para>Make use of the <code>MGraph</code> class to make it possible to
+                            create multiple CCBP charts in the same image. In order to identify
+                            which graph is affected by commands ti would be possible to just add a
+                            new argument giving the index to all the existing methods. However, a
+                            cleaner implementation would probably use the concept of a "current"
+                            graph which receives all the method calls. Implementing it that way
+                            would allow us to keep the existing signatures for all existing methods.
+                            In order to position the graphs it is probably a good idea to make use
+                            of some easy way for the user just to select how many rows should be
+                            used and many charts should be displayed on each row (to avoid the end
+                            user from having to position the graphs pixel by pixel)</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+        </section>
+        <section>
+            <title>The implementation of <code>class CCBPGraph</code></title>
+            <para>The entire implementation is included below and is also available en the
+                    "<filename>Example/</filename>" directory of the distribution as
+                    "<filename>ccbpgraph.class.php</filename>". There are also two example scripts
+                using this utility class "<filename>ccbp_ex1.php</filename>" and
+                    "<filename>ccbp_ex2.php</filename>"</para>
+            <para>
+                <programlisting>#:ccbpgraph.class#</programlisting>
+            </para>
+        </section>
+        <section>
+            <title>References</title>
+            <para>
+                <variablelist>
+                    <varlistentry xml:id="bibref.uc.ccpm">
+                        <term>[1] Critical chain Project Management, 2ed, Lawrence P. Leach</term>
+                        <listitem>
+                            <para>Artech House, ISBN 1-58053-903-3</para>
+                        </listitem>
+                    </varlistentry>
+                    <varlistentry xml:id="bibref.uc.toc">
+                        <term>[2] A Guide to Implementing the Theory of Constraints, K. J. Youngman, </term>
+                        <listitem>
+                            <para><uri
+                                    xlink:href="http://www.dbrmfg.co.nz/Projects%20Project%20Buffers.htm"
+                                    >http://www.dbrmfg.co.nz/Projects Project Buffers.htm</uri></para>
+                        </listitem>
+                    </varlistentry>
+                </variablelist>
+            </para>
+        </section>
+    </chapter>
+</part>

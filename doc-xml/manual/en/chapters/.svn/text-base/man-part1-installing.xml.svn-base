@@ -1,0 +1,2218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<part
+    version="5.0"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Installing and verifying the configuring</title>
+    <partintro>
+        <para>The goal of this first part is to introduce the necessary configurations options in
+            order to install and use the library. It will describe all necessary steps in order to
+            successfully install and verify the installation of the library. </para>
+        <para>
+            <caution>
+                <para>All files in the library uses utf-8 character encoding to be able to show a
+                    wide range of locales. The same applies to all examples. Since some example
+                    shows how to use extended character sets , i.e. Chinese and Japanese, and the
+                    extended characters are entered directly in the source file the editor/viewer
+                    used to view these files must be able to show utf-8 encoded files properly.
+                    Since utf-8 character set coincide with the ASCII character set for the usual
+                    latin (e.g. a-z, 0-9, etc) characters most files can however be seen with non
+                    utf-8 compliant editor/viewers.</para>
+            </caution>
+        </para>
+    </partintro>
+    <chapter
+        xml:id="chap_about">
+        <title>About the library</title>
+        <formalpara>
+            <title>What you will learn in this chapter</title>
+            <para>This chapter will go through what the library is, the licensing model, how it is
+                typically used and the detailed steps of installing it. This chapter will not
+                explain how to use the API in the library. It will help answering typical questions
+                such as "<emphasis>Should I use this library?</emphasis>", <emphasis>"Is the library
+                    suitable for use in my particular environment?</emphasis>, <emphasis>"Do I have
+                    enough knowledge to use this library?"</emphasis></para>
+        </formalpara>
+        <sect1>
+            <title>What is JpGraph?</title>
+            <para>The JpGraph library is a 2D graph plotting library for PHP4 and PHP5. It is meant
+                to significantly simplify the creation of dynamic graphs using PHP scripting. The
+                libray can be used on its own or as an embedded part of a large WEB development
+                undertaking. In addition the library allows images to be created using the command
+                line version of PHP (the cli version).</para>
+        </sect1>
+        <sect1>
+            <title>Software license</title>
+            <para>JpGraph is released under a dual license. For non-commercial usage the library is
+                released under QPL 1.0 (Qt-License) and for professional use it is released under
+                the JpGraph Professional License. See <xref
+                    xlink:href="#app.jpg-license"/> for more details regarding the exact wording of
+                the license. The goal the license have is to be simple, fair and help recover some
+                of the development cost and hosting services that the library development brings
+                with it.</para>
+            <para>Broadly speaking commercial use is defined as</para>
+            <para>a) The library is included as an integral part of a product that is sold with a
+                cost that exceeds the cost of the distribution medium. </para>
+            <para>b) The library is offered as a WEB service for a fee </para>
+            <para>c) The library is used in an intranet in a company with more than 2
+                employees</para>
+            <para>One license entitles the user to install the library on one single physical
+                machine which may run one or several logical servers. In addition it also entitles
+                the license holder to install one version of the library on a separate development
+                server. The professional license is perpetual and is valid for one major
+                version.</para>
+        </sect1>
+        <sect1>
+            <title>Versions of the library covered</title>
+            <para>This manual covers versions up to v3.1 of JpGraph. There are three main branches
+                of the library: <variablelist>
+                    <varlistentry>
+                        <term>The "1.x.y" branch</term>
+                        <listitem>
+                            <para>The 1.x.y series is only intended for PHP4 and is not compatible
+                                with PHP5 running in strict mode. If you are running an older
+                                installation with only PHP4 you must use this branch of the library.
+                                In addition you must use this branch if for some obscure reason only
+                                the very old GD 1.x library is available in the installation (teh GD
+                                library is the low level graphic primitives library used by JpGraph
+                                and available in PHP).</para>
+                            <caution>
+                                <para>The 1.x.y series is since 31 Dec 2008 no longer maintained and
+                                    should be considered deprecated. There will be no more
+                                    maintenance releases made on this branch.</para>
+                            </caution>
+                        </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                        <term>The "3.x.y" branch</term>
+                        <listitem>
+                            <para>The "3.x.y" series is the current one and is only intended to run
+                                on PHP5. This code is optimized for use both with PHP5 as well as
+                                the new (and bundled version) of the GD 2.x library. Hence this will
+                                not work if you only have the older GD 1.x graphic primitive library
+                                installed. However, all modern PHP installations since 2006 have
+                                shipped with GD 2.x so this should not in reality be any
+                                problem.</para>
+                            <caution>
+                                <para>Please note that it is not possible to run the "3.x.y" series
+                                    on PHP4. If you need to run on PHP4 then you <emphasis
+                                        role="bold">must</emphasis> use the 1.x version of the
+                                    library.</para>
+                            </caution>
+                        </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                        <term>The "3.x.y-p" branch (The pro-version)</term>
+                        <listitem>
+                            <para>This is in principle the same as the "3.x.y" branch with the
+                                difference that the pro-version includes a number of additional
+                                modules (see <xref
+                                    xlink:href="#part.add-pro-graphs"/>) not available in the free
+                                version. This includes both some additional graph types as well as
+                                1D and 2D barcodes. In addition the professional license gives three
+                                months of email support for installing and configuring the
+                                library.</para>
+                        </listitem>
+                    </varlistentry>
+                </variablelist></para>
+        </sect1>
+        <sect1>
+            <title>Purpose and usage</title>
+            <para>The purpose of the library is to make it possible to (very) easily create dynamic
+                images (a.k.a. graphs) using PHP scripting. The library hides as much as possible
+                all the details necessary to create dynamic images. Strictly speaking all the basic
+                low level functionality to draw images are already available in PHP since PHP comes
+                with the core GD library which is the very lowest layer to create images. The GD
+                library has graphic primitives to create lines, circles, points etc. but it has no
+                built-in intelligence to handle scales, labelling , colors etc. This logically makes
+                JpGraph library a higher type library more easily accessible than the raw GD
+                library. </para>
+            <figure>
+                <title>JpGraph and PHP</title>
+                <mediaobject>
+                    <imageobject><imagedata
+                            fileref="images/jpgraph-and-php.png"/></imageobject>
+                </mediaobject>
+            </figure>
+            <para>There are several possible usage scenario for the library and it's different
+                parts. </para>
+            <para>The most common usage is most likely to visualize numeric data by creating basic
+                charts (for example line, bar or pie charts) that is included dynamically in a
+                WEB-page via a straight forward <code>&lt;img></code> tag. The details on how to
+                create dynamic graphs will be fully covered in later sections of this manual The
+                library itself is agnostic to where the data comes from so it could for example be
+                retrieved from a database, from a plain text file or perhaps from some WEB-service.
+                In addition to this scenario the library could be used as a tool to create dynamic
+                charts that are stored as image files in a directory. This makes it possible to use
+                the library in an off-line batch mode from the command line (most likely using the
+                cli =command line version of PHP). For an example of using JpGraph in batch mode see <xref
+                    xlink:href="#chapter.showing-spam-stat"/>.</para>
+            <para>In addition to these basic usage scenarios both the free and the slightly more
+                advanced pro-version of the library includes a multitude of additional functionality
+                which includes for example more advanced graph types (like spider graphs, polar
+                plots, contour plots etc.) and some non graph capabilities like the possibility to
+                create barcodes (only available in the pro-version) or to create Gantt-charts. The
+                usage of all of these types of graphs are explained in this manual.</para>
+            <para>
+                <caution>
+                    <para>In order to use JpGraph the PHP installation must have support for the GD
+                        libraries enabled. See Chapter 2 and 3 for details on checking the
+                        installation.</para>
+                </caution>
+            </para>
+            <para>In order to get a quick feel for how the library can be used we have included in <xref
+                    xlink:href="#example.example0"/> a very basic type of line graph. Don't worry
+                right now about the details, the message here is that it only takes six lines of
+                real script code to create a basic graph. Have a look at the example and see just
+                how much of the script makes sense without us even having discussed any API
+                yet.</para>
+            <programlisting>#example0|This is the very first example#</programlisting>
+        </sect1>
+        <sect1>
+            <title>Prerequisites for running the library</title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Any 32bit operating system capable of running PHP5</para>
+                    </listitem>
+                    <listitem>
+                        <para>PHP5, requires version >= 5.1.0 (it might work with earlier versions
+                            but this is not officially supported)</para>
+                    </listitem>
+                    <listitem>
+                        <para>Enabled GD 2.x library in PHP installation. This is normally bundled
+                            with the PHP5 distribution. It is strongly recommended that you use the
+                            included version of GD with PHP5 and not try to install it
+                            separately.</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <caution>
+                <para>There are known issues so running the library under a 64 bit OS so the library
+                    does not officially support any 64 bit OS:es</para>
+            </caution>
+            <para>For more detailed information on PHP settings in <filename>php.ini</filename> see <xref
+                    xlink:href="#sec.verifying-phpgd-inst"/></para>
+        </sect1>
+        <sect1>
+            <title>Who can use the library</title>
+            <para>Even though the library hides a lot of details it needs to be pointed out that
+                this is still a programmers library. It is assumed that the user of the library has
+                basic skills in programming PHP and is familiar, at least to a basic extent, with
+                the concept of objects and object oriented programming since the entire library is
+                built around this paradigm. Fully understanding basic concepts such as classes,
+                methods, class instances and class inheritage will substantially help in trying to
+                understand how to use the library.</para>
+        </sect1>
+        <sect1>
+            <title>What you can do with the library</title>
+            <para>One should probably differentiate between the two basic usage scenarios</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para><emphasis
+                                role="bold">Online.</emphasis> That is, the image is dynamically
+                            generated when a user is viewing a particular WEB-page. This means that
+                            the time it takes to generate the image will add to the delay the user
+                            is experiencing when trying to view the page. (The library supports a
+                            caching mechanism to reduce the number of times an image has to
+                            generated, see <xref
+                                xlink:href="#sec.efficient-graph-generation"/> for a thorough
+                            discussion). For this scenario one should probably keep the images as
+                            basic as possible in order to have as small latency as possible. </para>
+                        <para>In practice this means that the number of data points to visualize
+                            should be kept in the order of hundreds and not thousands. In later
+                            sections we will discuss in details what can be done to improve the
+                            performance of the library.</para>
+                        <para> </para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis
+                                role="bold">Offline</emphasis>. That is, the images are generated by
+                            some "batch" processing (possible command line based). In this scenario
+                            the delay is not an issue and one could create much more complicated
+                            images and process many more data points. Even though the library in
+                            itself does not impose any restriction of the number of data points to
+                            process the memory and time limits set for PHP will. </para>
+                        <para>In practice if you need to process images with sizes above 2000x2000
+                            pixels resulting from processing 500,000 data points then it is probably
+                            better to find a more suitable way to produce these graphs rather than a
+                            PHP script (unless you are prepared to give PHP a couple of 100 MB of
+                            allowed memory)</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+        </sect1>
+        <sect1>
+            <title>What you shouldn't or cannot do with this library</title>
+            <para>If the primary usage is heavy scientific processing where you need to visualize
+                complex 2D/3D scenarios then this library is not for you. In this case it is
+                probably better to use one of the scientific tools like Matlab or Maple.</para>
+            <para>In addition, if you for example intend to implement a large scale project planning
+                tool with several thousand activities that you want to manipulate and display using
+                the support Gantt charts in this library this is probably stretching it a bit too
+                far. Again, this is probably better done with more dedicated tools like MS Project. </para>
+            <para>In addition may we again point out that the library does not officially support
+                any 64bit OS due to issues with PHP/GD.</para>
+            <para>
+                <note>
+                    <para>Some of the 2D barcodes will simply not work in a 64bit OS. This is
+                        consequence of the computation of the error correcting codes which in some
+                        instances assumes 32bit integers. For the basic graphs there is no known
+                        issues but since the library is not verified on a 64bit OS we do not
+                        officially support this.</para>
+                </note>
+            </para>
+            <para>There is also a question on sever load that should be taken into account. Due to
+                the CPU intensive nature of image processing the complexity of the generated images
+                needs to be kept as low as possible for any sites that would expect heavy load.
+                Since it is normally necessary to increase the allowed memory for PHP (see <xref
+                    xlink:href="#sec3.setting-up-php-ini"/>) when working with images this could
+                easily make the server hit it's physical memory limit if the load is very high. </para>
+            <para>For example, the practical lowest memory that should be set for PHP when working
+                with images is 32MB (recommended is at least 64MB), if your system must cope with 50
+                simultaneous users it means that the HTTP processes alone will need roughly 1.6GB
+                just to secure the basics. Handling 50 simultaneous executing image scripts will
+                also require some heavy processing and the server needs to have a CPU capacity to
+                handle this. Some discussions about dimensioning a server can be found in <xref
+                    xlink:href="#sec.efficient-graph-generation"/>.</para>
+        </sect1>
+        <xi:include
+            href="feature-matrix.xml"
+            parse="xml"/>
+        <sect1>
+            <title>Where to find additional information</title>
+            <para>The primary source for information is this manual together with the<uri
+                    xlink:href="http://www.aditus.nu/jpgraph/">JpGraph web site</uri> which also
+                contains further links to many external sources of information.</para>
+            <sect2>
+                <title>Manuals and distributed documentation</title>
+                <para>
+                    <orderedlist>
+                        <listitem>
+                            <para>The JpGraph user manual (this document)</para>
+                        </listitem>
+                        <listitem>
+                            <para>The JpGraph API reference manual. This reference contains details
+                                about all public APIs available together with the classes.</para>
+                        </listitem>
+                        <listitem>
+                            <para>JpGraph UML static class diagram. This is an experimental
+                                documentation which shows the static class dependency between all
+                                classes in the library.</para>
+                        </listitem>
+                        <listitem>
+                            <para>The <uri
+                                    xlink:href="http://jpgraph.intellit.nl/index.php">JpGraph
+                                    community forum</uri>. This is a discussion board for users of
+                                the JpGraph library where users both give examples on how they have
+                                used the library as well as asking and answering generic and
+                                specific questions.</para>
+                        </listitem>
+                        <listitem>
+                            <para>The FAQ. This is available both <uri
+                                    xlink:href="http://www.aditus.nu/jpgraph/">on-line</uri> and in <xref
+                                    xlink:href="#app.faq"/> to this manual. </para>
+                        </listitem>
+                    </orderedlist>
+                </para>
+            </sect2>
+            <sect2>
+                <title>On-line documentation and resources</title>
+                <para>The JpGraph document portal can be be found at <uri
+                        xlink:href="http://www.aditus.nu/jpgraph/documentation.php">http://www.aditus.nu/jpgraph/documentation.php</uri>
+                    in addition to the distributed documentation there are several "HowTo" sections
+                    which explains with some larger examples how to accomplish some specific type of
+                    graphs and solve common problems.</para>
+                <para>In addition to the <uri
+                        xlink:href="http://www.aditus.nu/jpgraph/">JpGraph Web site</uri> there are
+                    a number of external sites with tutorials and examples on how JpGraph has been
+                    used. This is not a complete list (nor will it ever be) but it lists a few of
+                    the tutorials/examples that we are aware of. The following is a partial list of
+                    known external tutorial showing more or less advanced examples on how to use
+                    specific features of the library. </para>
+                <para>
+                    <caution>
+                        <para>Usual caveats apply in that we can take no responsibility for the
+                            correctness of these tutorials since we have no influence over
+                            them.</para>
+                    </caution>
+                </para>
+                <para>
+                    <table
+                        frame="none">
+                        <title>External JpGraph tutorial</title>
+                        <tgroup
+                            cols="2">
+                            <colspec
+                                colname="c1"
+                                colnum="1"/>
+                            <colspec
+                                colname="c3"
+                                colnum="2"/>
+                            <thead>
+                                <row>
+                                    <entry>Name/Link</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry><emphasis
+                                            role="bold">Chart Dog Application.</emphasis></entry>
+                                    <entry>Application example</entry>
+                                </row>
+                                <row>
+                                    <entry
+                                        namest="c1"
+                                        nameend="c3">
+                                        <uri
+                                            xlink:href="http://www.jimwrightonline.com/php/chartdog_2_0/chartdog.php">http://www.jimwrightonline.com/php/chartdog_2_0/chartdog.php</uri></entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis
+                                            role="bold">Découverte de la librairie Php
+                                            JpGraph</emphasis></entry>
+                                    <entry>French tutorial</entry>
+                                </row>
+                                <row>
+                                    <entry
+                                        namest="c1"
+                                        nameend="c3">
+                                        <uri
+                                            xlink:href="http://eric-pommereau.developpez.com/tutoriels/decouverte-jpgraph/">http://eric-pommereau.developpez.com/tutoriels/decouverte-jpgraph/</uri></entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis
+                                            role="bold">Einführung zu JPGraph</emphasis></entry>
+                                    <entry>German tutorial</entry>
+                                </row>
+                                <row>
+                                    <entry
+                                        namest="c1"
+                                        nameend="c3">
+                                        <uri
+                                            xlink:href="http://www.binnendijk.net/jpgraph/index.php">http://www.binnendijk.net/jpgraph/index.php</uri></entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis
+                                            role="bold">Des graphes en Php avec
+                                        JpGraph</emphasis></entry>
+                                    <entry>French tutorial</entry>
+                                </row>
+                                <row>
+                                    <entry
+                                        namest="c1"
+                                        nameend="c3">
+                                        <uri
+                                            xlink:href="http://www.journaldunet.com/developpeur/tutoriel/php/011121php_jpgraph.shtml">http://www.journaldunet.com/developpeur/tutoriel/php/011121php_jpgraph.shtml</uri></entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis
+                                            role="bold">Developing Professional Quality Graphs with
+                                            PHP</emphasis></entry>
+                                    <entry>English tutorial</entry>
+                                </row>
+                                <row>
+                                    <entry
+                                        namest="c1"
+                                        nameend="c3">
+                                        <uri
+                                            xlink:href="http://devzone.zend.com/article/1260-Developing-Professional-Quality-Graphs-with-PHP">http://devzone.zend.com/article/1260-Developing-Professional-Quality-Graphs-with-PHP</uri></entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis
+                                            role="bold">PHPHacks.com Posts Creating charts with
+                                            JPGraph</emphasis></entry>
+                                    <entry>English tutorial</entry>
+                                </row>
+                                <row>
+                                    <entry
+                                        namest="c1"
+                                        nameend="c3">
+                                        <uri
+                                            xlink:href="http://devzone.zend.com/article/994-PHPHacks.com-Posts-Creating-charts-with-JPGraph">http://devzone.zend.com/article/994-PHPHacks.com-Posts-Creating-charts-with-JPGraph</uri></entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis
+                                            role="bold">Simple linear regression with
+                                        PHP</emphasis></entry>
+                                    <entry>IBM developer works article</entry>
+                                </row>
+                                <row>
+                                    <entry
+                                        namest="c1"
+                                        nameend="c3">
+                                        <uri
+                                            xlink:href="http://www.ibm.com/developerworks/web/library/wa-linphp2/">http://www.ibm.com/developerworks/web/library/wa-linphp2/</uri></entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis
+                                            role="bold">Dreamweaver Article</emphasis></entry>
+                                    <entry>How to integrate with Dreamweaver</entry>
+                                </row>
+                                <row>
+                                    <entry
+                                        namest="c1"
+                                        nameend="c3">
+                                        <uri
+                                            xlink:href="http://www.adobe.com/devnet/dreamweaver/articles/php_graphics_11.html">http://www.adobe.com/devnet/dreamweaver/articles/php_graphics_11.html</uri></entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis
+                                            role="bold">JPGraph Library V2.2
+                                        Tutorial</emphasis></entry>
+                                    <entry>Typo3 integration</entry>
+                                </row>
+                                <row>
+                                    <entry
+                                        namest="c1"
+                                        nameend="c3">
+                                        <uri
+                                            xlink:href="http://typo3.org/documentation/document-library/extension-manuals/rt_jpgraphtutor/current/">http://typo3.org/documentation/document-library/extension-manuals/rt_jpgraphtutor/current/</uri></entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis
+                                            role="bold">Introduction to JPGraph (Part
+                                        I)</emphasis></entry>
+                                    <entry>Basic introduction</entry>
+                                </row>
+                                <row>
+                                    <entry
+                                        namest="c1"
+                                        nameend="c3">
+                                        <uri
+                                            xlink:href="http://www.devtutorials.info/articles/1334_Introduction_to_JPGraph__Part_I_.asp">http://www.devtutorials.info/articles/1334_Introduction_to_JPGraph__Part_I_.asp</uri></entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis
+                                            role="bold"> PHP Graphics With JpGraph
+                                        </emphasis></entry>
+                                    <entry>Downloadable tutorials</entry>
+                                </row>
+                                <row>
+                                    <entry
+                                        namest="c1"
+                                        nameend="c3">
+                                        <uri
+                                            xlink:href="http://rosihanari.net/web-tutorial/php-graphics/">http://rosihanari.net/web-tutorial/php-graphics/</uri></entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis
+                                            role="bold">JpGraph: PHP Graphs &amp; Charts
+                                            On-The-Fly</emphasis></entry>
+                                    <entry>Basic introduction</entry>
+                                </row>
+                                <row>
+                                    <entry
+                                        namest="c1"
+                                        nameend="c3">
+                                        <uri
+                                            xlink:href="http://www.communitymx.com/abstract.cfm?cid=2AB8E">http://www.communitymx.com/abstract.cfm?cid=2AB8E</uri></entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis
+                                            role="bold">Using JpGraph</emphasis></entry>
+                                    <entry>JpGraph and Cake</entry>
+                                </row>
+                                <row>
+                                    <entry
+                                        namest="c1"
+                                        nameend="c3">
+                                        <uri
+                                            xlink:href="http://bakery.cakephp.org/articles/view/using-jpgraph">http://bakery.cakephp.org/articles/view/using-jpgraph</uri></entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis
+                                            role="bold">Create High Quality Graphs with
+                                            Jpgraph</emphasis></entry>
+                                    <entry>Basic introduction</entry>
+                                </row>
+                                <row>
+                                    <entry
+                                        namest="c1"
+                                        nameend="c3">
+                                        <uri
+                                            xlink:href="http://phpkitchen.com/2002/05/create-high-quality-graphs-with-jpgraph/">http://phpkitchen.com/2002/05/create-high-quality-graphs-with-jpgraph/</uri></entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis
+                                            role="bold">JpGraph tutorial </emphasis></entry>
+                                    <entry>Integration with Prado</entry>
+                                </row>
+                                <row>
+                                    <entry
+                                        namest="c1"
+                                        nameend="c3">
+                                        <uri
+                                            xlink:href="http://www.pradosoft.com/wiki/index.php/JpGraph_tutorial">http://www.pradosoft.com/wiki/index.php/JpGraph_tutorial</uri></entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </para>
+            </sect2>
+            <sect2>
+                <title>Defect database</title>
+                <para>Unfortunately there will be defects (bugs) even in this library. If you
+                    suspect that you have found a bug may we ask you to first check the existing bug
+                    database if this problem has already been reported. If the problem you have
+                    found has not been reported then we would appreciate hearing about your
+                    issue.</para>
+                <para>You can find our defect database at <uri
+                        xlink:href="http://www.aditus.nu/bugtraq/">http://www.aditus.nu/bugtraq/</uri></para>
+                <para>
+                    <note>
+                        <para>We have been forced to add some simple spam protection on the defect
+                            reporting system to prevent a lot of phony robot signups </para>
+                        <para>In order to sign-up for a new user account do the following </para>
+                        <para>1. Goto the issue tracker at <uri
+                                xlink:href="http://www.aditus.nu/bugtraq/?do=register">http://www.aditus.nu/bugtraq/?do=register</uri>
+                            in order to signup for a new account </para>
+                        <para>2. Select an arbitrary user name and prefix it with an "XY_", for
+                            example, if your chosen user id would be "adam12" then signup as
+                            "XY_adam12". </para>
+                        <para>3. Fill in the rest of the values, your name, e-mail etc. </para>
+                        <para>4, You will receive a confirmation mail in order to activate your
+                            account. </para>
+                        <para>5. In order to login you just need to use your chosen user name <emphasis
+                                role="bold">BUT WITHOUT</emphasis> the "XY_" prefix. This is only
+                            used when signing up for an account. </para>
+                    </note>
+                </para>
+            </sect2>
+        </sect1>
+        <sect1>
+            <title>Known bugs and omissions</title>
+            <para>In general a new version of the library is released twice a year. If you are in a
+                hurry to get a fix that may already be available in the development branch you can
+                always try the latest nightly build available from the JpGraph home page. However be
+                aware that a nightly build could be broken on rare occasions. However, our
+                development philosophy is to always have a releasable repository so for the most of
+                the time the snapshot will work fine. The snapshot is available from:</para>
+            <para><uri
+                    xlink:href="http://www.aditus.nu/jpgraph/jpsnapshot.php">http://www.aditus.nu/jpgraph/jpsnapshot.php</uri></para>
+            <para>The following is a partial list of what we believe to be the most irritating known
+                bugs (and omissions). See the <uri
+                    xlink:href="http://www.aditus.nu/bugtraq/index.php">Bugtracker</uri> for a more
+                current view on additional known minor issues with the library.<orderedlist>
+                    <listitem>
+                        <para>For performance reasons background images are not rotated along with
+                            graphs in rotated graphs. Images rotation must be made outside the
+                            library with some image manipulation program. This will never be
+                            included as a feature of the library since PHP is simply to slow for
+                            this kind of pixel-by-pixel image manipulation.</para>
+                    </listitem>
+                    <listitem>
+                        <para>The library does not work with a 64bit OS (This is partly due to PHP
+                            and partly due to some calculation of Error codes that assumes 32 bit
+                            integers)</para>
+                    </listitem>
+                    <listitem>
+                        <para>Truetype fonts are aligned according to there bounding box. This means
+                            that text line that contain characters below the baseline (e.g. "j")
+                            will be aligned slightly different from texts that only contain
+                            characters that are above the baseline (e.g. "a").</para>
+                    </listitem>
+                </orderedlist></para>
+        </sect1>
+    </chapter>
+    <chapter>
+        <title>The Short Version: Installing the library (for PHP/Apache experts)</title>
+        <formalpara>
+            <title>What you will learn in this chapter</title>
+            <para>This chapter will show you how to unpack the library and lists the minimum
+                prerequisites that is needed to get the library running. It is assumed that your are
+                familiar with adjusting the PHP configuration file <filename>php.ini</filename> and
+                that you already have a working PHP installation.</para>
+        </formalpara>
+        <sect1>
+            <title>Installing</title>
+            <para>Please follow the steps below:</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Either download the free library from <uri
+                                xlink:href="http://www.aditus.nu/jpgraph/jpdownload.php">http://www.aditus.nu/jpgraph/jpdownload.php</uri>
+                            or use your license information and download the pro-version from
+                                <uri>http://www.aditus.nu/jpgraph/pro_login.php</uri>. The download
+                            is just a packed zip (or tar.gz) of php files. There are no automatic
+                            installation scripts.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Unpack the library where you normally store PHP libraries. This should
+                            be in your PHP include path. When you unpack the library it will be
+                            named "jpgraph-3.x" (where x corresponds to the version you have
+                            downloaded).</para>
+                    </listitem>
+                    <listitem>
+                        <para>Now either rename the unpacked the directory to just jpgraph or if the
+                            system us Unix based create a soft symbolic link, for example</para>
+                        <para><prompt>ln -s jpgraph-2.x jpgraph</prompt></para>
+                        <para>This will allow you to access the library files in your own program
+                            for with a <code>require_once('jpgraph/jpgraph.php')</code></para>
+                    </listitem>
+                    <listitem>
+                        <para>Make sure that the GD extension is enabled in your
+                                <filename>php.ini</filename> file (check the output from
+                                <code>phpinfo()</code> ) </para>
+                    </listitem>
+                    <listitem>
+                        <para>[Optional] Verify that the paths defined in
+                                <filename>jpg-config.inc.php</filename> corresponds to the server
+                            setup. The path to your TTF fonts must be correct. If you get an error
+                            saying that some TTF fonts cannot be found or read then the path needs
+                            to be adjusted in this configuration file.</para>
+                    </listitem>
+                    <listitem>
+                        <para>[Optional] Check that you have sufficient memory and execution time
+                            set in your <filename>php.ini</filename> file. It is recommended to
+                            allow at least 32Mb memory for PHP if you intend to run anything else
+                            than very basic graph scripts.</para>
+                    </listitem>
+                    <listitem>
+                        <para>[Optional] To allow for better debugging in conjunction with graph
+                            scripts the output buffering should also be disabled in
+                                <filename>php.ini</filename></para>
+                    </listitem>
+                    <listitem>
+                        <para>[Optional] To avoid warning messages it might be necessary to set the
+                            default timezone in <filename>php.ini</filename> if this has not already
+                            been done. Starting with PHP 5.2 a warning is generated if the timezone
+                            for PHP is not set.</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <tip>
+                <para>When you install the library on a production server then you should not
+                    install the library in the document root. Instead it should be installed so that
+                    only the script can directly access the library files (somewhere in the PHP
+                    path). </para>
+                <para>If you have the pro-version you really should install the pre-compiled version
+                    of the library (available under directory <filename>PhpExpress-src</filename>.
+                    This will significantly increase the performance of the library. The only
+                    prerequisite is that you also need to install the (free) PhpExpress PHP
+                    Accelerator from NuSphere Corporation. See <xref
+                        xlink:href="#chap.php-accelerator"/> for information on how to install the
+                    freely available PHP Accelerator.</para>
+            </tip>
+        </sect1>
+        <sect1>
+            <title>Running the examples</title>
+            <para>The best way to verify that the installation is working is to run one of the
+                included example scripts. Assuming that the library is installed locally in the
+                document root on the HTTP server under <filename>jpgraph/</filename> pointing the
+                browser to <filename>"http://llocalhost/jpgraph/Examples/example0.php"</filename>
+                should show the same image as can be seen in <xref
+                    xlink:href="#example.example0"/>.</para>
+            <para>In order to generate all the examples available there is a "meta script" that will
+                just do this. Point the browser to </para>
+            <para><filename>"http://llocalhost/jpgraph/Examples/testsuit.php"</filename></para>
+            <para>just note that this will generate a page with more than 300 examples. Depending on
+                the capacity of the server it might take a few seconds before this script is
+                done.</para>
+        </sect1>
+        <sect1>
+            <title>Basic trouble shooting</title>
+            <para>If none of the examples above to work there is a couple of things that needs to be
+                checked. If not any of these quick fixes solves the problem then it is best to read
+                the long version of the installation instructions before continuing the trouble shooting.<orderedlist>
+                    <listitem>
+                        <para>Verify that the GD library is really working by running
+                                <code>phpinfo()</code> and check that your output includes a GD
+                            section which should show similar information as the image below</para>
+                        <para>
+                            <figure>
+                                <title><code>phpinfo()</code> GD sections</title>
+                                <mediaobject>
+                                    <imageobject>
+                                        <imagedata
+                                            scale="70"
+                                            fileref="images/phpinfo-gd.png"/>
+                                    </imageobject>
+                                </mediaobject>
+                            </figure>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Make sure you have enabled strict error checking and disabled output
+                            buffering in <filename>php.ini</filename>. This might not solve the
+                            problem by itself but it will enable (better) error messages to trouble
+                            shoot the installation.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Make sure that you are using a recent version of PHP (e.g. &#x2265;
+                            PHP 5.2.x)</para>
+                    </listitem>
+                    <listitem>
+                        <para>Make sure that the path to the TTF directories are correctly specified
+                            in <filename>jpg-cnfig.inc.php</filename></para>
+                    </listitem>
+                </orderedlist></para>
+        </sect1>
+    </chapter>
+    <chapter>
+        <title>The Long Version: Installing the Library</title>
+        <formalpara>
+            <title>What you will learn in this chapter</title>
+            <para>You will learn in detail how to configure and setup an environment to be able to
+                run the JpGraph library. The chapter will explain all configuration necessary in
+                great details and will also list some more extensive trouble shooting steps if you
+                encounter problems trying to get the library running. The only assumption is that
+                you have a working PHP installation together with your HTTP server.</para>
+        </formalpara>
+        <sect1>
+            <title>Downloading the library</title>
+            <para>
+                <variablelist>
+                    <varlistentry>
+                        <term>Downloading the free version</term>
+                        <listitem>
+                            <para>Point the browser to
+                                    <filename>"http://www.aditus.nu/jpgraph/jpdownload.php"</filename>
+                                and select the 3.x series if your are running PHP5 and the 1.x
+                                series if you are still running a PHP4 installation. </para>
+                            <para>
+                                <note>
+                                    <para>The 1.x series of the library is no longer maintained so
+                                        in case you have not yet upgraded top PHP5 you should
+                                        strongly consider this.</para>
+                                </note>
+                            </para>
+                        </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                        <term>Downloading the pro version</term>
+                        <listitem>
+                            <para>
+                                <orderedlist>
+                                    <listitem>
+                                        <para>Locate your license file that was sent to you when you
+                                            purchased the library. You will need both the license
+                                            number as well as the registered license mail as stated
+                                            in the license. Your license information should look
+                                            similar to: </para>
+                                        <para>
+                                            <screen><computeroutput>----------------------------------------------------------
+: Your license key : JPGP-0920-1234657  
+:  Name on license : A. JpGraph User 
+:           E-mail : jpgraph-user@example.com
+----------------------------------------------------------
+</computeroutput></screen>
+                                        </para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>Point the browser to
+                                                <filename>http://www.aditus.nu/jpgraph/pro_login.php</filename>
+                                            and enter your licence email and key on the
+                                            website.</para>
+                                        <para>
+                                            <figure>
+                                                <title>Pro-login dialogue on JpGraph Website</title>
+                                                <mediaobject>
+                                                  <imageobject><imagedata
+                                                  scale="70"
+                                                  fileref="images/pro-login.png"/></imageobject>
+                                                </mediaobject>
+                                            </figure>
+                                        </para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>Depending on your system you should now download
+                                            either the 1.x or the (preferred) 3.x series. There is a
+                                            choice to either download the library as a "*.zip" file
+                                            or as a compressed "*.tar.gz" file (which is the
+                                            preferred format in a Unix environment). Save the
+                                            downloaded file to a temporary directory of your
+                                            choice.</para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>[Optional] Verify your downloaded file against the
+                                            given MD5 sum on the website. On a Unix system this can
+                                            be done by running the <command>md5</command> program
+                                            and give the downloaded library as the argument.</para>
+                                        <para>For example: <prompt>$></prompt>
+                                            <command>md5</command>
+                                            <filename>jprgaph-3.0.0p.tar.gz</filename></para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>Unpack the library to a suitable directory that is in
+                                            your PHP include path as is described in <xref
+                                                xlink:href="#sec1.installing-library"/></para>
+                                    </listitem>
+                                </orderedlist>
+                            </para>
+                        </listitem>
+                    </varlistentry>
+                </variablelist>
+            </para>
+        </sect1>
+        <sect1
+            xml:id="sec.sys-req">
+            <title>Necessary system requirements for the library</title>
+            <para>In order to run the JpGraph library there are some prerequisites that must be
+                fulfilled. The PHP installation must have the low level graphic primitive library
+                "GD" enabled and if TTF fonts shall work in the graphs the FreeType 2.x library must
+                be enabled and installed in the PHP setup. Most modern PHP systems (since at least
+                2006) usually have these extensions enabled and installed by default which means it
+                is usually rather simple to get the library working. </para>
+            <para>However, there are many systems out there and some older non-standard systems will
+                require some manual intervention to work correctly.</para>
+            <caution>
+                <para>One more time; The library is not guaranteed to run on a 64Bit OS. We will
+                    point out this several more time during this manual.</para>
+            </caution>
+            <sect2
+                xml:id="sec.verifying-phpgd-inst">
+                <title>Verifying the PHP/GD installation</title>
+                <para>The first and most important step is to make sure that your PHP installations
+                    has the GD library enabled. The easiest way to find out if this has been enabled
+                    or not is to create a one line PHP program that has only one instruction,
+                        <code>phpinfo()</code></para>
+                <para>
+                    <programlisting>&lt;?php phpinfo(); ?></programlisting>
+                </para>
+                <para>Store this basic program as <filename>phpinfo.php</filename> in the document
+                    root. Then point the browser to</para>
+                <para>
+                    <filename>http://localhost/phpinfo.php</filename>
+                </para>
+                <para>If the steps above was followed the browser should now show a lot of
+                    information about the PHP installation. In order to find out if the GD have been
+                    installed and enabled look for the GD section in the output. The figure below
+                    shows a typical output of this section</para>
+                <para><figure
+                        xml:id="fig.phpinfo-gd">
+                        <title>phphinfo() GD-Information</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata
+                                    scale="70"
+                                    fileref="images/phpinfo-gd.png"/>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>There are three important points to notice here. <orderedlist>
+                        <listitem>
+                            <para>The GD Version. It should be 2.0.x. The GD version has been
+                                shipped with PHP for the last four years so this should not really
+                                be a problem. If for some odd reason the system only have GD 1.x
+                                installed then JpGraph 2.x, and 3.x cannot be used but it is still
+                                possible to use JpGraph 1.x.</para>
+                            <para>In addition the "bundled" version of GD should be used. This
+                                version is maintained together with PHP and is usually much more up
+                                to date then the stand alone GD version.</para>
+                        </listitem>
+                        <listitem>
+                            <para>FreeType version. This is required in order to use TTF fonts. This
+                                should be at least version 2.3.x Previous versions of the FreeType
+                                library have had known issues which has caused issues when used
+                                together with JpGraph.</para>
+                        </listitem>
+                        <listitem>
+                            <para>The final point worth checking is what type of image encoding the
+                                installation supports. The most common formats are PNG and JPEG. By
+                                default the library uses the PNG encoding format so it is important
+                                to check that the line that says "PNG Support" has "enabled" as
+                                value. As a rule of thumb PNG usually gives the smallest sizes of
+                                graph (best compression) so this is the recommended format. The only
+                                exception to this rule might be if a photo is used as background in
+                                the graph. Then it is possible that JPEG encoding gives a better
+                                compression since this is a destructive format (while PNG is a
+                                lossless format).</para>
+                            <para>For legacy reason it is also possible to use GIF encoding if the
+                                server supports this but if PNG is installed there are no good
+                                technical reasons to use GIF compression format. (The only possible
+                                usage of GIF is the ability to create an animated image by
+                                concatenating a number of GIF images which are then displayed in
+                                sequence. This is not possible with the (old) PNG standard.)</para>
+                        </listitem>
+                    </orderedlist></para>
+                <para>In order to remove any remaining doubts that the installation works as
+                    intended the following PHP script that only uses the GD library primitives
+                    should be run. This allows troubleshooting the installation without involving
+                    the additional complexity of JpGraph to make sure that the basics are in
+                    place.</para>
+                <para>Store the script in <xref
+                        xlink:href="#example.checkgd"/> your document root as
+                        <filename>"checkgd.php"</filename></para>
+                <programlisting>#checkgd|Verifying the GD installations#</programlisting>
+                <para>Now point the browser to this file and fetch the script. This should show an
+                    image in the browser with the text "a simple text string" similar to what is
+                    shown in <xref
+                        xlink:href="#fig.checkgd"/></para>
+                <para>In order to be really sure that the GD 2.x version of the GD library is
+                    installed (as opposed to just GD 1.x) we need to use a slightly more advanced
+                    script that makes use of some features available in GD 2.x but not in GD 1.x.
+                    The largest difference is the support for TrueColor images in GD 2.x so we
+                    create a script that makes use of a truecolor canvas..</para>
+                <programlisting>#checkgd2|Verifying GD2#</programlisting>
+                <para>In the same way as before store this file on the server and point the browser
+                    to it. The result should be the same image as is shown in <xref
+                        xlink:href="#fig.checkgd2"/></para>
+                <para><emphasis
+                        role="bold">In order to use the library it is absolutely necessary that the
+                        above two scrips works as described. If this is not the case the
+                            <filename>php.ini</filename> file needs to be checked as described in
+                        the next section. </emphasis></para>
+            </sect2>
+            <sect2>
+                <title>Enabling GD library in php.ini for PH5</title>
+                <para>If neither of the two example above worked and the GD section didn't exist in
+                    the output from <code>phpinfo()</code> the chances are that the GD library has
+                    not been enabled in the <filename>php.ini</filename> file.</para>
+                <para>The first problem to solve is therefore to locate the
+                        <filename>php.ini</filename> file in the installation. Depending on the type
+                    of server (and OS) this can be in different places. If the system is running on
+                    a Unix server the <filename>php.ini</filename> file is most likely stored in
+                    either <filename>/etc/php.ini</filename> , <filename>/etc/php/php.ini</filename>
+                    , <filename>/etc/php5/php.ini</filename> or
+                        <filename>/etc/php5/apache/php.ini</filename>
+                </para>
+                <para>
+                    <tip>
+                        <para>Check the output of <code>phpinfo()</code> to find out what
+                                <filename>php.ini</filename> file the installation is
+                            reading.</para>
+                    </tip>
+                </para>
+                <para>On a windows server there is no standard location since it completely depends
+                    on how the installation of the HTTP server and PHP was done. For example if the
+                    WAMP server was installed and put in the top directory
+                        <filename>c:\wamp\</filename> the <filename>php.ini</filename> file is
+                    installed under <filename>c:\wamp\bin\apache\apache2.2.11\bin\php.ini</filename>
+                </para>
+                <para>Open <filename>php.ini</filename> in a editor and locate the line </para>
+                <para><code>extension_dir = &lt;some-path-here></code></para>
+                <para>The directory path specified above is the directory where all PHP extension
+                    modules are stored. On a Unix system this is typically specified as
+                        <filename>/usr/lib/php5/extensions</filename> now examine that directory and
+                    check if an extension called "<filename>gd.so</filename>" (for Unix) or
+                        "<filename>gd.dll</filename>" (for Windows) exists (and is un-commented). If
+                    this extension cannot be found then this extension needs to be installed. For
+                    example, many Unix/Linux installation requires that the extra modules in PHP is
+                    manually enabled/installed through the appropriate Packet manager as the example
+                    below shows.</para>
+                <para>
+                    <example>
+                        <title>Installing GD through RPM packet manager</title>
+                        <para>
+                            <screen>$/> sudo zypper install php5-gd</screen>
+                        </para>
+                    </example>
+                </para>
+            </sect2>
+            <sect2>
+                <title>Verifying TTF fonts</title>
+                <para>This section is only intended to verify if that support exists for TTF fonts.
+                    If this does not work or if it is already known that there are no support for
+                    TTF fonts then please go directly to <xref
+                        xlink:href="#sec1.installing-fonts"/></para>
+                <para>In order to check if basic TTF font support is available create the following
+                    script in the document root and name it <filename>checkttf.php</filename>
+                </para>
+                <para>Then it is necessary to locate on the system exactly where the TTF fonts are
+                    stored and update the defines for the paths and/or the name of the TTF fonts
+                    that is know to exist. </para>
+                <para>
+                    <programlisting>#checkttf|Verifying TTF with a known font#</programlisting>
+                </para>
+                <para>As usual point the browser to this script and fetch the image. If thing works
+                    an image identical to what is shown in <xref
+                        xlink:href="#fig.checkttf"/> should be visible.</para>
+                <sect3
+                    xml:id="sec3.name-of-ttf-files">
+                    <title>Name of TTF font files</title>
+                    <para>The library has built in support for large number of TTF fonts, this
+                        includes both the standard MS WEB core fonts as well as Vera and DejaVu
+                        fonts. In addition a number of non-latin fonts are supported. This includes
+                        both Japanese, Chinese, Hebrew and Russian fonts. See <xref
+                            xlink:href="#sec2.using-non-latin-fonts"/> and <xref
+                            xlink:href="#sec1.character-encoding"/> for more on how to use non-latin
+                        fonts and encodings.</para>
+                    <para>In order for the fonts to be usable by the library the font files must
+                        have the following names (these are the standard names)</para>
+                    <para>More information on how to use TTF fonts in scripts can be found in <xref
+                            xlink:href="#chap.text_handling"/></para>
+                    <para>
+                        <table
+                            frame="all"
+                            xml:id="table.ttf-font-files">
+                            <title>Latin TTF font file names</title>
+                            <tgroup
+                                cols="6">
+                                <colspec
+                                    colname="c1"
+                                    colnum="1"/>
+                                <colspec
+                                    colname="c2"
+                                    colnum="2"/>
+                                <colspec
+                                    colname="newCol3"
+                                    colnum="3"/>
+                                <colspec
+                                    colname="c3"
+                                    colnum="4"/>
+                                <colspec
+                                    colname="c4"
+                                    colnum="5"/>
+                                <colspec
+                                    colname="c5"
+                                    colnum="6"/>
+                                <thead>
+                                    <row>
+                                        <entry>Font family name</entry>
+                                        <entry>Symbolic name</entry>
+                                        <entry>Normal, <code>FS_NORMAL</code></entry>
+                                        <entry>Bold, <code>FS_BOLD</code></entry>
+                                        <entry>Italic, <code>FS_ITALIC</code></entry>
+                                        <entry>Bold italic, <code>FS_BOLDITALIC</code></entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>Courier</entry>
+                                        <entry>FF_COURIER</entry>
+                                        <entry><filename>cour.ttf</filename></entry>
+                                        <entry><filename>courbd.ttf</filename></entry>
+                                        <entry><filename>couri.ttf</filename></entry>
+                                        <entry><filename>courbi.ttf</filename></entry>
+                                    </row>
+                                    <row>
+                                        <entry>Georgia</entry>
+                                        <entry>FF_GEORGIA</entry>
+                                        <entry><filename>georgia.ttf</filename></entry>
+                                        <entry><filename>georgiab.ttf</filename></entry>
+                                        <entry><filename>georgiai.ttf</filename></entry>
+                                        <entry/>
+                                    </row>
+                                    <row>
+                                        <entry>Trebuche</entry>
+                                        <entry>FF_TREBUCHE</entry>
+                                        <entry><filename>trebuc.ttf</filename></entry>
+                                        <entry><filename>trebucbd.ttf</filename></entry>
+                                        <entry><filename>trebucit.ttf</filename></entry>
+                                        <entry><filename>trebucbi.ttf</filename></entry>
+                                    </row>
+                                    <row>
+                                        <entry>Verdana</entry>
+                                        <entry>FF_VERDANA</entry>
+                                        <entry><filename>verdana.ttf</filename></entry>
+                                        <entry><filename>verdanab.ttf</filename></entry>
+                                        <entry><filename>verdanai.ttf</filename></entry>
+                                        <entry/>
+                                    </row>
+                                    <row>
+                                        <entry>Times roman</entry>
+                                        <entry>FF_TIMES</entry>
+                                        <entry><filename>times.ttf</filename></entry>
+                                        <entry><filename>timesbd.ttf</filename></entry>
+                                        <entry><filename>timesi.ttf</filename></entry>
+                                        <entry><filename>timesbi.ttf</filename></entry>
+                                    </row>
+                                    <row>
+                                        <entry>Comic</entry>
+                                        <entry>FF_COMIC</entry>
+                                        <entry><filename>comic.ttf</filename></entry>
+                                        <entry><filename>comicbd.ttf</filename></entry>
+                                        <entry/>
+                                        <entry/>
+                                    </row>
+                                    <row>
+                                        <entry>Arial</entry>
+                                        <entry>FF_ARIAL</entry>
+                                        <entry><filename>arial.ttf</filename></entry>
+                                        <entry><filename>arialbd.ttf</filename></entry>
+                                        <entry><filename>ariali.ttf</filename></entry>
+                                        <entry><filename>arialbi.ttf</filename></entry>
+                                    </row>
+                                    <row>
+                                        <entry>Vera</entry>
+                                        <entry>FF_VERA</entry>
+                                        <entry><filename>Vera.ttf</filename></entry>
+                                        <entry><filename>VeraBd.ttf</filename></entry>
+                                        <entry><filename>VeraIt.ttf</filename></entry>
+                                        <entry><filename>VeraBI.ttf</filename></entry>
+                                    </row>
+                                    <row>
+                                        <entry>Vera mono</entry>
+                                        <entry>FF_VERAMONO</entry>
+                                        <entry><filename>VeraMono.ttf</filename></entry>
+                                        <entry><filename>VeraMoBd.ttf</filename></entry>
+                                        <entry><filename>VeraMoIt.ttf</filename></entry>
+                                        <entry><filename>VeraMoBI.ttf</filename></entry>
+                                    </row>
+                                    <row>
+                                        <entry>Vera serif</entry>
+                                        <entry>FF_VERASERIF</entry>
+                                        <entry><filename>VeraSe.ttf</filename></entry>
+                                        <entry><filename>VeraSeBd.ttf</filename></entry>
+                                        <entry/>
+                                        <entry/>
+                                    </row>
+                                    <row>
+                                        <entry>(Chinese) Simsun</entry>
+                                        <entry>FF_SIMSUN</entry>
+                                        <entry><filename>simsun.ttc</filename></entry>
+                                        <entry><filename>simhei.ttf</filename></entry>
+                                        <entry/>
+                                        <entry/>
+                                    </row>
+                                    <row>
+                                        <entry>Chinese</entry>
+                                        <entry>FF_CHINESE</entry>
+                                        <entry><filename>bkai00mp.ttf</filename></entry>
+                                        <entry/>
+                                        <entry/>
+                                        <entry/>
+                                    </row>
+                                    <row>
+                                        <entry>(Japanese) Mincho</entry>
+                                        <entry>FF_MINCHO</entry>
+                                        <entry><filename>ipamp.ttf</filename></entry>
+                                        <entry/>
+                                        <entry/>
+                                        <entry/>
+                                    </row>
+                                    <row>
+                                        <entry>(Japanese) P Mincho</entry>
+                                        <entry>FF_PMINCHO</entry>
+                                        <entry><filename>ipamp.ttf</filename></entry>
+                                        <entry/>
+                                        <entry/>
+                                        <entry/>
+                                    </row>
+                                    <row>
+                                        <entry>(Japanese) Gothic</entry>
+                                        <entry>FF_GOTHIC</entry>
+                                        <entry><filename>ipag.ttf</filename></entry>
+                                        <entry/>
+                                        <entry/>
+                                        <entry/>
+                                    </row>
+                                    <row>
+                                        <entry>(Japanese) P Gothic</entry>
+                                        <entry>FF_PGOTHIC</entry>
+                                        <entry><filename>ipagp.ttf</filename></entry>
+                                        <entry/>
+                                        <entry/>
+                                        <entry/>
+                                    </row>
+                                    <row>
+                                        <entry>(Hebrew) David</entry>
+                                        <entry>FF_DAVID</entry>
+                                        <entry><filename>DAVIDNEW.TTF</filename></entry>
+                                        <entry/>
+                                        <entry/>
+                                        <entry/>
+                                    </row>
+                                    <row>
+                                        <entry>(Hebrew) Miriam</entry>
+                                        <entry>FF_MIRIAM</entry>
+                                        <entry><filename>MRIAMY.TTF</filename></entry>
+                                        <entry/>
+                                        <entry/>
+                                        <entry/>
+                                    </row>
+                                    <row>
+                                        <entry>(Hebrew) Ahron</entry>
+                                        <entry>FF_AHRON</entry>
+                                        <entry><filename>ahronbd.ttf</filename></entry>
+                                        <entry/>
+                                        <entry/>
+                                        <entry/>
+                                    </row>
+                                    <row>
+                                        <entry>DejaVu Sans Serif</entry>
+                                        <entry>FF_DV_SANSSERIF</entry>
+                                        <entry><filename>DejaVuSans.ttf</filename></entry>
+                                        <entry><filename>DejaVuSans-Bold.ttf</filename>, </entry>
+                                        <entry><filename>DejaVuSans-Oblique.ttf</filename></entry>
+                                        <entry><filename>DejaVuSans-BoldOblique.ttf</filename></entry>
+                                    </row>
+                                    <row>
+                                        <entry>DejaVu Sans Serif Mono</entry>
+                                        <entry>FF_DV_SANSSERIFMONO</entry>
+                                        <entry><filename>DejaVuSansMono.ttf</filename></entry>
+                                        <entry><filename>DejaVuSansMono-Bold.ttf</filename></entry>
+                                        <entry><filename>DejaVuSansMono-Oblique.ttf</filename></entry>
+                                        <entry><filename>DejaVuSansMono-BoldOblique.ttf</filename></entry>
+                                    </row>
+                                    <row>
+                                        <entry>DejaVu Sans Serif Condensed</entry>
+                                        <entry>FF_DV_SANSSERIFCOND</entry>
+                                        <entry><filename>DejaVuSansCondensed.ttf</filename></entry>
+                                        <entry><filename>DejaVuSansCondensed-Bold.ttf</filename></entry>
+                                        <entry><filename>DejaVuSansCondensed-Oblique.ttf</filename></entry>
+                                        <entry><filename>DejaVuSansCondensed-BoldOblique.ttf</filename></entry>
+                                    </row>
+                                    <row>
+                                        <entry>DejaVu Serif</entry>
+                                        <entry>FF_DV_SERIF</entry>
+                                        <entry><filename>DejaVuSerif.ttf</filename></entry>
+                                        <entry><filename>DejaVuSerif-Bold.ttf</filename></entry>
+                                        <entry><filename>DejaVuSerif-Italic.ttf</filename></entry>
+                                        <entry><filename>DejaVuSerif-BoldItalic.ttf</filename></entry>
+                                    </row>
+                                    <row>
+                                        <entry>DejaVu Serif Condensed</entry>
+                                        <entry>FF_DV_SERIFCOND</entry>
+                                        <entry><filename>DejaVuSerifCondensed.ttf</filename></entry>
+                                        <entry><filename>DejaVuSerifCondensed-Bold.ttf</filename></entry>
+                                        <entry><filename>DejaVuSerifCondensed-Italic.ttf</filename></entry>
+                                        <entry><filename>DejaVuSerifCondensed-BoldItalic.ttf</filename></entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                    </para>
+                    <para>
+                        <note>
+                            <para>For the DejaVu fonts there are actually two common sets of name in
+                                usage depending on how long it has been since the fonts where
+                                installed. The library knows of both sets of names and will try them
+                                in order selecting to use the first one available.</para>
+                        </note>
+                    </para>
+                </sect3>
+            </sect2>
+            <sect2>
+                <title>Support for different image formats</title>
+                <para>By default the standard GD image library supports the PNG graphic format. </para>
+                <para>Hence by default only PNG is supported. If JPEG support is needed this might
+                    require additional libraries that must be installed and enabled for usage by
+                    PHP/GD (in the <filename>php.ini </filename>file), again please see PHP
+                    documentation for specifics. For most practical purposes PNG is a better format
+                    since it normally achieves better compression then GIF (typically by a factor of
+                    2 for the types of images generated by JpGraph). </para>
+                <para>In comparison with JPEG format PNG is also better for the type of images
+                    generated by this library. </para>
+                <para>So, the bottom line is that there should be very good reasons to choose any
+                    other image encoding formats than PNG. By default the image format is set to
+                    "auto". This means that JpGraph automatically chooses the best available image
+                    encoding format using the preferred order "PNG", "GIF" and "JPG".</para>
+                <note>
+                    <title>No support for SVG</title>
+                    <para>We have received may requests to add support for SVG image output.
+                        Unfortunately we have investigated this and concluded that it is
+                        (surprisingly!) not technically possible to do this. The main reason is that
+                        with the current standard there is no way to statically determine the
+                        bounding boxes for texts. This is further described in <xref
+                            xlink:href="#app.adding-svg"/></para>
+                </note>
+            </sect2>
+        </sect1>
+        <sect1
+            xml:id="sec1.installing-library">
+            <title>Installing the library</title>
+            <para>When you have verified the necessary preconditions as described in the previous
+                paragraphs it is time to install the library. The "installing" part is nothing more
+                than copying the files in the distribution to a place in the directory structure
+                where you script can find the library files. On a Unix system it is common to
+                install PHP libraries under "<filename>/usr/share/php/</filename>". On a windows
+                system there is really no standard path for installing PHP libraries so you have to
+                decide your self. </para>
+            <para>The important thing here is that the path to the library is included in the PHP
+                search path, i.e. it is in one of the paths that PHP searches when it tries to
+                resolve a "<code>require_once</code>" or "<code>include</code>" statements.
+                Furthermore, the included examples and demo applications (included in the pro
+                version) assumes that the library is installed under the directory
+                    "<filename>jpgraph/</filename>".</para>
+            <para>As an example the following commands will install a specific version of the
+                library on a Unix server. If we assume that you have downloaded the library to the
+                    "<filename>/tmp/</filename>" directory and are already standing in this
+                directory the following commands will setup the library to be used</para>
+            <para>
+                <screen>root:/tmp> tar xzf jpgraph-2.5.tar.gz
+root:/tmp> cp -r jpgraph-2.5 /usr/shar/php/
+root:/tmp> ln -s /usr/shar/php/jpgraph-2.5 /usr/shar/php/jpgraph</screen>
+            </para>
+            <para>The last line makes a symbolic link from "jpgraph" to the actual version of the
+                library. This way you can try out different versions of the library without having
+                to make any changes in your scripts. You just point out a different version of the
+                library in the symbolic link.</para>
+            <sect2
+                xml:id="sec2.config-dev-server">
+                <title>Configuring JpGraph/PHP on a development server</title>
+                <sect3
+                    xml:id="sec3.setting-up-php-ini">
+                    <title>Setting up your php.ini file</title>
+                    <para>
+                        <tip>
+                            <para>To find the location of your <filename>php.ini</filename> file
+                                create and run a script with the single line <code>&lt;?php
+                                    phpinfo(); ?></code> . The look at the output for a line saying
+                                "php.ini file used" and you will see which
+                                    <filename>php.ini</filename> file is used.</para>
+                        </tip>
+                    </para>
+                    <para><emphasis
+                            role="bold">Setting the memory limits</emphasis></para>
+                    <para>In many default configuration the allowed memory for PHP is not enough for
+                        complex graph script since they (as many other image manipulation programs)
+                        can require a lot of memory. On a development server there should be at
+                        least 32MB memory allowed for the HTTP/PHP process. To verify this do the
+                        following</para>
+                    <para>
+                        <orderedlist>
+                            <listitem>
+                                <para>Open <filename>php.ini</filename> for editing.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Locate the line saying</para>
+                                <para><code>memory_limit = xx</code></para>
+                                <para>where "xx" is some number. Now make sure that you have at
+                                    least 32MB allowed by making sure the line reads</para>
+                                <para><code>memory_limit = 32M</code></para>
+                                <para>Note that fore very large images this might not be enough.
+                                    Consider the following example.</para>
+                                <para>Assume you need to create an 1200x1024 image in true color.
+                                    Just the plain image in itself will require 1200x1020x4 bytes,
+                                    which is roughly 4.7MB RAM during internal processing the
+                                    library can need up to three times that amount of memory so this
+                                    means that just for the image the library needs around of ~15MB
+                                    of RAM. If we then take the memory needed to load PHP as well as
+                                    the entire JpGraph library and dynamically execute and parse the
+                                    library it can easily consume another ~15MB RAM. If the image is
+                                    very complex and requires a huge number of objects to be created
+                                    (a typical example is a large Gantt chart) it might be necessary
+                                    to double the allowed memory to 64MB RAM. </para>
+                            </listitem>
+                        </orderedlist>
+                    </para>
+                    <para/>
+                    <para><emphasis
+                            role="bold">Setting maximum allowed run time</emphasis></para>
+                    <para>By default many installations have very short maximum run time for the PHP
+                        scripts. Common figures are 10s. For normal interactive use involving plain
+                        text processing this is usually adequate. However, producing large and
+                        complex images might take considerable time (as do all images processing).
+                        For this reason the maximum time limit for PHP should be increased to a
+                        minimum of 20s (depending on the complexity of your images as well as any
+                        associated data processing it might be necessary to allow up to
+                        30-40s).</para>
+                    <para>The allowed running time is controlled by the <filename>php.ini</filename>
+                        setting</para>
+                    <para><code>max_execution_time = xx</code></para>
+                    <para>where "xx" is some number. Recommended setting is therefore </para>
+                    <para><code>max_execution_time = 30</code></para>
+                    <para/>
+                    <para><emphasis
+                            role="bold">Disabling output buffer</emphasis></para>
+                    <para>The next part of the <filename>php.ini</filename> file that might need
+                        changing is the output buffer. In short this should be disabled and we will
+                        shortly explain why. To check this do the following</para>
+                    <para><orderedlist>
+                            <listitem>
+                                <para>Open <filename>php.ini</filename> for editing</para>
+                            </listitem>
+                            <listitem>
+                                <para>Locate the line saying </para>
+                                <para><code>output_buffering = xx</code></para>
+                                <para>where "xx" is some number. Make sure that this line is
+                                    commented out, i.e. it reads</para>
+                                <para><code>; output_buffering = xx</code></para>
+                            </listitem>
+                        </orderedlist>This reason we want this to be commented out is that during
+                        development we want to be able to see the potential error messages produced
+                        by the library and having the output buffering enabled will actually prevent
+                        this. Fully understanding why this is the case is good first step into the
+                        added complexity of producing images with PHP compared with just outputting
+                        text. Understanding this requires us to understand a few basic principles
+                        about the HTTP protocol. Especially how MIME encodings of data works.</para>
+                    <para>The following explanation is slightly simplified since a full description
+                        of the HTTP protocol would bring us a bit to far in this manual</para>
+                    <para><orderedlist>
+                            <listitem>
+                                <para>A client (e.g. browser) requests data from the server by
+                                    issuing a GET (or possible a POST) command to the server. This
+                                    is what happens when you enter a URI i the address bar in the
+                                    browser.</para>
+                            </listitem>
+                            <listitem>
+                                <para>The server replies with a data stream (or an error if the
+                                    requested data wasn't available). This data stream is prepended
+                                    with header (MIME header) that tells the client (e.g. the
+                                    browser) how to interpret the data that follows. The most common
+                                    type (and the default type if no header is sent by a faulty
+                                    server) is "text/html" . This tells the client to interpret the
+                                    data as plain text with embedded HTML encoding. </para>
+                                <para>When the data is to be interpreted as an image the header will
+                                    instead be one of the image headers, for example
+                                        <code>"image/png"</code> or <code>"image/jpeg"</code>. When
+                                    the client receives this header it will Interpret all the
+                                    following data as an image encoded in the indicated format. </para>
+                                <para>The important thing to keep in mind here is that each server
+                                    reply can have one and only one MIME type. This is the key to
+                                    further understanding the specific issues with dynamic image
+                                    generation. This explains why if a PHP script running on the
+                                    server sends a header first indicating that the following data
+                                    it sends should be interpreted by the client as an image it
+                                    cannot send both image data and some text.</para>
+                            </listitem>
+                        </orderedlist>We are now in a position to explain how output buffering would
+                        make debugging more difficult.</para>
+                    <para>Normally all output from a PHP script is sequentially, i.e. the header
+                        must first be sent and then the data. If no header is sent or plain text is
+                        sent without a header the client will interpret this as
+                            <code>"text/html"</code>. One purpose with "output_buffer" it to
+                        circumvent this to allow a certain amount of output to be put in a buffer
+                        for a while and later when some processing has determined what header should
+                        be sent the data is prepended with the correct header and the rest of the
+                        data is then sent. </para>
+                    <para>What could now happen is the following (not unlikely scenario): </para>
+                    <para><orderedlist>
+                            <listitem>
+                                <para>The scripts starts executing and the image starts to be
+                                    build.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Your script has some minor issues which produces some warnings
+                                    from PHP. These warning does not get sent directly back to the
+                                    client (the browser) to allow you to act on these warnings
+                                    instead they will be put into the output buffer. When later the
+                                    scripts starts outputting the proper image header and the image
+                                    data it gets added to the output buffer where your previous
+                                    textual PHP warning already are stored. </para>
+                            </listitem>
+                            <listitem>
+                                <para>Your client now receives the header that indicates that the
+                                    following data should be interpreted as an image but since that
+                                    image data is mixed with the textual warning messages it will
+                                    fail to decode the data (since it is not proper image data) and
+                                    will typical just show the image as a square with a red-cross
+                                    (FireFox) or some message along the lines of "<emphasis
+                                        role="italic">Cannot decode image</emphasis>". This is all
+                                    depending on how a certain client handles a corrupt
+                                    image.</para>
+                            </listitem>
+                        </orderedlist>The above scenario makes it impossible to debug your script
+                        since it will give no clue to what caused or where in your script these
+                        warnings were generated. The way to counteract this scenario is to disable
+                        output buffering. In this way the warning will be sent back to the client as
+                        soon as they are generated by PHP and will allow you to act on them. </para>
+                    <para/>
+                    <para><emphasis
+                            role="bold">Enabling adequate error checking</emphasis></para>
+                    <para>The final part of the <filename>php.ini</filename> file that should be
+                        adjusted (and this is not only for the JpGraph library) is the error level.
+                        To ensure maximum interoperability of the developed scripts they should all
+                        run completely silent no matter what error levels are set on the server.
+                        This means that development of all scripts should always be done with
+                        maximum error checking enabled. The JpGraph library can safely run
+                        completely silent even when all error checking is enabled.</para>
+                    <para>The error checking should therefore be specified as</para>
+                    <para><code>error_reporting = E_ALL | E_STRICT</code></para>
+                    <para>to enable the highest degree of PHP error checking</para>
+                    <para/>
+                    <para>
+                        <tip>
+                            <para>In addition to the above setting it is a good idea to also to
+                                makes sure that the following options are set</para>
+                            <para><code>zend.ze1_compatibility_mode = Off</code></para>
+                            <para>Zend engine 1 compatibility might cause problems with the
+                                library</para>
+                            <para><code>implicit_flush = On</code></para>
+                            <para>This can reduce the performance and shouldn't be used on a
+                                production server but will make all outputs sent back to the client
+                                as soon as possible and will aid in debugging.</para>
+                            <para><code>allow_call_time_pass_reference = Off</code></para>
+                            <para>This is just a general good idea since call time pass references
+                                is deprecated in PHP 5.0 and higher</para>
+                            <para><code>display_errors = On</code></para>
+                            <para>This makes sure all error are displayed</para>
+                            <para><code>display_startup_errors = On</code></para>
+                            <para>This makes sure that any initial errors thrown by PHP will be
+                                reported</para>
+                        </tip>
+                    </para>
+                    <para><emphasis
+                            role="bold">Setting default timezone</emphasis></para>
+                    <para>Starting with PHP 5.2 a warning will now be generated unless a default
+                        time zone is explicitly specified in <filename>php.ini</filename>. To set
+                        this find the line <code>date.timezone</code> in the
+                        <code>[Date]</code>section and set this to valid zone. For example to
+                        specify GMT+1 one could specify</para>
+                    <para><code>date.timezone = Europe/Paris</code></para>
+                    <para>Note: There should be no citation signs around the time zone.</para>
+                    <para>
+                        <caution>
+                            <para>In order to use the LED module (See <xref
+                                    xlink:href="#sec.led-graph-type"/>) the PHP installation must
+                                have multi-byte strings enabled so that the function
+                                    <command>mb_strlen()</command> is available. This is normally
+                                enabled at compile time for PHP by specifying the options
+                                    <code>--enable-mbstring --enable-mbregex</code> when configuring
+                                the compile options.</para>
+                        </caution>
+                    </para>
+                    <para>
+                        <caution>
+                            <para>In order to use the PDF417 barcode module (See <xref
+                                    xlink:href="#chap.pdf417"/>) it is necessary for the PHP
+                                installation to support the function <command>bcmod()</command>.
+                                This is enabled when compiling PHP by making sure that the option
+                                    <code>--enable-bcmath</code> is given when configuring PHP at
+                                compile time.</para>
+                        </caution>
+                    </para>
+                </sect3>
+                <sect3>
+                    <title>Setting up your jpg-config.inc.php</title>
+                    <para>Apart from the standard configuration described in <xref
+                            xlink:href="#sec1.installing-fonts"/> and <xref
+                            xlink:href="#sec1.adapting-installation"/> there is only one important
+                        configuration that is specific for a development server and that is the
+                        localization setting for error messages. </para>
+                    <para>As of version 3.0.0 there are three localization options</para>
+                    <para><orderedlist>
+                            <listitem>
+                                <para>English error messages ("en")</para>
+                            </listitem>
+                            <listitem>
+                                <para>German error messages ("de")</para>
+                            </listitem>
+                            <listitem>
+                                <para>Production error messages ("prod"). This is not really a
+                                    localization but a different set of error messages which does
+                                    not give detailed error messages but a generic message suitable
+                                    for a production server where the end user is not helped by
+                                    detailed graph script errors. Instead a generic message is shown
+                                    together with an error code that corresponds to the detailed
+                                    error. ("prod")</para>
+                            </listitem>
+                        </orderedlist>In order to specify the error message localization the
+                        following define in <filename>jpg-config.inc.php</filename> must be set the </para>
+                    <para><code>define('DEFAULT_ERR_LOCALE','en');</code></para>
+                    <para>The possible options are</para>
+                    <para>
+                        <orderedlist>
+                            <listitem>
+                                <para>"en", English locale</para>
+                            </listitem>
+                            <listitem>
+                                <para>"de", German locale</para>
+                            </listitem>
+                            <listitem>
+                                <para>"prod", The production version of the error messages.</para>
+                            </listitem>
+                        </orderedlist>
+                    </para>
+                    <para>
+                        <tip>
+                            <para>In addition to specifying the locale in the
+                                    <filename>jpg-config.inc.php</filename> file it can also be
+                                specified dynamically in each script by calling</para>
+                            <para>
+                                <programlisting>JpGraphError::SetErrLocale($aLocale);</programlisting>
+                            </para>
+                        </tip>
+                    </para>
+                </sect3>
+            </sect2>
+            <sect2
+                xml:id="sec2.config-prod-server">
+                <title>Configuring JpGraph/PHP on a production server</title>
+                <sect3>
+                    <title>Setting up your php.ini file</title>
+                    <para>Apart from what is applicable to a development server as described in <xref
+                            xlink:href="#sec2.config-dev-server"/> the following changes should be
+                        considered in a production environment.</para>
+                    <para>
+                        <emphasis
+                            role="bold">Setting the memory limits</emphasis>
+                    </para>
+                    <para>The one thing to keep in mind here is that each active connection will
+                        spawn a unique PHP instance (HTTP process). This means that the memory limit
+                        set per PHP process can cause a very high memory demand on a busy server
+                        with many simultaneous connections. For this reason it is important that
+                        during system test (before going into production) the actual needed memory
+                        limit is determined. </para>
+                    <para>For a busy server it is not uncommon to dimension it so it can handle 100
+                        simultaneous connections. If the limit of r each PHP process is set to 32MB
+                        this means that the server needs at least ~3.2GB memory just to handle the
+                        PHP processes (if they are all using there maximum allowed memory).</para>
+                    <para>
+                        <emphasis
+                            role="bold">Setting maximum allowed run time</emphasis>
+                    </para>
+                    <para>The same principle applies to a the allowed run time. For a production
+                        server with high load and many simultaneous users it might be necessary to
+                        increase the maximum allowed execution time just to be sure no process is
+                        terminated due to it reaching its maximum allowed run time. When that
+                        happens the PHP process will be killed an no output sent back to the client
+                        (e.g. the browser).</para>
+                    <para>
+                        <emphasis
+                            role="bold">Disabling output buffer</emphasis>
+                    </para>
+                    <para>The output buffer should be disabled on the production server as well
+                        since enabling this will slow down the PHP and put a higher demand on the
+                        memory requirements.</para>
+                    <para>
+                        <emphasis
+                            role="bold">Enabling adequate error checking</emphasis>
+                    </para>
+                    <para>On a production server it is not a good idea to display all PHP error
+                        messages to the end user so the display of error messages should be disabled
+                        and the error messages should only be logged to a file.</para>
+                    <tip>
+                        <para> On a production server it is also a good to idea to have the
+                            following settings: </para>
+                        <para>
+                            <code>display_errors = Off</code>
+                        </para>
+                        <para>This makes sure that now PHP errors are displayed</para>
+                        <para>
+                            <code>display_startup_errors = Off</code>
+                        </para>
+                        <para>This makes sure that any initial errors thrown by PHP is not displayed
+                            to the end user</para>
+                        <para><code>log_errors = On</code></para>
+                        <para><code>error_log = &lt;name-of-log-file></code></para>
+                        <para>This makes sure all server PHP errors are logged to a specified
+                            file</para>
+                    </tip>
+                </sect3>
+                <sect3>
+                    <title>Setting up your <filename>jpg-config.inc.php</filename></title>
+                    <para>On a production server it is best not to show detailed error messages to
+                        an end user. Instead it is better to have a generic error message that
+                        indicates a server problem and give an error code which can be decoded by
+                        looking it up in the table in <xref
+                            xlink:href="#app.err-msg"/> Using a generic error message is achieved by
+                        setting the following define:</para>
+                    <para><code>define('DEFAULT_ERR_LOCALE','prod');</code></para>
+                </sect3>
+            </sect2>
+            <sect2
+                xml:id="sec2.adjusting-php-include-path">
+                <title>Adjusting PHP include path</title>
+                <para>As was mentioned before the library should be installed somewhere in the PHP
+                    include path. There are two ways of configuring the include path:</para>
+                <para>
+                    <orderedlist>
+                        <listitem>
+                            <para>setting the include path in <filename>php.ini</filename></para>
+                            <para><code>include_path = &lt;file-path></code></para>
+                        </listitem>
+                        <listitem>
+                            <para>adjusting the include path directly in the code by using the PHP
+                                command <code>php_ini_set()</code> at the top of the script</para>
+                        </listitem>
+                    </orderedlist>
+                </para>
+                <para>The library examples assume that the library is available under a directory
+                    called "<filename>jpgraph/</filename>" . This will allow the scripts to include
+                    the library files by, for example, writing "<code>include</code>" or
+                        "<code>require_once</code>" statements such as </para>
+                <para><code>require_once( 'jpgraph/jpgraph.php')</code></para>
+            </sect2>
+            <sect2>
+                <title>Using Apache2 alias configuration during development</title>
+                <para>
+                    <note>
+                        <para>This section only discusses alias setting using the Apache HTTP server
+                            so this section can be skipped at first time reading the manual without
+                            loss of continuation.</para>
+                    </note>
+                    <note>
+                        <para>More detailed information on the alias directive is also available in
+                            the official Apache documentation at <uri
+                                xlink:href="http://httpd.apache.org/docs/2.2/mod/mod_alias.html#alias">http://httpd.apache.org/docs/2.2/mod/mod_alias.html</uri></para>
+                    </note>
+                </para>
+                <para>When accessing examples and test code through a regular bowser during
+                    development the scripts must be available in document root (or somewhere beneath
+                    that root) the root is traditionally named <code>/htdocs</code>. Having a
+                    development code/repository directly under this root directory is not a good
+                    idea. For example, write access to a document root (even on a development
+                    server) should be restricted, in addition the paths given to a test team should
+                    be the same whatever version is currently under test so storing different
+                    versions with different names under the root is also a poor setup.</para>
+                <para>A much better and easy, approach is to use the powerful concept of alias in
+                    Apache. This is a way of mapping a URL to a specific directory on the server.
+                    For example if <uri
+                        xlink:href="http://www.eclipse.org/projects/project-plan.php?projectid=tools.pdt">Eclipse-PDT</uri>
+                    is used as an IDE to develop PHP it is mandatory to have a workspace setup where
+                    all the working files resides. Assuming that a local developer has his workspace
+                    directly in his home directory, say <filename>~joe/workspace</filename>, we
+                    could configure an alias so that the workspace is accessible by the alias
+                        "<filename>http://localhost/ws/</filename>" by adding the following
+                    configuration in the Apache setup file(s)</para>
+                <programlisting>Alias /ws /home/joe/worksapce
+&lt;Directory /home/joe/workspace>
+  Order allow,deny
+  Allow from all
+&lt;/Directory> </programlisting>
+                <para>In this particular setup we use very liberal settings, allowing basically
+                    everyone with server access to access the directory. Using this approach makes
+                    it very easy to use the same test setup but allow testing of different
+                    branches/versions of the code.</para>
+                <para>Depending on the system these configurations can reside in different places.
+                    However, a very common structure is to keep all these small configuration files
+                    under <filename>/etc/apache/conf.d/</filename> The main Apache configuration
+                    then reads all the files (regardless of there name) that are stored under this
+                    directory. </para>
+                <para>As a final example we show a further slightly more complex example (which
+                    actually shows how most of our developers have there systems setup for PHP5
+                    development). This example adds options to do directory listing and allows the
+                    server to follow symbolic links. More information on available argument for the
+                    directive option is available in the official Apache documentation <uri
+                        xlink:href="http://httpd.apache.org/docs/2.2/mod/core.html#options">http://httpd.apache.org/docs/2.2/mod/core.html#options</uri></para>
+                <para>
+                    <example>
+                        <title>Alias configuration for a development server running Apache with
+                            Eclipse-PDT</title>
+                        <programlisting>#!workspace.conf#</programlisting>
+                    </example>
+                </para>
+            </sect2>
+        </sect1>
+        <sect1
+            xml:id="sec1.installing-fonts">
+            <title>Installing and configuring Font support</title>
+            <para>JpGraph supports two types of fonts, bitmap and TTF fonts. The advantage with
+                bitmap fonts are that they are supported from within the library without further
+                configuration. TTF fonts require some configuration and possible installation of the
+                actual TTF font specification file. (For more on installing TTF fonts see <xref
+                    xlink:href="#sec1.getting_add_fonts"/>.) </para>
+            <para>The drawbacks, on the other hand, with bitmap fonts are quite a few</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>they look quite crude and are only available in a few sizes</para>
+                    </listitem>
+                    <listitem>
+                        <para>italic font style is not supported for bitmap fonts</para>
+                    </listitem>
+                    <listitem>
+                        <para>they only support 7-bit ASCII characters</para>
+                    </listitem>
+                    <listitem>
+                        <para>they only support 0 and 90 degree rotated text</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>You can read more about how to use and select among the different fonts in <xref
+                    xlink:href="#chap.text_handling"/></para>
+            <sect2
+                xml:id="sec1.getting_add_fonts">
+                <title>Configuring TTF fonts</title>
+                <para>
+                    <note>
+                        <para>This could be considered an optional section since the library will
+                            work even without TTF fonts. However, for th reasons listed previously
+                            it is strongly recommended that TTF support is configured.</para>
+                    </note>
+                </para>
+                <para>In the following we will assume that the FreeType library is enabled and
+                    verified in the PHP installation (See <xref
+                        xlink:href="#fig.phpinfo-gd"/>)</para>
+                <para>Due to various legal issues no TTF fonts are included in the distribution of
+                    JpGraph since many commonly used TTF font files are copyrighted and there
+                    distribution restricted. For the most commonly used WEB-fonts (the Microsoft
+                    Core Fonts) the status is unclear. For many years Microsoft distributed them
+                    freely but they are no longer available from Microsofts home page. Instead they
+                    are available from <uri
+                        xlink:href="http://corefonts.sourceforge.net/">http://corefonts.sourceforge.net/</uri>
+                </para>
+                <para>There are however a fair amount of freely available high quality TTF fonts
+                    (see below). The first thing needed is to make sure that the path defines in the
+                    file <filename>jpg-config.inc.php</filename> corresponds to the server setup (so
+                    that the library can find the font files)</para>
+                <orderedlist>
+                    <listitem>
+                        <para>Open <filename>jpg-config.inc.php</filename> for editing</para>
+                    </listitem>
+                    <listitem>
+                        <para>Locate the define <code>TTF_DIR</code> (this is the define that
+                            possible needs updating depending on your system). By default this path
+                            will have a sensible values depending on if the library is installed on
+                            a Windows or a Unix system.</para>
+                    </listitem>
+                    <listitem>
+                        <para>If you are on a Windows platform you can just point the TTF directory
+                            path in JpGraph to use the standard Window font directory (e.g
+                                <filename>C:\windows\fonts\</filename>)</para>
+                    </listitem>
+                    <listitem>
+                        <para>If you are on a Unix platform, which may not have any TTF fonts
+                            installed, you can download and install the core MS WEB-initiative fonts
+                            from <uri
+                                xlink:href="http://corefonts.sourceforge.net/">http://corefonts.sourceforge.net/</uri>
+                            many Linux distributions also have automatic ways to install these
+                            fonts. These fonts were put in the public domain by the Microsoft
+                            Corporation but they are no longer available directly from
+                            Microsoft.</para>
+                    </listitem>
+                    <listitem>
+                        <para>You can also chose to install the freely available Vera Bitstream TTF
+                            fonts available from <uri
+                                xlink:href="http://www.gnome.org/fonts/">http://www.gnome.org/fonts/</uri></para>
+                    </listitem>
+                    <listitem>
+                        <para>You can also chose to install the freely available DejaVu TTF fonts <uri
+                                xlink:href="http://sourceforge.net/projects/dejavu/">http://sourceforge.net/projects/dejavu</uri></para>
+                    </listitem>
+                </orderedlist>
+                <para>JpGraph uses a standard naming convention for the TTF font files in order to
+                    be able to find the correct font file that correspond to a particular font
+                    family. This naming convention follows the standard naming of the available font
+                    files from the distributions listed above. </para>
+                <para>If the installation of the library is made on a computer running MS Windows
+                    then it is recommended to use the already available font files in Windows
+                    (usually located in <filename>C:\WINDOWS\FONTS</filename>). </para>
+                <para>If the installation is made on a UNIX derivate running X11 then the font
+                    location can differ between versions and UNIX brands. One commonly used path in
+                    modern installations are "<filename>/usr/share/fonts/truetype/</filename>" (In
+                    older installations it was common to put the truetype fonts under
+                        "<filename>/usr/X11R6/lib/X11/fonts/truetype/</filename>".)</para>
+                <para>Finally we note that it is possible to install additional fonts not natively
+                    supported by the library by using the <code>SetUserFont()</code> family of
+                    methods. (In theory it is also possible to patch the jpgraph source files to
+                    include support for other font files natively but since this requires code
+                    modifications of the library we do not discuss this further here in the
+                    introduction.)</para>
+                <para>Freely available TTF fonts can be found, for example, from</para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><uri
+                                    xlink:href="http://www.webfontlist.com">http://www.webfontlist.com</uri></para>
+                        </listitem>
+                        <listitem>
+                            <para><uri
+                                    xlink:href="http://www.webpagepublicity.com/free-fonts.html">http://www.webpagepublicity.com/free-fonts.html</uri></para>
+                        </listitem>
+                        <listitem>
+                            <para><uri
+                                    xlink:href="http://www.fontonic.com/fonts.asp?width=do&amp;offset=120">http://www.fontonic.com/fonts.asp?width=do&amp;offset=120</uri></para>
+                        </listitem>
+                        <listitem>
+                            <para><uri
+                                    xlink:href="http://www.fontspace.com/category/famous">http://www.fontspace.com/category/famous</uri></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </sect2>
+            <sect2
+                xml:id="sec2.using-non-latin-fonts">
+                <title>Using non-latin based fonts with JpGraph</title>
+                <para>In addition to European fonts it is also possible to use non-latin based fonts
+                    such as Cyrillic, Japanese, Chinese, Hebrew and Greek. For any of these
+                    languages a suitable TTF font that supports the non-latin based language must be
+                    made available to the library. Some specific rules also applies to each of the
+                    supported languages due to the necessary character encoding needed due to
+                    different convention when writing the character for some languages. </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>For Cyrillic support the define <code>LANGUAGE_CYRILLIC</code> in
+                                    <filename>jpg-config.php</filename> must be set to
+                                    <code>true</code>. It is then possible to use a suitable
+                                Cyrillic font as replacement of the ordinary font. This setting
+                                combined with the <code>CYRILLIC_FROM_WINDOWS</code> and
+                                    <code>LANGUAGE_CHARSET</code> is used to fine tune the handling
+                                cyrillic input. The rules are as follows:</para>
+                            <para>
+                                <orderedlist>
+                                    <listitem>
+                                        <para>If <code>LANGUAGE_CYRILLIC</code> is <emphasis
+                                                role="bold">false</emphasis> no specific handling of
+                                            Cyrillic characters at all will be done.</para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>If <code>CYRILLIC_FROM_WINDOWS</code> is <emphasis
+                                                role="bold">true</emphasis> then it will be assumed
+                                            the input coding by default is encoded using <emphasis
+                                                role="bold">WINDOWS-1251</emphasis>. </para>
+                                        <para>The conversion is then done via a call to
+                                                <code>convert_cyr_string($aTxt, 'w', 'k')</code>
+                                            where <code>$aTxt</code> is replaced with the input
+                                            string to be encoded.</para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>If <code>CYRILLIC_FROM_WINDOWS</code> is <emphasis
+                                                role="bold">false</emphasis> then it will be assumed
+                                            the input coding by default is encoded using <emphasis
+                                                role="bold">KOI8-R</emphasis>.</para>
+                                        <para>The conversion is then done via the sequence of
+                                            callls</para>
+                                        <para>
+                                            <programlisting>&lt;?php
+$isostring = convert_cyr_string($aTxt, "k", "i");
+$unistring = LanguageConv::iso2uni($isostring);
+?></programlisting>
+                                        </para>
+                                        <para>in oder to get a proper utf-8 internal encoding
+                                            (internally the library only uses utf-8 encoding)</para>
+                                    </listitem>
+                                    <listitem>
+                                        <para><code>LANGUAGE_CHARSET</code> can be used to
+                                            dynamically adjust the conversion of the input character
+                                            set when using cyrillic characters. This constant is
+                                            used to auto-detect whether cyrillic conversion is
+                                            really necessary if enabled (via the If
+                                                <code>LANGUAGE_CYRILLIC</code>=true) . This constant
+                                            can be set to a variable containing the currently used
+                                            character input set .A typical such string would be
+                                            'UTF-8' or 'utf-8' (the comparison is case-insensitive).
+                                            If this charset is not 'koi8-r' nor 'windows-1251'
+                                            derivate then no conversion is done. </para>
+                                    </listitem>
+                                </orderedlist>
+                            </para>
+                            <para/>
+                        </listitem>
+                        <listitem>
+                            <para>For Chinese character set JpGraph supports both BIG5 and GB2312
+                                encoding. For BIG5 encoding the PHP installation must have support
+                                for the "<code>iconv()</code>" function. Furthermore the define
+                                    <code>CHINESE_TTF_FONT</code> must be set to the name of the
+                                Chinese BIG5 font that is to be used. By default this is set to
+                                    "<filename>bkai00mp.ttf</filename>". To use the Chinese BIG5
+                                font in the scripts one must then specify the font family as
+                                    <code>FF_CHINESE</code>.</para>
+                            <para>To use the alternative font files
+                                "<filename>simsun.ttc</filename>" and
+                                    "<filename>simhei.ttf</filename>" (which uses the GB2312
+                                encoding) the only step needed is to install those fonts in the
+                                normal TTF font directory and then specify the font family as
+                                    <code>FF_SIMSUN</code>, the "<filename>simhei.ttf</filename>" is
+                                used when the font style is specified as
+                                <code>FS_BOLD</code>.</para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </sect2>
+        </sect1>
+        <sect1
+            xml:id="sec1.adapting-installation">
+            <title>Adapting and customizing the installation</title>
+            <para>All configuration of the library is done in the file
+                    <filename>jpg-config.inc.php</filename>. Each option in the file is extensively
+                documented in <xref
+                    xlink:href="#app.jpg-config"/> Here we will only cover the most important
+                configuration that it likely to have to be customized in order to successfully run
+                the library.</para>
+            <para>
+                <note>
+                    <para>All configuration settings comes with default values that should in normal
+                        cases be enough for a "standard" system. However for a production system you
+                        might want to fine tune this according to your specific system setup.</para>
+                </note>
+                <tip>
+                    <para>During development (and to some extent even on a production server) it
+                        might be necessary to adjust some parameters in your
+                            <filename>php.ini</filename> file. For more on this see <xref
+                            xlink:href="#sec1.installing-library"/></para>
+                </tip>
+            </para>
+            <sect2>
+                <title>Setting up necessary paths</title>
+                <para>There are three categories of directory paths that can be specified. The
+                    categories are:</para>
+                <para>
+                    <orderedlist>
+                        <listitem>
+                            <para>Font directories, this we already touched upon in <xref
+                                    xlink:href="#sec1.getting_add_fonts"/>. </para>
+                        </listitem>
+                        <listitem>
+                            <para>Cache directory, the cache feature of the library is extensively
+                                discussed in <xref
+                                    xlink:href="#chap.using-cache"/>. The important thing to notice
+                                here is that whatever directory you chose to use as a cache
+                                directory it must be a directory that is writable for the process
+                                running PHP (normally the HTTP server process, e.g. Apache)</para>
+                        </listitem>
+                        <listitem>
+                            <para>CSIM Cache directory (if CSIM cache feature is used). CSIM stands
+                                for Client Side Image Maps and is a way to construct client side
+                                drill down charts. (Today this is the only inpractice used image
+                                mapping method but it is also possible to have Server Side Image
+                                Maps).</para>
+                        </listitem>
+                    </orderedlist>
+                </para>
+            </sect2>
+        </sect1>
+        <sect1>
+            <title>Verifying the library installation</title>
+            <para>After installing the library a good check that everything works is to run the
+                included example scripts. Worth noting is that some of the examples uses TTF fonts.
+                This means that if you try to run those examples on an installation that does not
+                have any TTF fonts configured an error message will be displayed.</para>
+            <para><emphasis
+                    role="bold">Running your first example</emphasis></para>
+            <para>If we assume that you have installed the library directly under the document root
+                on the HTTP server in a directory named "<code>jpgraph/</code>" you can access the
+                examples in the "<filename>jpgraph/Examples/</filename>" directory by pointing your
+                browser for example to "<filename>jpgraph/Examples/example0.php</filename>" . This
+                should then show the same image as is displayed in <xref
+                    xlink:href="#fig.example0"/></para>
+            <para>If the above example works correctly you can run all the included examples by
+                pointing the browser to the script
+                    "<filename>jpgraph/Examples/testsuit.php</filename>". This will automatically
+                generate all non-CSIM examples (for an explanation of CSIM graphs see ??) and show
+                them in one long list. Note that since this has more than 300 images it can take
+                some time to generate all example images.</para>
+            <para>
+                <tip>
+                    <para>In order to generate all CSIM examples you can run the testsuit with the
+                        URL argument <code>?type=2</code></para>
+                    <para><code>jpgraph/Examples/testsuit.php?type=2</code></para>
+                    <para>You will then get a number of examples of so called drill-down charts
+                        where a number of areas of the graphs a re hotspots which can be clicked to
+                        open a specified URL. However, in these examples all the click-URL have just
+                        dummy values which points back to the same file.</para>
+                </tip>
+            </para>
+        </sect1>
+        <sect1>
+            <title>Troubleshooting the installation</title>
+            <para>Unfortunately there are many parameters in a server installation that may affect
+                the execution of PHP so the steps below can only give some indications of how to
+                further investigate some potential problems.</para>
+            <para>Experience shows that most of the trouble are caused by either an old buggy
+                version of the free-type TTF library or using an old antiquated version of the GD
+                library. So before starting trouble shooting the scripts please make sure that you
+                have an up to date PHP installation with the bundled version of the GD library (as
+                describe in the previous sections) and a working FreeType library installed.</para>
+            <para><orderedlist>
+                    <listitem>
+                        <para><emphasis
+                                role="bold">No image is displayed.</emphasis></para>
+                        <para>The first thing you should do is to isolate the problem by calling
+                            your graph script directly in the browser. There are then two variants
+                            of this problem. </para>
+                        <para>
+                            <orderedlist>
+                                <listitem>
+                                    <para>No data is sent back from the server.</para>
+                                    <para>You can verify this by calling your graph script directly
+                                        in the browser and then check the source (click "view
+                                        source" menu item in the browser). If this is a truly blank
+                                        image then no data was sent back from the browser.</para>
+                                    <para>This means that the PHP process has been terminated
+                                        prematurely before it could send any data back. This could
+                                        be caused by either the PHP process crashing (due to a bug
+                                        in either PHP or your HTTP server) or the HTTP server
+                                        crashed. This is often due to a broken PHP installation and
+                                        more than often a problem with the True Type libraries. </para>
+                                    <para>It could also be caused by the PHP script running longer
+                                        than the maximum allowed execution time (as specified in
+                                            <filename>php.ini</filename>). The first thing you
+                                        should do is to increase the maximum allowed execution time.
+                                        If this does not solve the problem you should look in the
+                                        log files for both your HTTP server and PHP to try to find
+                                        clues to if the PHP process really crashed. Another
+                                        possibility is that the PHP process uses more than the
+                                        maximum allowed memory (as set in
+                                            <filename>php.ini</filename>) and then it is terminated.
+                                        So a good first step is to put some really high values for
+                                        memory and time just to take away these parameters.</para>
+                                </listitem>
+                                <listitem>
+                                    <para>The data sent back is corrupt.</para>
+                                    <para>Depending on your browser this can show up differently but
+                                        a common symptom is a "red X" in the browser. In order to
+                                        debug this you should make sure that you have followed the
+                                        steps in <xref
+                                            xlink:href="#sec2.config-dev-server"/> to make sure you
+                                        have output buffering disabled and have maximum error
+                                        checking enabled in PHP. The most common cases for this type
+                                        of problem is having enabled output buffering and some minor
+                                        errors in the script which causes PHP to emit warnings which
+                                        gets included in the image data. </para>
+                                    <para>A very common mistake is to have some white spaces in the
+                                        script before the opening "<code>&lt;?php</code>". This
+                                        white space will be added to the output buffer and then get
+                                        mixed up with the image data causing the image data to be
+                                        corrupt. A similar problem can occur if multiple newlines
+                                        are added after the final <code>"?>"</code>
+                                    </para>
+                                </listitem>
+                            </orderedlist>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis
+                                role="bold">An error message saying "Fonts are not available or not
+                                readable" </emphasis></para>
+                        <para>When an image contains TTF fonts you might get an error message saying
+                            that the fonts are not available or not readable. If this is the case it
+                            is first necessary to check that the font files really exist in the
+                            directory that is specified in <filename>jpg-config.inc.php</filename>
+                            and that they are also readable by the HTTP/PHP process. If this is the
+                            case then it is necessary to check that the names of the font files are
+                            the one that JpGraph assumes, see <xref
+                                xlink:href="#sec3.name-of-ttf-files"/>. Another problem can be if
+                            the PHP installation is running in "safe mode" (See <uri
+                                xlink:href="http://se.php.net/manual/en/ini.sect.safe-mode.php">PHP
+                                Manual: Security and safe mode</uri>) and has enabled strict
+                            directory policy via an "<code>open_basedir</code>" restriction. This
+                            will prevent the PHP process from reading any files outside the
+                            specified base directory. If this is enabled there is no way around for
+                            PHP to read any files outside this restriction and any TTF files
+                            necessary must be moved so that they can be accessed within the realms
+                            of the specified basedirectory.</para>
+                        <para>If you are running IIS and Win2k and get the error "Can't find font"
+                            when trying to use TTF fonts then try to change the paths to UNIX style,
+                            i.e. "<filename>/usr/local/fonts/ttf/</filename>". Remember that the
+                            path is absolute and not relative to the <filename>htdocs</filename>
+                            catalogue.</para>
+                        <para>If you are running on Unix server please keep in mind that file names
+                            are case sensitive.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis
+                                role="bold">An error message saying "Headers have already been
+                                sent"</emphasis></para>
+                        <para>A common mistake is to have a space in the beginning of the image
+                            script which the HTTP server will send back to the browser. The browser
+                            now assumes that the data coming back from this script is text since it
+                            hasn't received an explicit header. When then the image headers get sent
+                            back to the browser to forewarn the browser of the forthcoming image
+                            data the browser will not like that as it has already assumed the data
+                            stream was a text stream. The browser will then give the infamous
+                            "Headers already sent error".</para>
+                        <para>Make sure that your script has no white space before the opening
+                                "<code>&lt;?php</code>" statement or a number of blank lines after
+                            the concluding "<code>?></code>"</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis
+                                role="bold">Issues specific to Windows and IIS</emphasis></para>
+                        <para>Some windows installations seems to have a problem with a PHP script
+                            ending in more than one newline (This newline seems to be sent to the
+                            browser and will cause a <emphasis
+                                role="italic">Header already sent error</emphasis>). To correct this
+                            problem check all your scripts for more than one empty newline after the
+                            ending "<code>?></code>" statement. All files provided with the library
+                            end in exactly one final newline and should not be a problem.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis
+                                role="bold">TTF fonts are not displayed correctly</emphasis></para>
+                        <para>If the TTF fonts only shows up as yellow then the installation is used
+                            a buggy (too old) installation of the FreeType font library and the only
+                            thing to do is to re-install and setup PHP+GD again with a newer version
+                            of the FreeType library. Another symptom of a an (old) buggy FreeType
+                            library is that the fonts are not correctly rotated (the text string is
+                            rotated but not the individual characters).</para>
+                    </listitem>
+                </orderedlist>As a final advise you should read the FAQ (available in this manual
+                see <xref
+                    xlink:href="#app.faq"/>) or on the JpGraph website at <uri
+                    xlink:href="http://www.aditus.nu/jpgraph/jpgraphfaq.php">http://www.aditus.nu/jpgraph/jpgraphfaq.php</uri></para>
+            <para>Depending on your sever it might also help to recompile PHP yourself instead of
+                the version included with the system. You can find typical configuration scripts to
+                compile PHP4 and PHP5 in the appendices, see <xref
+                    xlink:href="#app.compile-php"/>
+            </para>
+        </sect1>
+    </chapter>
+</part>

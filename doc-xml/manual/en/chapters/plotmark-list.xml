@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<appendix version="5.0" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xml:id="app.plotmark-list">
+    <title>Available plot marks</title>
+    <para> Plot marks can be added to almost all linear (cartesian) graph types. They are used to
+        emphasise the actual data points in the graph. The plot mark property is available as the
+        instance variable "<code>$mark</code>" for the plot types that support plot marks. </para>
+    <sect1>
+        <title>Built in basic plot marks</title>
+        <para>To embellishment a line plot with one of the built-in basic plot marks, say a a red
+            diamond mark,  at each data point the following line has to be added to the graph
+            script</para>
+        <para>
+            <programlisting>&lt;?php
+$lineplot->mark->SetType(MARK_DIAMOND);
+$lineplot->mark->SetFillColor('red');
+?></programlisting>
+        </para>
+        <para>The rest of the basic plot marks are handled analogues.</para>
+        <para>
+            <table frame="all" xml:id="tab.built-in-plotmarks">
+                <title>Built in line based plot marks</title>
+                <tgroup cols="2" align="center">
+                    <colspec colname="c1" colnum="1" align="center"/>
+                    <colspec colname="c2" colnum="2" align="center"/>
+                    <thead>
+                        <row>
+                            <entry>Displayed plot mark</entry>
+                            <entry>Symbolic name</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>
+                                <para><inlinemediaobject><imageobject><imagedata
+                                                fileref="images/img_marker_square.png"
+                                            /></imageobject></inlinemediaobject></para>
+                            </entry>
+                            <entry>
+                                <para><code>MARK_SQUARE</code></para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <para><inlinemediaobject><imageobject><imagedata
+                                                fileref="images/img_marker_utriangle.png"
+                                            /></imageobject></inlinemediaobject></para>
+                            </entry>
+                            <entry>
+                                <para><code>MARK_UTRIANGLE</code></para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <para><inlinemediaobject><imageobject><imagedata
+                                                fileref="images/img_marker_dtriangle.png"
+                                            /></imageobject></inlinemediaobject></para>
+                            </entry>
+                            <entry>
+                                <para><code>MARK_DTRIANGLE</code></para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <para><inlinemediaobject><imageobject><imagedata
+                                                fileref="images/img_marker_diamond.png"
+                                            /></imageobject></inlinemediaobject></para>
+                            </entry>
+                            <entry>
+                                <para><code>MARK_DIAMOND</code></para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <para><inlinemediaobject><imageobject><imagedata
+                                                fileref="images/img_marker_circle.png"
+                                            /></imageobject></inlinemediaobject></para>
+                            </entry>
+                            <entry>
+                                <para><code>MARK_CIRCLE</code></para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <para><inlinemediaobject><imageobject><imagedata
+                                                fileref="images/img_marker_filledcircle.png"
+                                            /></imageobject></inlinemediaobject></para>
+                            </entry>
+                            <entry>
+                                <para><code>MARK_FILLEDCIRCLE</code></para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <para><inlinemediaobject><imageobject><imagedata
+                                                fileref="images/img_marker_cross.png"
+                                            /></imageobject></inlinemediaobject></para>
+                            </entry>
+                            <entry>
+                                <para><code>MARK_CROSS</code></para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <para><inlinemediaobject><imageobject><imagedata
+                                                fileref="images/img_marker_star.png"
+                                        /></imageobject></inlinemediaobject></para>
+                            </entry>
+                            <entry>
+                                <para><code>MARK_STAR</code></para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <para><inlinemediaobject><imageobject><imagedata
+                                                fileref="images/img_marker_x.png"
+                                        /></imageobject></inlinemediaobject></para>
+                            </entry>
+                            <entry>
+                                <para><code>MARK_X</code></para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <para><inlinemediaobject><imageobject><imagedata
+                                                fileref="images/img_marker_lefttriangle.png"
+                                            /></imageobject></inlinemediaobject></para>
+                            </entry>
+                            <entry>
+                                <para><code>MARK_LEFTTRIANGLE</code></para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <para><inlinemediaobject><imageobject><imagedata
+                                                fileref="images/img_marker_righttriangle.png"
+                                            /></imageobject></inlinemediaobject></para>
+                            </entry>
+                            <entry>
+                                <para><code>MARK_RIGHTTRIANGLE</code></para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <para><inlinemediaobject><imageobject><imagedata
+                                                fileref="images/img_marker_flash.png"
+                                            /></imageobject></inlinemediaobject></para>
+                            </entry>
+                            <entry>
+                                <para><code>MARK_FLASH</code></para>
+                            </entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </para>
+    </sect1>
+    <sect1>
+        <title>Built in image plot marks</title>
+        <para>Since the image based plot marks only supports some colors (since there has to be a
+            unique image for each color) the following sections shows for each major image plot mark
+            what colors are available. The image shows the natural size of the plot mark, i.e. the
+            scale factor is =1. Only the round balls ar available natively in three different sizes.
+            Even though it is possible to scale up all the images arbitrarily it will cause the
+            images to become pixelated.</para>
+        <para>To use one of the built in image plot mark two parameters has to be given to the
+                <code>SetType()</code> method. The basic class of plot mark and the wanted color.
+            For example to use a green square as plot marks the following line would have to be
+            added</para>
+        <para>
+            <programlisting>&lt;?php
+$lineplot->mark->SetType(MARK_IMG_SQUARE,'green');
+?></programlisting>
+        </para>
+        <para>If a non-supported color is specified an error will be thrown.</para>
+        <sect2>
+            <title>Image plot mark: Balls</title>
+            <para>
+                <figure>
+                    <title>Small size</title>
+                    <mediaobject>
+                        <imageobject><imagedata fileref="images/plotmark_colors_img_sball.png"
+                            /></imageobject>
+                    </mediaobject>
+                </figure>
+            </para>
+            <para>
+                <figure>
+                    <title>Medium size</title>
+                    <mediaobject>
+                        <imageobject><imagedata fileref="images/plotmark_colors_img_mball.png"
+                            /></imageobject>
+                    </mediaobject>
+                </figure>
+            </para>
+            <para>
+                <figure>
+                    <title>Large size</title>
+                    <mediaobject>
+                        <imageobject><imagedata fileref="images/plotmark_colors_img_lball.png"
+                            /></imageobject>
+                    </mediaobject>
+                </figure>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Image plot mark: Squares</title>
+            <para>
+                <figure>
+                    <title>Standard size</title>
+                    <mediaobject>
+                        <imageobject><imagedata fileref="images/plotmark_colors_img_square.png"
+                            /></imageobject>
+                    </mediaobject>
+                </figure>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Image plot mark: Diamonds</title>
+            <para>
+                <figure>
+                    <title>Standard size</title>
+                    <mediaobject>
+                        <imageobject><imagedata fileref="images/plotmark_colors_img_diamond.png"
+                            /></imageobject>
+                    </mediaobject>
+                </figure>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Image plot mark: Stars</title>
+            <para>
+                <figure>
+                    <title>Standard size</title>
+                    <mediaobject>
+                        <imageobject><imagedata fileref="images/plotmark_colors_img_star.png"
+                            /></imageobject>
+                    </mediaobject>
+                </figure>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Image plot mark: Bevels</title>
+            <para>
+                <figure>
+                    <title>Standard size</title>
+                    <mediaobject>
+                        <imageobject><imagedata fileref="images/plotmark_colors_img_bevel.png"
+                            /></imageobject>
+                    </mediaobject>
+                </figure>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Image plot mark: Pushpins</title>
+            <para>
+                <figure>
+                    <title>Standard size</title>
+                    <mediaobject>
+                        <imageobject><imagedata fileref="images/plotmark_colors_img_pushpin.png"
+                            /></imageobject>
+                    </mediaobject>
+                </figure>
+            </para>
+        </sect2>
+    </sect1>
+</appendix>

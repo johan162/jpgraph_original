@@ -1,0 +1,1909 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<chapter version="5.0" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Windrose</title>
+    <sect1>
+        <title>Introduction</title>
+        <note><para>This module is only available in the pro-version of the library.</para></note>
+        <para>Windrose plots are usually used to display values which are related to compass
+            directions. For example it could be used to illustrate measured wind strengths over a
+            time period in different directions. <xref xlink:href="#fig.windrose-intro"/>
+            Illustrates a basic example of a windrose graph with one windrose plot.</para>
+        <figure xml:id="fig.windrose-intro">
+            <title>An basic Windrose plot</title>
+            <mediaobject>
+                <imageobject><imagedata fileref="images/windrose_intro.png" scale="60"
+                    /></imageobject>
+            </mediaobject>
+        </figure>
+        <para>Windrose plots puts data in a number of ranges (or buckets). The number of data points
+            in a certain bucket is visualized by the length of the particular bucket in that
+            direction. The input data specifies the percentage of the overall data that belongs to
+            one bucket in one specific direction. By default there are eight buckets with ranges
+            shown in <xref xlink:href="#table.windrose-default-buckets"/>. The default ranges that
+            is shown in the legend is standard values used in displaying wind strengths. The values
+            in the legend (for the buckets) is purely informational since the actual display is
+            controlled by the input data that only specifies a bucket number and not any absolute
+            data values. See more on how to specify input data in ??</para>
+        <para>
+            <table frame="all" xml:id="table.windrose-default-buckets">
+                <title>Default windrose buckets</title>
+                <tgroup cols="2">
+                    <colspec colname="c1" colnum="1"/>
+                    <colspec colname="c2" colnum="2"/>
+                    <thead>
+                        <row>
+                            <entry>Bucket nr </entry>
+                            <entry>Range of values </entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry align="center">0</entry>
+                            <entry>[0,1]</entry>
+                        </row>
+                        <row>
+                            <entry align="center">1</entry>
+                            <entry>[1,2]</entry>
+                        </row>
+                        <row>
+                            <entry align="center">2</entry>
+                            <entry>[2,3]</entry>
+                        </row>
+                        <row>
+                            <entry align="center">3</entry>
+                            <entry>[3,5]</entry>
+                        </row>
+                        <row>
+                            <entry align="center">4</entry>
+                            <entry>[5,6]</entry>
+                        </row>
+                        <row>
+                            <entry align="center">5</entry>
+                            <entry>[6,10]</entry>
+                        </row>
+                        <row>
+                            <entry align="center">6</entry>
+                            <entry>[10,13.5]</entry>
+                        </row>
+                        <row>
+                            <entry align="center">7</entry>
+                            <entry>[13.5,99]</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </para>
+        <para>
+            <note>
+                <para>The default fonts for Windrose graphs are TTF fonts. This means that to run
+                    the examples exactly as shown in this chapter TTF fonts must be installed. If
+                    TTF fonts are not available then the font needs to be changed to one of the
+                    built-in fonts. </para>
+            </note>
+        </para>
+        <para>Windrose plots also supports full image anti-aliasing to enhance the look and feel of
+            the graph. The image in <xref xlink:href="#fig.windrose-intro"/> is using
+            anti-alias.</para>
+        <para>
+            <caution>
+                <para>To use anti alias TTF fonts must be enabled and used.</para>
+            </caution>
+        </para>
+        <sect2>
+            <title>Features</title>
+            <para>The Windrose extension module supports all the usual library graph capabilities
+                like frames, shadows, colors, titles, cache. Some of the additional Windrose graphs
+                capabilities are: </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Enhanced anti-alias capability for smooth looking graphs</para>
+                    </listitem>
+                    <listitem>
+                        <para>Manual or automatic scale</para>
+                    </listitem>
+                    <listitem>
+                        <para>Supports customizable compass types which allow you to choose between
+                            16,8 and 4 compass directions to be shown.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Supports two types of basic graphs; Free direction graphs and compass
+                            bound graphs.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Allows data to be specified with both compass direction and angles (in
+                            degrees)</para>
+                    </listitem>
+                    <listitem>
+                        <para>Fully customizable fonts everywhere in the plot</para>
+                    </listitem>
+                    <listitem>
+                        <para>Fully automatic adaptive positioning of the labels for the scale to
+                            avoid collision with data. This can also be turned off to allow manual
+                            positioning of the labels.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Labels have extensive formatting capabilities and supports background
+                            colors, rounded boxes and arbitrary fonts.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Supports multiple Windrose graphs on the same image</para>
+                    </listitem>
+                    <listitem>
+                        <para>Fully customizable size and positioning of each individual windrose
+                            graph.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Size of windrose plots can be specified both as absolute pixels or as
+                            fraction of the graph size.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Both manual and automatic color specifications</para>
+                    </listitem>
+                    <listitem>
+                        <para>Both automatic and manual scaling</para>
+                    </listitem>
+                    <listitem>
+                        <para>Intelligent positioning of angle labels with possibility for client
+                            specification of alignment type.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Windrose graphs may have arbitrary texts blocks added to the
+                            graph</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Different types of Windrose plots</title>
+            <para>There are two basic types of Windrose plots: </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><emphasis role="bold">Compass type. </emphasis></para>
+                        <para>This type of windrose plot has either 4,8 or 16 compass direction
+                            axis. Directions in input data is limited to one of the compass
+                            directions in the plot. The directions are specified as ordinal number
+                            of the direction axis. </para>
+                        <para>The labels on the axis is by default short forms of the compass
+                            directions, for example, "E", "N", "W", "S". (See ?? for how to alter
+                            the default names of the compass directions). The ordinal number are
+                            counted anti-clockwise from East (3 o'clock).</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">Free type. </emphasis></para>
+                        <para>This type of windrose plot has no pre-defined direction axis.
+                            Directions in input data can be arbitrary angles (or specified as
+                            compass directions e.g. "NW"). The 0-angle corresponds to the East
+                            direction (3 o'clock)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>To specify the type of plot to create the following method is used</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>WindrosePlot::SetType($aDirection)</code>
+                        </para>
+                        <para><code>$aDirection</code> is one of the following 4 predefined
+                            constants</para>
+                        <para>
+                            <itemizedlist>
+                                <listitem>
+                                    <para><code>WINDROSE_TYPE4</code>, Compass type with the four
+                                        core compass directions</para>
+                                </listitem>
+                                <listitem>
+                                    <para><code>WINDROSE_TYPE8</code>, Compass type with eight
+                                        directions</para>
+                                </listitem>
+                                <listitem>
+                                    <para><code>WINDROSE_TYPE16</code>, Compass type with sixteen
+                                        directions</para>
+                                </listitem>
+                                <listitem>
+                                    <para><code>WINDROSE_TYPEFREE</code>, Free type. Data directions
+                                        can be arbitrary angles and there are no predefined labels
+                                        nor any predefined axis.</para>
+                                </listitem>
+                            </itemizedlist>
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The figures below illustrates the basic principle of the different types of
+                windrose plots</para>
+            <para>
+                <informaltable frame="void">
+                    <tbody>
+                        <tr>
+                            <td align="center">
+                                <figure>
+                                    <title><code>WINDROSE_TYPE4</code></title>
+                                    <mediaobject>
+                                        <imageobject><imagedata fileref="images/windrose_type4.png"
+                                                scale="60"/></imageobject>
+                                    </mediaobject>
+                                </figure>
+                            </td>
+                            <td align="center">
+                                <figure>
+                                    <title><code>WINDROSE_TYPE8</code></title>
+                                    <mediaobject>
+                                        <imageobject><imagedata fileref="images/windrose_type8.png"
+                                                scale="60"/></imageobject>
+                                    </mediaobject>
+                                </figure>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <figure>
+                                    <title><code>WINDROSE_TYPE16</code></title>
+                                    <mediaobject>
+                                        <imageobject><imagedata fileref="images/windrose_type16.png"
+                                                scale="60"/></imageobject>
+                                    </mediaobject>
+                                </figure>
+                            </td>
+                            <td align="center">
+                                <figure>
+                                    <title><code>WINDROSE_TYPEFREE</code></title>
+                                    <mediaobject>
+                                        <imageobject><imagedata
+                                                fileref="images/windrose_typefree.png" scale="60"
+                                            /></imageobject>
+                                    </mediaobject>
+                                </figure>
+                            </td>
+                        </tr>
+                    </tbody>
+                </informaltable>
+            </para>
+            <para>The following line would specify a Windrose plot with all 16 compass angles </para>
+            <para>
+                <programlisting>&lt;?php
+$wp = new WindrosePlot($data);
+$wp->SetType(WINDROSE_TYPE16); 
+?></programlisting>
+            </para>
+            <para>
+                <note>
+                    <para>If no type is specified the plot type will default to a compass type with
+                        16 directions</para>
+                </note>
+            </para>
+            <sect3>
+                <title>Specifying input data</title>
+                <para>Input data is in the form of a data array. Each entry in the array is itself
+                    an array which gives the data for one direction. The data should be interpreted
+                    as the percentage of the overall data that belongs to a certain direction and
+                    bucket. This also means that the total sum of all data entries (for all
+                    doirections) must be less or equal to 100. It can however be less than 100
+                    (indicating that some data is lost). </para>
+                <para>The first bucket, bucket 0, specifies the 0-value, i.e. what part of the data
+                    in that direction that has no measurement (e.g. it was wind still). Since wind
+                    still has no direction all specified bucket 0 are summarized and displayed in
+                    the inner circle.</para>
+                <para>By default the ranges displayed on the legend are:</para>
+                <para>0-1, 1-2, 2-3, 3-5, 5-6, 6-10, 10-13.5, 13-99</para>
+                <para>This means that the first element specify the percentage of 0-1 reading the
+                    sum of these reading will be placed in the center of the windrose plot. The
+                    second element specifies the percentage of 1-2 readings, the third element the
+                    percentage of 2-3 readings and so on.</para>
+                <para>The direction is specified as the key for that element. The direction can be
+                    specified as either </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>A string specifying any of the displayed compass directions, e.g.
+                                "N", "SW".</para>
+                            <para>
+                                <screen>$data = array ( array('E' => &lt;east_bucket0>,&lt;east_bucket1> ... &lt;east_bucketN> ),
+                array('ESE' => &lt;eastsoutheast_bucket0>, ... &lt;eastsoutheast_bucketN> ), 
+                ....
+                array('NE' => &lt;northeast_bucket0>, ... &lt;northeast_bucketN> ), 
+                array('ENE' => &lt;eastnortheast_bucket0>, ... &lt;eastnortheast_bucketN> ));</screen>
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>An ordinal number (integer) in the range 0-15 for regular plots
+                                which indicates the axis counting anti-clockwise from East. Please
+                                note that only displayed axis count. Ordinal number zero specifies
+                                the east direction</para>
+                            <para>
+                                <screen>$data = array ( array(0 => &lt;east_bucket0>,&lt;east_bucket1> ... &lt;east_bucketN> ),
+                array(1 => &lt;eastsoutheast_bucket0>, ... &lt;eastsoutheast_bucketN> ), 
+                ....
+                array(2 => &lt;northeast_bucket0>, ... &lt;northeast_bucketN> ), 
+                array(3 => &lt;eastnortheast_bucket0>, ... &lt;eastnortheast_bucketN> ));</screen>
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>A string indicating a number, e.g. '34.5' , please note that if
+                                the angle is a fraction it must specified as a string. The library
+                                will then automatically recognize that as a valid angle and treat it
+                                as expected. (The reason for this is that floating point numbers
+                                can't be used as keys in an associative array.)</para>
+                            <para>
+                                <screen>$data = array ( array('12.5' => &lt;bucket0>,&lt;bucket1> ... &lt;bucketN> ),
+                array('22.1' => &lt;bucket0>, ... &lt;bucketN> ), 
+                ....
+                                </screen>
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>Within the same data set it is also possible to mix the styles.</para>
+                <para>
+                    <caution>
+                        <para>The library makes no data validation apart from checking that the
+                            overall sum of the buckets can not be > 100%. It is up to the client to
+                            make sure that the data specified makes sense.</para>
+                    </caution>
+                </para>
+                <para>If you specify a direction in the data for a compass directions that is not
+                    displayed when using a regular Windrose plot you will get an error message to
+                    that affect. </para>
+                <para>Below are some examples of how to specify the data which should clarify how
+                    this works</para>
+                <para>
+                    <example>
+                        <title>Examples of input data for compass (regular) Windrose plots</title>
+                        <para><emphasis role="italic">(Assuming we have all 16 axis
+                                displayed)</emphasis></para>
+                        <para>
+                            <programlisting>$data = array( 'N' => array(2,5,6) );</programlisting>
+                        </para>
+                        <para>This data array specifies reading in only one direction, "North", the
+                            number of 0-readings are 2 percent, number of 0-1 readings are 5 percent
+                            and the number of 1-2 readings are 6 percent. </para>
+                        <para>
+                            <programlisting>$data = array( 1 => array(2,5,6), 3 =>  array(6,3), 'NW' => array(3,2,2,2) )</programlisting>
+                        </para>
+                        <para>This data array specifies readings in three directions. As shown it is
+                            possible to mix both ordinal number for the axis as well as the symbolic
+                            direction name. However, it is probably best to stick with one method at
+                            a time for clarity.</para>
+                    </example>
+                </para>
+                <para>
+                    <example>
+                        <title> Examples of input data for free Windrose plots</title>
+                        <para>What is special with the free type is that angles are no longer
+                            restricted to only the 16 compass directions but arbitrary directions as
+                            well. </para>
+                        <para>
+                            <programlisting>$data = array( 10 => array(2,5,6), 24 =>  array(6,3), 137 => array(3,2,2,2) )</programlisting>
+                        </para>
+                        <para>This data array specifies readings in three directions, 10 degrees, 24
+                            degrees and 137 degrees. </para>
+                        <para>
+                            <programlisting>$data = array( '21.6' => array(2,5,6), 'N' => array(6,3), 137 => array(3,2,2,2) )</programlisting>
+                        </para>
+                        <para>This data array specifies readings in three directions, 21.5 degrees,
+                            'North' (or 90 degrees) and finally 137 degrees. Please note that in
+                            order to specify a fraction for an angle we must specify the direction
+                            as a string value, i.e. '21.6'. This will then be handled automatically
+                            be the library. </para>
+                    </example>
+                </para>
+            </sect3>
+        </sect2>
+    </sect1>
+    <sect1>
+        <title>Creating and formatting basic Windrose graphs</title>
+        <para>Creation of windrose graphs first requires the inclusion of the library extension
+            module "<filename>jpgraph_windrose.php</filename>"</para>
+        <para>The creation of Windrose graphs otherwise follows the traditional steps in the library
+            of creating a graph and then adding one or several windrose plots to the canvas.<orderedlist>
+                <listitem>
+                    <para>Create a basic canvas graph as an instance of <code>class
+                            WindroseGraph</code></para>
+                </listitem>
+                <listitem>
+                    <para>Create an instance of one or several windrose plots as instances of
+                            <code>class WindrosePlot</code>, set up the scale and appearance and
+                        then add them to the graph canvas.</para>
+                </listitem>
+                <listitem>
+                    <para>Send back the graph to the client with a call to
+                            <code>WindroseGraph::Stroke()</code>. As usual this can be used to
+                        either send back the graph to the client (e.g.browser) or write the graph to
+                        a file by specifying a filename as the first argument to
+                            <code>WindroseGraph::Stroke()</code>.</para>
+                </listitem>
+            </orderedlist></para>
+        <para>The example in <xref xlink:href="#fig.windrose_ex0"/> show a windrose graphs using
+            just the default values for all parameters. </para>
+        <para>
+            <programlisting>#windrose_ex0|A basic 16 direction windrose graph#</programlisting>
+        </para>
+        <para>In the same way as for other graph types one or several Windrose plots can be added
+            and positioned freely in the Windrose graph by specifying the position as either
+            absolute coordinates or as fractions of the width/height of the overall graph.</para>
+        <para>
+            <tip>
+                <para>An easier way to position Windrose plots is to use layout classes as described
+                    in <xref xlink:href="#sec.windrose-layout-classes"/></para>
+            </tip>
+        </para>
+        <para>Each instance of the <code>WindrosePlot</code> is added to the overall graph with a
+            call to the standard method </para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para><code>WindroseGraph::Add($aObject)</code></para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>To avoid that all the plots collide in the middle the positioning and sizing methods
+            as shown in the previous sections should be used. </para>
+        <para>The following script shows how two plots are displayed in the same graph.</para>
+        <para>
+            <programlisting>#windrose_2plots_ex1|Adding two windrose plots to the same graph#</programlisting>
+        </para>
+        <sect2>
+            <title>Specifying the windrose scale</title>
+            <para>The scale is a property of each plot and is access though the instance variable
+                    <code>WindrosePlot::scale</code>. The scale consists of the epi-centric circles
+                that radiates from the center of the Windrose plot. The step between each circle can
+                be set manually or it can be done automatically by the library depending on the data
+                values. </para>
+            <para>(In order to keep the flow of the text this section leaves the full examples to
+                the example section.)</para>
+            <para>To manual set the scale of the circles the following method is used:</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>WindrosePlotScale::SetStepSize($aMax,$aStepSize=null)</code></para>
+                        <para><code>$aMax</code>, The maximum scale value</para>
+                        <para><code>$aStepSize</code>, The step between each scale circle</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>By default the library tries multiple of 5:s and 2:s for a visually esthetic grid
+                spacing. </para>
+            <para>Other example of methods available to adjust the scale are</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>WindrosePlotScale::SetFont($aFontFamily,$aFontStyle=FS_NORMAL,$aFontSize=10)</code></para>
+                        <para>Specify font for all scale labels apart from the 0-label (in the
+                            center)</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>WindrosePlotScale::SetZFont($aFontFamily,$aFontStyle=FS_NORMAL,$aFontSize=10)</code></para>
+                        <para>Specify the font for the 0-label (in the center)</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>WindrosePlotScale::SetFontColor($aColor)</code></para>
+                        <para>Specify font color for all scale labels apart from the 0-label (in the
+                            center)</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>WindrosePlotScale::SetZFontColor($aColor)</code></para>
+                        <para>Specify the font for the 0-label (in the center)</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>WindrosePlotScale::SetLabelFillColor($aBkgColor,$aBorderColor=false)</code></para>
+                        <para>Set the background color for the labels</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>WindrosePlotScale::SetLabelAlign($aAlign)</code></para>
+                        <para>Set the label text alignment</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>WindrosePlotScale::SetLabelFormat($aFmt)</code></para>
+                        <para>Set the label format. This is specified as a "<code>printf()</code>"
+                            format string.</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>WindrosePlotScale::Hide($aFlg)</code></para>
+                        <para>Hide the scale labels</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>Examples of how to use these methods are shown in the following sections.</para>
+            <sect3>
+                <title>Specifying fonts and font colors</title>
+                <para>Fonts can be specified for both the labels on the scale as well as separately
+                    for the label in the center of the plot. The following code snippet shows how to
+                    do this (we assume we have already created a windrose plot called
+                        "<code>windplot</code>") </para>
+                <para>
+                    <programlisting>// Font and color for scale labels
+$windplot->scale->SetFont(FF_VERDANA,FS_NORMAL,10);
+$windplot->scale->SetFontColor('navy');
+                        
+// Font and color for the center (Zero circle) label
+$windplot->scale->SetZFont(FF_VERDANA,FS_NORMAL,10);
+$windplot->scale->SetZFontColor('navy');</programlisting>
+                </para>
+            </sect3>
+            <sect3>
+                <title>Manually specifying the scale</title>
+                <para>By default the library automatically determines a scale range and step size
+                    taking into account the maximum value of data, size of the plot and the font
+                    size specified for the scale labels. </para>
+                <para>However it is possible to force a manual scale and step size with a call to
+                        <code>Set($aMaxValue,$aStepSize)</code>. This call sets the maximum scale
+                    value as well as the step size. The step size is optional. If the step size is
+                    not specified it will be automatically determined. </para>
+                <para>
+                    <programlisting>// Specify both maximum value and a step size
+$windplot->scale->Set(40,8);
+  ...
+// Specify just the maximum value
+$windplot->scale->Set(40);</programlisting>
+                </para>
+                <para>This feature is also illustrated in <xref xlink:href="#fig.windrose_ex7"/> in
+                    the example part of this chapter.</para>
+                <para>
+                    <note>
+                        <para>The automatic scaling tries to first use step sizes as multiples of 5
+                            and then multiples of 2 to achieve a suitable spacing of the scale
+                            lines.</para>
+                    </note>
+                </para>
+                <para>
+                    <note>
+                        <para>It might be surprising to see that the scale steps may change when the
+                            label font is changed. However, this is by design. The reason for this
+                            is that there is only a certain amount of space available for the labels
+                            between each step. In order for large fonts to fit the space between the
+                            grids the step between each circle must be large enough.</para>
+                    </note>
+                </para>
+            </sect3>
+            <sect3>
+                <title>Specifying the label angle</title>
+                <para>The labels for the scale is placed along a line radiating from the center of
+                    the windrose plots. The angle for the labels can be either manually or
+                    automatically determined. </para>
+                <para>The labels for the scale is placed along one of the sixteen compass directions
+                    if you choose automatic positioning of the labels. By default the library tries
+                    to choose a direction with as little data around it as possible.</para>
+                <para>To manually specify the angle a call to <code>SetAngle($aAngle)</code> with
+                    the angle (in degrees) as argument. </para>
+                <para>The code snippet below shows how to do this </para>
+                <para>
+                    <programlisting>// Show the labels at 45 degrees angle
+$windplot->scale->SetAngle(45);</programlisting>
+                </para>
+                <para>To specify that the library should do this automatically (which is the
+                    default) the angle is specified as the string 'auto' as</para>
+                <para>
+                    <programlisting>// Let the library determine a good angle 
+$windplot->scale->SetAngle('auto');</programlisting>
+                </para>
+            </sect3>
+            <sect3>
+                <title>Specifying number formats for scale labels</title>
+                <para>In the same way as for other scales in the library it is possible to specify a
+                    "printf()" format string to adjust the appearance of the labels. By default the
+                    label format is the same as</para>
+                <para>
+                    <programlisting>$windplot->scale->SetLabelFormat('%d%%');</programlisting>
+                </para>
+            </sect3>
+        </sect2>
+        <sect2>
+            <title>Specifying direction labels</title>
+            <para>With direction labels we mean the names of the compass directions surrounding the
+                windrose plot. By default they are given the English short form for the 16 discrete
+                compass named directions. This can also be localized (described in ??).</para>
+            <sect3>
+                <title>Specifying fonts and font colors for the axis titles (direction
+                    labels)</title>
+                <para>Fonts for the axis titles are specified with (with the usual arguments)</para>
+                <para><itemizedlist>
+                        <listitem>
+                            <para><code>WindrosePlot::SetFont()</code></para>
+                        </listitem>
+                        <listitem>
+                            <para><code>WindrosePlot::SetFontColor()</code></para>
+                        </listitem>
+                    </itemizedlist>as the following example shows </para>
+                <para>
+                    <programlisting>$windplot->SetFont(FF_TIMES,FS_BOLD,12);
+$windplot->SetFontColor('darkgreen');</programlisting>
+                </para>
+                <para>Which for example could give a Windrose plot as shown in <xref
+                        xlink:href="#fig.windrose_ex4"/></para>
+            </sect3>
+            <sect3>
+                <title>Setting arbitrary text for data directions</title>
+                <para>Wen using the free direction windrose plots the default label is the direction
+                    for the data in degrees. This is fully customizable by using the following
+                    method. <itemizedlist>
+                        <listitem>
+                            <para><code>WindrosePlot::SetLabels($aLabels)</code></para>
+                            <para>The input data to this method is an associative array where the
+                                keys are the direction and the content is the text to be
+                                displayed.</para>
+                        </listitem>
+                    </itemizedlist></para>
+                <para>Please note that for regular Windrose plots, i.e. with only compass direction
+                    the label can not be changed. This is only available if the type of the windrose
+                    plot is <code>WINDROSE_TYPEFREE</code>.</para>
+                <para>The following example specifies a data point at 50 degrees and a text
+                    "Point\n#7315" as the label.</para>
+                <para>
+                    <tip>
+                        <para>Labels can contain "\n" which will be interpreted as a line break.
+                        </para>
+                    </tip>
+                </para>
+                <para>
+                    <programlisting>$data = array( 50 => array(12,12,2) );
+$labels = array( 50 => 'Point #7315' );
+...
+$windplot = new WindrosePlot();
+$windplot->SetLabels($labels); </programlisting>
+                </para>
+                <para>An example of this can be seen in <xref xlink:href="#fig.windrose_ex6"
+                    /></para>
+            </sect3>
+            <sect3>
+                <title>Adjusting the alignment and margin</title>
+                <para>There are two basic ways of adjusting the position of the compass labels
+                    around the plot: </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>Adjusting the margin between the label and the outer plot
+                                circle</para>
+                        </listitem>
+                        <listitem>
+                            <para>Adjusting the anchor point of the labels.</para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>The easiest way to explain this is to first imagine an invisible circle around
+                    the plot. The margins specifies how far from the outer scale circle this
+                    imaginative circle is placed. </para>
+                <para>In order to position the labels on that circle around the plot there are
+                    several possible ways to select what point of the text should be positioned on
+                    the circle. The easiest way is to select the center (both in X and Y directions)
+                    of the text. This works well if all labels are roughly the same size. If there
+                    are big difference between the smallest and largest label it might be necessary
+                    to have a very large margin to avoid the text to "collide" with the plot.</para>
+                <para>A better way is to determine the closest point of the text to the plot and
+                    then make that point lay on the circle. The closets point depends on what
+                    compass direction the label is on, for example for the "East" label the closes
+                    point is the middle of the left side of the text and for the "West" the closes
+                    point is the middle of the right side.</para>
+                <para>The library supports both way of positioning through the method </para>
+                <para><itemizedlist>
+                        <listitem>
+                            <para><code>WindrosePlot::SetLabelPosition($aPosition)</code></para>
+                            <para>Valid values for $aPosition are <code>LBLPOSIITON_CENTER</code>
+                                and <code>LBLPOSITION_EDGE</code> .</para>
+                        </listitem>
+                    </itemizedlist>The following code snippet shows how to specify both margin and
+                    position do this: </para>
+                <para>
+                    <programlisting>$windplot->SetLabelMargin(30);
+$windplot->SetLabelPosition(LBLPOSITION_EDGE); </programlisting>
+                </para>
+                <para>The red circle in ?? and ?? illustrates the "imaginative" circle on which the
+                    labels are placed. The distance from the out most plot circle to the label
+                    anchor point is the margin.</para>
+                <informaltable frame="void">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <figure>
+                                    <title>Positioning with LBLPOSITION_CENTER</title>
+                                    <mediaobject>
+                                        <imageobject>
+                                            <imagedata fileref="images/windrose_label-align1.png"
+                                                scale="60"/>
+                                        </imageobject>
+                                    </mediaobject>
+                                </figure>
+                            </td>
+                            <td>
+                                <figure>
+                                    <title>Positioning with LBLPOSITION_EDGE</title>
+                                    <mediaobject>
+                                        <imageobject>
+                                            <imagedata fileref="images/windrose_label-align2.png"
+                                                scale="60"/>
+                                        </imageobject>
+                                    </mediaobject>
+                                </figure>
+                            </td>
+                        </tr>
+                    </tbody>
+                </informaltable>
+                <para>An example of this can be seen in <xref xlink:href="#fig.windrose_ex6"
+                    /></para>
+            </sect3>
+        </sect2>
+    </sect1>
+    <sect1>
+        <title>Formatting the plot</title>
+        <sect2>
+            <title>Positioning the plot</title>
+            <para>The position of the graph can be controlled with the method </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>WindrosePlot::SetPos($aXPos,$aYPos)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The position can be specified as either absolute position (in pixels) or as a
+                fraction of width and height. The anchor for the position is the center of the
+                windrose plot. For example, the following line centers the plot in the graph </para>
+            <para>
+                <programlisting>$windplot->SetPos(0.5,0.5);</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Specifying the size of the plot</title>
+            <para>In the same way as for the position the size of the windrose plot can be specified
+                as either an absolute value or as a fraction of the minimum of width and height. The
+                size specified refers to the diameter of the plot. </para>
+            <para>The size is controlled with the the method</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>WindrosePlot::SetSize($aDiameter)</code>
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>as in </para>
+            <para>
+                <programlisting>$windplot->SetSize(200); </programlisting>
+            </para>
+            <para>The code above sets the diameter of the plot to 200 pixels, setting the value to
+                0.7 would set the diameter to 0.7 * min(WIDTH,HEIGHT) where width and height are the
+                size of the graph.</para>
+        </sect2>
+        <sect2>
+            <title>Specifying the size of the Zero-circle (middle circle)</title>
+            <para>The size of the middle circle (the zero-range circle) can be adjusted with the
+                method </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>WindrosePlot::SetZCircleSize($aDiameter)</code>
+                        </para>
+                        <para><code>$aDiameter</code>, The diameter can be specified as either an
+                            absolute integer value or as a fraction of the windrose plot diameter.
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>For example the following line sets the size to 1/3 of the windrose plot. </para>
+            <para>
+                <programlisting>$windplot->SetZCircleSize(1/3); </programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Formatting the plot legend</title>
+            <para>The legend is displayed in a fixed position just below the windrose plot as can be
+                seen in all the previous examples.</para>
+            <para>All legend methods is accessed through the legend property of the windrose plot as
+                in </para>
+            <para>
+                <programlisting>$windroseplot->legend->SetFont(...);</programlisting>
+            </para>
+            <para>There are four basic attributes that can be customizable for the legend as
+                described in the following paragraphs. </para>
+            <sect3>
+                <title>Specifying legend fonts</title>
+                <para>To allow for maximum flexibility font can be specified for both the numerical
+                    ranges as well as for the text under the legend. In order to avoid making the
+                    legend to wide it is often desirable to use a smaller font for the ranges and a
+                    slightly larger font for the actual text under the legend (as well as inside the
+                    "calm" circle - the indicator for bucket 0). </para>
+                <para>The fonts for the legend is adjusted by the following methods</para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>SetTFont()</code>, The text below the legend</para>
+                        </listitem>
+                        <listitem>
+                            <para><code>SetLFont()</code>, The font for the labels</para>
+                        </listitem>
+                        <listitem>
+                            <para><code>SetCFont()</code>, The font for the label inside the "calm"
+                                circle</para>
+                        </listitem>
+                        <listitem>
+                            <para><code>SetFont()</code>, Sets all the font areas above the same
+                                font. Note that if this method is called after one of the individual
+                                settings previous specified (e.g. <code>SetCFont()</code>) they will
+                                be overwritten.</para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>The colors for the fonts are specified in an analogue way by using the methods </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>SetTFontColor()</code></para>
+                        </listitem>
+                        <listitem>
+                            <para><code>SetLFontColor()</code></para>
+                        </listitem>
+                        <listitem>
+                            <para><code>SetCFontColor()</code></para>
+                        </listitem>
+                        <listitem>
+                            <para><code>SetFontColor()</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para><xref xlink:href="#fig.windrose-legend-methods"/> explains visually how these
+                    methods are applied</para>
+                <figure xml:id="fig.windrose-legend-methods">
+                    <title>Windrose legend methods</title>
+                    <mediaobject>
+                        <imageobject><imagedata fileref="images/wind-legend-methods.png" scale="60"
+                            /></imageobject>
+                    </mediaobject>
+                </figure>
+                <para><xref xlink:href="#fig.windrose_ex6.1"/> illustrates how two fonts were used
+                    for the legend. For the circle we have use a Chinese font (The Kanji characters
+                    roughly means "Chinese language")</para>
+                <para>
+                    <caution>
+                        <para>The source file (as every source file in the library) is encoded in
+                            utf-8. For technical reasons some browsers might not render the Chinese
+                            characters correctly when the source file is viewed.</para>
+                    </caution>
+                </para>
+                <para>
+                    <programlisting>#=windrose_ex6.1|Using chinese fonts#</programlisting>
+                </para>
+            </sect3>
+            <sect3>
+                <title>Setting text and colors for the Zero-circle</title>
+                <para>The "Calm" circle can have it's size, line weight and color adjusted. In
+                    addition (as was shown in <xref xlink:href="#fig.windrose_ex6.1"/>) specify any
+                    text within the circle. By default the text "Calm" is printed inside the circle.
+                    The following methods are used to adjust these properties. </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>SetCircleWeight($aWeight)</code></para>
+                        </listitem>
+                        <listitem>
+                            <para><code>SetCircleRadius($aRadius)</code></para>
+                        </listitem>
+                        <listitem>
+                            <para><code>SetCircleColor($aColor)</code></para>
+                        </listitem>
+                        <listitem>
+                            <para><code>SetCircleText($aTxt)</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </sect3>
+            <sect3>
+                <title>Specifying number formats for ranges</title>
+                <para>For the ranges it is possible to adjust how the numbers are formatted with a
+                    general format string (in the style of a <code>printf()</code> format string).
+                    This would allow, for example, to choose the number of decimal values to show in
+                    the legend. The format string is specified with a call to </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>Legend::SetFormat($aFmt)</code>. </para>
+                            <para>The format will be applied to both the lower and upper range
+                                value. This means that the actual legend range text in the legend
+                                will be printed as [number format]-[number format]. </para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>The following example shows how to make sure the ranges are displayed as
+                    integers</para>
+                <para>
+                    <programlisting>$wp->legend->SetFormat('%d');</programlisting>
+                </para>
+            </sect3>
+            <sect3>
+                <title>Specifying legend bottom text</title>
+                <para>Finally it is also possible to specify a text at the bottom of the legend with
+                    a call to </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>Legend::SetText($aTxt)</code>. The text will be displayed
+                                just underneath the legend as for example, shown in <xref
+                                    xlink:href="#fig.windrose_ex6.1"/>
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </sect3>
+            <sect3>
+                <title>Specifying the numeric values displayed for the ranges</title>
+                <para>The values displayed in the legend for the ranges can be adjusted with a call
+                    to </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>WindRosePlot::SetRanges($aRanges)</code>. By default the
+                                ranges are set to 0,1,2,3,5,6,10,13.5,99.0, this means that the
+                                ranges printed will be 1-2, 2-3, 3-5, .... </para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>The following example shows how to change this to the ranges 0.000-0.001,
+                    0.001-0.003, 0.003-0.005 </para>
+                <para>
+                    <programlisting>$windplot->SetRanges(array(0.001,0.003,0.005));
+                        $windplot->SetFormat('%.3f');</programlisting>
+                </para>
+                <para>As can be seen the first range (bucket 0) is not really directly printed. It
+                    is by default indicated by the circle to the left in the legend.</para>
+                <para>In the example lines above we also changed the format to display the decimals.
+                    Without this the default is only to show one decimal and that would show all
+                    ranges as 0.0. An example of how this might look can be seen in figure 10 below.
+                </para>
+            </sect3>
+        </sect2>
+        <sect2>
+            <title>Adjusting the grid colors</title>
+            <para>The colors of both the radial grid and the circular grid can be adjusted. This is
+                done with the method </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>WindrosePlot::SetGridColor($aColor1,$aColor2)</code>
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The first argument specifies the grid circle color and the second argument
+                specifies the radial grid colors. </para>
+        </sect2>
+        <sect2>
+            <title>Adjusting the weight of the grid circles</title>
+            <para>To adjust the weight (thickness) of the grid lines (both circle and radial lines)
+                the following method is used</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>WindrosePlot::SetGridWeight($aWeight1,$aWeight2)</code></para>
+                        <para>The first argument specifies the weight of the circle and the second
+                            the weight of the radial lines.</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <note>
+                <para>It is possible to have individual colors of the radial grid lines (and line
+                    style &amp;weight) by using any of the methods </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>SetRadialColors()</code></para>
+                        </listitem>
+                        <listitem>
+                            <para><code>SetRadialStyles()</code>
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para><code>SetRadialWeight()</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </note>
+            <para>
+                <note>
+                    <para>Due to technical and performance limitations circle weight can only be
+                        specified in the range [1,3] (inclusively).</para>
+                </note>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Adding a box around the plot</title>
+            <para>Finally we remember that it is possible to add a rectangular box around the plot
+                by using the method </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>WindrosePlot::SetBox($aColor='black', $aWeight=1,
+                                $aStyle='solid', $aShow=true)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>an example of this can be seen in <xref xlink:href="#fig.windrose_2plots_ex1"
+                />.</para>
+        </sect2>
+        <sect2>
+            <title>Adjusting the size of the center zero circle</title>
+            <para>The size of the center circle can be manually adjusted as either specified in
+                absolute number of pixels or as fractions of the windrose plot (not the entire
+                windrose graph). This is done with the method </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>WindrosePlot::SetZCircleSize($aSize)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </sect2>
+        <sect2 xml:id="sec.windrose-locale-compass">
+            <title>Localizing the default names for the compass directions</title>
+            <para>By default the compass cardinal directions are presented in English locale using
+                standard denominations for the 16 compass directions. </para>
+            <para>Localizing these names are done with a call to the method </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>WindrosePlot::SetCompassLabels($aLabels)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>The order of the names for the directions should start with the corresponding name
+                for "East" and then continue counter-clockwise all the way to "East North East".
+                Adjusting the names for the compass directions means two things: </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>If there is named direction in the data (as key) that key must now
+                            also be in localized form.</para>
+                    </listitem>
+                    <listitem>
+                        <para>The displayed names for the compass direction will be shown in
+                            localized form.</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>For example, the code snippet below shows how to localize the compass directions
+                into Swedish. </para>
+            <para>
+                <programlisting>...
+$data = array(
+    'sso' => array(12,8,2,3),
+    6 => array(5,4,4,5,4),
+);
+$se_CompassLbl =
+array('O','ONO','NO','NNO','N','NNV','NV','VNV','V','VSV','SV','SSV','S','SSO','SO','OSO');
+....
+$windroseplot->SetCompassLabels($se_CompassLbl);
+... </programlisting>
+            </para>
+            <para>and the following shows how to make a localization into Japanese</para>
+            <para>
+                <caution>
+                    <para>The source file (as every source file in the library) is encoded in utf-8.
+                        For technical reasons some browsers might not render the Japanese characters
+                        correctly when the source file is viewed.</para>
+                </caution>
+            </para>
+            <para>
+                <programlisting>#=windrose_ex7.1|Japanese locale#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Adjusting the formatting of the windrose plot legs</title>
+            <sect3>
+                <title>Specifying range colors</title>
+                <para>To adjust the colors used for each range in the plot the method </para>
+                <para><code>WindrosePlot::SetRangeColors($aRangeColors)</code>
+                </para>
+                <para>The following example shows how to set a red-brown color scale</para>
+                <para>
+                    <programlisting>$rangeColors = array('khaki','yellow','orange','orange:0.7','brown','darkred','black');
+$windplot->SetRangeColors($rangeColors); </programlisting>
+                </para>
+            </sect3>
+            <sect3>
+                <title>Specifying the width of the plot "legs"</title>
+                <para>The weight (width) of the legs used for each range in the plot is by default
+                    set to the range 2,4,6,8,10,12,14,16,18,20 pixels. </para>
+                <para>This can be adjusted with a call to the method </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>WindrosePlot::SetRangeWeights($aWeights)</code>
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>If fewer weights than ranges used are supplied the ranges will wrap-around.
+                    The following example shows how to set a larger difference in size for the legs
+                    between the ranges. </para>
+                <para>
+                    <programlisting>$windplot->SetRangeWeights(array(2,6,10,14,18)); </programlisting>
+                </para>
+            </sect3>
+        </sect2>
+    </sect1>
+    <sect1>
+        <title>Some more advanced formatting</title>
+        <sect2>
+            <title>Turning off Anti-aliasing</title>
+            <para>By default anti-aliasing is enabled. This has a speed penalty together with
+                restrictions that no background images can be used in this version of the library. </para>
+            <para>If you want to use background images or improve performance anti-aliasing can be
+                turned off with a call to the method </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>WindrosePlot::SetAntiAlias($aFlag)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </sect2>
+        <sect2>
+            <title>More on formatting scale-labels</title>
+            <para>Since scale labels are normal text element all normal text formatting can be used
+                to enhance the look &amp;feel of the scale labels. </para>
+            <sect3>
+                <title>Adding background colors</title>
+                <para>A simple enhancement to make the labels more visible is to add a box and a
+                    background color for the label. This is done with a call to the method </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>WindrosePlotScale::SetLabelFillColor($aFillColor,
+                                    $aColor)</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>The following code snippet shows how this could be done </para>
+                <para>
+                    <programlisting>$windplot->scale->SetLabelFillColor('lightblue','black'); </programlisting>
+                </para>
+                <para>
+                    <programlisting>#=windrose_ex8.1|Adding label background#</programlisting>
+                </para>
+            </sect3>
+            <sect3>
+                <title>Adjusting the alignment of the scale labels</title>
+                <para>By default the scale labels are centered on the intersection between the
+                    radial line and the grid circle. It is possible to also have the label
+                    positioned slightly outside the circular grid. This is all controlled by the
+                    method </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>WindrosePlotScale::SetLabelAlign($aAlign)</code></para>
+                            <para>Possible values for <code>$aAlign</code> are</para>
+                            <para>
+                                <itemizedlist>
+                                    <listitem>
+                                        <para>LBLALIGN_CENTER, The default. Center the label</para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>LBLALIGN_TOP, Optional. Position the label slightly
+                                            outside the circular grid line.</para>
+                                    </listitem>
+                                </itemizedlist>
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </sect3>
+            <sect3>
+                <title>Specifying number formats</title>
+                <para>The final formatting option is to specify the number format of the label. This
+                    is specified as an ordinary "<code>printf()</code>" format string. The format is
+                    specified with a call to </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>WindrosePlotScale::SetLabelFormat($aFmt)</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>For example the code snippet below makes the label display 1 decimal and
+                    adding a '%' sign. </para>
+                <para>
+                    <programlisting>$windroseplot->scale->SetLabelFormat('%.1f%%'); </programlisting>
+                </para>
+            </sect3>
+            <sect3>
+                <title>Hiding the labels</title>
+                <para>Finally it is possible to completely hide the scale labels with a call to </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>WindrosePlotScale::Hide($aFlg=true)</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </sect3>
+        </sect2>
+        <sect2>
+            <title>Formatting the legend </title>
+            <para>All the property for the legend is access through the legend property of the
+                windrose plot as shown in the examples below. </para>
+            <sect3>
+                <title>Turning off the legend</title>
+                <para>By default the legend is shown for each plot. It can be turned off with a call
+                    to </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>LegendStyle::Hide()</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>as the following code snippet shows. </para>
+                <para>
+                    <programlisting>$windroseplot->legend->Hide(); </programlisting>
+                </para>
+            </sect3>
+            <sect3>
+                <title>Adjusting the legend position</title>
+                <para>In version 1.0 of Windrose plot it is not possible to fully adjust the
+                    position of the plot legend. However, it is possible to manually adjust the
+                    margin between</para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>the Windrose plot and the legend</para>
+                        </listitem>
+                        <listitem>
+                            <para>... the bottom of the box around a single plot and the
+                                legend</para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>Both these margins are adjusted with a call to </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>Legend::SetMargin($aMarg,$aBottomMargin=5)</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>For example by adding the following lines to your script </para>
+                <para>
+                    <programlisting>$windroseplot->legend->SetMargin(25); </programlisting>
+                </para>
+                <para>By default this margin to the Windrose plot is 10 pixels and to the bottom of
+                    the plot box it is 5 pixels. Note that the legend positioning will automatically
+                    adjust for any increase in the font size for the compass directions to ensure
+                    that the legend will never collide with the labels when large fonts are
+                    used.</para>
+            </sect3>
+            <sect3>
+                <title>Adjusting the length of each legend window leg</title>
+                <para>By default the length of each legend leg is just long enough (with a little
+                    bit to spare) to cover the range labels just on top of the legend legs. It can
+                    never be set to smaller than that but it can be made larger with a call to </para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>LegendStyle::SetLength($aLength)</code></para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </sect3>
+            <sect3>
+                <title>Adjusting how the range is displayed</title>
+                <para>By default the range labels is displayed so that the end label of bucket
+                        <emphasis role="italic">n</emphasis> is the same as the start label in
+                    bucket (<emphasis role="italic">n+1</emphasis>). This behaviour can be
+                    controlled with the method</para>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>WindrosePlot::SetRangeStyle($aStyle)</code></para>
+                            <para><code>$aStyle</code>, is one of two symbolic constants</para>
+                            <para>
+                                <orderedlist>
+                                    <listitem>
+                                        <para><code>RANGE_OVERLAPPING</code>, (The default)</para>
+                                    </listitem>
+                                    <listitem>
+                                        <para><code>RANGE_DISCRETE</code>, The range labels will be
+                                            distinct</para>
+                                    </listitem>
+                                </orderedlist>
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para><xref xlink:href="#fig.windrose-legend-lstyles"/> shows the difference between
+                    the two legend styles</para>
+                <figure xml:id="fig.windrose-legend-lstyles">
+                    <title>Different legend label styles</title>
+                    <mediaobject>
+                        <imageobject><imagedata fileref="images/wind-legend-styles.png" scale="60"
+                            /></imageobject>
+                    </mediaobject>
+                </figure>
+            </sect3>
+        </sect2>
+        <sect2>
+            <title>Highlighting specific compass directions</title>
+            <para>In order to emphasize certain directions it is possible to individually adjust the
+                radial lines look &amp; feel. </para>
+            <para>For example, assume that the direction 134º in a free plot is especially
+                important. In order to emphasize this we can make the radial line, solid and red
+                while maintaining a low profile on the other directions. </para>
+            <para>This is easily accomplished by the use of one or more of the three plot methods </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>SetRadialColors($aColors)</code>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetRadialWeights($aWeights)</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>SetRadialStyles($aStyles)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>These method all take arrays as argument. The arrays specifies what direction and
+                what style to use. So, for example to make the "Southwest" grid red one would add
+                the lines </para>
+            <para>
+                <programlisting>&lt;?php
+colors = array('sw' => 'red');
+$windplot->SetRadialColors($colors);
+?></programlisting>
+            </para>
+            <para>As direction either the (localized) name can be used or the index/direction
+                depending on if it is a free or regular type of windrose type. </para>
+            <para>Any direction which hasn't been explicitly specified in the array will use the
+                default colors (As Specified by <code>SetGridColor()</code>) and the default weight
+                (as specified by <code>SetGridWeight()</code>).</para>
+        </sect2>
+        <sect2>
+            <title>Including a graph in a PDF</title>
+            <para>This information assumes that the PDFlib in installed and available in the PHP
+                setup being used. This very short paragraph is in no way a replacement for reading
+                the full PDFlib documentation. It is just intended to give some ideas on how this
+                can be done. This information is to large extent a repetition of what can be read in
+                    <xref xlink:href="#app.faq"/></para>
+            <para>Instead of stroking the image to a file or back to the browser you can get hold of
+                the internal GD handle that represents the graph. This is done by specifying the
+                constant <code>_IMG_HANDLER</code> as the file name in the call to
+                    <code>Stroke()</code>. This will tell the <code>Stroke()</code> method to return
+                the GD handle.</para>
+            <para>In order to use the GD handle together with the PDFlib the image must be loaded
+                into memory by a call to </para>
+            <para><code>pdf_open_memory_image($pdf, $im)</code>
+            </para>
+            <para>The following snippet shows how you can produce and send back a PDF page to the
+                browser. Please note that this is just a code sketch and not final code</para>
+            <para>
+                <programlisting>...
+$graph = new WindroseGraph(...);
+
+// Code to create the graph
+// .........................
+// .........................
+
+// Put the image in a PDF page by first getting the GD handle
+$im = $graph->Stroke(_IMG_HANDLER);
+
+$pdf = pdf_new();
+pdf_open_file($pdf, "");
+
+// Convert the GD image to something the
+// PDFlibrary knows how to handle
+$pimg = pdf_open_memory_image($pdf, $im);
+
+// Setup a basic PDF page
+pdf_begin_page($pdf, 595, 842);
+pdf_add_outline($pdf, "Page 1");
+pdf_place_image($pdf, $pimg, 0, 500, 1);
+pdf_close_image($pdf, $pimg);
+pdf_end_page($pdf);
+pdf_close($pdf);
+
+// Prepare to output the PDF page
+$buf = pdf_get_buffer($pdf);
+$len = strlen($buf);
+
+header("Content-type: application/pdf");
+header("Content-Length: $len");
+header("Content-Disposition: inline; filename=foo.pdf");
+
+echo $buf;
+
+pdf_delete($pdf);
+...</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Adding a background image</title>
+            <para>In the same way as with the other types of plots in the library there is a
+                possibility to add a background image in the graph. However, due to limitations with
+                the way the extended anti-alias in windroses is implemented it is not possible to
+                use background images when this (default) behavior is enabled. </para>
+            <para>(It is technically possible to correct this limitations but the performance hit of
+                doing this is completely unacceptable since that would require pixel-level
+                manipulation directly in PHP with would be prohibitively CPU expensive).</para>
+            <para>To use background images the extended anti alias feature in windrose plots must be
+                disabled with a call to <code>Windrosegraph::SetAntiAlias(false) </code></para>
+            <para>In order to add a background image the normal method
+                    <code>SetBackgroundImage()</code> is used. The following code snippet shows how
+                this is done. </para>
+            <para>
+                <programlisting>$graph->SetBackgroundImage('mybackground.jpg',BGIMG_FILLFRAME); </programlisting>
+            </para>
+            <para>The above example puts the image covering the entire graph area. </para>
+            <para>Remember that you can also adjust the mixing level of the background image with a
+                call to <code>SetBackgroundImageMix($aMixLevel)</code> This determines how much of
+                the image is blended with the background color. An argument of 100 takes 100 percent
+                of the image and a value of 0 is the same as not displaying the background image at
+                all.</para>
+            <para>An example of using a background image is shown in <xref
+                    xlink:href="#sec.windrose-ex10"/></para>
+            <para>See <xref xlink:href="#sec2.img-country-background"/> for more general information
+                on background images.</para>
+            <para>
+                <tip>
+                    <para>Remember that the method <code>Graph::SetBackgroundImageMix($aMix)</code>
+                        can be used to adjust the alpha blending of the background image</para>
+                </tip>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Adjusting the interpretation for ordinal keys in data</title>
+            <para>As previously stated the position for data values in the plot, (when the ' key is
+                specified as an integer), is the index of the displayed axis counted
+                counter-clockwise from "East". </para>
+            <para>Another possibility which seems to be standard in some application of Windrose
+                plots is to start counting clockwise from the first axis after the "North" axis.
+                Depending on if the plots displays 16 , 8 or 3 axis this first axis (with ordinal
+                number 0) would then be either "NNE", "NE" or "E".</para>
+            <para>To adjust the interpretation the following method is used </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>WindrosePlot::SetDataKeyEncoding($aEncoding)</code>
+                        </para>
+                        <para>Possible values for the parameter are</para>
+                        <para>
+                            <itemizedlist>
+                                <listitem>
+                                    <para><code>KEYENCODING_CLOCKWISE</code>, This setting will
+                                        force the plot to interpret the key in the data as counted
+                                        clockwise. The axis with 0-index is taken to be the first
+                                        existing axis just to the right of "North" counted
+                                        clockwise.</para>
+                                </listitem>
+                                <listitem>
+                                    <para><code>KEYENCODING_ANTICLOCKWISE</code>, This setting will
+                                        force the plot to interpret the key in the data as counted
+                                        counter-clockwise. The axis with the 0-index is the "East"
+                                        axis.</para>
+                                </listitem>
+                            </itemizedlist>
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>By default the setting is <code>KEYENCODING_ANTICLOCKWISE</code>. ?? illustrates
+                how the same data can be interpretated in two different way depending on this
+                setting. The data in both figure a) and b) was given by the array </para>
+            <para>
+                <programlisting>$data = array(
+    0 => array(3,2,1,2,2),
+    4 => array(1,1,1.5,2),
+    6 => array(1,1,1.5,2),
+    12 => array(2,3,5,1),
+);</programlisting>
+            </para>
+            <para>
+                <programlisting>#=windrose_ex9.1|Interpretation of ordinal keys#</programlisting>
+            </para>
+        </sect2>
+    </sect1>
+    <sect1>
+        <title>Adding icon and text objects to the graph</title>
+        <para>Windrose plots supports the ordinary way of adding icon and text objects to the graph. </para>
+        <sect2>
+            <title>Adding a text object</title>
+            <para>Text objects are added by first creating an instance of <code>class Text</code>
+                for each text needed and then adding the text to the graph with the usual call to
+                    <code>WindroseGraph::Add()</code>. </para>
+            <para>A basic text will only require two additional lines of code</para>
+            <para>
+                <programlisting>&lt;?php
+$txt = new Text('Simple string',20,20);
+$graph->Add($txt); 
+?></programlisting>
+            </para>
+            <para>The following code snippet is slightly more complicated and will create a boxed
+                text in the upper right corner of the graph. </para>
+            <para>
+                <programlisting>&lt;?php
+// Add a boxed text
+$txt = new Text();
+$txt->SetFont(FF_ARIAL,FS_NORMAL,10);
+$txt->Set("Arbitrary text\non a\nWidrose Plot");
+$txt->SetParagraphAlign('center');
+$txt->SetPos(0.95,0.15,'right');
+$txt->SetBox('lightyellow');
+$txt->SetShadow();
+$graph->Add($txt); 
+?></programlisting>
+            </para>
+            <para>An example of adding text to a graph can for example be seen in <xref
+                    xlink:href="#fig.windrose_ex5"/>. The snippet above adds a text at coordinates
+                X=20, Y=20 using the default lower left corner as the text anchor point.</para>
+            <para>
+                <note>
+                    <para>To add a newline you must remember to use double-quotes to enclose the
+                        text otherwise the "\n" will only be interpreted literally. </para>
+                </note>
+            </para>
+            <para>
+                <note>
+                    <para>Remember that the "text align", as adjusted with <code>SetAlign()</code>,
+                        specifies the anchor point for the text, i.e. what part of the text is
+                        aligned with the specified position. </para>
+                </note>
+            </para>
+            <para>To add many text strings it is often useful to specify them in an array and then
+                have a loop creating the text object and add the text array of all the created
+                objects to the graph as the following short snippet shows.</para>
+            <para>
+                <programlisting>&lt;?php
+//--------------------------------------------------------------
+// Add texts to the graph
+//--------------------------------------------------------------
+$txts = array( 
+    array('Textstring one ...',$tx1,$ty1),
+    array('Textstring two ...',$tx2,$ty2),
+    array('Textstring three ...',$tx3,$ty3),
+
+$n=count($txts);
+$t=array();
+for($i=0; $i &lt; $n; ++$i){
+    $t[$i] = new Text($txts[$i][0],$txts[$i][1],$txts[$i][2]);
+    $t[$i]->SetFont(FF_ARIAL,FS_NORMAL,12);
+    $t[$i]->SetColor('brown');
+    $t[$i]->SetAlign('center','top');
+}
+$graph->Add($t);
+?></programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Adding icons to the graph</title>
+            <para>Icons are added as instances of <code>class IconPlot</code> to the graph (as usual
+                with a call to <code>WindroseGraph::Add()</code>). This means that to use icons the
+                library module "<filename>jpgraph_iconplot.php</filename>" must first be included. </para>
+            <para>The following example shows how to add a small "tornado" icon in the upper left
+                corner of the graph. For more information on formatting icons that are added to a
+                graph see <xref xlink:href="#sec.adding-icons-to-graph"/></para>
+            <para>
+                <caution>
+                    <para>Since Windrose graphs doesn't have a ny concept of linear scale the
+                        position of icons can only be specified as absolute pixels or fraction of
+                        the width/height.</para>
+                </caution>
+            </para>
+            <para>
+                <programlisting>#windrose_icon_ex1|Adding a "tornado" icon to the top left corner#</programlisting>
+            </para>
+        </sect2>
+    </sect1>
+    <sect1 xml:id="sec.windrose-layout-classes">
+        <title>Using layout classes to position Windrose plots</title>
+        <para>Normally we don't want to have to calculate the absolute x and y coordinates when
+            positioning multiple Windrose plots in graph as was done in <xref
+                xlink:href="#fig.windrose_2plots_ex1"/>. A much better concept would be to just tell
+            the library to position three windrose plots horizontally or vertically without having
+            to figure out the exact coordinates our self.</para>
+        <para>This is where layout classes come in handy.</para>
+        <para>There are two types of layouts; horizontal and vertical. To specify that two windroses
+            should be positioned side by side (horizontal) a new horizontal layout object is created
+            and then the two windroses plots are added as object within the horizontal layout class.
+            Later on when the objects are about to be stroked on the graph the horizontal layout
+            class will take all its objects and spread them out evenly along a horizontal line
+            depending on the individual size of each windrose. The same principle applies to the
+            vertical layout class with the obvious change in direction.</para>
+        <para>The layout object are added to the graph in exactly the same was as odometers, by
+            calling the <code>WindroseGraph::Add()</code> method. </para>
+        <para>The following line would create a horizontal line of three windrose plots</para>
+        <para>
+            <programlisting>&lt;?php
+$graph = WindroseGraph($width,$height);
+
+...
+// Create three plots
+$w1 = new WindrosePlot($data1);
+$w1->SetSize(0.25);
+$w2 = new WindrosePlot($data2);
+$w2->SetSize(0.25);
+$w3 = new WindrosePlot($data3);
+$w3->SetSize(0.25);
+
+// Position them even horizontally
+$hor = new LayoutHor( array($w1, $w2, $w3) );
+
+// add and send back to the client
+$graph->Add($hor);
+$graph->Stroke();
+?></programlisting>
+        </para>
+        <para>Since both horizontal en vertical layout can be combined it is possible to create
+            almost any rectangular layout. For example to create a 4x4 graph first two horizontal
+            layouts would be created and they would then be included in a vertical layout as the
+            following principle code snippet shows.</para>
+        <para>
+            <programlisting>&lt;?php
+$graph = WindroseGraph($width,$height);
+
+...
+// Create three plots
+$w1 = new WindrosePlot($data1);
+$w1->SetSize(0.24);
+$w2 = new WindrosePlot($data2);
+$w2->SetSize(0.24);
+$w3 = new WindrosePlot($data3);
+$w3->SetSize(0.24);
+$w4 = new WindrosePlot($data4);
+$w4->SetSize(0.24);
+
+// Create the two rows
+$hor1 = new LayoutHor( array($w1, $w2) );
+$hor2 = new LayoutHor( array($w3, $w4) );
+
+// positioned on top of each other
+$vert = new LayoutVert( array($hor1, $hor2) );
+
+// add and send back to the client
+$graph->Add($vert);
+$graph->Stroke();
+?></programlisting>
+        </para>
+        <para>An example of this is shown in <xref xlink:href="#fig.windrose_layout_ex0"/></para>
+        <para>
+            <programlisting>#=windrose_layout_ex0|Using layout classes to position 4 windrose plots#</programlisting>
+        </para>
+        <para>A slightly more complex example where some more formatting have been added is shown in
+                <xref xlink:href="#fig.windrose_layout_ex1"/> where two larger plots are in the top
+            row and three smaller plots are shown in the bottom row.</para>
+        <para>
+            <programlisting>#windrose_layout_ex1|Using layout classes to position 5 windrose plots#</programlisting>
+        </para>
+    </sect1>
+    <sect1>
+        <title>Example section</title>
+        <para>The following section is a summary with a number of examples that illustrates the
+            usage of the methods described in the previous sections.</para>
+        <sect2>
+            <title>Example 1</title>
+            <para>Objectives:</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Showing a complete but elementary windrose plot using mostly default
+                            values.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Adding and formatting a title</para>
+                    </listitem>
+                    <listitem>
+                        <para>Adding a legend text in order to show the units.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to specify data using both ordinal and textual
+                            representation of compass directions.</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>
+                <programlisting>#windrose_ex1#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Example 2</title>
+            <para>Objectives:</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Showing how to customize the width of the windrose legs</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to only display 8 compass axis</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to set a specific size in pixels for the plot</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to adjust the size of the center circle</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to adjust scale label font &amp;colors</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to adjust the font for the compass directions</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>
+                <programlisting>#windrose_ex2#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Example 3</title>
+            <para>Objectives:</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Showing how to add multiple plots to the same graph</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to add a subtitle and a drop shadow to the graph</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to change size and position for plots</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to add legend text</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>
+                <programlisting>#windrose_ex3#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Example 4</title>
+            <para>Objectives:</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Showing how to add arbitrary paragraphs of text to a graph</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to manually set the grid distance</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to adjust the grid colors</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to customize the format for the displayed ranges</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to add arbitrary text to the center circle</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to adjust the margin for the legend</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to increase the margin to the compass directions</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>
+                <programlisting>#windrose_ex4#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Example 5</title>
+            <para>Objectives:</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Showing how to add arbitrary paragraphs of text to a graph</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to manually set the grid distance</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to add a box/frame around the individual plot</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to localize the compass directions </para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to set customized colors for the ranges</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>
+                <programlisting>#windrose_ex5#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Example 6</title>
+            <para>Objectives:</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Set range colors</para>
+                    </listitem>
+                    <listitem>
+                        <para>Set grid colors</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to adjust the label margin </para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to change the format for displayed legend values </para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>
+                <programlisting>#windrose_ex6#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Example 7</title>
+            <para>Objectives:</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Showing how to change the direction labels</para>
+                    </listitem>
+                    <listitem>
+                        <para>Adjust the displayed ranges</para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to change the format for displayed legend values </para>
+                    </listitem>
+                    <listitem>
+                        <para>Showing how to manually setting the scale range and scale step size
+                        </para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>
+                <programlisting>#windrose_ex7#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Example 8</title>
+            <para>Objectives:</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Different styles of radial grid lines for a type 8 plot</para>
+                    </listitem>
+                    <listitem>
+                        <para>Adding partial labels</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>
+                <programlisting>#windrose_ex8|Show how to set different styles for individual radial grid lines#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Example 9</title>
+            <para>Objectives:</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Set radial grids for a type 16 plot</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>
+                <programlisting>#windrose_ex9#</programlisting>
+            </para>
+        </sect2>
+        <sect2 xml:id="sec.windrose-ex10">
+            <title>Example 10</title>
+            <para>Objectives:</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Showing how to add a background image which is one of the country
+                            flags</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>
+                <programlisting>#windrose_bgimg_ex1#</programlisting>
+            </para>
+        </sect2>
+    </sect1>
+</chapter>

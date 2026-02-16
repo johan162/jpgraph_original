@@ -1,0 +1,26 @@
+#! /bin/sh
+# mkphp5-cgi
+# Build a CGI version of PHP5
+./configure --prefix=/usr/share \
+--datadir=/usr/share/php \
+--libdir=/usr/share --includedir=/usr/include \
+--enable-force-cgi-redirect \
+--bindir=/usr/bin \
+--with-config-file-path=/etc/php5/apache2 \
+--enable-mbstring --enable-mbregex \
+--with-mysql  \
+--with-gd --enable-gd-native-ttf \
+--with-zlib-dir=/usr/lib \
+--with-png-dir=/usr/lib --with-jpeg-dir=/usr/lib --with-xpm-dir=/usr/X11R6 \
+--with-freetype-dir=/usr/lib \
+--enable-ftp \
+--enable-safe-mode \
+--bindir=/usr/bin \
+--enable-bcmath -enable-calendar \
+--enable-ctype \
+--enable-magic-quotes \
+--enable-inline-optimization \
+--enable-tokenizer \
+--with-bz2 \
+--with-iconv
+

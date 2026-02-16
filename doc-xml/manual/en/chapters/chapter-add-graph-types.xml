@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<chapter version="5.0" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Additional graph types</title>
+    <para>These chapter describes the types of graphs supported by the library that is not a
+        standard graph type used to display data series. </para>
+    <sect1 xml:id="sec.led-graph-type">
+        <title>LED bill boards</title>
+        <para>This feature allows the creation of displayed letters (some) and digits which have the
+            look of a 4x7 LED display. </para>
+        <para>In order to use this feature the module "<filename>jpgraph_led.php</filename>" must be
+            included.</para>
+        <para>
+            <caution>
+                <para>In order to use the LED module the PHP installation must have multi-byte
+                    strings enabled so that the function <code>mb_strlen()</code> is available. This
+                    is normally enabled at compile time for PHP by specifying the options
+                        <code>--enable-mbstring --enable-mbregex</code> when configuring the compile
+                    options.</para>
+            </caution>
+        </para>
+        <para>The figures below shows some samples of the characters supported and the available
+            colors</para>
+        <para>
+            <informaltable frame="none">
+                <tgroup cols="1">
+                    <colspec colname="c1" colnum="1"/>
+                    <tbody>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex1|LEDC_GREEN #</programlisting>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex2|LEDC_RED#</programlisting>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex3|LEDC_YELLOW#</programlisting>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex5|LEDC_BLUE#</programlisting>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex6|LEDC_GRAY#</programlisting>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex17|LEDC_INVERTGRAY#</programlisting>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex7|LEDC_CHOCOLATE#</programlisting>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex8|LEDC_PERU#</programlisting>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex9|LEDC_GOLDENROD#</programlisting>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex10|LEDC_KHAKI#</programlisting>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex11|LEDC_OLIVE#</programlisting>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex12|LEDC_LIMEGREEN#</programlisting>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex13|LEDC_FORESTGREEN#</programlisting>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex14|LEDC_TEAL#</programlisting>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex15|LEDC_STEELBLUE#</programlisting>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex16|LEDC_NAVY#</programlisting>
+                            </entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </informaltable>
+        </para>
+        <para>A LED display is constructed by creating an instance of class DigitalLED47</para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para><code>DigitalLED47::__construct($aRadius = 2, $aMargin= 0.6)</code></para>
+                    <para>The first argument specifies the radius of each "led-light" and the second
+                        argument the margin around each character. Adjusting the radius is the only
+                        way to adjust the size of the LED characters. </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>In order to generate the billboard the method </para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para><code>DigitalLED47::Stroke($aValStr, $aColor , $aFileName =
+                        '')</code></para>
+                    <para><code>$aValStr</code>, The string to be displayed</para>
+                    <para><code>$aColor</code>, one of the available colors as shown in the figures
+                        above</para>
+                    <para><code>$aFileName</code>, An optional file name which specifies a file that
+                        the image will be written to. No image will be streamed back to the browser
+                        in this case.</para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>is called with the string to be displayed as the first argument. The following code
+            snippet shows how to create a green LED bill board</para>
+        <para>
+            <programlisting>$led = new DigitalLED74();
+$led->Stroke('0123456789. ABCDEFGHIJKL',LEDC_GREEN); </programlisting>
+        </para>
+        <para>In order to improve visual quality of the LED display it uses super sampling
+            internally to achieve the anti-alias smoothing effect. The number of oversampling is
+            specified with</para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para><code>DigitalLED47::SetSupersampling($aSuperSampling)</code></para>
+                    <para>By default a 2:times super-sampling is used. Using any value higher than 4
+                        does not give any visual improvements</para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>In the three figures below different levels of super sampling is used, in the left
+            most image no super sampling is used (super sampling=1), in the middle figure super
+            sampling=2 (the default) and in the rightmost figure super sampling is set to 4</para>
+        <para>
+            <informaltable frame="none">
+                <tgroup cols="3">
+                    <colspec colname="c1" colnum="1"/>
+                    <colspec colname="c2" colnum="2"/>
+                    <colspec colname="c3" colnum="3"/>
+                    <tbody>
+                        <row>
+                            <entry>
+                                <programlisting>#=ledex4|Supersampling=1#</programlisting>
+                            </entry>
+                            <entry>
+                                <programlisting>#=ledex4.1|Supersampling=2 (default)#</programlisting>
+                            </entry>
+                            <entry>
+                                <programlisting>#=ledex4.2|Supersampling=4#</programlisting>
+                            </entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </informaltable>
+        </para>
+        <sect2>
+            <title>Cyrillic character support</title>
+            <para>In addition to most of the basic latin characters the library also have some
+                support for Cyrillic characters. Due to the limed resolution (4x7) some more complex
+                cyrillic characters are not rendered very faithfully. The available rendering for
+                the cyrillic alphabet is shown in <xref xlink:href="#fig.cyrillic-led"/></para>
+            <para>
+                <figure xml:id="fig.cyrillic-led">
+                    <title>LED 4x7 Cyrillic alphabet support</title>
+                    <informaltable frame="none">
+                        <tgroup cols="1">
+                            <colspec colname="c1" colnum="1"/>
+                            <tbody>
+                                <row>
+                                    <entry>
+                                        <para><inlinemediaobject><imageobject><imagedata
+                                                  fileref="images/led_cyrillic1.png"
+                                                /></imageobject></inlinemediaobject></para>
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry>
+                                        <para><inlinemediaobject><imageobject><imagedata
+                                                  fileref="images/led_cyrillic2.png"
+                                                /></imageobject></inlinemediaobject></para>
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </informaltable>
+                </figure>
+            </para>
+            <para>
+                <caution>
+                    <para>Since the library internally uses utf8 character encoding it means that
+                        the string passed on to the library must also be encoded in utf8. In case
+                        the characters have another encoding, say cp1251, they must first be
+                        converted to utf8. This could for example be done by the PHP function
+                            <code>iconv()</code>..</para>
+                </caution>
+            </para>
+            <para>(This is the only place in the library that is truly multi-byte text safe.)</para>
+        </sect2>
+    </sect1>
+    <sect1>
+        <title>Captcha generation</title>
+        <para>Captcha is an acronym for "<emphasis role="italic">Completely Automated Public Turing
+                test to tell Computers and Humans Apart.</emphasis>" and is often used to prevent
+            automatic sign-ups in various WEB-based applications.</para>
+        <para>The library support generation of a simple captchas based on hand drawn "ugly" letters
+            and digits. They are combined into a word which can be presented as an image.</para>
+        <para>
+            <warning>
+                <para>It should be noted that with ample processing power and modern image analysis
+                    it is probably not hat difficult to actually break these captchas so the usage
+                    of these captchas in mission critical environments is entirely the
+                    responsibility of the user.</para>
+            </warning>
+        </para>
+        <para>The module in the library that is needed is
+            "<filename>jpgraph_antispam.php</filename>" and behaves as a simplified plot module. </para>
+        <para>?? showsn an example on how this can look</para>
+        <para>
+            <programlisting>#=antispamex01|Sample illustration of captcha challenge#</programlisting>
+        </para>
+        <para>Captcha images have less functionality then the usual graphs generated with the
+            library in order to keep this utility reasonable small. The primary limitation is that
+            there are no additional formatting options for the images and the image generated will
+            always use the JPEG image format. Hence it is not possible to change this to use, for
+            example, PNG format.</para>
+        <sect2>
+            <title>Generating Captchas</title>
+            <para>There are two basic alternatives on how to generate the content of the
+                captcha</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Submit a string that should be used</para>
+                    </listitem>
+                    <listitem>
+                        <para>Automatically generate a random string. If this alternative is chosen
+                            then the user of the library should save the created string and compare
+                            it to what the user enters.</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>In order to write a script to generate a new challenge there are four steps to be
+                completed.</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>include the library file "<filename>jpgraph_antispam.php</filename>".
+                            Note that there is no need to include the
+                                "<filename>jpgraph.php</filename>" library since all functionality
+                            is included in this library file.</para>
+                        <para>
+                            <programlisting>require_once "jpgraph_antispam.php";</programlisting>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>a new instance of the class AntiSpam must be created</para>
+                        <para>
+                            <programlisting>$spam = new  AntiSpam();</programlisting>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>the string to be used in the challenge must be specified. To
+                            automatically generate a suitable string use</para>
+                        <para>
+                            <programlisting>// The argument determines the length of the generated string
+$chars = $spam-> Rand(5);</programlisting>
+                        </para>
+                        <para>If instead the string to be used should be specified this string
+                            should be specified in the initial creation of the
+                                <code>AntiSpam()</code> or by calling the <code>Set()</code> method
+                            as in</para>
+                        <para>
+                            <programlisting>$spam-> Set('aui8k');</programlisting>
+                        </para>
+                        <para>Please note that in order to minimize the risk for confusion the
+                            letters 'O' and the number '0' (zero) is not allowed since they are too
+                            alike and can be mistaken for each other.</para>
+                    </listitem>
+                    <listitem>
+                        <para>output the image with a call the method <code>Stroke()</code> on the
+                            created instance of the AntiSpam class.</para>
+                        <para>
+                            <programlisting>if( $spam->Stroke () === false  ) {
+    die("Illegal or no data to plot");
+}</programlisting>
+                        </para>
+                        <para>Note that we have put a guard around the output since in the case of
+                            an error this method will result a boolean false value. As with the
+                            other graph types it is possible to write the generated image to a file
+                            by submitting a file name as an argument to Stroke().</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>In order to practically use this module the challenge string is most likely passed
+                to the image script via a URL argument, saved to a file and the read back in the
+                HTML page that is providing the captcha challenge.</para>
+            <para>
+                <warning>
+                    <para>It should be pointed out on more time that modern image analysis
+                        technology is fairly good at automatically read these types of images and
+                        translate it back to the letters they represent so this type of captchas
+                        does not provide any guarantee for automatic sign-ups. There are active
+                        academic research on how to apply various types of artificial intelligence
+                        to read many types of captchas. </para>
+                </warning>
+            </para>
+        </sect2>
+    </sect1>
+    <sect1 xml:id="sec.canvas-graph">
+        <title>Canvas graphs</title>
+        <para>This is basically a free form blank canvas where any graphics can be drawn. Canvas
+            graphs area also used as the basic graph for graphic tables as described in <xref
+                xlink:href="#chapter.graphic-tables"/></para>
+        <para>The library provides two module files to aid with this
+                "j<filename>pgraph_canvas.php</filename>" and
+                "<filename>jpgraph_canvtools.php</filename>". The second module is strictly speaking
+            not necessary but provides a number of utility classes that makes it much easier to work
+            with canvas.</para>
+        <para>Canvas graphs is provided as a layer to make is easier to create arbitrary images and
+            still make use of some of the convenience methods available in the library (like font
+            and color support). </para>
+        <para>Canvas graphs makes it easy to use the low level graphic drawing primitives in the
+            library provided by the two classes </para>
+        <para>
+            <orderedlist>
+                <listitem>
+                    <para><code>class Image</code></para>
+                    <para>This is the basic low level class that encapsulates the GD library by
+                        providing a complete framework for using graphic primitives with a coherent
+                        API and many convenience methods.</para>
+                </listitem>
+                <listitem>
+                    <para><code>class RotImage</code></para>
+                    <para>This is a descendant of class Image that in addition to the basic
+                        primitives also provides support for rotation of graphs</para>
+                </listitem>
+            </orderedlist>
+        </para>
+        <para>It is possible to work at different levels of abstraction when creating a
+            canvas.</para>
+        <para>
+            <orderedlist>
+                <listitem>
+                    <para>By only using the basic Image and RotImage classes. This can be considered
+                        one abstraction level above the most basic GD libraries</para>
+                </listitem>
+                <listitem>
+                    <para>By making use of the functionality provided by <code>class
+                            CanvasGraph</code> and the supporting classes (e.g. <code>class
+                            CanvasScale</code>). By using the canvas scale class it is possible to
+                        defining a coordinate grid on the canvas. These coordinates can then be used
+                        instead of absolute pixels which is necessary to us ethe basic Image and
+                        RotImage classes.</para>
+                </listitem>
+            </orderedlist>
+        </para>
+        <para>A concrete example of how canvas graphs can be used can be seen in <xref
+                xlink:href="#fig.listfontsex1"/> where all the available fonts have been drawn on a
+            canvas.</para>
+        <sect2>
+            <title>Creating a simple canvas</title>
+            <para>Creating a canvas gives you the opportunity draw arbitrary shapes on a "white"
+                piece of paper. Let's first show a simple example were we just draw a text box. </para>
+            <para>
+                <programlisting>#canvasex01|A simple canvas graph to draw a text box#</programlisting>
+            </para>
+            <para>The example in <xref xlink:href="#fig.canvasex01"/> starts by creating a 400x200
+                sized image. </para>
+            <para>The margins are then set to to get a frame around the image. </para>
+            <para>For canvases the margins has no effect in the way coordinates are entered. Top
+                left is (0,0) and bottom right (including any potential margin and shadow) is the
+                maximum. In this case the coordinate range are X:0-399, and Y:0-199</para>
+            <para>The <code>InitFrame()</code> method is then called which actually strokes the
+                margin and plotarea to the graph. Since everything is stroked in the order the
+                commands are given it is necessary to make sure that the graphical objects that
+                should be on top are stroked last. This is different from the other graph types
+                since they will hide these details and stroke the details in the graph in the
+                correct order. </para>
+            <para>We then create a Text object, setup it's properties, including the absolute screen
+                position where we want the text, and then stroke it. </para>
+            <para>The <code>Text::Align()</code> method specifies the anchor point of the text as
+                explained in <xref xlink:href="#chap.text_handling"/></para>
+            <para>We also specify that the lines within the paragraph should be centered with a call
+                to <code>Text::ParagraphAlign()</code> Since we also choose to have a box around the
+                text we have to make use of the method <code>Text::SetBox()</code> which is used to
+                specify the fill color, the border color and the shadow color (if the shadow color
+                is set to '', no shadow will be used).</para>
+            <para>Now we are ready to stroke the text onto the canvas. In order to do so we must
+                specify the graphical context when stroking the text. The current graphic context is
+                always available in the "<code>$img</code>" property of the CanvasGraph
+                class.</para>
+            <para>This specification of the graphical context is needed to all Stroke method that is
+                external to the main graph class.</para>
+        </sect2>
+        <sect2>
+            <title>Adding lines and rectangles to a canvas</title>
+            <para>A canvas also makes a good background for using standard graphic primitives, for
+                example circles and lines. The first thing to remember is that this requires working
+                with absolute screen coordinates and secondly that all drawing primitives are found
+                in the Image Class accessible as a property of the Graph class. </para>
+            <para>This means that to draw a line between absolute coordinates (0,0) and (100,100)
+                the following code must be created</para>
+            <para>
+                <programlisting>$graph->img->Line(0, 0, 100, 100);</programlisting>
+            </para>
+            <para>The following example shows how to create some basic graphic shapes on a
+                canvas</para>
+            <para>
+                <programlisting>#canvasex02|Drawing some basic geometric shapes on a canvas#</programlisting>
+            </para>
+        </sect2>
+        <sect2>
+            <title>Using a canvas scale together with the shape class</title>
+            <para>The previous method using absolute coordinates works. But it gives very little
+                flexibility in, for example, scaling the image. Working with absolute coordinates is
+                therefore not very practical and gets tedious for complex figures.</para>
+            <para>To mitigate these issues the library offers a convenience class, <code>class
+                    CanvasScale</code>, this will allow the creation of a suitable scale that will
+                make it easier to both create and scale the graph.</para>
+            <para>In order to use a canvas scale the module
+                    "<filename>jpgraph_canvtools.php</filename>" must first be included. In addition
+                to the canvas scale class this module also provides the companion <code>Shape</code>
+                class. This companion shape class is used to draw shapes using the specified scale
+                onto the canvas. </para>
+            <para>Using the scale is quite simple and requires only two steps</para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>An instance of the scale class is first created with the CanvasGraph
+                            instance as the first parameter</para>
+                    </listitem>
+                    <listitem>
+                        <para>The wanted scale is then specified with the wanted x and y
+                            scales</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>The following code snippet shows how this is done</para>
+            <para>
+                <programlisting>&lt;?php
+$graph = CanvasGraph(400,300);
+
+// ... other canvas formatting
+
+// Create a new scale
+$scale = new CanvasScale( $graph );
+$scale->Set($xmin, $xmax, $ymin, $ymax);
+
+// ...
+?></programlisting>
+            </para>
+            <para>The next step needed to be able to create geometric shapes is to create an
+                instance of class Shape and give the canvas graph and the scale as the two
+                parameters as the following line shows.</para>
+            <para>
+                <programlisting>&lt;?php
+$shape = new Shape($graph, $scale);
+?></programlisting>
+            </para>
+            <para>It is now possible to create arbitrary geometric shapes by using the provided
+                methods in the shape class. The shape class provides the following methods</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>Shape::SetColor($aColor)</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Shape::Line($x1,$y1,$x2,$y2)</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Shape::Polygon($p,$aClosed=false)</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Shape::FilledPolygon($p)</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Shape::Bezier($p,$aSteps=40)</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Shape::Rectangle($x1,$y1,$x2,$y2)</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Shape::FilledRectangle($x1,$y1,$x2,$y2)</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Shape::Circle($x1,$y1,$r)</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Shape::FilledCircle($x1,$y1,$r)</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Shape::RoundedRectangle($x1,$y1,$x2,$y2,$r=null)</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Shape::FilledRoundedRectangle($x1,$y1,$x2,$y2,$r=null)</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Shape::ShadowRectangle($x1,$y1,$x2,$y2,$fcolor=false,$shadow_width=null,$shadow_color=array(102,102,102))</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Shape::SetTextAlign($halign,$valign="bottom")</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Shape::StrokeText($x1,$y1,$txt,$dir=0,$paragraph_align="left")</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>Shape::
+                                IndentedRectangle($xt,$yt,$w,$h,$iw=0,$ih=0,$aCorner=3,$aFillColor="",$r=4)</code></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>We can now show a complete example of using the shape class</para>
+            <para>
+                <programlisting>#canvasex03|Creating a canvas graph with a scale and using the shape class#</programlisting>
+            </para>
+            <para>To show the usefulness of using the scale class <xref xlink:href="#fig.canvasex04"
+                /> shows the result after just changing the image size but keeping the code the
+                same. The relation between the shapes will remain the same but in a smaller format
+                to fit the new image size.</para>
+            <para>
+                <programlisting>#=canvasex04|Changing the image size to create a smaller version of the previous example#</programlisting>
+            </para>
+            <para>If we instead wanted to keep the image size but shrink the shapes we could just
+                make the scale twice as large which would result in <xref
+                    xlink:href="#fig.canvasex05"/></para>
+            <para>
+                <programlisting>#=canvasex05|Keeping the image size but changing the scale#</programlisting>
+            </para>
+            <para>We previously mentioned that the Shape class was a wrapper around the image class
+                with one exception. The exception is that it contains one additional method which
+                draws an "indented rectangle". An indented rectangle is a rectangle where one of
+                it's four corners have been moved into the rectangle <xref
+                    xlink:href="#fig.canvasex06"/> shows an example of using this shape.</para>
+            <para>
+                <programlisting>#=canvasex06|Example of using an indented rectangle#</programlisting>
+            </para>
+            <para>As a final note we mention the utility class <code>class
+                    CanvasRectangleText</code> This can be used to add a text with a rounded
+                rectangle (possibly filled) onto the canvas. <xref xlink:href="#fig.listfontsex1"/>
+                where all the available fonts were shown were using this class. </para>
+        </sect2>
+    </sect1>
+</chapter>

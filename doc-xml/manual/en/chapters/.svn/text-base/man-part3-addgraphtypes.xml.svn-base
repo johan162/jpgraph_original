@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<part version="5.0" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="part.add-pro-graphs">
+    <title>Additional graph types available in the professional version</title>
+    <xi:include href="chapter-graphical-tables.xml" parse="xml"/>
+    <xi:include href="chapter-odometer.xml" parse="xml"/>
+    <xi:include href="chapter-windrose.xml" parse="xml"/>
+    <xi:include href="chapter-matrix.xml" parse="xml"/>   
+    <xi:include href="chapter-filled-contour.xml" parse="xml"/>
+</part>

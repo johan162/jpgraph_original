@@ -1,0 +1,6 @@
+<?php
+// ...
+$pi = SymChar::Get('pi');
+$graph->title->Set('Test is pi'.$pi);
+// ...
+?>

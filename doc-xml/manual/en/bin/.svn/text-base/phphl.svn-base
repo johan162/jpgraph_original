@@ -1,0 +1,194 @@
+#!/usr/bin/php
+<?php
+//========================================================================
+// Small utility to generate syntax highlighted PHP source
+// $Id$
+//========================================================================
+require_once 'Text/Highlighter.php';
+
+  //----------------------------------------------------------------------
+  // CLASS ParseArgs
+  // Parse command line arguments and make sanity checks
+  //----------------------------------------------------------------------
+class ParseArgs {
+    var $argc,$argv;
+
+    function ParseArgs() {
+        // Get command line argument
+        $this->argv = ($_SERVER['argv']);
+        $this->argc = ($_SERVER['argc']);
+    }
+
+    function PrintUsage() {
+        echo "hl [-h] [-q] [-l|-li] [-css cssfile] [--debug] [-o dstfile] [-f src-file | src-file]\n".
+            "(Running on PHP: ".PHP_VERSION."\n".
+            "Highlight PHP src\n".
+            "-h Print help\n".
+            "-f Source file\n".
+            "-o Output file\n".
+            "-l Add line numbers (as table)\n".
+            "-li Add line numbers a list\n".
+            "-q Silent run\n".
+            "--name Add File name at top before outputtting the highlighted source\n".
+            "--css CSS file to use in resulting HTML (Default is phphl.css)\n".
+            "--debug Debug output\n".
+
+            "\n";
+        exit(1);
+    }
+
+    function Get() {
+        $srcfile = '';
+        $dstfile = '';
+        $cssfile = 'phphl.css';
+        $silent = false;
+        $debug = false;
+        $lnumbers = 0;
+        $tabsize = 4;
+        $addname = false;
+        $i = 0 ;
+        if( ($n=$this->GetNum()) > 0 ) {
+            $i=1;
+            while( $i <= $n ) {
+                switch( $this->argv[$i] ) {
+                case '-h':
+                    $this->PrintUsage();
+                    exit(0);
+                    break;
+                case '-o':
+                    $dstfile=$this->argv[++$i];
+                    break;
+                case '-f':
+                    $srcfile=$this->argv[++$i];
+                    break;
+                case '--css':
+                    $cssfile=$this->argv[++$i];
+                    break;
+                case '--name':
+                    $addname=true;
+                    break;
+                case '-t':
+                    $tabsize=(int)$this->argv[++$i];
+                    break;
+                case '-q':
+                    $silent=true;
+                    break;
+                case '-l':
+                    $lnumbers=HL_NUMBERS_TABLE;
+                    break;
+                case '-li':
+                    $lnumbers=HL_NUMBERS_LI;
+                    break;
+                case '--debug':
+                    $debug = true;
+                    break;
+                default:
+                    if( $srcfile == '' ) {
+                        $srcfile=$this->argv[$i];
+                    }
+                    else {
+                        echo "** Error: Unknown parameter: ".$this->argv[$i]."\n";
+                        $this->PrintUsage();
+                        exit(1);
+                    }
+                    break;
+                }
+                ++$i;
+            }
+
+        }
+
+        if( trim($srcfile) == '' ) {
+            echo "** Error: No source file specified \n";
+            $this->PrintUsage();
+            exit(1);
+        }
+
+        if( $tabsize < 1 || $tabsize > 60 ) {
+            echo "** Error: Tabsize must be in range [1,60]\n";
+            $this->PrintUsage();
+            exit(1);
+        }
+
+        $ret = array(
+            'srcfile' => $srcfile,
+            'dstfile' => $dstfile,
+            'cssfile' => $cssfile,
+            'silent' => $silent,
+            'tabsize' => $tabsize,
+            'lnumbers' => $lnumbers,
+            'addname' => $addname,
+            'debug' => $debug);
+
+        return $ret;
+    }
+
+    function _Dump() {
+        var_dump($this->argv);
+    }
+
+    function GetNum() {
+        return $this->argc-1;
+    }
+}
+
+class Driver {
+    private $iMsgCnt=1;
+    private $iParams;
+    function Msg($aTxt,$aLevel=1) {
+        if( $this->iParams['silent'] )
+            return;
+
+        // Level
+        // = 0 extended info
+        // = 1 info print
+        // = 2 error
+        // = 3 fatal
+        if( $aLevel >= 1 ) {
+            echo sprintf("%03d",$this->iMsgCnt).': '.$aTxt."\n";
+            $this->iMsgCnt++;
+        }
+        if( $aLevel == 3 )
+            die();
+    }
+
+    function Highlight($aSrcFile,$aDstFile,$aParams) {
+        if( !is_readable($aSrcFile) ) {
+            $this->Msg('Cannot read souce file: '.$aSrcFile,3);
+            return;
+        }
+        $fbuffer = file_get_contents($aSrcFile) ;
+        $options = array(
+            'numbers' => $aParams['lnumbers'],
+           'tabsize' => $aParams['tabsize'],
+       );
+        $highlighter = Text_Highlighter::factory('php',$options);
+        $fhbuffer = $highlighter->highlight($fbuffer);
+        $fhbuffer = '<link rel="stylesheet" href="'.$aParams['cssfile'].'" type="text/css">'.$fhbuffer;
+        if( trim($aDstFile) != '' ) {
+            if( ($ret = file_put_contents($aDstFile,$fhbuffer)) === false ) {
+                $this->Msg('Cannot write highlighted file: '.$dstFile,3);
+                return;
+            };
+        }
+        else {
+            if( $aParams['addname'] ) {
+                echo '<div style="font-weight: bold;margin-left:15px;">'.basename($aSrcFile).'</div>';
+            }
+            echo $fhbuffer;
+            echo "\n";
+        }
+    }
+
+    function Run($aParams) {
+        $this->iParams = $aParams;
+        $this->Highlight($aParams['srcfile'],$aParams['dstfile'],$aParams);
+    }
+}
+
+$pa = new ParseArgs();
+$driver = new Driver();
+$params = $pa->Get();
+$driver->Run($params);
+
+?>

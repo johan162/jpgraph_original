@@ -1,0 +1,286 @@
+<?php
+/*
+ *  $Id$
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the LGPL. For more information please see
+ * <http://phing.info>.
+ */
+
+require_once 'phing/Task.php';
+require_once 'Text/Highlighter.php';
+
+/**
+ * This task is for highlighting souce code embedded in an HTML document. The main usage scenario is for
+ * producing documentation where the source included as examples or code snippets should be highlighted.
+ * In order for the task to find the source to highlight it has to be sourrounded by two specified
+ * delimeter tags specified as parameters.
+ *
+ * This tasl depends on the Pear package Text_highlighter that must be installed first through
+ * your closest PEAR repository.
+ *
+ * Example usage:
+ *
+ * <code>
+ *    <highlightsrc linenumber="true" tabsize=4>
+ *        <fileset dir="output/html/">
+ *            <include pattern="*.html">
+ *        </fileset>
+ *    </highlightsrc>
+ * </code>
+ *
+ * Example 2:
+ * Useful when including source in manuals and guides
+ * <code>
+ * <highlightsrc file="test/manual.html" linenumber="true" >
+ *    <filterchain>
+ *      <filterreader classname="phing.filters.ReplaceTokensWithFile" >
+ *        <param type="tokenchar" name="begintoken" value="\#"/>
+ *        <param type="tokenchar" name="endtoken" value="\#"/>
+ *        <param name="postfix" value=".php"/>
+ *        <param name="dir" value="output/hsrc/"/>
+ *      </filterreader>
+ *    </filterchain>
+ * </highlightsrc>
+ * </code>
+ *
+ * Supports filesets, filelist and filterchains
+ *
+ * @author    Johan Persson <johanp@aditus.nu>
+ * @version   $Id$
+ * @package   phing.tasks.ext
+ */
+class HighlightSrcTask extends Task {
+
+    /** Single file to process. */
+    private $file;
+
+    /** Any filesets that should be processed. */
+    private $filesets = array();
+
+    /** Any filters to be applied before append happens. */
+    private $filterChains = array();
+
+    /** Should the source have linenumber */
+    private $lineNumber = false;
+
+    /** What program language are we processing */
+    private $language = 'php';
+
+    /** How many spaces should any tab character be expanded to */
+    private $tabSize = 4;
+
+    /** Local instance of Text_Highlighter */
+    private $highlighter = null;
+
+    /**
+     * Tell the highlighter what programming language we are processing (default is php)
+     *
+     * @param  string
+     * @return void
+     * @access public
+     */
+    public function setLanguage($languageang) {
+        $this->language = $language;
+    }
+
+    /**
+     * How many spaces should a tab be expanded to
+     *
+     * @param  integer
+     * @return void
+     * @access public
+     */
+    public function setTabSize($tabsize) {
+        $this->tabSize = $tabsize;
+    }
+
+    /**
+     * Specify if we should add a column with the linenumbers to the left of the source
+     *
+     * @param  book
+     * @return void
+     * @access public
+     */
+    public function setLinenumber($bool) {
+        $this->lineNumber = (bool) $bool;
+    }
+
+    /** Alias for setFrom() */
+    function setFile(PhingFile $f) {
+        $this->file = $f;
+    }
+
+    /** Nested creator, adds a set of files (nested fileset attribute). */
+    function createFileSet() {
+        $num = array_push($this->filesets, new FileSet());
+        return $this->filesets[$num-1];
+    }
+
+    /**
+     * Creates a filterchain
+     *
+     * @return  object  The created filterchain object
+     */
+    function createFilterChain() {
+        $num = array_push($this->filterChains, new FilterChain($this->project));
+        return $this->filterChains[$num-1];
+    }
+
+    /**
+     * Callback function for regexp. This callback gets called for each programlisting
+     * for each file and replaces the old programlisting it gets as an argument with
+     * a syntax highlighted version.
+     *
+     * @return  object  The created filterchain object
+     */
+    public function doHighlightCallback($proglisting) {
+
+        // The argument $proglisting now contains the HTML coded version
+        // of all text between the <programlisting> tags. This means that
+        // all <,{ etc has been replace by the corresponding HTML entities
+        // so for that reason we must start by getting back the original
+        // characters.
+        $buffer = str_replace(array('&gt;', '&lt;', '&amp;','&quot;'),
+                              array('>', '<', '&', '"'),
+                              $proglisting[1]);
+
+        if( trim($buffer) == '' )
+            return;
+
+        $buffer = $this->highlighter->highlight($buffer);
+
+        return $buffer;
+
+    }
+
+    /** Main task entry point. Do the syntax highlightning on specified files after first
+     *  processing them through all specified filters in the filterchain
+     */
+    function main() {
+
+        if ($this->file === null && empty($this->filesets)) {
+            throw new BuildException("You must specify a file or fileset(s) for the HighlightSrcTask task.");
+        }
+
+        // Setup the parameters for Text_Highlighter
+        $loption = 0;
+        if( $this->lineNumber ) {
+            $loption = HL_NUMBERS_TABLE; // We only use formatting with a table for line numbers
+        }
+        $options = array(
+            'numbers' => $loption,
+            'tabsize' => $this->tabSize,
+            );
+
+        if( ! class_exists('Text_Highlighter') ) {
+            throw new BuildException('Cannot find class Text_Highlighter which is needed to do Syntax highlightning. Download this from the PEAR repository http://pear.php.net/package/Text_Highlighter/');
+        }
+
+        $this->highlighter = Text_Highlighter::factory($this->language,$options);
+        if( $this->highlighter === NULL ) {
+            throw new BuildException('Cannot create an instance of Text_Highlighter');
+        }
+
+        // compile the list of all files to modify, both file attrib and fileset elements can be used.
+        $files = array();
+        if ($this->file !== null) {
+            $files[] = $this->file;
+        }
+
+        if (!empty($this->filesets)) {
+            $filenames = array();
+            foreach ($this->filesets as $fs) {
+                try {
+                    $ds = $fs->getDirectoryScanner($this->project);
+                    $filenames = $ds->getIncludedFiles(); // get included filenames
+                    $dir = $fs->getDir($this->project);
+                    foreach ($filenames as $fname) {
+                        $files[] = new PhingFile($dir, $fname);
+                    }
+                } catch (BuildException $be) {
+                    $this->log($be->getMessage(), Project::MSG_WARN);
+                }
+            }
+        }
+
+        // These "slots" allow filters to retrieve information about the currently-being-process files
+        $slot = $this->getRegisterSlot("currentFile");
+        $basenameSlot = $this->getRegisterSlot("currentFile.basename");
+        $n = count($files);
+        $this->log("Applying syntax highlightning to $n file(s) using language \"{$this->language}\".");
+
+        foreach($files as $file) {
+
+
+            // set the register slots
+            $slot->setValue($file->getPath());
+            $basenameSlot->setValue($file->getName());
+
+            // 1) read contents of file, pulling through any filters
+            $in = null;
+            try {
+                $contents = "";
+                $in = FileUtils::getChainedReader(new FileReader($file), $this->filterChains, $this->project);
+                while(-1 !== ($buffer = $in->read())) {
+                    $contents .= $buffer;
+                }
+                $in->close();
+            } catch (Exception $e) {
+                if ($in) $in->close();
+                $this->log("Erorr reading file: " . $e->getMessage(), Project::MSG_WARN);
+            }
+
+            try {
+
+                // This is a preparation for the replacement with the callback below.
+                // If we don't do this then the next pattern will find too much for this case.
+                $contents = preg_replace(
+                    '%<pre class="programlisting"></pre>%',
+                    '%<pre class="programlisting"> </pre>%',
+                    $contents);
+
+                if( $contents === NULL )
+                    throw new BuildException('Internal error executing preg_replace()');
+
+                // Add modifier %Us = PCRE_UNGREEDY PCRE_DOTALL
+                $contents = preg_replace_callback(
+                    '%<pre class="programlisting">(.+)</pre>%Us',
+                    array($this,'doHighlightCallback'),
+                    $contents);
+
+                if( $contents === NULL )
+                    throw new BuildException('Internal error executing preg_replace_callback()');
+
+            } catch (Exception $e) {
+                $this->log("Error while syntax highlightning file: " . $e->getMessage(), Project::MSG_WARN);
+            }
+
+            try {
+                // now create a FileWriter w/ the same file, and write to the file
+                $out = new FileWriter($file);
+                $out->write($contents);
+                $out->close();
+                $this->log("Syntax highlightning file $file.", Project::MSG_VERBOSE);
+            } catch (Exception $e) {
+                if ($out) $out->close();
+                $this->log("Error writing file back: " . $e->getMessage(), Project::MSG_WARN);
+            }
+
+        }
+
+    }
+
+}

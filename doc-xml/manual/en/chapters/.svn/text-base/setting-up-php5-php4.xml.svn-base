@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<appendix version="5.0" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xml:id="app.setting-up-parallel-servers">
+    <title>Setting up PHP5 in parallel with PHP4 in SuSE 10.1</title>
+    <para>Even though PHP4 is officially deprecated and is no longer actively maintained a large
+        number of existing installations are stiil (and will be) using PHP4. For this reason it can
+        be important to be able to test scripts running both PHP4 and PHP5. This section shows how
+        to do this on Linux SuSE 10.1 installation. Other Linux dialects can use similar but not
+        identical setups.</para>
+    <para>SuSE 10.1 ships with Apache2 and PHP5 as standard. In order to install PHP4 in parallel
+        some extra work is therefore required. This chapter explains how to setup both PHP4 and PHP5
+        on the same server by configuring Apache2 using virtual hosts. </para>
+    <para>We will show how to maintain a simultaneous installation of both PHP4 and PHP5 at the same
+        time without the need to run a switching script to select which PHP version to activate. In
+        this setup we have opted to configure Apache with two virtual hosts based on IP-address, one
+        host running PHP4 as a SAPI module and the other virtual host running PHP5 as a CGI
+        module.</para>
+    <section>
+        <title>Configuration files and directories for Apache2 in SuSE 10.1</title>
+        <para>Before we start we give a short overview of where important configuration files and
+            directories for Apache2 are located in SuSE </para>
+        <para>
+            <note>
+                <para>The configuration files setup by SuSE is slightly different from the standard
+                    one-single "/etc/httpd.conf" used by other systems. The way SuSE does it is to
+                    create a hierarchy of setup files under "/etc/apache2/". While this might look
+                    complicated at first sight it has several advantages specially when You consider
+                    that some script have to modify and add configurations to Apache2. Doing
+                    automatic (and safe) edits in a large config file that can also be manually
+                    edited is almost impossible to guarantee. </para>
+            </note>
+        </para>
+        <para>
+            <variablelist>
+                <varlistentry>
+                    <term>Dir: /etc/apache2/</term>
+                    <listitem>
+                        <para>General configuration directory for Apache2, this is where the
+                                "<filename>httpd.conf</filename>" lives. </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>Dir: /etc/apache2/conf.d/</term>
+                    <listitem>
+                        <para>Module configuration files for loaded modules, for example php4.conf.
+                            All the configuration files in this directory will be automatically read
+                            by the main <filename>httpd.conf</filename> by means of an
+                                "<code>include conf.d/*.conf</code>" command so the exact name
+                            doesn't really matter as long as the file ends in "<code>*.conf</code>".
+                        </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>Dir: /etc/apache2/vhosts.d/</term>
+                    <listitem>
+                        <para>Virtual host configuration files. All files in this directory will be
+                            automatically read by the main <filename>httpd.conf</filename> the exact
+                            name doesn't really matter as long as the file ends in
+                                "<filename>*.conf</filename>". Note: When yast2 is used to edit
+                            virtual hosts it will add its "<filename>yast2_*.conf</filename>" in
+                            this directory. Unfortunately the virtual host configuration in yast2 in
+                            not without problem (bugs) for IP based virtual hosts so we prefer to
+                            create the configuration files manually. This will be shown later on in
+                            this article. </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>File: /etc/sysconfig/apache2</term>
+                    <listitem>
+                        <para>This is the main Apache2 configuration file. This file is the one that
+                            is really used to configure apache when it is started. This is also the
+                            file that the "Yast2" HTTPD-module edits. </para>
+                        <para>From our point of view the most important thing is that this is the
+                            place where we tell Apache2 what external modules to load. </para>
+                        <para>In the SuSE configuration this is done by listing all the modules in
+                            the string variable <code>APACHE_MODULES</code>. In the SuSE
+                            configuration there are no static "AddModule" directives in any of the
+                            configuration files for Apache. Instead this is dynamically generated
+                            each time apache is started (for example by /etc/init.d/apache2 start) </para>
+                        <para>The generation of the actual module file names is quite clever in that
+                            the script looks at the core module name in the
+                                <code>APACHE_MODULE</code> variable and automatically determines the
+                            name of the file name of the load modules. This means that for PHP we
+                            only have to give the name "php4" or "php5" as the name of the module. </para>
+                        <para>The script will then discover that the name of the file load module is
+                            in fact "<filename>libphp4.so</filename>" or
+                                "<filename>libphp5.so</filename>" automatically. The dynamically
+                            created list of load modules will be written to
+                                "<filename>/etc/apache2/sysconfig/loadmodule.conf</filename>" just
+                            before the startup script activates apache2 daemon which will then read
+                            the modules from this file which is included from the main
+                                "<filename>httpd.conf</filename>" file. </para>
+                    </listitem>
+                </varlistentry>
+            </variablelist>
+        </para>
+    </section>
+    <section>
+        <title>Making sure you have the correct Apache2 setup</title>
+        <para>PHP is only guaranteed to work with the Apache2 "Prefork MPM"
+            (Multi-Processing-Module) and you need to have apache2-prefork installed. This also
+            means that the APACHE_MPM in /etc/sysconfig/apache2 must NOT be set to "worker". You can
+            read more about the reasons for this issues in the <uri
+                xlink:href="http://httpd.apache.org/docs-2.0/developer/thread_safety.html">Apache
+                Documentation : Thread Safety</uri> For general information about MPMs please see
+                <uri xlink:href="http://httpd.apache.org/docs-2.0/mpm.html">Apache Documentation :
+                MPM</uri>
+        </para>
+        <para>If you use Yast2 to install Apache2 and the prefork module then all this will be
+            automatically setup. Before continuing please make sure that You have successfully
+            installed Apache2 on your server. For example by directing your favorite browser to
+                "<filename>http://localhost/</filename>" </para>
+        <para>
+            <note>
+                <para>There is no need to install the default SuSE PHP5 module since we must replace
+                    that anyway with our own CGI version of PHP5. </para>
+            </note>
+        </para>
+    </section>
+    <section>
+        <title>Approaches to running multiple PHP versions</title>
+        <para>There are two fundamental ways of running multiple versions of PHP on the same server. </para>
+        <para>
+            <orderedlist>
+                <listitem>
+                    <para>Running multiple instances of the HTTPD demon where each instance listens
+                        on separate addresses and/or ports. </para>
+                    <para><emphasis role="bold">Advantage:</emphasis> This is the only way to run
+                        multiple versions of PHP as (SAPI) modules in Apache2. In addition this has
+                        some better security since potential crashes will be isolated and not effect
+                        the other HTTPD demons. </para>
+                    <para><emphasis role="bold">Drawback:</emphasis> Running multiple HTTPD
+                        instances will need more system resources in terms of memory and file
+                        handlers. </para>
+                </listitem>
+                <listitem>
+                    <para>Running one instance of the HTTPD demon which is configured to serve
+                        multiple virtual hosts. This is the approach we have chosen. </para>
+                    <para><emphasis role="bold">Advantage:</emphasis> Minimum system overhead and
+                        relatively easy to setup. </para>
+                    <para><emphasis role="bold">Drawback:</emphasis> Only one PHP version can be run
+                        as a (SAPI) Apache module the other PHP versions must be
+                        configured/installed as CGI modules. This has a slight performance impact
+                        and might not be suitable for heavily loaded production sites. (Note: that
+                        could be overcome with the use of fast-cgi which works by pre-loading an
+                        instance of PHP in memory which will then be used by the Apache process. See
+                        Apache2 documentation regarding fast-cgi for more details). </para>
+                    <para>
+                        <note>
+                            <para>There are actually two versions of virtual hosts with apache. By
+                                name pr by IP-address. In this example we have chosen to match the
+                                virtual hosts by IP address since for a development server we want
+                                to be able to use plain IP addresses and not have the added
+                                complexity of setting up a full DNS server. For more details about
+                                other differences please see the excellent Apache2 documentation.
+                            </para>
+                        </note>
+                    </para>
+                </listitem>
+            </orderedlist>
+        </para>
+    </section>
+    <section>
+        <title>Outline of the remainder of the chapter</title>
+        <para>The approach we will use is to setup PHP4 as a (SAPI) Apache module on the default
+            server address and setup PHP5 as a CGI module on a virtual host. </para>
+        <para>
+            <variablelist>
+                <varlistentry>
+                    <term>Part I - Installing PHP4 as a SAPI module in Apache.</term>
+                    <listitem>
+                        <para>Part 1 Installing PHP4 as a SAPI module in Apache. This sections
+                            details how to configure and compile PHP4 as a SAPI module and then do
+                            the necessary Apache configuration modifications to enable this new
+                            module. By the end of this section we will have the ability to run PHP4
+                            scripts on our server. </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>Part II - Creating a virtual host</term>
+                    <listitem>
+                        <para>By assigning an alias IP-address on the server we can configure Apache
+                            with a virtual server based on this address. This new virtual server
+                            will have its own "cgi-bin/" as well as "htdocs/" directories. This part
+                            shows how to enable this by adding suitable configurations in Apache. By
+                            the end of this section our server will accept HTTP calls on a secondary
+                            IP-Address and use the specified document root for this new IP-address.
+                        </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term>Part III - Installing PHP5 as a CGI module on the virtual host.</term>
+                    <listitem>
+                        <para>This final part shows how to configure and compile PHP5 as a CGI
+                            module that we then make available for the newly created virtual host in
+                            part 2. By the end of this module we will have PHP4 running on the
+                            default server address and PHP5 running on the secondary virtual host.
+                        </para>
+                    </listitem>
+                </varlistentry>
+            </variablelist>
+        </para>
+    </section>
+    <section>
+        <title>Part I - Installing PHP4</title>
+        <section>
+            <title>Step one; Compiling PHP4 as a module for Apache2</title>
+            <para>First download the latest PHP4 tar-ball from php.net or the closest mirror and
+                unpack it in a temporary directory. </para>
+            <para>Since we will compile PHP4 ourself we need first to make sure a number of
+                libraries and the corresponding header files are installed in the system in order to
+                be able to compile PHP4. This is done by installing a number of "*-devel.rpm" on
+                your server. Depending your wanted configuration different development libraries
+                must be made available. </para>
+            <para>At the very minimum you will need the "apache2-devel.rpm" which provides the
+                "/sbin/apxs2" (Apache eXtenSion 2) command used to build modules with Apache2. Other
+                modules you might need are </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>jpeg-devel.rpm </para>
+                    </listitem>
+                    <listitem>
+                        <para>png-devel.rpm </para>
+                    </listitem>
+                    <listitem>
+                        <para>mm-devel.rpm </para>
+                    </listitem>
+                    <listitem>
+                        <para>xml2-devel.rpm </para>
+                    </listitem>
+                    <listitem>
+                        <para>mysql-devel.rpm </para>
+                    </listitem>
+                    <listitem>
+                        <para>...</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>Before you compile PHP4 you need to configure it by running the "./configure"
+                command with the options you want to be included in PHP4. </para>
+            <para>We use a small shell script called "mkphp4-sapi" to avoid having to re-type all
+                the options each time we compile a new version of PHP. The options we use for a
+                typical development server are (you might want to use other options) </para>
+            <para>
+                <programlisting>#! /bin/sh
+./configure --prefix=/usr/share \
+--datadir=/usr/share/php4 \
+--with-apxs2=/usr/sbin/apxs2 \
+--libdir=/usr/share \
+--includedir=/usr/include \
+--bindir=/usr/bin \
+--with-config-file-path=/etc/php4/apache2 \
+--enable-mbstring --enable-mbregex \
+--with-mysql  \
+--with-gd --enable-gd-imgstrttf --enable-gd-native-ttf \
+--with-zlib-dir=/usr/lib \
+--with-png-dir=/usr/lib \
+--with-jpeg-dir=/usr/lib --with-xpm-dir=/usr/X11R6 \
+--with-tiff-dir=/usr/lib --with-ttf-dir=/usr/lib \
+--with-freetype-dir=/usr/lib \
+--enable-ftp \
+--enable-memory-limit --enable-safe-mode \
+--bindir=/usr/bin \
+--enable-bcmath -enable-calendar \
+--enable-ctype --with-ftp \
+--enable-magic-quotes \
+--enable-inline-optimization \
+--with-bz2 \
+--with-iconv</programlisting>
+            </para>
+            <para>However there are one thing You should take notice of. We have specified the
+                config file path (where the php.ini resides) to "/etc/php4/apache2/" as You can
+                probably guess from this naming convention it will make it possible to have
+                different ini files for both PHP4 and PHP5. In fact we have four different ini files
+                according to </para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>"<filename>/etc/php4/apache2/php.ini</filename>" Used by the apache
+                            SAPI module version of PHP4 </para>
+                    </listitem>
+                    <listitem>
+                        <para>"<filename>/etc/php4/cli/php.ini</filename>" Used by the standalone
+                            client version of PHP4 (/usr/bin/php4) </para>
+                    </listitem>
+                    <listitem>
+                        <para>"<filename>/etc/php5/apache2/php.ini</filename>" Used by the apache
+                            CGI version of PHP5 </para>
+                    </listitem>
+                    <listitem>
+                        <para>"<filename>/etc/php5/cli/php.ini</filename>" Used by the standalone
+                            client version of PHP5 (/usr/bin/php5) </para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>When you run this you might get some errors saying that the configuration file
+                cannot find some library. This is a sign that you might have the library installed
+                but not yet have the "*-devel" RPM version added to your system which is needed
+                since this is where all the usual header files needed for compilation would be. </para>
+            <para>So for example if you get an error like "Cannot find PNG libraries. Please check
+                your that the corresponding "png-devel" library is installed and if not go back to
+                Yast2 and install the needed "*-devel.rpm" versions of the libraries. </para>
+            <para>When You have been able to successfully run the ./configuration command it is time
+                to compile. Type "make" as usual but do not type "make install", now wait until the
+                compilation finishes. </para>
+            <para>
+                <note>
+                    <para>If you are on a Pentium4 HT or on a real dual CPU machine you can speed up
+                        the compilation by instead giving the "make -j3" command which will start up
+                        3 concurrent compilation processes.</para>
+                </note>
+            </para>
+            <para>Again; Do not run "<code>make install</code>" since this will try to modify the
+                configuration files in a way that isn't SuSE friendly. </para>
+            <para>The resulting PHP4 that you have built can be found in
+                    "<filename>.libs/libphp4.so</filename>". Now we only want to copy this file to
+                the location of the other Apache2 modules. </para>
+            <para>
+                <note>
+                    <para>Again, PHP is only guaranteed to work with the non-threaded version of
+                        Apache2, which means that you should have installed the "apache2-prefork"
+                        MPM and NOT the "apache2-worker" MPM. </para>
+                </note>
+            </para>
+            <para>If you have correctly installed the prefork MPM several existing modules should
+                now be installed in "<filename>/usr/lib/apache2-prefork/</filename>". </para>
+            <para>So the only thing that now remains is to copy
+                    "<filename>.libs/libphp4.so</filename>" to
+                    "<filename>/usr/apache2-prefork/</filename>" in order for Apache to find PHP4 as
+                a module. </para>
+        </section>
+        <section>
+            <title>Step two; Enable the PHP4 module in the Apache2 configuration</title>
+            <para>There are three steps to needed to enable PHP4 in Apache. </para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Add php4 to the APACHE_MODULE string in "/etc/sysconfig/apache2" in
+                            order so that the startup script in SuSE will add the appropriate
+                            LoadModule statement so that Apache will load PHP4 as a module. In our
+                            case our module string will look like </para>
+                        <para>
+                            <programlisting>APACHE_MODULES="access actions alias auth auth_dbm autoindex cgi \
+dir env expires include log_config mime negotiation setenvif ssl \
+suexec userdir dav dav_svn php4 "</programlisting>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Telling Apache to run files ending in *.php through the PHP4 module.
+                            This is done by specifying the MIME type which the PHP4 module
+                            registered itself with. In addition we also tell Apache to search for
+                            the appropriate PHP index files in case a directory name is given as the
+                            URL. We do this by creating a file "<filename>php4.conf</filename>" with
+                            the following content </para>
+                        <para>
+                            <programlisting>&lt;IfModule sapi_apache2.c>
+   AddType application/x-httpd-php .php3
+   AddType application/x-httpd-php .php4
+   AddType application/x-httpd-php .php
+   AddType application/x-httpd-php-source .php3s
+   AddType application/x-httpd-php-source .php4s
+   AddType application/x-httpd-php-source .phps
+   DirectoryIndex index.php3
+   DirectoryIndex index.php4
+   DirectoryIndex index.php
+&lt;/IfModule></programlisting>
+                        </para>
+                        <para>and place it in the "<filename>/etc/apache2/conf.d/</filename>"
+                            directory. This will guarantee that it will be read upon startup. The
+                                "<code>IfModule</code>" statement in the beginning is just to avoid
+                            the statements to be executed in case the PHP4 module is not loaded (we
+                            test this by checking if the "<code>sapi_apache2.c</code>" has been
+                            activated in Apache). </para>
+                    </listitem>
+                    <listitem>
+                        <para>The final step now is to restart Apache by doing (as root) </para>
+                        <para>
+                            <programlisting>$> /etc/init.d/apache2 restart</programlisting>
+                        </para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>In order to verify that PHP has been enabled run a standard PHP script; for
+                example by copying the following script to "<filename>/srv/www/htdocs/</filename>" </para>
+            <para>
+                <programlisting>&lt;?php 
+phpinfo(); 
+?></programlisting>
+            </para>
+            <para>and name it as "<filename>phpinfo.php</filename>" . If you now go to your favorite
+                browser and run this script as "http://localhost/phpinfo.php" you should get the
+                standard PHP4 information presented as a quite big table. </para>
+        </section>
+    </section>
+    <section>
+        <title>Part II - Creating a virtual host</title>
+        <section>
+            <title>Step 1; Adding an alias IP-address to Your server</title>
+            <para>In this example we will assume that the server is called "gamma" and have the
+                primary address "192.168.0.50". The virtual host will be called "gamma2" and will be
+                located at address "192.168.0.51". The easiest way to add another address alias is
+                to use yast2 and the network configuration module and simple add a new alias.
+            </para>
+        </section>
+        <section>
+            <title>Step 2; Creating different document and cgi roots</title>
+            <para>In preparation of the new virtual host we want it to have a separate document and
+                cgi (where we will store the PHP5 binary) roots compared with the standard server.
+                For this purpose we add two new directories "/srv/www/gamm2-htdocs/" and
+                "/srv/www/gamma2-cgi-bin/" on the server. </para>
+        </section>
+        <section>
+            <title>Step 3; Configure Apache with a virtual host</title>
+            <para>For his we add a new small config file named "gamma2_vhost.conf" (the exact name
+                is not important as long as it ends in *.conf) in the "/etc/apache2/vhosts.d/"
+                directory. The script we add is </para>
+            <para>
+                <programlisting># Setup gamma2 on secondary IP-address
+&lt;VirtualHost 192.168.0.51>
+
+ DocumentRoot /srv/www/gamma2-htdocs/
+ ServerName gamma2
+ ServerAdmin root@localhost
+
+ # We use a separate CGI directory
+ ScriptAlias /cgi-bin/ /srv/www/gamma2-cgi-bin/
+
+ # For good measure we also add recognition of PHP5 index
+ DirectoryIndex index.php5
+
+ # This is the two critical statement for this virtual
+ # host we activate PHP5 as a CGI module
+ Action php5-cgi /cgi-bin/php
+ AddHandler php5-cgi .php5 .php
+
+ &lt;Directory /srv/www/gamma2-cgi-bin/>
+  AllowOverride None
+  Options +ExecCGI -Includes
+  Order allow,deny
+  Allow from all
+ &lt;/Directory>
+
+ &lt;Directory "/srv/www/gamma2-htdocs/">
+  Options None
+  AllowOverride None
+  Order allow,deny
+  Allow from all
+  DirectoryIndex index.html index.php
+ &lt;/Directory>
+
+ UserDir public_html
+
+&lt;/VirtualHost> </programlisting>
+            </para>
+            <para>We do not go into any more detail of this configuration since it should be fairly
+                easy to understand. For details we refer to the Apache documentation. </para>
+            <para>What we have accomplished with this file is that when we call the server on the
+                second address any php file will be recognized by apache as a file to be handled by
+                the "php5-cgi" action. This in turn means that whenever Apache encounters a *.php5
+                (or *.php) file it will run the program "/cgi-bin/php". This path in turn will be
+                expanded to " /srv/www/gamma2-cgi-bin/php". </para>
+            <para>In the next section we will show how to compile PHP5 and put the executable CGI
+                version in this directory.</para>
+        </section>
+    </section>
+    <section>
+        <title>Part III - Installing PHP5</title>
+        <para>We are now ready for the last step which means compiling PHP5 as a CGI module for
+            Apache. This follows the same principle as the compilation for PHP4 as described above.
+            Again, we use a small configuration script "<filename>mkphp5-cgi</filename>" which is
+            shown below.</para>
+        <para>
+            <programlisting>#! /bin/sh
+./configure --prefix=/usr/share \
+--datadir=/usr/share/php \
+--libdir=/usr/share --includedir=/usr/include \
+--enable-force-cgi-redirect \
+--bindir=/usr/bin \
+--with-config-file-path=/etc/php5/apache2 \
+--enable-mbstring --enable-mbregex \
+--with-mysql  \
+--with-gd --enable-gd-imgstrttf --enable-gd-native-ttf \
+--with-zlib-dir=/usr/lib \
+--with-png-dir=/usr/lib --with-jpeg-dir=/usr/lib \
+--with-xpm-dir=/usr/X11R6 \
+--with-tiff-dir=/usr/lib --with-ttf-dir=/usr/lib \
+--with-freetype-dir=/usr/lib \
+--enable-ftp \
+--enable-memory-limit --enable-safe-mode \
+--bindir=/usr/bin \
+--enable-bcmath -enable-calendar \
+--enable-ctype --with-ftp \
+--enable-magic-quotes \
+--enable-inline-optimization \
+--with-bz2 \
+--with-iconv</programlisting>
+        </para>
+        <para>Notice that as we said before we have a different configuration path for PHP5 compared
+            with PHP4 as shown above. Also note that in order to build the CGI module we do not
+            configure the "apxs2" option. After successful configuration type
+                "<command>make</command>" but do not type "<command>make install</command>" in order
+            to compile PHP5. </para>
+        <para>After the compilation have finished copy "<filename>sapi/cgi/php</filename>" to
+                "<filename>/srv/www/gamma2-cgi-bin/php</filename>" since this is the place where our
+            virtual host expects to find the PHP5 CGI module. </para>
+    </section>
+    <section>
+        <title>Part IV - Verifying the setup</title>
+        <para>The only small thing remaining, in case You haven't done so already, is to create
+            suitable "<filename>php.ini</filename>" scripts that are copied to the previous
+            specified PHP4 and PHP5 config file directories,
+                "<filename>/etc/php4/apache2/</filename>" and
+                "<filename>/etc/php5/apache2/</filename>". </para>
+        <para>
+            <note>
+                <para>It is recommended to enable all warnings and errors in each php.ini file
+                    unless You have very, very good reasons not to do this. Use the default php.ini
+                    files in the PHP distribution as the initial template. For use with JpGraph it
+                    is recommended to do the following modifications: </para>
+                <para>
+                    <orderedlist>
+                        <listitem>
+                            <para>Increase maximum allowed memory to 32MB </para>
+                        </listitem>
+                        <listitem>
+                            <para>Increase maximum allowed script running time to 30s</para>
+                        </listitem>
+                        <listitem>
+                            <para>Set full error reporting </para>
+                        </listitem>
+                    </orderedlist>
+                </para>
+            </note>
+        </para>
+        <para>Assuming the IP-addresses shown in the configuration above we are now ready to test
+            out setup. In order to do this make sure that each document root have the "phpinfo.php"
+            test script (see above). </para>
+        <para>We can now test the different setups by using the URLs </para>
+        <para>
+            <orderedlist>
+                <listitem>
+                    <para><filename>http://192.168.0.50/phpinfo.php</filename>
+                    </para>
+                    <para>This URL would send back configuration showing that the server is running
+                        PHP4. Verify that the config path used is set to
+                            "<filename>/etc/php4/apache2/</filename>". </para>
+                </listitem>
+                <listitem>
+                    <para><filename>http://192.168.0.51/phpinfo.php</filename>
+                    </para>
+                    <para>This URL would send back configuration showing that the server is running
+                        PHP5 Verify that the config path used is set to
+                            "<filename>/etc/php5/apache2/</filename>". </para>
+                </listitem>
+            </orderedlist>
+        </para>
+        <section>
+            <title>Troubleshooting</title>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>If your browser asks you to download content with mime-type
+                                "<code>mime/x-httpd-application</code>" when you try to visit the
+                            PHP script it means that Apache does not yet run PHP as a module (now
+                            module have accepted to handle the x-http-application mime type). Make
+                            sure you have included the "php4" in the <code>APACHE_MODULES</code>
+                            string as described above and that you added the
+                                "<filename>php4.conf</filename>" file in the
+                                "<filename>/etc/apache2/conf.d/</filename>" directory. </para>
+                    </listitem>
+                    <listitem>
+                        <para>We had some issues with FireFox insisting on downloading
+                                "<filename>phpinfo.php</filename>" as a file even when other browser
+                            showed the page properly, using "<command>etherreal</command>" we could
+                            confirm that Firefox was using a previous cached version before we had
+                            enabled PHP in the apache configuration. To solve this we had to clear
+                            the Firefox cache. </para>
+                    </listitem>
+                </orderedlist>
+            </para>
+        </section>
+    </section>
+</appendix>

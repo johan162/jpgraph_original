@@ -1,0 +1,32 @@
+#! /bin/sh
+# mkphp5-cli
+# Build a command line version of PHP5
+./configure \
+--prefix=/usr/share/php5 \
+--datadir=/usr/share/php5 \
+--libdir=/usr/share/php5 \
+--includedir=/usr/include/php5 \
+--enable-force-cgi-redirect \
+--bindir=/usr/bin \
+--with-config-file-path=/etc/php5/cli \
+--with-config-file-scan-dir=/etc/php5/cli \
+--enable-mbstring --enable-mbregex \
+--with-mysql  \
+--with-gd --enable-gd-imgstrttf --enable-gd-native-ttf \
+--with-zlib-dir=/usr/lib \
+--with-png-dir=/usr/lib --with-jpeg-dir=/usr/lib --with-xpm-dir=/usr/X11R6 \
+--with-tiff-dir=/usr/lib --with-ttf-dir=/usr/lib \
+--with-freetype-dir=/usr/lib \
+--enable-ftp \
+--enable-memory-limit \ 
+--enable-safe-mode \
+--enable-bcmath -enable-calendar \
+--enable-ctype \
+--with-ftp \
+--enable-magic-quotes \
+--enable-inline-optimization \
+--enable-tokenizer \
+--with-bz2 \
+--with-iconv \
+--with-pear=/usr/share/php5
+

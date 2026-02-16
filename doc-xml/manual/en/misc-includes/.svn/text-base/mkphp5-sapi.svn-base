@@ -1,0 +1,25 @@
+#! /bin/sh
+# mkphp5-sapi
+# Build a SAPI (Apache module) version of PHP5
+./configure --prefix=/usr/share \
+--datadir=/usr/share/php --with-apxs2=/usr/sbin/apxs2 \
+--libdir=/usr/share --includedir=/usr/include \
+--bindir=/usr/bin \
+--with-config-file-path=/etc/php5/apache2 \
+--enable-mbstring --enable-mbregex \
+--with-mysql  \
+--with-gd --enable-gd-imgstrttf --enable-gd-native-ttf \
+--with-zlib-dir=/usr/lib \
+--with-png-dir=/usr/lib --with-jpeg-dir=/usr/lib --with-xpm-dir=/usr/X11R6 \
+--with-tiff-dir=/usr/lib --with-ttf-dir=/usr/lib \
+--with-freetype-dir=/usr/lib \
+--enable-ftp \
+--enable-memory-limit --enable-safe-mode \
+--bindir=/usr/bin \
+--enable-bcmath -enable-calendar \
+--enable-ctype --with-ftp \
+--enable-magic-quotes \
+--enable-inline-optimization \
+--with-bz2 \
+--with-iconv
+

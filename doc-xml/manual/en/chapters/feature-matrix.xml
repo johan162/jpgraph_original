@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<!--$Id: feature-matrix.xml 1647 2009-07-20 12:29:23Z ljp $ -->
+<sect1 version="5.0" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Feature-matrix for the library</title>
+    <para>JpGraph library is an OO graph library which makes it easy to both draw a "quick and
+        dirty" graph with a minimum of code and quite complex graphs which requires a very fine
+        grain of control. The library tries to assign sensible default values for most parameters
+        hence making the learning curve quite flat since for most of the time very few commands are
+        required to draw graphs with a pleasing esthetic look.</para>
+    <para>The following list makes no claim to be complete but it will give a birds view of some of
+        the main (and in some cases unique) features of the library. The list will also illustrate
+        the difference between the free and the pro-version.</para>
+    <para>
+        <table frame="none">
+            <title>Feature matrix for JpGraph library</title>
+            <tgroup cols="3">
+                <colspec colname="c1" colnum="1"/>
+                <colspec colname="c2" colnum="2"/>
+                <colspec colname="c3" colnum="3"/>
+                <thead>
+                    <row>
+                        <entry>Feature</entry>
+                        <entry>Free version</entry>
+                        <entry>Pro-version</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>Supports PNG, GIF, JPG image formats</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Flexible scales, supports text-lin, text-log, lin-lin, lin-log,
+                            log-lin and log-log and integer scales </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Supports both PNG, GIF and JPG graphic formats. Note that the
+                            available formats are dependent on the specific PHP installation where
+                            the library is used.</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Supports caching of generated graphs to lessen burden of a HTTP
+                            server. </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Supports batch mode to only generate images to a file</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Supports client side image maps which makes it easy to produce drill
+                            down images. </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Intelligent auto-scaling which gravitates towards esthetic values,
+                            i.e. multiples of 2:s and 5:s </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Fully supports manual scaling, with fine grain control of position of
+                            ticks. </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Multiple Y-axes (and scales) and multiple data series in the same
+                            graph</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Supports background images with different formatting options</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>User specified grace for auto-scaling</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Supports unlimited number of y-axes, </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Supports, line-plots, filled line-plots, accumulated line-plots, bar
+                            plots, accumulated bar plots, grouped bar plots, error plots, line error
+                            plots, scatter plots, gantt-charts, radar plots, 2D and 3D pie charts. </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Supports unlimited number of plots in each graph, makes it easy to
+                            compose complex graph which consists of several plot types </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>User specified position of axis</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Designed as a flexible OO framework which makes it easy to add new
+                            types of plots </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Supports automatic legend generation with custom formatting</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Supports both vertical and horizontal grids</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Supports anti-aliasing of lines</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Supports background images as well as unlimited number of icons in
+                            the graph </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Supports rotation of linear graphs</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>More then 400 named colors</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Designed modularly - you don't have to include code which isn't used </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Supports user specified callback for fine tuning scale labels</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Support for text augmentation of graphs</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Support for PHP Accelerator</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Support for a large set of 1D barcodes (EAN-128, ...)</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Support for Windrose plots</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Support for discontinuities in graphs</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Enhanced anti-aliasing for PieCharts</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>More advanced formatting of graph titles including 3D Bevel effects. </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Additional 3D Bevel formatting feature for the entire Graph </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Footer text on all graph types </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Full support for color alpha blending </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Advanced interpolation with cubic splines to get smooth curves from
+                            just a few data points. </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Several different fill styles for line plots</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Some image 3D effects built-in without external image manipulation
+                            programs </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Additional built-in images for plot marks including 3D rendered
+                            markers like diamonds, squares, bevels, balls, pins etc </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Support for calculation of linear regression</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Text strings can be added to the plot using scale coordinates </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Support for all primitive URL parameter types with CSIM graphs. </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Hare/Niemeyer Integer compensation for Pie Plots </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Possibility to use Vertical Gradient fill for line plots. </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Improved error handling. The visual appearance of the error handling
+                            now tries to mimic any windows system window (in graphic) </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Builtin support to display over 200 country flag and the possibility
+                            to use them as icons or markers in the graphs. All the flag images are
+                            builtin with JpGraph in an efficient pre-compiled data format. </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Support for both Chinese and Japanese character sets </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Support for custom TTF fonts</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Support for 2D contour plots of 3D functions</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Unlimited number of data points (up to memory and CPU limit of
+                            server)</entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Windrose plots</entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Odometer plots</entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Graphic excel like tables</entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>1D Linear barcodes (e.g. EAN8,13,128, Code39, 128, 2of5, Code-11,
+                            Codabar etc)</entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>2D-Barcode PDF417</entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>2D-Barcode Datamatrix</entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>2D-Barcode QR-code</entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Matrix visualization</entry>
+                        <entry>
+                        </entry>
+                        <entry align="center">
+                            <para role="checkmark">
+                            </para>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+    </para>
+    <para>In addition to these high level features the library has been designed to be orthogonal
+        and consistent in its' naming convention. For example, to specify color each object (i.e.
+        axis, grids, texts, titles etc) within the graph implements the method
+            <code>SetColor()</code> with the same signature. </para>
+</sect1>

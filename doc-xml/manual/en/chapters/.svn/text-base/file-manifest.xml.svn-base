@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<appendix version="5.0" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>List of files included in the library</title>
+    <para>In the distribution these files are stored directly under the src directory in the
+        distribution. </para>
+    <para>In the pro-version of the library there are also two alternative directories which
+        contains variations of the core <filename>src</filename> directory. These additional
+        directories are:</para>
+    <para>
+        <variablelist>
+            <varlistentry>
+                <term>stripped-src</term>
+                <listitem>
+                    <para>These file are suitable to be deployed on a production server. No examples
+                        or demo applications are included here and in addition all files have white
+                        spaces and comments stripped which makes them significantly smaller and
+                        hence reduce the load time of the files on a productions server.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>phpExpress-src</term>
+                <listitem>
+                    <para>These files are intended to be used with the PHP Accelerator from
+                        NuSpehere. This accelerometer can be downloaded free of charge from <uri
+                            xlink:href="http://www.nusphere.com">NuSphere corporation</uri>. For a
+                        production server this is the recommended installation since it
+                        significantly reduces the load on the production server. See <xref
+                            xlink:href="#chap.php-accelerator"/> for information on how to install
+                        the freely available PHP Accelerator.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </para>
+    <table frame="none">
+        <title>List of files included in the library</title>
+        <tgroup cols="3">
+            <colspec colnum="1" colname="c1" colwidth="1.1*"/>
+            <colspec colnum="2" colname="c2" colwidth="0.52*"/>
+            <colspec colnum="3" colname="c3" colwidth="1.39*"/>
+            <thead>
+                <row>
+                    <entry>File name</entry>
+                    <entry>Only Pro Version </entry>
+                    <entry>Description</entry>
+                </row>
+            </thead>
+            <tbody>
+                <row>
+                    <entry>
+                        <filename>flags.dat</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Raw data for country flag in maximum size</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>flags_thumb100x100.dat</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Raw data for country flag in size 100x100</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>flags_thumb35x35.dat</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Raw data for country flag in size 35x35</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>flags_thumb60x60.dat</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Raw data for country flag in size 60x60</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>gd_image.inc.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Interface classes to the low level GD library</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>imgdata_balls.inc.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Stored image data for marker images</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>imgdata_bevels.inc.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Stored image data for marker images</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>imgdata_diamonds.inc.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Stored image data for marker images</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>imgdata_pushpins.inc.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Stored image data for marker images</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>imgdata_squares.inc.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Stored image data for marker images</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>imgdata_stars.inc.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Stored image data for marker images</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpg-config.inc.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Configuration file for the library</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_antispam-digits.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Image data for CAPTCHA digits</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_antispam.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: CAPTCHA figures</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_bar.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Bargraphs</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_canvas.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Canvas graphs</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_canvtools.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Tools for canvas graphs</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_date.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Date scale handling</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_errhandler.inc.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Core module: Error handler</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_error.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Error plots</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_flags.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Country flags</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_gantt.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Gantt chart</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_gb2312.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: GB2312 (Chinese) encoding</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_gradient.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Gradient fill</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_iconplot.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Icon images in plots</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_imgtrans.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Image transformation</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_led.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: LED digits/numbers</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_legend.inc.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Core module: Legend handling</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_line.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Line plot</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_log.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Log scale</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_mgraph.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Multigraph canvas</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Core module: JpGraph core module</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_pie3d.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: 3D Pie plot</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_pie.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: 2D Pie plot</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_plotband.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Plot bands (filled areas in graphs)</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_plotmark.inc.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Plotmark for line plots</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_polar.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Polar plots</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_radar.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module:: Radar plot</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_regstat.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module: Spline and Bezier curves</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_rgb.inc.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Core module: Color handling</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_scatter.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module:: Scatter plot</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_stock.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module:: Stock charts</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_text.inc.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Core module: Text handling</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_ttf.inc.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Core module: TTF font handling</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_utils.inc.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension module:: Various utility classes</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_layout_vh.inc.php</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Extension utility: classes for automatic layout classes</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_odo.php</filename>
+                    </entry>
+                    <entry align="center">*</entry>
+                    <entry>Extension module: Odometer plot</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_windrose.php</filename>
+                    </entry>
+                    <entry align="center">*</entry>
+                    <entry>Extension module:: Windrose plots</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_table.php</filename>
+                    </entry>
+                    <entry align="center">*</entry>
+                    <entry>Extension module:: Graphic tables</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_barcode.php</filename>
+                    </entry>
+                    <entry align="center">*</entry>
+                    <entry>Extension module: 1D Barcodes</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>jpgraph_matrix.php</filename>
+                    </entry>
+                    <entry align="center">*</entry>
+                    <entry>Extension module: Matrix plots</entry>
+                </row>
+            </tbody>
+        </tgroup>
+    </table>
+    <para>In addition to the files above the distribution contains the following directories</para>
+    <table frame="none">
+        <title>List of subdirectories in main <filename>src</filename> directory</title>
+        <tgroup cols="3">
+            <colspec colnum="1" colname="c1" colwidth="1.1*"/>
+            <colspec colnum="2" colname="c2" colwidth="0.52*"/>
+            <colspec colnum="3" colname="c3" colwidth="1.39*"/>
+            <thead>
+                <row>
+                    <entry>Directory</entry>
+                    <entry>Only Pro Version</entry>
+                    <entry>Description</entry>
+                </row>
+            </thead>
+            <tbody>
+                <row>
+                    <entry>
+                        <filename>Examples</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>JpGraph Example directory</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>lang</filename>
+                    </entry>
+                    <entry>
+                    </entry>
+                    <entry>Localized error messages</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>barcode</filename>
+                    </entry>
+                    <entry align="center">*</entry>
+                    <entry>1D Barcodes</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>datamatrix</filename>
+                    </entry>
+                    <entry align="center">*</entry>
+                    <entry>2D Barcode Datamatrix directory</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>pdf417</filename>
+                    </entry>
+                    <entry align="center">*</entry>
+                    <entry>2D Barcode PDF417 directory</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>QR</filename>
+                    </entry>
+                    <entry align="center">*</entry>
+                    <entry>2D Barcode QR (Quick response) directory</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>table_examples</filename>
+                    </entry>
+                    <entry align="center">*</entry>
+                    <entry>Table examples</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>windrose_examples</filename>
+                    </entry>
+                    <entry align="center">*</entry>
+                    <entry>Windrose examples</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>odometer_examples</filename>
+                    </entry>
+                    <entry align="center">*</entry>
+                    <entry>Odometer examples</entry>
+                </row>
+                <row>
+                    <entry>
+                        <filename>matrix_examples</filename>
+                    </entry>
+                    <entry align="center">*</entry>
+                    <entry>Matrix plot examples</entry>
+                </row>
+            </tbody>
+        </tgroup>
+    </table>
+</appendix>
