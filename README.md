@@ -1,12 +1,12 @@
 # JpGraph — Historic Archive
 
-> **⚠️ This repository is a historic archive.** JpGraph was developed between 2000–2010 for **PHP 5.x** and the **GD 2.x** graphics library. It is not maintained, will not run on modern PHP versions, and is published here solely for historical and educational interest.
+> **⚠️ This repository is a historic archive.** JpGraph was originally developed between ca 1998–2010 for **PHP 5.x** and the **GD 2.x** graphics library. This last version from the original author of JpGraph is not maintained, will not run on modern PHP versions, and is published here solely for historical and educational interest.
 
 ## What Was/Is JpGraph?
 
-JpGraph is an object-oriented PHP graph-plotting library created by **Johan Persson** at [Aditus Consulting](http://www.aditus.nu/jpgraph/). Development started around 1998–1999 and continued through 2010.
+JpGraph is an object-oriented PHP graph-plotting library created by **Johan Persson** [owner of the now defunct Aditus Consulting]). Development started around 1998–1999 and continued through the end of the 2010:ish.
 
-At its peak, JpGraph was one of the most comprehensive server-side charting libraries available for PHP and was for a decade the most used graphic library for PHP. It could produce publication-quality charts rendered as PNG, JPEG, or GIF images — all driven by PHP's GD extension with no JavaScript, no browser dependency, and no external rendering engine.
+At its peak, JpGraph was the most comprehensive server-side charting libraries available for PHP and was for a decade the most used graphic library for PHP. It could produce publication-quality charts rendered as PNG, JPEG, or GIF images — all driven by PHP's GD extension with no JavaScript, no browser dependency, and no external rendering engine.
 
 The library was eventually released under a **dual license**: the QPL 1.0 for open-source and educational use, and a commercial JpGraph Professional License. The reason for the dual license to be able to part tinme work almost fulltime with support and development.
 
