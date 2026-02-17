@@ -169,7 +169,7 @@ In-depth technical documentation describing the internal design and algorithms o
 
 ### `ddda/` — Database Driven Documentation Architecture
 
-A custom web-based tool that Johan Persson built to manage JpGraph's API documentation. It parses PHP source code, stores the class hierarchy in a MySQL database, provides a web UI to edit descriptions per method/parameter, tracks documentation coverage as a percentage, and generates the HTML class reference shipped with the library.
+A custom web-based tool to manage JpGraph's API documentation. It parses PHP source code, stores the class hierarchy in a MySQL database, provides a web UI to edit descriptions per method/parameter, tracks documentation coverage as a percentage, and generates the HTML class reference shipped with the library.
 
 See [README-DDDA.md](README-DDDA.md) for a detailed description.
 
@@ -200,9 +200,9 @@ The documentation covers:
 
 ### `QR-paper/` — A Note on Errors in the QR Standard
 
-During the development of the QR Code module, Johan Persson discovered minor errors in the official QR barcode specification (ISO/IEC 18004). The paper documents these discrepancies:
+During the development of the QR Code module, an error in the official QR barcode specification (ISO/IEC 18004) for application of the final balancing mask. The paper dicsusses this error and its implication.
 
-- `J. Persson - A note on minor errors in the QR standard.pdf` — The published note.
+- `J. Persson - A note on minor errors in the QR standard.pdf` — The published paper.
 - `qrlog.txt` — Debug log output from the QR encoder used while verifying the issues.
 
 ---
