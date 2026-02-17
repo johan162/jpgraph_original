@@ -1,6 +1,28 @@
 # JpGraph — Historic Archive
 
-> **⚠️ This repository is a historic archive.** JpGraph was originally developed between ca 1998–2010 for **PHP 5.x** and the **GD 2.x** graphics library. This last version from the original author of JpGraph is not maintained, will not run on modern PHP versions, and is published here solely for historical and educational interest.
+> **⚠️ This repository is a historic archive.** JpGraph was originally developed between ca 1998–2010 by me for **PHP 3-5.x** and the **GD 2.x** graphics library. This last version from the original author of JpGraph is not maintained, will not run on modern PHP versions, and is published here solely for historical and educational interest.
+
+## Table of Contents
+
+- [JpGraph — Historic Archive](#jpgraph--historic-archive)
+  - [What Was/Is JpGraph?](#what-wasis-jpgraph)
+  - [What happened to JpGraph?](#what-happened-to-jpgraph)
+    - [What This Repository Contains](#what-this-repository-contains)
+  - [Project Layout in Detail](#project-layout-in-detail)
+    - [`jpgraph-3.1.6p/` — The Library (v3.1.6p)](#jpgraph-316p--the-library-v316p)
+      - [`jpgraph-3.1.6p/src/` — Source Code](#jpgraph-316psrc--source-code)
+      - [`jpgraph-3.1.6p/src-phpexpress/` and `src-stripped/`](#jpgraph-316psrc-phpexpress-and-src-stripped)
+      - [`jpgraph-3.1.6p/docportal/`](#jpgraph-316pdocportal)
+    - [`architecture/` — Technical Architecture Documentation](#architecture--technical-architecture-documentation)
+    - [`ddda/` — Database Driven Documentation Architecture](#ddda--database-driven-documentation-architecture)
+    - [`doc-xml/` — Documentation Source (DocBook XML)](#doc-xml--documentation-source-docbook-xml)
+    - [`QR-paper/` — A Note on Errors in the QR Standard](#qr-paper--a-note-on-errors-in-the-qr-standard)
+    - [`misc/` — Historical Artifacts](#misc--historical-artifacts)
+  - [Requirements (Historical)](#requirements-historical)
+  - [License](#license)
+
+
+
 
 ## What Was/Is JpGraph?
 
@@ -24,12 +46,11 @@ This repository collects the **last Pro release** (v3.1.6p, January 2010) togeth
 | Path | Description |
 |------|-------------|
 | [`jpgraph-3.1.6p/`](jpgraph-3.1.6p/) | Final professional release — source, examples, and rendered documentation |
+| [`architecture/`](architecture/) | Technical architecture documentation — detailed descriptions of the core library, barcode implementations, and contour plot algorithms |
 | [`ddda/`](ddda/) | DDDA (Database Driven Documentation Architecture) — the custom tool built to document JpGraph's class hierarchy (see [README-DDDA.md](README-DDDA.md)) |
 | [`doc-xml/`](doc-xml/) | DocBook XML source for the user manual and reference guide |
 | [`QR-paper/`](QR-paper/) | A note on errors discovered in the official QR barcode specification during development of the QR module |
-| [`barcode_architecture.md`](barcode_architecture.md) | Detailed technical description of all four barcode subsystems — PDF417, QR Code, Data Matrix, and 1D linear barcodes |
-| [`misc/`](misc/) | Miscellaneous historical artifacts including the very first release (v1.0) |
-| [`release-email-3.0.0.txt`](release-email-3.0.0.txt) | The original release announcement email for v3.0.0 |
+| [`misc/`](misc/) | Miscellaneous historical artifacts including the very first release (v1.0) and the v3.0.0 release announcement |
 
 ---
 
@@ -76,7 +97,7 @@ The core library and all plotting modules:
 | `jpgraph_polar.php` | Polar coordinate plots (full 360° and 180° modes) with logarithmic scale support. |
 | `jpgraph_windrose.php` | Wind rose diagrams — compass-directional frequency plots (4/8/16 directions). |
 | `jpgraph_stock.php` | Stock/candlestick charts (open-high-low-close). |
-| `jpgraph_contour.php` | **Contour (isobar) line plots** — a novel marching-edges algorithm (see [architecture-overview.md](architecture-overview.md)). |
+| `jpgraph_contour.php` | **Contour (isobar) line plots** — a novel marching-edges algorithm (see [architecture/contour-algorithm.md](architecture/contour-algorithm.md)). |
 | `jpgraph_contourf.php` | **Filled contour plots** — adaptive recursive subdivision (rectangular or triangular mesh) with label placement and collision avoidance. |
 | `jpgraph_matrix.php` | Matrix/heatmap visualization with configurable colormaps and mesh interpolation. |
 | `jpgraph_meshinterpolate.inc.php` | Recursive bilinear mesh interpolation — upscales coarse data matrices for smoother contour/matrix renders. |
@@ -104,7 +125,7 @@ The core library and all plotting modules:
 | `datamatrix/` | Data Matrix (ECC 140 & ECC 200) 2D barcode generator with multiple encodation schemes. |
 | `pdf417/` | PDF417 2D barcode generator with cluster patterns and data compression. |
 
-See [barcode_architecture.md](barcode_architecture.md) for a comprehensive technical description of all barcode implementations.
+See [architecture/barcode-architecture.md](architecture/barcode-architecture.md) for a comprehensive technical description of all barcode implementations.
 
 **Other source directories:**
 
@@ -131,6 +152,18 @@ The rendered documentation portal:
 - `manual.pdf` — The complete manual as a single PDF.
 - `chunkhtml/` — The user manual rendered as chunked HTML (200+ pages), built from DocBook XML via Phing. Covers installation, every chart type, theming, caching, CSIM image maps, and all configuration options.
 - `classref/` — The generated API class reference (HTML files for 90+ classes), produced by the DDDA system.
+
+---
+
+### `architecture/` — Technical Architecture Documentation
+
+In-depth technical documentation describing the internal design and algorithms of JpGraph:
+
+| Document | Description |
+|----------|-------------|
+| [`core-architecture.md`](architecture/core-architecture.md) | Core library architecture — the 5-layer rendering pipeline, auto-scaling algorithm, class hierarchy, image caching, CSIM, and error-as-image rendering |
+| [`barcode-architecture.md`](architecture/barcode-architecture.md) | Comprehensive technical description of all four barcode subsystems — PDF417 (state-machine compressor), QR Code (Reed-Solomon, Galois field), Data Matrix (ECC 140 & 200), and 13 types of 1D linear barcodes |
+| [`contour-algorithm.md`](architecture/contour-algorithm.md) | The novel marching-edges contour line algorithm and adaptive recursive subdivision for filled contour plots |
 
 ---
 
@@ -179,16 +212,11 @@ During the development of the QR Code module, Johan Persson discovered minor err
 | File | Description |
 |------|-------------|
 | `jpgraph10.zip` | **The very first public release of JpGraph (v1.0)**. An archive of the original library from circa 2000. |
+| `release-email-3.0.0.txt` | The original announcement email for the JpGraph 3.0.0 Professional release, sent to existing license holders. Documents the major new features introduced in 3.0: matrix visualization, 2D contour graphs, QR codes, a command-line barcode utility, rewritten error handling with PHP5 exceptions, Gantt bars with discontinuities, and PHP 5.3 support. |
 | `jpgarch.php` | A JpGraph script (using `CanvasGraph` and `CanvasRectangleText`) that draws a visual architecture overview diagram of JpGraph's own internal structure — a chart made with the charting library about the charting library. |
 | `gencolorchart.php` | A utility that generates visual color swatch charts for all 500+ named colors supported by JpGraph. |
 | `flag_raw.bz2` | Raw country flag image data. |
 | `jpgraph_forum_dump.sql.gz` | A MySQL dump of the JpGraph community support forum. |
-
----
-
-### `release-email-3.0.0.txt`
-
-The original announcement email for the JpGraph 3.0.0 Professional release, sent to existing license holders. Documents the major new features introduced in 3.0: matrix visualization, 2D contour graphs, QR codes, a command-line barcode utility, rewritten error handling with PHP5 exceptions, Gantt bars with discontinuities, and PHP 5.3 support.
 
 ---
 

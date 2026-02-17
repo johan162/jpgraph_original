@@ -46,12 +46,33 @@ A **contour plot** visualizes a 3D surface $z = f(x, y)$ on a 2D plane by drawin
 
 ### Input Data Model
 
-Both algorithms assume the input is a **2D matrix** of scalar values representing samples on a **regular equi-spaced grid**:
+Both algorithms assume the input is a **2D matrix** of scalar values representing samples of a surface $z = f(x, y)$ on a **regular equi-spaced grid**. Each matrix entry $Z[r][c]$ stores the height (or intensity) of the surface at one sample point. The algorithms do not use explicit $(x, y)$ coordinates — instead, the row and column indices **are** the coordinates. Row index $r$ maps to the $y$-axis and column index $c$ maps to the $x$-axis, with unit spacing between adjacent samples.
+
+#### What the Values Represent
+
+Imagine a physical surface — a terrain elevation map, a temperature field, or a pressure distribution. We cannot store every point on the continuous surface, so we **sample** it at evenly spaced locations and record the $z$ value at each location:
 
 ```
-    Data Matrix Z[rows][cols]:
+    Continuous surface z = f(x,y)       Sampled at grid points
     
-         col 0    col 1    col 2    col 3
+    ╭─────────────────────╮         (0,0)  (1,0)  (2,0)  (3,0)
+    │ ╱╲   ╱╲             │           •──────•──────•──────•
+    │╱  ╲╱╱  ╲            │           │      │      │      │
+    │         ╲  ╱╲       │         (0,1)  (1,1)  (2,1)  (3,1)
+    │          ╲╱  ╲      │           •──────•──────•──────•
+    │               ╲     │           │      │      │      │
+    ╰─────────────────────╯         (0,2)  (1,2)  (2,2)  (3,2)
+                                      •──────•──────•──────•
+                                
+    Each • stores the z value at that (x,y) location.
+```
+
+These sampled values are stored in a 2D array (a matrix), where the row index selects the $y$ position and the column index selects the $x$ position:
+
+```
+    Data Matrix Z[rows][cols]  (M rows × N columns):
+    
+         col 0    col 1    col 2    col 3       ← x-axis (column index)
         ┌────────┬────────┬────────┬────────┐
 row 0   │ Z[0,0] │ Z[0,1] │ Z[0,2] │ Z[0,3] │
         ├────────┼────────┼────────┼────────┤
@@ -59,20 +80,92 @@ row 1   │ Z[1,0] │ Z[1,1] │ Z[1,2] │ Z[1,3] │
         ├────────┼────────┼────────┼────────┤
 row 2   │ Z[2,0] │ Z[2,1] │ Z[2,2] │ Z[2,3] │
         └────────┴────────┴────────┴────────┘
-        
-    This creates a grid of CELLS:
-    
-          Cell[0,0]  Cell[0,1]  Cell[0,2]
-        ┌──────────┬──────────┬──────────┐
-        │          │          │          │
-        │          │          │          │
-        ├──────────┼──────────┼──────────┤
-        │          │          │          │
-        │ Cell[1,0]│ Cell[1,1]│ Cell[1,2]│
-        └──────────┴──────────┴──────────┘
-        
-    For an M×N data matrix, there are (M-1)×(N-1) cells.
+          ↑
+          y-axis (row index)
 ```
+
+For example, in the JpGraph PHP source, the data is passed as a plain nested array:
+
+```php
+$data = array(
+    array(0.5, 1.1, 1.5, 1.0, 2.0),   // row 0 — five sample values
+    array(1.0, 1.5, 3.0, 5.0, 6.0),   // row 1
+    array(0.9, 2.0, 2.1, 3.0, 6.0),   // row 2
+    array(1.0, 1.5, 3.0, 4.0, 6.0),   // row 3
+);
+// This is a 4×5 matrix (M=4 rows, N=5 columns)
+```
+
+The number of rows is `count($data)` and the number of columns is `count($data[0])`. No explicit $(x, y)$ coordinates are supplied — the position of each sample point is implied by its array indices.
+
+#### From Sample Points to Cells
+
+The sample points form the **vertices** (corners) of a grid. The contour algorithm works not on individual vertices but on the **cells** formed between them. A cell is the rectangular region bounded by four neighboring sample points:
+
+```
+    Four adjacent sample points define one cell:
+    
+    Z[r][c] ─────────────── Z[r][c+1]       The cell sits in the
+         │                       │           space BETWEEN the four
+         │                       │           corner sample points.
+         │     Cell[r][c]        │           
+         │                       │           Its corners carry the
+         │                       │           known z values; the
+    Z[r+1][c] ─────────────── Z[r+1][c+1]   algorithm interpolates
+                                             along the edges.
+```
+
+Because each cell requires a neighbor to its right (column $c+1$) and below (row $r+1$), the last row and last column of sample points serve only as the right/bottom boundaries of cells — they do not start new cells. This is why an $M \times N$ matrix of sample points produces $(M{-}1) \times (N{-}1)$ cells:
+
+```
+    3×4 data matrix (M=3, N=4) → 2×3 grid of cells:
+    
+    Sample points (vertices):           Cells:
+
+    •────────•────────•────────•────────•
+    │        │        │        │        │
+    │        │        │        │        │ 
+    •────────•────────•────────•────────•     ┌──────────┬──────────┬──────────┐
+    │        │        │        │        │     │          │          │          │
+    │        │        │        │        │     │ Cell[0,0]│ Cell[0,1]│ Cell[0,2]│
+    •────────•────────•────────•────────•     ├──────────┼──────────┼──────────┤
+    │        │        │        │        │     │          │          │          │
+    │        │        │        │        │     │ Cell[1,0]│ Cell[1,1]│ Cell[1,2]│
+    •────────•────────•────────•────────•     └──────────┴──────────┴──────────┘
+    
+    12 sample points                           (3-1)×(4-1) = 2×3 = 6 cells
+    (3 rows × 4 columns)
+```
+
+#### Why Cells Matter
+
+The contour algorithm scans **every cell** in the grid and asks: *does the isobar (contour line at value $c$) cross any edges of this cell?* Each cell edge connects two sample points whose $z$ values are known. If the isobar value $c$ lies between those two endpoint values, the contour line must cross that edge somewhere. The algorithm then uses linear interpolation along the edge to pinpoint where, and connects the crossing points within each cell to form contour line segments.
+
+In other words:
+- **Vertices** (sample points) provide the known $z$ values.
+- **Edges** (lines between adjacent vertices) are where the algorithm detects crossings.
+- **Cells** (rectangles between four vertices) are the units of work — the algorithm processes one cell at a time to find and connect contour crossings.
+
+```
+    How a contour line emerges from cells:
+    
+     0.5 ─────── 1.1 ─────── 1.5 ─────── 3.0
+      │           │           │            │
+      │  Cell A   │  Cell B   │   Cell C   │    isobar c = 1.0
+      │  (no      │           │            │
+      │  crossing)│           ×            │     × = crossing point
+      │           │         / │  \         │
+     1.0 ─────── 1.5 ─────×─ 0.9 ─×────── 2.0
+      ↑           
+    vertex ON the isobar
+    (handled by perturbation, Step 1)
+    
+    Cell A: all corners either ≤1.0 or ≥1.0 after perturbation → no crossing
+    Cell B: isobar crosses right edge (1.5→0.9) and bottom edge (1.5→0.9) → segment
+    Cell C: isobar crosses left edge (1.5→0.9) and bottom  edge (0.9→2.0)? 
+```
+
+> **Summary:** The data matrix is a grid of sampled $z$ values. Column indices are $x$ coordinates, row indices are $y$ coordinates, and the values are $z$ heights. Adjacent sample points form cells — the fundamental processing units of the contour algorithm. An $M \times N$ matrix yields $(M{-}1) \times (N{-}1)$ cells because each cell needs four corner vertices.
 
 ---
 
@@ -152,7 +245,7 @@ function adjustDataPointValues(Z, isobarValues):
 
 ### Edge Types
 
-Each cell has four edges. The algorithm uses two types:
+Each cell has four edges. The algorithm recognizes two types of edges:
 
 ```
     Horizontal edges (HORIZ_EDGE = 0):
@@ -198,7 +291,8 @@ $$
 
 ### Building the Edge Matrices
 
-For each isobar, create two boolean matrices tracking crossings:
+For each isobar, create two boolean matrices tracking crossings of vertical and horizontal edges:
+
 
 ```
 function determineIsobarEdgeCrossings(isobarIndex, Z, isobarValues):
@@ -236,12 +330,12 @@ function isobarVCrossing(row, col, isobarValue):
 ```
     For a 3×4 data matrix with isobar c = 50:
     
-    Data:           Horizontal Edges:    Vertical Edges:
+    Data:           Horizontal Edges:       Vertical Edges:
     
-    30  45  55  70      ✓   ×   ✓           ✓   ×   ×   ✓
-     │   │   │   │       │   │   │            │   │   │   │
+    30  45  55  70      ✓   ×   ✓            ✓   ×   ×   ✓
+     │   │   │   │      │   │   │            │   │   │   │
     35  48  52  65  →   ×   ✓   ×     +      ✓   ×   ×   ✓
-     │   │   │   │       │   │   │            │   │   │   │
+     │   │   │   │      │   │   │            │   │   │   │
     40  55  58  60      ×   ×   ×           (boundary edges)
     
     ✓ = isobar crosses this edge
@@ -316,21 +410,23 @@ The isobar does not pass through this cell. Skip it.
 The isobar enters through one edge and exits through another. Connect them with a line segment.
 
 ```
-    Six possible configurations for 2-crossing case:
+    Six possible configurations for 2-crossing case (The exact crossing point is determined through interpolation):
+    
+
     
     TOP-BOTTOM    TOP-LEFT      TOP-RIGHT
-    ────×────     ────×────     ────×────
-        │             │             │
-        │              ╲             ╱
-        │               ╲           ╱
-    ────×────     ×              ×────────
+    ────×────     ───×──────     ──────×────
+        │           ╱                   ╲
+        │          ╱                     ╲
+        │         ×                        × 
+    ────×────     ──────────      ──────────
     
     BOTTOM-LEFT  BOTTOM-RIGHT   LEFT-RIGHT
-    ─────────    ────────×─     ×────────×
-        │               ╲           ╱
-        ╱                ╲         ╱
-       ╱                  ╲       ╱
-    ×────────    ────×────×     ──────────
+    ─────────    ──────────      ─────────
+    ×                      ×       
+     ╲                    ╱      ×────────×   
+       ╲                 ╱          
+    ────×────    ───────×───     ──────────
 ```
 
 **Implementation for 2-crossing case:**
@@ -350,20 +446,22 @@ if length(crossings) == 2:
 ```
     Saddle Point Configuration:
     
-       LOW    HIGH       The surface looks like a saddle
+    LOW    HIGH          The surface looks like a saddle
     30 ─×──── 70         (horse saddle), with two "peaks"
      │      ╱│           diagonally opposite and two
      ×    ╱  ×  c=50     "valleys" diagonally opposite.
      │  ╱    │
     60 ──×─── 35         Two possible interpretations:
-       HIGH   LOW
+    HIGH    LOW
+
+
+    Option A: "\"        Option B: "/"
+    30 ─×────70         30 ─×────70   
+     │    ╲  │           │ ╱     │ 
+     ×      ╲×           ×       ×
+     │ ╲     │           │      ╱│
+    60──×───35           60───×──35
        
-    Option A: "/"        Option B: "\"
-    ╱        ╲          ╲        ╱
-      ╲    ╱              ╱    ╲
-        ╳                    ╳
-      ╱    ╲              ╲    ╱
-    ╲        ╱          ╱        ╲
 ```
 
 ### Understanding Saddle Points
@@ -692,8 +790,8 @@ The filled contour algorithm is substantially more complex than the line-only ve
 ├─────────────────────────────────────────────────────────────────┤
 │  INPUT:                                                         │
 │    • Data matrix Z[rows][cols]                                  │
-│    • Contour values {c₀, c₁, ..., cₙ}                          │
-│    • Contour colors {color₀, color₁, ..., colorₙ₊₁}            │
+│    • Contour values {c₀, c₁, ..., cₙ}                           │
+│    • Contour colors {color₀, color₁, ..., colorₙ₊₁}             │
 │    • Maximum recursion depth (default: 6)                       │
 │    • Subdivision method: 'rect' or 'tri'                        │
 │                                                                 │
