@@ -4,18 +4,38 @@
 
 ## Table of Contents
 
-- [Design Philosophy](#design-philosophy)
-- [Layered Architecture](#layered-architecture)
-- [The Rendering Pipeline](#the-rendering-pipeline)
-- [Class Hierarchy](#class-hierarchy)
-- [The Auto-Scaling Algorithm](#the-auto-scaling-algorithm)
-- [The Contour Plot Algorithm](#the-contour-plot-algorithm)
-- [The Filled Contour Algorithm (Adaptive Recursive Subdivision)](#the-filled-contour-algorithm-adaptive-recursive-subdivision)
-- [Mesh Interpolation](#mesh-interpolation)
-- [Client-Side Image Maps (CSIM)](#client-side-image-maps-csim)
-- [Image Caching](#image-caching)
-- [Error Handling as Image Rendering](#error-handling-as-image-rendering)
-- [Notable Design Details](#notable-design-details)
+- [JpGraph — Architecture Overview](#jpgraph--architecture-overview)
+  - [Table of Contents](#table-of-contents)
+  - [Design Philosophy](#design-philosophy)
+  - [Layered Architecture](#layered-architecture)
+    - [Layer 1 — GD Extension](#layer-1--gd-extension)
+    - [Layer 2 — Image Abstraction (`gd_image.inc.php`)](#layer-2--image-abstraction-gd_imageincphp)
+    - [Layer 3 — Graph Framework (`jpgraph.php`)](#layer-3--graph-framework-jpgraphphp)
+    - [Layer 4 — Plot Modules](#layer-4--plot-modules)
+  - [The Rendering Pipeline](#the-rendering-pipeline)
+  - [Class Hierarchy](#class-hierarchy)
+  - [The Auto-Scaling Algorithm](#the-auto-scaling-algorithm)
+  - [The Contour Plot Algorithm](#the-contour-plot-algorithm)
+    - [Input](#input)
+    - [Algorithm Steps](#algorithm-steps)
+      - [Step 1: Perturbation](#step-1-perturbation)
+      - [Step 2: Edge Crossing Detection](#step-2-edge-crossing-detection)
+      - [Step 3: Cell Analysis](#step-3-cell-analysis)
+      - [Step 4: Coordinate Interpolation](#step-4-coordinate-interpolation)
+      - [Output](#output)
+    - [Color Assignment](#color-assignment)
+  - [Client-Side Image Maps (CSIM)](#client-side-image-maps-csim)
+  - [Image Caching](#image-caching)
+  - [Error Handling as Image Rendering](#error-handling-as-image-rendering)
+  - [Notable Design Details](#notable-design-details)
+    - [The Self-Documenting Architecture Diagram](#the-self-documenting-architecture-diagram)
+    - [500+ Named Colors](#500-named-colors)
+    - [The 90° Rotation Trick](#the-90-rotation-trick)
+    - [Reed-Solomon Error Correction](#reed-solomon-error-correction)
+    - [The QR Specification Error](#the-qr-specification-error)
+    - [Gantt Chart Complexity](#gantt-chart-complexity)
+    - [Anti-Spam CAPTCHA Generator](#anti-spam-captcha-generator)
+    - [Wind Rose — A Non-Standard Coordinate System](#wind-rose--a-non-standard-coordinate-system)
 
 ---
 
@@ -280,90 +300,6 @@ Colors are assigned per isobar using either:
 - Automatic **spectral coloring** via `RGB::GetSpectrum($v)` where $v \in [0, 1]$ maps to a blue→cyan→green→yellow→red color ramp.
 - **High-contrast mode** — a linear blue-to-red gradient, or pure black.
 
----
-
-## The Filled Contour Algorithm (Adaptive Recursive Subdivision)
-
-**File:** `jpgraph_contourf.php` — The `ContourWorker` class (~1 000 lines)
-
-The filled contour algorithm is significantly more complex than the line-only version. It must not only find contour lines but also **fill the regions between them** with the correct colors. The approach is an original **adaptive recursive subdivision** algorithm.
-
-### Core Idea
-
-The input grid is divided into sub-cells. Each sub-cell is recursively subdivided until one of two termination conditions is met:
-
-1. **Maximum recursion depth reached** (default: 6, meaning up to 64× subdivision). The sub-cell is filled with the color of the average of its corner values.
-2. **At most one contour line crosses each edge** of the sub-cell. The contour line divides the sub-cell into at most three polygons, each filled with the appropriate color.
-
-This adaptive approach concentrates computational effort where it matters — near contour lines — while large uniform regions are handled cheaply.
-
-### Two Subdivision Methods
-
-The user can choose between:
-
-- **Rectangular subdivision** (`RectFill`) — Each cell is split into four equal sub-rectangles. The corner values of sub-rectangles are computed as averages of their parent's corners.
-- **Triangular subdivision** (`TriFill`) — Each cell is split into two triangles along the diagonal, then each triangle is recursively split into four sub-triangles by edge midpoints. Triangular subdivision generally produces smoother contour fills because triangles are simpler primitives with fewer ambiguous cases.
-
-### Rectangular Subdivision Detail
-
-For a rectangle with corner values $(v_1, v_2, v_3, v_4)$:
-
-1. Determine which contour index each corner falls into: $vv_i = $ `GetNextHigherContourIdx`$(v_i)$.
-2. If all four corners are in the **same contour band** ($vv_1 = vv_2 = vv_3 = vv_4$), fill the rectangle with that band's color.
-3. Otherwise, compute $dv_k = |vv_i - vv_j|$ for each edge. If exactly one contour crosses each of exactly two edges (total crossing count = 2):
-   - Interpolate the crossing points on those edges.
-   - Split the rectangle into two polygons along the contour line.
-   - Fill each polygon with its band's color.
-   - Draw the contour line if line display is enabled.
-4. If four edges are crossed (saddle point with total = 4), resolve the saddle orientation and split into three polygons.
-5. Otherwise, **subdivide**: compute the center value as the average of all four corners, then recursively process the four sub-rectangles.
-
-### Triangular Subdivision Detail
-
-For a triangle with vertex values $(v_1, v_2, v_3)$:
-
-1. If all three are in the same contour band, fill with one color.
-2. If exactly two edges are crossed by the same contour:
-   - The contour line divides the triangle into one smaller triangle and one quadrilateral.
-   - Fill both regions and draw the contour line.
-3. Otherwise, compute edge midpoints $(x_{mp}, y_{mp})$ and midpoint values (by averaging or interpolation), then recursively process four sub-triangles.
-
-### Saddle Point Resolution
-
-When four edges of a rectangle are crossed, the algorithm must determine how to pair them. It computes the center value $v_c = (v_1 + v_2 + v_3 + v_4)/4$ and compares the contour values at the crossings:
-
-- If all four crossings are the **same contour**, the saddle orientation is determined by whether $v_c$ and $v_1$ are on the same side of that contour.
-- If two different contours cross, the pairing is determined by which crossing values match.
-
-### Label Placement
-
-Contour labels are placed using a **collision avoidance** system:
-
-1. Candidate label positions are the midpoints of contour line segments.
-2. Before placing a label, `LabelProx()` checks the distance to all existing labels of the same contour index (and optionally adjacent indices).
-3. A minimum distance threshold (proportional to $\sqrt{width \times height}$) prevents overlapping.
-4. Labels are **angle-aligned** to the contour gradient using `atan(dy/dx)`.
-5. Labels near the plot edges are suppressed.
-
-### Perturbation
-
-Like the line-only algorithm, vertex values that exactly equal a contour value are perturbated by a factor of 0.9999 before processing. This ensures each isobar crossing belongs unambiguously to one side of the mesh.
-
----
-
-## Mesh Interpolation
-
-**File:** `jpgraph_meshinterpolate.inc.php`
-
-Both contour and matrix plots support **data upsampling** via recursive bilinear interpolation. Given a coarse $m \times n$ data matrix and an interpolation factor $f$, the algorithm produces a finer $((m-1) \cdot 2^{f-1} + 1) \times ((n-1) \cdot 2^{f-1} + 1)$ matrix.
-
-The interpolation works by recursively subdividing each cell:
-
-1. Place the original values at stride $2^{f-1}$ positions in the output matrix.
-2. For each cell, compute the four edge midpoints as averages of adjacent corners, and the center as the average of all four corners.
-3. Recurse on the four resulting sub-cells with factor $f - 1$.
-
-This produces a smooth bilinear surface through the original data points. An interpolation factor of 3 turns a 10×10 grid into a 37×37 grid; factor 5 (the maximum allowed) turns it into a 145×145 grid.
 
 ---
 
