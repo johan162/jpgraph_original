@@ -196,6 +196,8 @@ The documentation covers:
 - Appendices (FAQ, named color reference, country flags, error message catalog)
 - Chapter XML files, images, CSS stylesheets, and Phing build extensions
 
+> **NOTE:** The layout of the class diagram and especially the column layout with greyed-out overridden methods from the parent class was inspired by the class documentation from the Psion class documentation in their SDK. 
+
 ---
 
 ### `QR-paper/` — A Note on Errors in the QR Standard
