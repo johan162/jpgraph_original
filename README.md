@@ -5,6 +5,7 @@
 ## Table of Contents
 
 - [JpGraph — Historic Archive](#jpgraph--historic-archive)
+  - [Table of Contents](#table-of-contents)
   - [What Was/Is JpGraph?](#what-wasis-jpgraph)
   - [What happened to JpGraph?](#what-happened-to-jpgraph)
     - [What This Repository Contains](#what-this-repository-contains)
@@ -47,10 +48,11 @@ This repository collects the **last Pro release** (v3.1.6p, January 2010) togeth
 |------|-------------|
 | [`jpgraph-3.1.6p/`](jpgraph-3.1.6p/) | Final professional release — source, examples, and rendered documentation |
 | [`architecture/`](architecture/) | Technical architecture documentation — detailed descriptions of the core library, barcode implementations, and contour plot algorithms |
-| [`ddda/`](ddda/) | DDDA (Database Driven Documentation Architecture) — the custom tool built to document JpGraph's class hierarchy (see [README-DDDA.md](README-DDDA.md)) |
-| [`doc-xml/`](doc-xml/) | DocBook XML source for the user manual and reference guide |
+| [`ddda/`](ddda/) | DDDA (Database Driven Documentation Architecture) — the custom tool with documentation that built to document JpGraph's class hierarchy (see [README-DDDA.md](README-DDDA.md)) |
+| [`doc-src/`](doc-src/) | DocBook XML source for the user manual and reference guide |
 | [`QR-paper/`](QR-paper/) | A note on errors discovered in the official QR barcode specification during development of the QR module |
 | [`misc/`](misc/) | Miscellaneous historical artifacts including the very first release (v1.0) and the v3.0.0 release announcement |
+| [`php_conference_2002`](php_conference_2002/) | Material presented at the International PHP Conference 2002 | 
 
 ---
 
